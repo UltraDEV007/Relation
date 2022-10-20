@@ -3,7 +3,6 @@ from datetime import datetime
 from configs import upload_configs
 
 
-
 def upload_blob(destination_file, year):
 
     storage_client = storage.Client().from_service_account_json('readr-key.json')
