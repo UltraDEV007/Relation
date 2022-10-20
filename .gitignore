@@ -1,6 +1,6 @@
 *.json
 elections/*
 elections
-configs.py
+.env
 
 __pycache__
