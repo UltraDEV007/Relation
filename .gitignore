@@ -1,0 +1,6 @@
+*.json
+elections/*
+elections
+configs.py
+
+__pycache__
