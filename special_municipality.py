@@ -8,12 +8,12 @@ from tools.cec_data import request_cec
 
 
 def parse_default(candidate_info):
-    for special_municipality in default_special_municipality:
-        city = special_municipality['city']
-        mapping_candNo = candidate_info[city]
+    default = []
+    for city_name, defl_candNo  in default_special_municipality.items():
+        mapping_candNo = candidate_info[city_name]
         candidates = []
-        print(city)
-        for candNo in special_municipality['candidates']:
+        print(city_name)
+        for candNo in defl_candNo:
             candTks = {
                 "candNo": str(candNo).zfill(2),
                 "name": mapping_candNo[str(candNo)]['name'],
@@ -23,8 +23,8 @@ def parse_default(candidate_info):
                 "candVictor": False,
             }
             candidates.append(candTks)
-        special_municipality["candidates"] = candidates
-    return default_special_municipality
+        default.append({"city": city_name, "candidates": candidates})
+    return default
 
 
 def parse_cec_data(candidate_info):
@@ -51,11 +51,11 @@ def parse_cec_data(candidate_info):
                         print(" cec data candNo is null.")
                         return
                     try:
-                        candTks["name"] = mapping_candNo[candTksInfo["candNo"]]['name']
+                        candTks["name"] = mapping_candNo[str(candTksInfo["candNo"])]['name']
                     except KeyError:
                         candTks["name"] = ''
                     try:
-                        candTks["party"] = mapping_candNo[candTksInfo["candNo"]]['party']
+                        candTks["party"] = mapping_candNo[str(candTksInfo["candNo"])]['party']
                     except KeyError:
                         candTks["party"] = ''
                     if candTksInfo["tks"] is not None:

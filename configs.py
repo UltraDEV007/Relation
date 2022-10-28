@@ -5,32 +5,15 @@ special_municipality =  {
                 "臺中市": "",
                 "臺南市": "",
                 "高雄市": ""}  
-default_special_municipality = [
-    {
-        "city": "臺北市",
-        "candidates":[6, 8, 12], # default(before start) showing candidateNo
-    },
-    {
-        "city": "新北市",
-        "candidates":[1, 2],
-    },
-    {
-        "city": "桃園市",
-        "candidates":[1, 3, 4],
-    },
-    {
-        "city": "臺中市",
-        "candidates":[1, 2, 3],
-    },
-    {
-        "city": "臺南市",
-        "candidates":[2, 3, 5],
-    },
-    {
-        "city": "高雄市",
-        "candidates":[1, 3, 4],
-    },
-]
+default_special_municipality = {
+    "臺北市": [6, 8, 12], # default(before start) showing candidateNo
+    "新北市": [1, 2],
+    "桃園市": [1, 3, 4],
+    "臺中市": [1, 2, 3],
+    "臺南市": [2, 3, 5],
+    "高雄市": [1, 3, 4],
+}
+
 
 districts_mapping = {"臺北市": "taipeiCity", "新北市": "newTaipeiCity", "桃園市": "taoyuanCity", "臺中市": "taichungCity", "臺南市": "tainanCity", "高雄市": "kaohsiungCity",
                      "新竹縣": "hsinchuCounty", "苗栗縣": "miaoliCounty", "彰化縣": "changhuaCounty", "南投縣": "nantouCounty", "雲林縣": "yunlinCounty", "嘉義縣": "chiayiCounty",
