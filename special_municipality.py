@@ -4,50 +4,20 @@ import os
 from gql import gql
 from configs import special_municipality, default_special_municipality
 from tools.uploadGCS import upload_blob
-from tools.conn import gql_client
 from tools.cec_data import request_cec
 
 
-def get_personElection_from_cms(electoral_district):
-    county = {}
-    query = '''
-     query{
-    personElections(where:{
-        election:{id:{equals:81}},
-        electoral_district:{name:{contains:"%s"}},
-    }){
-    number
-    party{
-      name
-    }
-        person_id{
-          name
-        }
-    
-    }
-    }''' % electoral_district
-    client = gql_client()
-    r = client.execute(gql(query))
-    if r['personElections']:
-        for candidate in r['personElections']:
-            candNo = int(candidate['number'])
-            county[candNo] = {}
-            county[candNo]["name"] = candidate['person_id']['name']
-            county[candNo]["party"] = candidate['party']['name'] if candidate['party'] else "無"
-    return county
-
-
-def parse_default():
+def parse_default(candidate_info):
     for special_municipality in default_special_municipality:
         city = special_municipality['city']
-        mapping_candNo = get_personElection_from_cms(city)
+        mapping_candNo = candidate_info[city]
         candidates = []
         print(city)
         for candNo in special_municipality['candidates']:
             candTks = {
                 "candNo": str(candNo).zfill(2),
-                "name": mapping_candNo[candNo]['name'],
-                "party": mapping_candNo[candNo]['party'],
+                "name": mapping_candNo[str(candNo)]['name'],
+                "party": mapping_candNo[str(candNo)]['party'],
                 "tks": 0,
                 "tksRate": 0,
                 "candVictor": False,
@@ -57,11 +27,11 @@ def parse_default():
     return default_special_municipality
 
 
-def parse_cec_data():
+def parse_cec_data(candidate_info):
     jsonfile = request_cec()
     if jsonfile:
         jsonfile = jsonfile["TC"]
-        with open('election-polling/mapping/mapping_county_district.json') as f:
+        with open('mapping/mapping_county_district.json') as f:
             mapping_city = json.loads(f.read())
 
         for data in jsonfile:
@@ -70,7 +40,7 @@ def parse_cec_data():
                 city_code = f'{data["prvCode"]}_{data["cityCode"]}_000'
                 city = mapping_city[city_code]
                 print(city)
-                mapping_candNo = get_personElection_from_cms(city)
+                mapping_candNo = candidate_info[city]
                 candidates = []
                 for candTksInfo in data["candTksInfo"]:
                     # print(candTksInfo)
@@ -112,19 +82,24 @@ def parse_cec_data():
 
 
 def gen_special_municipality_polling():
+    with open('mapping/mayor_candidate.json') as f:
+        candidate_info = json.loads(f.read())
     if os.environ['isSTARTED'] == 'true':
-        result = parse_cec_data()
+        result = parse_cec_data(candidate_info)
         if result is False:
             return
     else:
-        result = parse_default()
-    destination_file = 'elections/real-time/election2022.json'
+        result = parse_default(candidate_info)
+
+    year = datetime.now().year
+    ELECTION_TYPE = os.environ['ELECTION_TYPE']
+    destination_file = f'elections/{year}/{ELECTION_TYPE}/special_municipality.json'
     if not os.path.exists(os.path.dirname(destination_file)):
         os.makedirs(os.path.dirname(destination_file))
     with open(destination_file, 'w') as f:
         f.write(json.dumps({"updatedAt": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 "polling": result}, ensure_ascii=False))
-    upload_blob(destination_file, year=2022)
+    upload_blob(destination_file, year)
 
 
 if __name__ == '__main__':
