@@ -1,3 +1,37 @@
+special_municipality =  {
+                "臺北市": "",
+                "新北市": "",
+                "桃園市": "",
+                "臺中市": "",
+                "臺南市": "",
+                "高雄市": ""}  
+default_special_municipality = [
+    {
+        "city": "臺北市",
+        "candidates":[6, 8, 12],
+    },
+    {
+        "city": "新北市",
+        "candidates":[1, 2],
+    },
+    {
+        "city": "桃園市",
+        "candidates":[1, 3, 4],
+    },
+    {
+        "city": "臺中市",
+        "candidates":[1, 2, 3],
+    },
+    {
+        "city": "臺南市",
+        "candidates":[2, 3, 5],
+    },
+    {
+        "city": "高雄市",
+        "candidates":[1, 3, 4],
+    },
+]
+
 districts_mapping = {"臺北市": "taipeiCity", "新北市": "newTaipeiCity", "桃園市": "taoyuanCity", "臺中市": "taichungCity", "臺南市": "tainanCity", "高雄市": "kaohsiungCity",
                      "新竹縣": "hsinchuCounty", "苗栗縣": "miaoliCounty", "彰化縣": "changhuaCounty", "南投縣": "nantouCounty", "雲林縣": "yunlinCounty", "嘉義縣": "chiayiCounty",
                      "屏東縣": "pingtungCounty", "宜蘭縣": "yilanCounty", "花蓮縣": "hualienCounty", "臺東縣": "taitungCounty", "澎湖縣": "penghuCounty", "金門縣": "kinmenCounty",

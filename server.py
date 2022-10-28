@@ -1,13 +1,13 @@
 from flask import Flask
-from politics_candidate import generate_politic_candidate
-
+import os
+from special_municipality import gen_special_municipality_polling
 app = Flask(__name__)
 
 
-@app.route("/candidate", methods=['GET'])
-def process_data():
-    generate_politic_candidate()
-    return 'done'
+@app.route("/special_municipality", methods=['GET'])
+def municipality():
+        gen_special_municipality_polling()
+        return 'done'
 
 
 @app.route("/")
