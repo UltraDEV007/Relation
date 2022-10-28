@@ -8,7 +8,7 @@ special_municipality =  {
 default_special_municipality = [
     {
         "city": "臺北市",
-        "candidates":[6, 8, 12],
+        "candidates":[6, 8, 12], # default(before start) showing candidateNo
     },
     {
         "city": "新北市",
