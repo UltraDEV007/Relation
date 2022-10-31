@@ -11,7 +11,13 @@ def dump_politics(election_id):
     db_host = os.environ['DATABASE_HOST']
     db_port = os.environ['DATABASE_PORT']
 
-    connection = psycopg2.connect(database=db, user=db_user,password=db_pw, host=db_host, port=db_port)
+    keepalive_kwargs = {
+        "keepalives": 1,
+        "keepalives_idle": 60,
+        "keepalives_interval": 10,
+        "keepalives_count": 5
+    }
+    connection = psycopg2.connect(database=db, user=db_user,password=db_pw, host=db_host, port=db_port, **keepalive_kwargs)
     cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     dump_query = """SELECT "desc", "content", "Person"."name", "Election"."name", "ElectionArea"."name", "Organization"."name" FROM "Politic", "PersonElection", "Person", "Election", "ElectionArea", "Organization" WHERE "Politic".person = "PersonElection".id AND "PersonElection".election = "Election"."id" AND "PersonElection"."person_id" = "Person"."id" AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Organization"."id" = "PersonElection"."party" AND "Politic"."status" = 'verified' AND "Election".id = """ + str(election_id)
