@@ -10,7 +10,7 @@ def process_data():
     generate_politic_candidate()
     return 'done'
 
-@app.route("/dump_politics", method=['GET'])
+@app.route("/dump_politics", methods=['GET'])
 def dump_election_politics():
     election_id = request.args.get('election_id', type = int)
     if election_id is None or election_id < 0:
