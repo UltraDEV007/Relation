@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from politics_candidate import generate_politic_candidate
 from politics_dump import dump_politics
 
