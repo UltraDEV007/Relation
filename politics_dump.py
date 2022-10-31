@@ -18,7 +18,9 @@ def dump_politics(election_id):
     dump_query = """SELECT "desc", "content", "Person"."name", "Election"."name", "ElectionArea"."name", "Organization"."name" FROM "Politic", "PersonElection", "Person", "Election", "ElectionArea", "Organization" WHERE "Politic".person = "PersonElection".id AND "PersonElection".election = "Election"."id" AND "PersonElection"."person_id" = "Person"."id" AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Organization"."id" = "PersonElection"."party" AND "Politic"."status" = 'verified' AND "Election".id = """ + str(election_id)
     cursor.execute(dump_query)
     all_politics = cursor.fetchall()
-    destination_file = 'politics-' + str(election_id) + ".csv"
+    destination_file = 'politics/politics-' + str(election_id) + ".csv"
+    if not os.path.exists(os.path.dirname(destination_file)):
+        os.makedirs(os.path.dirname(destination_file))
 
     with open(destination_file, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
