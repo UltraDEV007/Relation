@@ -1,6 +1,6 @@
 from flask import Flask, request
 from politics_candidate import generate_politic_candidate
-from politics_dump import dump_politics
+from politics_dump import dump_politics, landing
 
 app = Flask(__name__)
 
@@ -16,6 +16,11 @@ def dump_election_politics():
     if election_id is None or election_id < 0:
         return "wrong election id"
     dump_politics(election_id)
+    return "done"
+
+@app.route("landing_data", methods=['GET'])
+def dump_landing():
+    landing()
     return "done"
 
 @app.route("/")
