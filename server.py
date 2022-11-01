@@ -18,7 +18,7 @@ def dump_election_politics():
     dump_politics(election_id)
     return "done"
 
-@app.route("landing_data", methods=['GET'])
+@app.route("/landing_data", methods=['GET'])
 def dump_landing():
     landing()
     return "done"
