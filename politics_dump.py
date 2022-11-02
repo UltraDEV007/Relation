@@ -85,7 +85,7 @@ def landing():
                 dist_amount[count[2]] = 1
         result[election["total"]] = len(dist_politic)
         #fetch all candidates
-        get_candidates = """SELECT "Person"."birth_date_year", "PersonElection".id, "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
+        get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
         cursor.execute(get_candidates)
         all_candidates = cursor.fetchall()
         area_candidates = {}
