@@ -108,6 +108,7 @@ def landing():
                 {"name": "新竹市", "city": "新竹市", "total": 6 },
                 {"name": "桃園市", "city": "桃園市", "total": 4 },
                 {"name": "臺北市", "city": "臺北市", "total": 12 },
+                {"name": "新北市", "city": "新北市", "total": 2 },
                 {"name": "基隆市", "city": "基隆市", "total": 5 },
             ] } )
             result['mayorAndPolitics'].append( {"key": "center", "name": "中部", "amount": 0, "total": 17, "areas": [
