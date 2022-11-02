@@ -146,7 +146,7 @@ def landing():
                         section_area["candidates"] = area_candidates[section_area['name']]
                         section_area["total"] = len(area_candidates[section_area['name']])
                         section_area_amount = section_area_amount = section_area["total"]
-                    section_area['amount'] = section_amount
+                section['amount'] = section_amount
                     
         elif election['type'] == 'councilorAndPolitics':
             result["councilorAndPolitics"] = []
