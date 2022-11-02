@@ -1,15 +1,8 @@
 from flask import Flask, request
-from politics_candidate import generate_politic_candidate
 from politics_dump import dump_politics, landing
 from special_municipality import gen_special_municipality_polling
 
 app = Flask(__name__)
-
-
-@app.route("/candidate", methods=['GET'])
-def process_data():
-    generate_politic_candidate()
-    return 'done'
 
 @app.route("/dump_politics", methods=['GET'])
 def dump_election_politics():
