@@ -136,6 +136,7 @@ def landing():
             ]} )
             for section in result['mayorAndPolitics']:
                 section_amount = 0
+                section_total = 0
                 for section_area in section['areas']:
                     section_area_amount = 0
                     if section_area['name'] in area_hash:
@@ -148,8 +149,10 @@ def landing():
                             section_area["done"] = 0
                         section_area["candidates"] = area_candidates[section_area['name']]
                         section_area["total"] = len(area_candidates[section_area['name']])
+                        section_total = section_total + section_area["total"]
                         section_area_amount = section_area_amount = section_area["total"]
                 section['amount'] = section_amount
+                section['total'] = section_total
                     
         elif election['type'] == 'councilorAndPolitics':
             result["councilorAndPolitics"] = []
