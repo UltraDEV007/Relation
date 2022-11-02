@@ -23,10 +23,10 @@ def query_elections(electioin_type):
         return result
 
 
-def query_personElections(district, electionID):
+def query_personElections(electionID, district=''):
     query = '''
             query{
-            personElections(where:{election:{OR:[%s]}, electoral_district:{name:{contains:"%s"}}}, orderBy:{number:asc}){
+            personElections(where:{election:{OR:[%s]}%s}, orderBy:{number:asc}){
             id
             number
             votes_obtained_number
@@ -35,6 +35,7 @@ def query_personElections(district, electionID):
             electoral_district{
                 name
                 indigenous
+                city
             }
             person_id{
                 id

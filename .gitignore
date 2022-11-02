@@ -1,4 +1,4 @@
-*.json
+
 elections/*
 elections
 .env

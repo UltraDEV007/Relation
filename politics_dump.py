@@ -42,6 +42,8 @@ def landing():
     db_pw = os.environ['DATABASE_PASSWORD']
     db_host = os.environ['DATABASE_HOST']
     db_port = os.environ['DATABASE_PORT']
+    election_config = os.environ['ELECTION_CONFIG']
+    dest_file = os.environ['LANDING_DEST']
     result = {}
 
     keepalive_kwargs = {
@@ -51,7 +53,7 @@ def landing():
         "keepalives_count": 5
     }
 
-    election_id = [{"id": 81, "type": "mayorAndPolitics", "total": "totalCompletionOfMayor"}, {"id": 82, "type": "councilorAndPolitics", "total": "totalCompletionOfCouncilor"}]
+    election_id = json.loads(election_config)
     connection = psycopg2.connect(database=db, user=db_user,password=db_pw, host=db_host, port=db_port, **keepalive_kwargs)
     cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -70,7 +72,7 @@ def landing():
             area_hash[area[2]].append({ "id": area[0], "order": order, "name": area[1], "city": area[2], "candidates": [] })
                 
         #fetch politics
-        dump_query = """SELECT count(person), person, "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "PersonElection"."election" = {} GROUP BY "Politic"."person", "ElectionArea"."name";""".format(str(election["id"]))
+        dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
         cursor.execute(dump_query)
         all_politics = cursor.fetchall()
         dist_politic = {}
@@ -83,7 +85,7 @@ def landing():
                 dist_amount[count[2]] = 1
         result[election["total"]] = len(dist_politic)
         #fetch all candidates
-        get_candidates = """SELECT "Person"."birth_date_year", "PersonElection".id, "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
+        get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
         cursor.execute(get_candidates)
         all_candidates = cursor.fetchall()
         area_candidates = {}
@@ -106,6 +108,7 @@ def landing():
                 {"name": "新竹市", "city": "新竹市", "total": 6 },
                 {"name": "桃園市", "city": "桃園市", "total": 4 },
                 {"name": "臺北市", "city": "臺北市", "total": 12 },
+                {"name": "新北市", "city": "新北市", "total": 2 },
                 {"name": "基隆市", "city": "基隆市", "total": 5 },
             ] } )
             result['mayorAndPolitics'].append( {"key": "center", "name": "中部", "amount": 0, "total": 17, "areas": [
@@ -193,7 +196,6 @@ def landing():
 
                 
         # parse candidates
-        dest_file = "politics/landing.json"
         if not os.path.exists(os.path.dirname(dest_file)):
             os.makedirs(os.path.dirname(dest_file))
 
