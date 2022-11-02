@@ -72,7 +72,7 @@ def landing():
             area_hash[area[2]].append({ "id": area[0], "order": order, "name": area[1], "city": area[2], "candidates": [] })
                 
         #fetch politics
-        dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
+        dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
         cursor.execute(dump_query)
         all_politics = cursor.fetchall()
         dist_politic = {}
