@@ -174,6 +174,7 @@ def landing():
             result["councilorAndPolitics"].append( {"name": "臺東縣", "amount": 0, "total": 0, "areas": []} )
             for councilor in result["councilorAndPolitics"]:
                 councilor_amount = 0
+                councilor_total = 0
                 if councilor["name"] in area_hash:
                     councilor["areas"] = area_hash[councilor["name"]]
                     for area in councilor["areas"]:
@@ -181,12 +182,15 @@ def landing():
                         if area['name'] in area_candidates:
                             area["candidates"] = area_candidates[area['name']]
                             area["total"] = len(area_candidates[area['name']])
+                            councilor_total = councilor_total + area["total"]
                             for candidate in area['candidates']:
                                 if candidate['done'] > 0:
                                     area_amount = area_amount + 1
                         area['done'] = area_amount
                         councilor_amount = councilor_amount + area_amount
-                    councilor['done'] = councilor_amount
+                    councilor['amount'] = councilor_amount
+                    councilor['total'] = councilor_total
+
                 
         # parse candidates
         dest_file = "politics/landing.json"
