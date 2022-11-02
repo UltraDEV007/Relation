@@ -42,6 +42,8 @@ def landing():
     db_pw = os.environ['DATABASE_PASSWORD']
     db_host = os.environ['DATABASE_HOST']
     db_port = os.environ['DATABASE_PORT']
+    election_config = os.environ['ELECTION_CONFIG']
+    dest_file = os.environ['LANDING_DEST']
     result = {}
 
     keepalive_kwargs = {
@@ -51,7 +53,7 @@ def landing():
         "keepalives_count": 5
     }
 
-    election_id = [{"id": 81, "type": "mayorAndPolitics", "total": "totalCompletionOfMayor"}, {"id": 82, "type": "councilorAndPolitics", "total": "totalCompletionOfCouncilor"}]
+    election_id = json.loads(election_config)
     connection = psycopg2.connect(database=db, user=db_user,password=db_pw, host=db_host, port=db_port, **keepalive_kwargs)
     cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -193,7 +195,6 @@ def landing():
 
                 
         # parse candidates
-        dest_file = "politics/landing.json"
         if not os.path.exists(os.path.dirname(dest_file)):
             os.makedirs(os.path.dirname(dest_file))
 
