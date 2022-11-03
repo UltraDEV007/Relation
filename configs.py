@@ -6,12 +6,12 @@ special_municipality =  {
                 "臺南市": "",
                 "高雄市": ""}  
 default_special_municipality = {
-    "臺北市": [6, 8, 12], # default(before start) showing candidateNo
-    "新北市": [1, 2],
-    "桃園市": [1, 3, 4],
-    "臺中市": [1, 2, 3],
-    "臺南市": [2, 3, 5],
-    "高雄市": [1, 3, 4],
+    "63_000_000": [6, 8, 12], # default(before start) showing candidateNo
+    "65_000_000": [1, 2],
+    "68_000_000": [1, 3, 4],
+    "66_000_000": [1, 2, 3],
+    "67_000_000": [2, 3, 5],
+    "64_000_000": [1, 3, 4],
 }
 
 
