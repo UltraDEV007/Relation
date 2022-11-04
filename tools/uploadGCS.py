@@ -1,6 +1,8 @@
 from google.cloud import storage
 from datetime import datetime
 from configs import upload_configs
+import os
+import json
 
 
 def upload_blob(destination_file, year):
@@ -17,3 +19,11 @@ def upload_blob(destination_file, year):
     blob.content_type = upload_configs['content_type_json']
     blob.patch()
     print("The metadata configuration for the blob is complete")
+
+
+def save_file(destination_file, data, year):
+    if not os.path.exists(os.path.dirname(destination_file)):
+        os.makedirs(os.path.dirname(destination_file))
+    with open(destination_file, 'w') as f:
+        f.write(json.dumps(data, ensure_ascii=False))
+    upload_blob(destination_file, year)
