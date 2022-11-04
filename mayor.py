@@ -11,6 +11,8 @@ with open('mapping/mapping_county_town_vill.json') as f:
     mapping_county_town_vill = json.loads(f.read())
 with open('mapping/mayor_candidate_2022.json') as f:
     candidate_info = json.loads(f.read())
+VOTES = 'prof3'
+ELEGIBLE_VOTERS = 'prof7'
 
 
 def parse_cec_mayor(data):
@@ -19,8 +21,8 @@ def parse_cec_mayor(data):
         deptCode = district['deptCode'] if district['deptCode'] else '000'
         region_code = f"{district['prvCode']}_{district['cityCode']}_{deptCode}"
         region = organized_data.setdefault(region_code, {'detailed': {
-            'prof3': district['prof3'],
-            'prof7': district['prof7'],
+            VOTES: district[VOTES],
+            ELEGIBLE_VOTERS: district[ELEGIBLE_VOTERS],
             'profRate': district['profRate'],
         }})
         for c in district['candTksInfo']:
@@ -141,8 +143,8 @@ def map_candidate(region_candidates, polling_data, region_code):
 
 def gen_map(scope, polling_data,  scope_code='', sub_region=''):
     result = []
-    country_prof3 = 0
-    country_prof7 = 0
+    country_votes = 0
+    country_eligible_voters = 0
     for region_code in sub_region.keys():
         if scope == 'country':
             vill_Code = '000'
@@ -165,14 +167,14 @@ def gen_map(scope, polling_data,  scope_code='', sub_region=''):
             detailed_polling_data = polling_data[region_code]['detailed']
             profRate = detailed_polling_data['profRate'] if detailed_polling_data['profRate'] else 0
             if scope == 'country': 
-                country_prof3 += detailed_polling_data['prof3']
-                country_prof7 += detailed_polling_data['prof7']
+                country_votes += detailed_polling_data[VOTES]
+                country_eligible_voters += detailed_polling_data[ELEGIBLE_VOTERS]
         else:
             profRate = 0
         
         result.append({
             "range": range,
-            "county": county_code,
+            "county": county_code.replace('_', ''),
             "town": None if town_code == '000' else town_code,
             "vill": None if vill_Code == '000' else vill_Code,
             "profRate": profRate,
@@ -187,7 +189,7 @@ def gen_map(scope, polling_data,  scope_code='', sub_region=''):
             "county": None,
             "town": None,
             "vill": None,
-            "profRate": round(country_prof3 / country_prof7 * 100, 2) if polling_data else 0
+            "profRate": round(country_votes / country_eligible_voters * 100, 2) if polling_data else 0
         }
         destination_file = f'elections/{year}/mayor/map/{scope}.json'
     elif scope == 'county':
@@ -200,7 +202,7 @@ def gen_map(scope, polling_data,  scope_code='', sub_region=''):
     
 
 
-def gen_mayor_by_cec(data = ''):
+def gen_mayor(data = ''):
     print("全國")
     gen_special_municipality(data)
     gen_vote(data)
@@ -222,6 +224,6 @@ if __name__ == '__main__':
         jsonfile = request_cec()
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
-            gen_mayor_by_cec(polling_data)
+            gen_mayor(polling_data)
     else:
-        gen_mayor_by_cec()# default
+        gen_mayor()# default

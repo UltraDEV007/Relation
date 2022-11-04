@@ -2,7 +2,7 @@ from flask import Flask, request
 from politics_dump import dump_politics, landing
 import os
 from tools.cec_data import request_cec
-from mayor import gen_mayor_by_cec, parse_cec_mayor
+from mayor import gen_mayor, parse_cec_mayor
 
 app = Flask(__name__)
 
@@ -13,12 +13,12 @@ def elections():
         jsonfile = request_cec()
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
-            gen_mayor_by_cec(polling_data)
+            gen_mayor(polling_data)
             print("mayor done")
             return 'done'
         return 'problem of cec data '
     else:
-        gen_mayor_by_cec()
+        gen_mayor()
         return 'done'
 
 
