@@ -58,7 +58,14 @@ def landing():
     cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     for election in election_id:
+        if isinstance(election["id"], list):
+            multiple_election = True
+        else:
+            multiple_election = False 
+
         get_election_areas = """SELECT "ElectionArea"."id", "ElectionArea"."name", substring("ElectionArea"."name", 0, 4), substring("ElectionArea"."name", 5, 2) FROM "ElectionArea"  WHERE "ElectionArea"."election" = {};""".format(str(election["id"]))
+        if multiple_election == True and len(election["id"] == 2):
+            get_election_areas = """SELECT "ElectionArea"."id", "ElectionArea"."name", substring("ElectionArea"."name", 0, 4), substring("ElectionArea"."name", 5, 2) FROM "ElectionArea"  WHERE "ElectionArea"."election" = {} OR "ElectionArea"."election" = {};""".format(str(election["id"][0]), str(election["id"][1]))
         cursor.execute(get_election_areas)
         election_areas = cursor.fetchall()
         area_hash = {}
@@ -73,6 +80,8 @@ def landing():
                 
         #fetch politics
         dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
+        if multiple_election == True and len(election["id"] == 2):
+            dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND ("PersonElection"."election" = {} OR "PersonElection"."election" = {}) GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"][0]), str(election["id"][1]))
         cursor.execute(dump_query)
         all_politics = cursor.fetchall()
         dist_politic = {}
@@ -86,6 +95,8 @@ def landing():
         result[election["total"]] = len(dist_politic)
         #fetch all candidates
         get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
+        if multiple_election == True and len(election["id"] == 2):
+            get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE ("Election".id = {} OR "Election".id = {}) AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]), str(election["id"][1]))
         cursor.execute(get_candidates)
         all_candidates = cursor.fetchall()
         area_candidates = {}
