@@ -13,7 +13,7 @@ with open('mapping/mayor_candidate_2022.json') as f:
     candidate_info = json.loads(f.read())
 VOTES = 'prof3'
 ELEGIBLE_VOTERS = 'prof7'
-
+ENV_FOLDER = os.environ['ENV_FOLDER']
 
 def parse_cec_mayor(data):
     organized_data = {}
@@ -72,7 +72,7 @@ def gen_special_municipality(polling_data):
         result.append(
             {"city": mapping_county_town[county_code], "candidates": candidates[:3]})
     year = datetime.now().year
-    destination_file = f'elections/{year}/mayor/special_municipality.json'
+    destination_file = f'{ENV_FOLDER}/{year}/mayor/special_municipality.json'
     data = {"updatedAt": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             "polling": result}
     save_file(destination_file, data, year)
@@ -125,7 +125,7 @@ def gen_vote(polling_data='', candidate_info=candidate_info, year=datetime.now()
             "title": "縣市長選舉",
             "version": VERSION,
             "districts": result}
-    destination_file = f'elections/{VERSION}/{year}/mayor/all.json'
+    destination_file = f'{ENV_FOLDER}/{VERSION}/{year}/mayor/all.json'
 
     save_file(destination_file, data, year)
     return
@@ -202,11 +202,11 @@ def gen_map(scope, polling_data,  scope_code='', sub_region=''):
             "vill": None,
             "profRate": round(country_votes / country_eligible_voters * 100, 2) if polling_data else 0
         }
-        destination_file = f'elections/{year}/mayor/map/{scope}.json'
+        destination_file = f'{ENV_FOLDER}/{year}/mayor/map/{scope}.json'
     elif scope == 'county':
-        destination_file = f'elections/{year}/mayor/map/{scope}/{scope_code[:-3].replace("_", "")}.json'
+        destination_file = f'{ENV_FOLDER}/{year}/mayor/map/{scope}/{scope_code[:-3].replace("_", "")}.json'
     else:
-        destination_file = f'elections/{year}/mayor/map/{scope}/{scope_code.replace("_", "")}.json'
+        destination_file = f'{ENV_FOLDER}/{year}/mayor/map/{scope}/{scope_code.replace("_", "")}.json'
 
     save_file(destination_file, dict(sorted(data.items(), reverse=True)), year)
     return
@@ -233,8 +233,8 @@ def gen_mayor(data = ''):
 if __name__ == '__main__':
     if os.environ['isSTARTED'] == 'true':
         jsonfile = request_cec('running.json')
-        # with open('running.json') as f:
-        #     jsonfile = json.loads(f.read())
+        with open('running.json') as f:
+            jsonfile = json.loads(f.read())
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
             gen_mayor(polling_data)
