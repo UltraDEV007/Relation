@@ -163,12 +163,12 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
             candidate_info_scope = candidate_info[county_code][region_code]
 
             if polling_data:
+                area_polling = polling_data[county_code][area_code]
                 candidates = map_candidate(
-                    candidate_info_scope, polling_data[county_code][area_code])
-                detailed_polling_data = polling_data[county_code][area_code]['detailed']
-                profRate = detailed_polling_data['profRate'] if detailed_polling_data['profRate'] else 0
-                county_votes += detailed_polling_data[VOTES]
-                county_eligible_voters += detailed_polling_data[ELEGIBLE_VOTERS]
+                    candidate_info_scope, area_polling)
+                profRate = area_polling['detailed']['profRate'] if area_polling['detailed']['profRate'] else 0
+                county_votes += area_polling['detailed'][VOTES]
+                county_eligible_voters += area_polling['detailed'][ELEGIBLE_VOTERS]
             else:
                 candidates = map_candidate(candidate_info_scope, '')
                 profRate = 0
@@ -189,10 +189,10 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
                 candidate_info_scope = candidate_info[county_code][area_code]
 
                 if polling_data:
+                    vill_polling = polling_data[county_code][area_code][town_code][vill_code]
                     candidates = map_candidate(
-                        candidate_info_scope, polling_data[county_code][area_code][town_code][vill_code])
-                    detailed_polling_data = polling_data[county_code][area_code][town_code][vill_code]['detailed']
-                    profRate = detailed_polling_data['profRate'] if detailed_polling_data['profRate'] else 0
+                        candidate_info_scope, vill_polling)
+                    profRate = vill_polling['detailed']['profRate'] if vill_polling['detailed']['profRate'] else 0
                 else:
                     candidates = None
                     profRate = None

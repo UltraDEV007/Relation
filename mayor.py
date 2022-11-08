@@ -37,17 +37,23 @@ def gen_special_municipality(polling_data):
         candidates = []
         if polling_data:
             for candNo, c_info in candidate_info[county_code].items():
-                tksRate = polling_data[county_code][int(
-                    candNo)]['tksRate'] if polling_data[county_code][int(candNo)]['tksRate'] else 0
-                tks = polling_data[county_code][int(
-                    candNo)]['tks'] if polling_data[county_code][int(candNo)]['tks'] else 0
+                try:
+                    tksRate = polling_data[county_code][int(
+                        candNo)]['tksRate'] if polling_data[county_code][int(candNo)]['tksRate'] else 0
+                    tks = polling_data[county_code][int(
+                        candNo)]['tks'] if polling_data[county_code][int(candNo)]['tks'] else 0
+                    candVictor = True if polling_data[county_code][int(candNo)]['candVictor'] == '*' else False
+                except:
+                    tksRate = 0
+                    tks = 0
+                    candVictor = False
                 candTks = {
                     "candNo": candNo.zfill(2),
                     "name": c_info['name'],
                     "party": c_info['party'],
                     "tks": tks,
                     "tksRate": tksRate,
-                    "candVictor":  True if polling_data[county_code][int(candNo)]['candVictor'] == '*' else False,
+                    "candVictor":  candVictor,
                 }
                 candidates.append(candTks)
         else:
@@ -73,7 +79,7 @@ def gen_special_municipality(polling_data):
     return
 
 
-def gen_vote(polling_data=''):
+def gen_vote(polling_data='', candidate_info=candidate_info, year=datetime.now().year):
     result = []
     for region_code, region_candidates in candidate_info.items():
         candidates = []
@@ -100,12 +106,17 @@ def gen_vote(polling_data=''):
                 candTks['tksRate'] = polling_data[region_code][int(
                     candNo)]['tksRate'] if polling_data[region_code][int(candNo)]['tksRate'] else 0
                 candTks['candVictor'] = True if polling_data[region_code][int(
-                    candNo)]['candVictor'] == '*' else False
+                    candNo)]['candVictor'] == '*' or polling_data[region_code][int(
+                    candNo)]['candVictor'] == True else False
             candidates.append(candTks)
-        result.append(
-            {"districtName": mapping_county_town[region_code], "candidates": candidates})
+        try:
+            districtName = mapping_county_town[region_code]
+        except KeyError:
+            districtName = region_code
 
-    year = datetime.now().year
+        result.append(
+            {"districtName": districtName, "candidates": candidates})
+
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     VERSION = os.environ['VERSION']
     data = {"updatedAt": now,
@@ -221,7 +232,9 @@ def gen_mayor(data = ''):
 
 if __name__ == '__main__':
     if os.environ['isSTARTED'] == 'true':
-        jsonfile = request_cec()
+        jsonfile = request_cec('running.json')
+        # with open('running.json') as f:
+        #     jsonfile = json.loads(f.read())
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
             gen_mayor(polling_data)
