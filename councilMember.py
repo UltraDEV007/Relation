@@ -13,6 +13,8 @@ with open('mapping/councilMember_candidate_2022.json') as f:
     candidate_info = json.loads(f.read())
 VOTES = 'prof3'
 ELEGIBLE_VOTERS = 'prof7'
+ENV_FOLDER = os.environ['ENV_FOLDER']
+
 
 def parse_cec_council(raw_data):
     organized_data = {}
@@ -54,7 +56,7 @@ def gen_seat(county_code, polling_data):
                 "seats": count,
             })
     year = datetime.now().year
-    destination_file = f'elections/{year}/councilMember/seat/county/{county_code[:-4].replace("_", "")}.json'
+    destination_file = f'{ENV_FOLDER}/{year}/councilMember/seat/county/{county_code[:-4].replace("_", "")}.json'
     data = {"updatedAt": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             "parties": result}
     save_file(destination_file, data, year)
@@ -120,7 +122,7 @@ def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
             "title": f"縣市議員選舉({chinese_districts_name})",
             "version": VERSION,
             "districts": result}
-    destination_file = f'elections/{VERSION}/{year}/councilMember/{english_districts_name}.json'
+    destination_file = f'{ENV_FOLDER}/{VERSION}/{year}/councilMember/{english_districts_name}.json'
 
     save_file(destination_file, data, year)
     return
@@ -163,12 +165,12 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
             candidate_info_scope = candidate_info[county_code][region_code]
 
             if polling_data:
+                area_polling = polling_data[county_code][area_code]
                 candidates = map_candidate(
-                    candidate_info_scope, polling_data[county_code][area_code])
-                detailed_polling_data = polling_data[county_code][area_code]['detailed']
-                profRate = detailed_polling_data['profRate'] if detailed_polling_data['profRate'] else 0
-                county_votes += detailed_polling_data[VOTES]
-                county_eligible_voters += detailed_polling_data[ELEGIBLE_VOTERS]
+                    candidate_info_scope, area_polling)
+                profRate = area_polling['detailed']['profRate'] if area_polling['detailed']['profRate'] else 0
+                county_votes += area_polling['detailed'][VOTES]
+                county_eligible_voters += area_polling['detailed'][ELEGIBLE_VOTERS]
             else:
                 candidates = map_candidate(candidate_info_scope, '')
                 profRate = 0
@@ -189,10 +191,10 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
                 candidate_info_scope = candidate_info[county_code][area_code]
 
                 if polling_data:
+                    vill_polling = polling_data[county_code][area_code][town_code][vill_code]
                     candidates = map_candidate(
-                        candidate_info_scope, polling_data[county_code][area_code][town_code][vill_code])
-                    detailed_polling_data = polling_data[county_code][area_code][town_code][vill_code]['detailed']
-                    profRate = detailed_polling_data['profRate'] if detailed_polling_data['profRate'] else 0
+                        candidate_info_scope, vill_polling)
+                    profRate = vill_polling['detailed']['profRate'] if vill_polling['detailed']['profRate'] else 0
                 else:
                     candidates = None
                     profRate = None
@@ -218,9 +220,9 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
         }
     dest_county = county_code[:-3].replace("_", "")
     if scope == 'county':
-        destination_file = f'elections/{year}/councilMember/map/{scope}/{dest_county}.json'
+        destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{dest_county}.json'
     else:
-        destination_file = f'elections/{year}/councilMember/map/{scope}/{dest_county}{scope_code}.json'
+        destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{dest_county}{scope_code}.json'
 
     save_file(destination_file, dict(sorted(data.items(), reverse=True)), year)
     return
