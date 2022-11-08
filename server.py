@@ -3,22 +3,29 @@ from politics_dump import dump_politics, landing
 import os
 from tools.cec_data import request_cec
 from mayor import gen_mayor, parse_cec_mayor
-
+from councilMember import gen_councilMember, parse_cec_council
 app = Flask(__name__)
 
 
 @app.route("/gen_elections_json", methods=['GET'])
 def elections():
     if os.environ['isSTARTED'] == 'true':
-        jsonfile = request_cec()
+        jsonfile = request_cec('running.json')
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
             gen_mayor(polling_data)
             print("mayor done")
+            council_data = parse_cec_council(jsonfile["T1"], jsonfile["T2", jsonfile["T3"]])
+            gen_councilMember(council_data)
+            print("councilMember done")
+
             return 'done'
         return 'problem of cec data '
     else:
         gen_mayor()
+        print("mayor done")
+        gen_councilMember()
+        print("councilMember done")
         return 'done'
 
 
