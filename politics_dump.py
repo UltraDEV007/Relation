@@ -134,7 +134,7 @@ def landing():
                 {"name": "屏東縣", "city": "屏東縣", "total": 0 },
                 {"name": "嘉義縣", "city": "嘉義縣", "total": 0 },
                 {"name": "高雄市", "city": "高雄市", "total": 0 },
-                #{"name": "嘉義市", "city": "嘉義市", "total": 0 },
+                {"name": "嘉義市", "city": "嘉義市", "total": 0 },
             ]} )
             result['mayorAndPolitics'].append( {"key": "east", "name": "東部", "amount": 0, "total": 6, "areas": [
                 {"name": "花蓮縣", "city": "花蓮縣", "total": 0 },
