@@ -1,31 +1,49 @@
 from flask import Flask, request
 from politics_dump import dump_politics, landing
-from special_municipality import gen_special_municipality_polling
-
+import os
+from tools.cec_data import request_cec
+from mayor import gen_mayor, parse_cec_mayor
+from councilMember import gen_councilMember, parse_cec_council
 app = Flask(__name__)
+
+
+@app.route("/gen_elections_json", methods=['GET'])
+def elections():
+    if os.environ['isSTARTED'] == 'true':
+        jsonfile = request_cec('running.json')
+        if jsonfile:
+            polling_data = parse_cec_mayor(jsonfile["TC"])
+            gen_mayor(polling_data)
+            print("mayor done")
+            council_data = parse_cec_council(jsonfile["T1"], jsonfile["T2", jsonfile["T3"]])
+            gen_councilMember(council_data)
+            print("councilMember done")
+
+            return 'done'
+        return 'problem of cec data '
+    else:
+        gen_mayor()
+        print("mayor done")
+        gen_councilMember()
+        print("councilMember done")
+        return 'done'
+
 
 @app.route("/dump_politics", methods=['GET'])
 def dump_election_politics():
-    election_id = request.args.get('election_id', type = int)
+    election_id = request.args.get('election_id', type=int)
     if election_id is None or election_id < 0:
         return "wrong election id"
     dump_politics(election_id)
     return "done"
+
 
 @app.route("/landing_data", methods=['GET'])
 def dump_landing():
     landing()
     return "done"
 
-@app.route("/special_municipality", methods=['GET'])
-def municipality():
-        gen_special_municipality_polling()
-        return 'done'
 
-# @app.route("/election_module", methods=['GET'])
-# def election():
-#       return 'done'
- 
 @app.route("/")
 def healthcheck():
     return "ok"
