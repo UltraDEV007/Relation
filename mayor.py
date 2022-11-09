@@ -59,7 +59,7 @@ def parse_tv_sht():
         }
         #     candidateNo = row[2]
     return sht_data, source
-def gen_tv_mayor(source, sht_data, polling_data=''):
+def gen_tv_mayor(source='', sht_data='', polling_data=''):
     result = []
     if source:
         for county_name, candNos in sht_data.items():
@@ -113,7 +113,7 @@ def gen_tv_mayor(source, sht_data, polling_data=''):
                     candidates.append(candTks)
             candidates.sort(key=lambda x: (-x["tks"], x["candNo"]), reverse=False)
             result.append(
-                {"city": mapping_county_town[county_code], "candidates": candidates[:3], "source" : source})
+                {"city": mapping_county_town[county_code], "candidates": candidates[:3], "source" : county_source})
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/mayor/tv.json'
     data = {"updatedAt": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -318,9 +318,7 @@ def gen_mayor(data = ''):
 
 if __name__ == '__main__':
     if os.environ['isSTARTED'] == 'true':
-        # jsonfile = request_cec('running.json')
-        with open('running.json') as f:
-            jsonfile = json.loads(f.read())
+        jsonfile = request_cec('running.json')
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
             gen_mayor(polling_data)
