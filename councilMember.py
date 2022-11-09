@@ -58,6 +58,8 @@ def gen_seat(county_code, polling_data):
                 "label": party,
                 "seats": count,
             })
+        result = sorted(result, key=lambda x: x['seats'], reverse=True) 
+        # result = result.sort(key= lambda x:  x['seats'])
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/councilMember/seat/county/{county_code[:-4].replace("_", "")}.json'
     data = {"updatedAt": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -248,15 +250,12 @@ def gen_councilMember(data=''):
 
 if __name__ == '__main__':
     if os.environ['isSTARTED'] == 'true':
-        # jsonfile = request_cec()
-        with open('running.json') as f:
-            jsonfile = json.loads(f.read())
+        jsonfile = request_cec('running.json')
         if jsonfile:
             # polling_data = parse_cec_mayor(jsonfile["TC"])
             # gen_mayor(polling_data)
             # print("mayor done")
-            council_data = parse_cec_council(
-                jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
+            council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
             gen_councilMember(council_data)
             print("councilMember done")
 
