@@ -43,8 +43,11 @@ def gen_seat(county_code, polling_data):
                 if canNo == 'detailed':
                     continue
                 if candidate['candVictor'] == '*':
-                    party = candidate_info[county_code][area_code][str(
-                        canNo).zfill(2)]['party']
+                    try:
+                        party = candidate_info[county_code][area_code][str(
+                            canNo).zfill(2)]['party']
+                    except KeyError:
+                        continue
                     party = party if party != '無' else '無黨籍及未經政黨推薦'
                     if party in parties:
                         parties[party] += 1
@@ -80,7 +83,7 @@ def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
                     'imgSrc': c_info['name_img'] if c_info['name_img'] else ''
                 },
                 'party': {
-                    'label': c_info['party'] if c_info['party'] != '無' else '',
+                    'label': c_info['party'] if c_info['party'] != '無' else '無黨籍',
                     'href': '',
                     'imgSrc': c_info['party_img'] if c_info['party_img'] else ''
                 },
@@ -187,7 +190,7 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
             for vill_code, vill in sub_region[region_code].items():
                 area_code = scope_code
                 vill_name = vill.split("_")[-1]
-                range = f'{mapping_county_town[county_code]} 第{region_code}選區 {vill_name}'
+                range = f'{mapping_county_town[county_code]} 第{area_code}選區 {vill_name}'
                 candidate_info_scope = candidate_info[county_code][area_code]
 
                 if polling_data:
