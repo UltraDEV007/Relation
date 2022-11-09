@@ -2,7 +2,7 @@ from flask import Flask, request
 from politics_dump import dump_politics, landing
 import os
 import googleapiclient
-from tools.cec_data import request_cec
+from tools.cec_data import request_cec_by_type
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
@@ -12,7 +12,7 @@ app = Flask(__name__)
 @app.route("/gen_elections_json", methods=['GET'])
 def elections():
     if os.environ['isSTARTED'] == 'true':
-        jsonfile = request_cec('running.json')
+        jsonfile = request_cec_by_type()
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
             gen_mayor(polling_data)
@@ -31,7 +31,7 @@ def elections():
             sht_data, source = parse_tv_sht()
             if 'cec' not in source.values():
                 gen_tv_mayor(source, sht_data)
-        referendumfile = request_cec('RFrunning.json')
+        referendumfile = request_cec_by_type('rf')
         if referendumfile:
             polling_data = parse_cec_referendum(referendumfile)
             gen_referendum(polling_data)

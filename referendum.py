@@ -118,7 +118,24 @@ def gen_map(case_id, scope, polling_data,  scope_code, sub_region, county='', ye
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     data = {"updatedAt": now,
             "districts": result}
+        
     if scope == 'country':
+        data['summary'] = {
+            "range": '全國',
+            "county": None,
+            "town": None,
+            "vill": None,
+            "profRate": 0,
+            "agreeRate": 0,
+            "disagreeRate": 0,
+            "adptVictor": 'Y',
+        }
+        if polling_data:
+            country_polling = polling_data[case_id]['00_000_000']
+            data['summary']['profRate'] = country_polling['profRate']
+            data['summary']['agreeRate'] = country_polling['agreeRate']
+            data['summary']['disagreeRate'] = country_polling['disagreeRate']
+            data['summary']['adptVictor'] = country_polling['adptVictor']
         destination_file = f'{ENV_FOLDER}/{year}/referendum/map/{case_id}/{scope}.json'
     elif scope == 'county':
         destination_file = f'{ENV_FOLDER}/{year}/referendum/map/{case_id}/{scope}/{county_code}.json'
@@ -130,7 +147,6 @@ def gen_map(case_id, scope, polling_data,  scope_code, sub_region, county='', ye
 
 
 def gen_referendum(data=''):
-    print("全國")
     gen_vote(data)
     if data:
         for case_id in data.keys():
@@ -144,7 +160,6 @@ def gen_referendum(data=''):
         gen_map(case_id, 'country', data, '00_000_000', sub_region=[
                 k for k in mapping_county_town_vill.keys()])
         for county_code, towns in mapping_county_town_vill.items():
-            print(county_code)
             gen_map(case_id, 'county', data, county_code, towns)
             for town_code, vills in towns.items():
                 gen_map(case_id, 'town', data, town_code, vills, county_code)
@@ -153,7 +168,9 @@ def gen_referendum(data=''):
 
 if __name__ == "__main__":
     if os.environ['isSTARTED'] == 'true':
-        jsonfile = request_cec('RFrunning.json')
+        # jsonfile = request_cec('RFrunning.json')
+        with open("RFrunning.json") as f:
+            jsonfile = json.loads(f.read())
         if jsonfile:
             polling_data = parse_cec_referendum(jsonfile)
             gen_referendum(polling_data)
