@@ -2,8 +2,9 @@ import requests
 import os
 import json
 
-def request_cec():
-    r = requests.get(os.environ['CECURL'],auth=(os.environ['USERNAME'], os.environ['PASSWD']))
+def request_cec(filename):
+    url = f"{os.environ['CECURL']}{filename}"
+    r = requests.get(url = url,auth=(os.environ['USERNAME'], os.environ['PASSWD']))
     if r.status_code == 200:
         new_data = json.loads(r.text)
         if os.path.isfile('running.json'):
@@ -20,5 +21,5 @@ def request_cec():
         return False
 
 if __name__=='__main__':
-    data = request_cec()
+    data = request_cec('running.json')
     print("done")
