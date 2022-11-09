@@ -3,7 +3,7 @@ from politics_dump import dump_politics, landing
 import os
 import googleapiclient
 from tools.cec_data import request_cec
-# from referendum import parse_cec_referendum
+from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
 app = Flask(__name__)
@@ -20,24 +20,24 @@ def elections():
             council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
             gen_councilMember(council_data)
             print("councilMember done")
-            
             try:
                 sht_data, source = parse_tv_sht()
                 gen_tv_mayor(source, sht_data, polling_data)
-            except googleapiclient.errors.HttpError :
-                print('sht failed') 
+                print('tv mayoe done')
+            except googleapiclient.errors.HttpError:
+                print('sht failed')
         else:
             print('problem of cec data ')
             sht_data, source = parse_tv_sht()
             if 'cec' not in source.values():
                 gen_tv_mayor(source, sht_data)
-        # referendumfile = request_cec('RFrunning.json')
-        # if referendumfile:
-        #     polling_data = parse_cec_referendum(referendumfile)
-            #gen_referendum(polling_data)
-            # print("referendum done")
-        # else:
-        #     print('problem of cec data ')
+        referendumfile = request_cec('RFrunning.json')
+        if referendumfile:
+            polling_data = parse_cec_referendum(referendumfile)
+            gen_referendum(polling_data)
+            print("referendum done")
+        else:
+            print('problem of cec referendum data ')
         return 'done'
     else:
         gen_mayor()
@@ -45,8 +45,8 @@ def elections():
         print("mayor done")
         gen_councilMember()
         print("councilMember done")
-        # gen_referendum()
-        # print("referendum done")
+        gen_referendum()
+        print("referendum done")
         return 'done'
 
 
