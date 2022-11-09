@@ -273,6 +273,9 @@ def gen_map(scope, polling_data,  scope_code='', sub_region=''):
             profRate = polling_data[region_code]['profRate'] if polling_data[region_code]['profRate'] else 0
         else:
             profRate = 0
+            if scope == 'town':
+                profRate = None
+                candidates = None
 
         result.append({
             "range": range,
@@ -297,7 +300,6 @@ def gen_map(scope, polling_data,  scope_code='', sub_region=''):
 
 
 def gen_mayor(data = ''):
-    print("全國")
     gen_special_municipality(data)
     gen_vote(data)
     gen_map('country', data, '00_000_000', candidate_info)
@@ -305,12 +307,10 @@ def gen_mayor(data = ''):
         if county_code == '10_020':#2022嘉義市長選舉延後
             continue
         county_code = county_code + '_000'
-        print(mapping_county_town[county_code])
         gen_map('county', data, county_code, towns)
         if os.environ['isSTARTED'] != 'true':
             for town_code, vills in towns.items():
                 town_code = county_code[:-3] + town_code
-                # print(mapping_county_town[town_code])
                 gen_map('town', polling_data='',
                         scope_code = town_code, sub_region=vills)
     return
@@ -328,5 +328,5 @@ if __name__ == '__main__':
             if 'cec' not in source.values():
                 gen_tv_mayor(source, sht_data)
     else:
-        # gen_mayor()# default
+        gen_mayor()# default
         gen_tv_mayor()
