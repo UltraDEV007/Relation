@@ -1,8 +1,10 @@
 from flask import Flask, request
 from politics_dump import dump_politics, landing
 import os
+import googleapiclient
 from tools.cec_data import request_cec
-from mayor import gen_mayor, parse_cec_mayor
+# from referendum import parse_cec_referendum
+from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
 app = Flask(__name__)
 
@@ -15,17 +17,36 @@ def elections():
             polling_data = parse_cec_mayor(jsonfile["TC"])
             gen_mayor(polling_data)
             print("mayor done")
-            council_data = parse_cec_council(jsonfile["T1"], jsonfile["T2", jsonfile["T3"]])
+            council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
             gen_councilMember(council_data)
             print("councilMember done")
-
-            return 'done'
-        return 'problem of cec data '
+            
+            try:
+                sht_data, source = parse_tv_sht()
+                gen_tv_mayor(source, sht_data, polling_data)
+            except googleapiclient.errors.HttpError :
+                print('sht failed') 
+        else:
+            print('problem of cec data ')
+            sht_data, source = parse_tv_sht()
+            if 'cec' not in source.values():
+                gen_tv_mayor(source, sht_data)
+        # referendumfile = request_cec('RFrunning.json')
+        # if referendumfile:
+        #     polling_data = parse_cec_referendum(referendumfile)
+            #gen_referendum(polling_data)
+            # print("referendum done")
+        # else:
+        #     print('problem of cec data ')
+        return 'done'
     else:
         gen_mayor()
+        gen_tv_mayor()
         print("mayor done")
         gen_councilMember()
         print("councilMember done")
+        # gen_referendum()
+        # print("referendum done")
         return 'done'
 
 
