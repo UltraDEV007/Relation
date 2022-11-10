@@ -59,7 +59,7 @@ def gen_vote(polling_data='', year=datetime.now().year):
                 "disagreeRate": 0,
                 "pass": True}
         )
-    now = datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S')
+    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
     VERSION = os.environ['VERSION']
     data = {
         "updatedAt": now,
@@ -115,7 +115,7 @@ def gen_map(case_id, scope, polling_data,  scope_code, sub_region, county='', ye
             tks_info['adptVictor'] = region_polling['adptVictor']
 
         result.append(tks_info)
-    now = datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S')
+    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
     data = {"updatedAt": now,
             "districts": result}
         
