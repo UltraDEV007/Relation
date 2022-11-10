@@ -1,6 +1,6 @@
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from tools.cec_data import request_cec
 from tools.uploadGCS import save_file
 ENV_FOLDER = os.environ['ENV_FOLDER']
@@ -59,7 +59,7 @@ def gen_vote(polling_data='', year=datetime.now().year):
                 "disagreeRate": 0,
                 "pass": True}
         )
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    now = datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S')
     VERSION = os.environ['VERSION']
     data = {
         "updatedAt": now,
@@ -115,7 +115,7 @@ def gen_map(case_id, scope, polling_data,  scope_code, sub_region, county='', ye
             tks_info['adptVictor'] = region_polling['adptVictor']
 
         result.append(tks_info)
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    now = datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S')
     data = {"updatedAt": now,
             "districts": result}
         
