@@ -20,8 +20,8 @@ def elections():
             updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
             gen_mayor(updatedAt, polling_data)
             print("mayor done")
-            council_data = parse_cec_council(updatedAt, jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            gen_councilMember(council_data)
+            council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
+            gen_councilMember(updatedAt, council_data)
             print("councilMember done")
             try:
                 sht_data, source = parse_tv_sht()
