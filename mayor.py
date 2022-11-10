@@ -38,8 +38,16 @@ def parse_tv_sht():
         candNo = int(row[2])
         name = row[1]
         party = row[3]
-        tks = int(row[5].replace(',', '')) if row[5] else 0
-        tksRate = float(row[4].replace('%', '')) if row[4] else 0
+        try:
+            tks = row[5].replace(',', '')
+            tks = tks.replace('%', '')
+            tks = int(tks) if tks else 0
+        except ValueError:
+            tks = 0
+        try:
+            tksRate = float(row[4].replace('%', '')) if row[4] else 0
+        except ValueError:
+            tksRate = 0
         candVictor = False
         county_source = source.setdefault(county_name, row[6])
         if county_source == '自行計票 + 候選人計票' or county_source == 'tv':
