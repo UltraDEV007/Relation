@@ -38,8 +38,8 @@ def parse_tv_sht():
         candNo = int(row[2])
         name = row[1]
         party = row[3]
-        tks = int(row[5].replace(',', ''))
-        tksRate = float(row[4].replace('%', ''))
+        tks = int(row[5].replace(',', '')) if row[5] else 0
+        tksRate = float(row[4].replace('%', '')) if row[4] else 0
         candVictor = False
         county_source = source.setdefault(county_name, row[6])
         if county_source == '自行計票 + 候選人計票' or county_source == 'tv':
@@ -59,6 +59,8 @@ def parse_tv_sht():
         }
         #     candidateNo = row[2]
     return sht_data, source
+
+
 def gen_tv_mayor(source='', sht_data='', polling_data=''):
     result = []
     if source:
@@ -80,7 +82,7 @@ def gen_tv_mayor(source='', sht_data='', polling_data=''):
                         "tks": cand_infos[candNo]['tks'],
                         "tksRate": cand_infos[candNo]['tksRate'],
                         "candVictor": True if cand_infos[candNo]['candVictor'] == "*" else False
-                        }
+                    }
                 except KeyError:
                     candidate = {
                         "candNo": str(candNo).zfill(2),
@@ -89,38 +91,38 @@ def gen_tv_mayor(source='', sht_data='', polling_data=''):
                         "tks": 0,
                         "tksRate": 0,
                         "candVictor": False
-                        }
+                    }
 
-                candidates.append(candidate) 
+                candidates.append(candidate)
             candidates.sort(key=lambda x: (-x["tks"], x["candNo"]), reverse=False)
             result.append(
-                {"city": county_name, "candidates": candidates, "source" : county_source})
+                {"city": county_name, "candidates": candidates, "source": county_source})
     else:
         for county_code, default_candidates in default_tv.items():
             candidates = []
             county_source = "中選會"
             county_name = mapping_county_town[county_code]
             for candNo in default_candidates:
-                    c_info = candidate_info[county_code][str(candNo)]
-                    candTks = {
-                        "candNo": str(candNo).zfill(2),
-                        "name": c_info['name'],
-                        "party": c_info['party'],
-                        "tks": 0,
-                        "tksRate": 0,
-                        "candVictor": False,
-                    }
-                    candidates.append(candTks)
+                c_info = candidate_info[county_code][str(candNo)]
+                candTks = {
+                    "candNo": str(candNo).zfill(2),
+                    "name": c_info['name'],
+                    "party": c_info['party'],
+                    "tks": 0,
+                    "tksRate": 0,
+                    "candVictor": False,
+                }
+                candidates.append(candTks)
             candidates.sort(key=lambda x: (-x["tks"], x["candNo"]), reverse=False)
             result.append(
-                {"city": mapping_county_town[county_code], "candidates": candidates[:3], "source" : county_source})
+                {"city": mapping_county_town[county_code], "candidates": candidates[:3], "source": county_source})
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/mayor/tv.json'
     data = {"updatedAt": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             "polling": result}
     save_file(destination_file, data, year)
     return
-    
+
 
 def gen_special_municipality(polling_data):
     result = []
@@ -199,7 +201,7 @@ def gen_vote(polling_data='', candidate_info=candidate_info, year=datetime.now()
                         candNo)]['tksRate'] if polling_data[region_code][int(candNo)]['tksRate'] else 0
                     candTks['candVictor'] = True if polling_data[region_code][int(
                         candNo)]['candVictor'] == '*' or polling_data[region_code][int(
-                        candNo)]['candVictor'] == True else False
+                            candNo)]['candVictor'] == True else False
                 except KeyError:
                     pass
             candidates.append(candTks)
@@ -304,7 +306,7 @@ def gen_mayor(data = ''):
     gen_vote(data)
     gen_map('country', data, '00_000_000', candidate_info)
     for county_code, towns in mapping_county_town_vill.items():
-        if county_code == '10_020':#2022嘉義市長選舉延後
+        if county_code == '10_020':  # 2022嘉義市長選舉延後
             continue
         county_code = county_code + '_000'
         gen_map('county', data, county_code, towns)
@@ -322,11 +324,18 @@ if __name__ == '__main__':
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
             gen_mayor(polling_data)
-            # return
+            print("mayor done")
+            try:
+                sht_data, source = parse_tv_sht()
+                gen_tv_mayor(source, sht_data, polling_data)
+                print('tv mayoe done')
+            except googleapiclient.errors.HttpError:
+                print('sht failed')
         else:
+            print('problem of cec data ')
             sht_data, source = parse_tv_sht()
             if 'cec' not in source.values():
                 gen_tv_mayor(source, sht_data)
     else:
-        gen_mayor()# default
+        gen_mayor()  # default
         gen_tv_mayor()
