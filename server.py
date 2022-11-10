@@ -2,6 +2,7 @@ from flask import Flask, request
 from politics_dump import dump_politics, landing
 import os
 import googleapiclient
+from datetime import datetime
 from tools.cec_data import request_cec_by_type
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
@@ -15,14 +16,16 @@ def elections():
         jsonfile = request_cec_by_type()
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
-            gen_mayor(polling_data)
+            updatedAt = jsonfile["ST"] 
+            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
+            gen_mayor(updatedAt, polling_data)
             print("mayor done")
-            council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
+            council_data = parse_cec_council(updatedAt, jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
             gen_councilMember(council_data)
             print("councilMember done")
             try:
                 sht_data, source = parse_tv_sht()
-                gen_tv_mayor(source, sht_data, polling_data)
+                gen_tv_mayor(updatedAt, source, sht_data, polling_data)
                 print('tv mayoe done')
             except googleapiclient.errors.HttpError:
                 print('sht failed')
@@ -30,11 +33,13 @@ def elections():
             print('problem of cec data ')
             sht_data, source = parse_tv_sht()
             if 'cec' not in source.values():
-                gen_tv_mayor(source, sht_data)
+                gen_tv_mayor(source=source, sht_data=sht_data)
         referendumfile = request_cec_by_type('rf')
         if referendumfile:
             polling_data = parse_cec_referendum(referendumfile)
-            gen_referendum(polling_data)
+            updatedAt = jsonfile["ST"] 
+            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
+            gen_referendum(updatedAt,polling_data)
             print("referendum done")
         else:
             print('problem of cec referendum data ')

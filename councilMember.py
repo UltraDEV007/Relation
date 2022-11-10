@@ -34,7 +34,7 @@ def parse_cec_council(raw_data):
     return organized_data
 
 
-def gen_seat(county_code, polling_data):
+def gen_seat(updatedAt, county_code, polling_data):
     result = []
     parties = {}
     if polling_data:
@@ -62,13 +62,13 @@ def gen_seat(county_code, polling_data):
         # result = result.sort(key= lambda x:  x['seats'])
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/councilMember/seat/county/{county_code[:-4].replace("_", "")}.json'
-    data = {"updatedAt": (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'),
+    data = {"updatedAt": updatedAt,
             "parties": result}
     save_file(destination_file, data, year)
     return
 
 
-def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
+def gen_vote(updatedAt, county_code, polling_data, year, candidate_info = candidate_info):
     result = []
     if polling_data:
         polling_data = polling_data[county_code]
@@ -110,8 +110,6 @@ def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
              "type": region_candidates['type'],
              "candidates": candidates})
 
-    # year = datetime.now().year
-    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
     VERSION = os.environ['VERSION']
     try:
         english_districts_name = districts_mapping[mapping_county_town[county_code]]
@@ -121,7 +119,7 @@ def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
         chinese_districts_name = mapping_county_town[county_code]
     except KeyError:
         chinese_districts_name = county_code
-    data = {"updatedAt": now,
+    data = {"updatedAt": updatedAt,
             "year": str(year),
             "type": 'mayor',
             "title": f"縣市議員選舉({chinese_districts_name})",
@@ -157,7 +155,7 @@ def map_candidate(region_candidates, polling_data):
 
     return candidates
 
-def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
+def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_region=''):
     result = []
     county_votes = 0
     county_eligible_voters = 0
@@ -212,8 +210,7 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
                     "profRate": profRate,
                     "candidates": candidates})
     year = datetime.now().year
-    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
-    data = {"updatedAt": now,
+    data = {"updatedAt": updatedAt,
             "districts": result}
     if scope == 'county':
         data['summary'] = {
@@ -233,18 +230,18 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
     return
 
 
-def gen_councilMember(data=''):
+def gen_councilMember(updatedAt = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'), data=''):
     year = datetime.now().year
     for county_code, areas in mapping_county_area_town_vill.items():
         county_code = county_code + '_000'
         print(mapping_county_town[county_code])
-        gen_seat(county_code, data)
-        gen_vote(county_code, data, year)
-        gen_map(county_code, data, 'county', county_code, areas)
+        gen_seat(updatedAt, county_code, data)
+        gen_vote(updatedAt, county_code, data, year)
+        gen_map(updatedAt, county_code, data, 'county', county_code, areas)
         if os.environ['isSTARTED'] != 'true':
             for area_code, towns in areas.items():
                 print(area_code)
-                gen_map(county_code, data, 'area', area_code, towns)
+                gen_map(updatedAt, county_code, data, 'area', area_code, towns)
     return
 
 
@@ -256,7 +253,9 @@ if __name__ == '__main__':
             # gen_mayor(polling_data)
             # print("mayor done")
             council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            gen_councilMember(council_data)
+            updatedAt = jsonfile["ST"] 
+            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
+            gen_councilMember(updatedAt, council_data)
             print("councilMember done")
 
             # return 'done'
