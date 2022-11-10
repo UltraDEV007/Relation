@@ -65,11 +65,10 @@ def parse_tv_sht():
             "tksRate": tksRate,
             "candVictor": candVictor
         }
-        #     candidateNo = row[2]
     return sht_data, source
 
 
-def gen_tv_mayor(source='', sht_data='', polling_data=''):
+def gen_tv_mayor(updatedAt = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'), source='', sht_data='', polling_data=''):
     result = []
     if source:
         for county_name, candNos in sht_data.items():
@@ -126,13 +125,13 @@ def gen_tv_mayor(source='', sht_data='', polling_data=''):
                 {"city": mapping_county_town[county_code], "candidates": candidates[:3], "source": county_source})
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/mayor/tv.json'
-    data = {"updatedAt": (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'),
+    data = {"updatedAt": updatedAt,
             "polling": result}
     save_file(destination_file, data, year)
     return
 
 
-def gen_special_municipality(polling_data):
+def gen_special_municipality(updatedAt, polling_data):
     result = []
     for county_code, default_candidates in default_special_municipality.items():
         candidates = []
@@ -174,13 +173,13 @@ def gen_special_municipality(polling_data):
             {"city": mapping_county_town[county_code], "candidates": candidates[:3]})
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/mayor/special_municipality.json'
-    data = {"updatedAt": (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'),
+    data = {"updatedAt": updatedAt,
             "polling": result}
     save_file(destination_file, data, year)
     return
 
 
-def gen_vote(polling_data='', candidate_info=candidate_info, year=datetime.now().year):
+def gen_vote(updatedAt, polling_data='', candidate_info=candidate_info, year=datetime.now().year):
     result = []
     for region_code, region_candidates in candidate_info.items():
         candidates = []
@@ -221,9 +220,8 @@ def gen_vote(polling_data='', candidate_info=candidate_info, year=datetime.now()
         result.append(
             {"districtName": districtName, "candidates": candidates})
 
-    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
     VERSION = os.environ['VERSION']
-    data = {"updatedAt": now,
+    data = {"updatedAt": updatedAt,
             "year": str(year),
             "type": 'mayor',
             "title": "縣市長選舉",
@@ -259,7 +257,7 @@ def map_candidate(region_candidates, polling_data, region_code):
     return candidates
 
 
-def gen_map(scope, polling_data,  scope_code='', sub_region=''):
+def gen_map(updatedAt, scope, polling_data,  scope_code='', sub_region=''):
     result = []
     for region_code in sub_region.keys():
         if scope == 'country':
@@ -295,8 +293,7 @@ def gen_map(scope, polling_data,  scope_code='', sub_region=''):
             "profRate": profRate,
             "candidates": candidates})
     year = datetime.now().year
-    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
-    data = {"updatedAt": now,
+    data = {"updatedAt": updatedAt,
             "districts": result}
     if scope == 'country':
         destination_file = f'{ENV_FOLDER}/{year}/mayor/map/{scope}.json'
@@ -309,19 +306,19 @@ def gen_map(scope, polling_data,  scope_code='', sub_region=''):
     return
 
 
-def gen_mayor(data = ''):
-    gen_special_municipality(data)
-    gen_vote(data)
-    gen_map('country', data, '00_000_000', candidate_info)
+def gen_mayor(updatedAt = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'), data = ''):
+    gen_special_municipality(updatedAt, data)
+    gen_vote(updatedAt, data)
+    gen_map(updatedAt, 'country', data, '00_000_000', candidate_info)
     for county_code, towns in mapping_county_town_vill.items():
         if county_code == '10_020':  # 2022嘉義市長選舉延後
             continue
         county_code = county_code + '_000'
-        gen_map('county', data, county_code, towns)
+        gen_map(updatedAt, 'county', data, county_code, towns)
         if os.environ['isSTARTED'] != 'true':
             for town_code, vills in towns.items():
                 town_code = county_code[:-3] + town_code
-                gen_map('town', polling_data='',
+                gen_map(updatedAt, 'town', polling_data='',
                         scope_code = town_code, sub_region=vills)
     return
 
@@ -331,11 +328,13 @@ if __name__ == '__main__':
         jsonfile = request_cec('running.json')
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
-            gen_mayor(polling_data)
+            updatedAt = jsonfile["ST"] 
+            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
+            gen_mayor(updatedAt, polling_data)
             print("mayor done")
             try:
                 sht_data, source = parse_tv_sht()
-                gen_tv_mayor(source, sht_data, polling_data)
+                gen_tv_mayor(updatedAt, source, sht_data, polling_data)
                 print('tv mayoe done')
             except googleapiclient.errors.HttpError:
                 print('sht failed')

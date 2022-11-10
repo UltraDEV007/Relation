@@ -30,7 +30,7 @@ def parse_cec_referendum(raw_data):
     return organized_data
 
 
-def gen_vote(polling_data='', year=datetime.now().year):
+def gen_vote(updatedAt, polling_data='', year=datetime.now().year):
     result = []
     if polling_data:
         for case_name, all_data in polling_data.items():
@@ -59,10 +59,9 @@ def gen_vote(polling_data='', year=datetime.now().year):
                 "disagreeRate": 0,
                 "pass": True}
         )
-    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
     VERSION = os.environ['VERSION']
     data = {
-        "updatedAt": now,
+        "updatedAt": updatedAt,
         "year": year,
         "type": "referendum",
         "version": VERSION,
@@ -75,7 +74,7 @@ def gen_vote(polling_data='', year=datetime.now().year):
     return
 
 
-def gen_map(case_id, scope, polling_data,  scope_code, sub_region, county='', year=datetime.now().year):
+def gen_map(updatedAt, case_id, scope, polling_data,  scope_code, sub_region, county='', year=datetime.now().year):
     result = []
     for region_code in sub_region:
         town_code = None
@@ -115,8 +114,7 @@ def gen_map(case_id, scope, polling_data,  scope_code, sub_region, county='', ye
             tks_info['adptVictor'] = region_polling['adptVictor']
 
         result.append(tks_info)
-    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
-    data = {"updatedAt": now,
+    data = {"updatedAt": updatedAt,
             "districts": result}
         
     if scope == 'country':
@@ -146,34 +144,36 @@ def gen_map(case_id, scope, polling_data,  scope_code, sub_region, county='', ye
     return
 
 
-def gen_referendum(data=''):
-    gen_vote(data)
+def gen_referendum(updatedAt = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'), data='',):
+    gen_vote(updatedAt, data)
     if data:
         for case_id in data.keys():
-            gen_map(case_id, 'country', data, '00_000_000', sub_region=[
+            gen_map(updatedAt, case_id, 'country', data, '00_000_000', sub_region=[
                     k for k in mapping_county_town_vill.keys()])
             for county_code, towns in mapping_county_town_vill.items():
-                gen_map(case_id, 'county', data, county_code, towns)
+                gen_map(updatedAt, case_id, 'county', data, county_code, towns)
 
     else:
         case_id = 'F1'
-        gen_map(case_id, 'country', data, '00_000_000', sub_region=[
+        gen_map(updatedAt, case_id, 'country', data, '00_000_000', sub_region=[
                 k for k in mapping_county_town_vill.keys()])
         for county_code, towns in mapping_county_town_vill.items():
-            gen_map(case_id, 'county', data, county_code, towns)
+            gen_map(updatedAt, case_id, 'county', data, county_code, towns)
             for town_code, vills in towns.items():
-                gen_map(case_id, 'town', data, town_code, vills, county_code)
+                gen_map(updatedAt, case_id, 'town', data, town_code, vills, county_code)
     return
 
 
 if __name__ == "__main__":
     if os.environ['isSTARTED'] == 'true':
-        # jsonfile = request_cec('RFrunning.json')
-        with open("RFrunning.json") as f:
-            jsonfile = json.loads(f.read())
+        jsonfile = request_cec('RFrunning.json')
+        # with open("RFrunning.json") as f:
+        #     jsonfile = json.loads(f.read())
         if jsonfile:
             polling_data = parse_cec_referendum(jsonfile)
-            gen_referendum(polling_data)
+            updatedAt = jsonfile["ST"] 
+            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
+            gen_referendum(updatedAt, polling_data)
         #     return 'done'
         # return 'problem of cec data '
     else:
