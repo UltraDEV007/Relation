@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import os
 from tools.uploadGCS import save_file
@@ -62,7 +62,7 @@ def gen_seat(county_code, polling_data):
         # result = result.sort(key= lambda x:  x['seats'])
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/councilMember/seat/county/{county_code[:-4].replace("_", "")}.json'
-    data = {"updatedAt": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+    data = {"updatedAt": datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S'),
             "parties": result}
     save_file(destination_file, data, year)
     return
@@ -111,7 +111,7 @@ def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
              "candidates": candidates})
 
     # year = datetime.now().year
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    now = datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S')
     VERSION = os.environ['VERSION']
     try:
         english_districts_name = districts_mapping[mapping_county_town[county_code]]
@@ -212,7 +212,7 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
                     "profRate": profRate,
                     "candidates": candidates})
     year = datetime.now().year
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    now = datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S')
     data = {"updatedAt": now,
             "districts": result}
     if scope == 'county':
