@@ -118,7 +118,7 @@ def gen_tv_mayor(source='', sht_data='', polling_data=''):
                 {"city": mapping_county_town[county_code], "candidates": candidates[:3], "source": county_source})
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/mayor/tv.json'
-    data = {"updatedAt": datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S'),
+    data = {"updatedAt": (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'),
             "polling": result}
     save_file(destination_file, data, year)
     return
@@ -166,7 +166,7 @@ def gen_special_municipality(polling_data):
             {"city": mapping_county_town[county_code], "candidates": candidates[:3]})
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/mayor/special_municipality.json'
-    data = {"updatedAt": datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S'),
+    data = {"updatedAt": (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'),
             "polling": result}
     save_file(destination_file, data, year)
     return
@@ -213,7 +213,7 @@ def gen_vote(polling_data='', candidate_info=candidate_info, year=datetime.now()
         result.append(
             {"districtName": districtName, "candidates": candidates})
 
-    now = datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S')
+    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
     VERSION = os.environ['VERSION']
     data = {"updatedAt": now,
             "year": str(year),
@@ -287,7 +287,7 @@ def gen_map(scope, polling_data,  scope_code='', sub_region=''):
             "profRate": profRate,
             "candidates": candidates})
     year = datetime.now().year
-    now = datetime.utcnow()+timedelta(hours=8).strftime('%Y-%m-%d %H:%M:%S')
+    now = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
     data = {"updatedAt": now,
             "districts": result}
     if scope == 'country':
