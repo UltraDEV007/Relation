@@ -121,7 +121,7 @@ def gen_vote(updatedAt, county_code, polling_data, year, candidate_info = candid
         chinese_districts_name = county_code
     data = {"updatedAt": updatedAt,
             "year": str(year),
-            "type": 'mayor',
+            "type": 'councilMember',
             "title": f"縣市議員選舉({chinese_districts_name})",
             "version": VERSION,
             "districts": result}
