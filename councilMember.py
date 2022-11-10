@@ -221,7 +221,7 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
             "county": county_code[:-4].replace('_', ''),
             "town": None,
             "vill": None,
-            "profRate": round(county_votes / county_eligible_voters * 100, 2) if polling_data else 0
+            "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0
         }
     dest_county = county_code[:-3].replace("_", "")
     if scope == 'county':
