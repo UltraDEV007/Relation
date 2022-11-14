@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import os
 from tools.uploadGCS import save_file
@@ -34,7 +34,7 @@ def parse_cec_council(raw_data):
     return organized_data
 
 
-def gen_seat(county_code, polling_data):
+def gen_seat(updatedAt, county_code, polling_data):
     result = []
     parties = {}
     if polling_data:
@@ -43,8 +43,11 @@ def gen_seat(county_code, polling_data):
                 if canNo == 'detailed':
                     continue
                 if candidate['candVictor'] == '*':
-                    party = candidate_info[county_code][area_code][str(
-                        canNo).zfill(2)]['party']
+                    try:
+                        party = candidate_info[county_code][area_code][str(
+                            canNo).zfill(2)]['party']
+                    except KeyError:
+                        continue
                     party = party if party != '無' else '無黨籍及未經政黨推薦'
                     if party in parties:
                         parties[party] += 1
@@ -55,15 +58,17 @@ def gen_seat(county_code, polling_data):
                 "label": party,
                 "seats": count,
             })
+        result = sorted(result, key=lambda x: x['seats'], reverse=True) 
+        # result = result.sort(key= lambda x:  x['seats'])
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/councilMember/seat/county/{county_code[:-4].replace("_", "")}.json'
-    data = {"updatedAt": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+    data = {"updatedAt": updatedAt,
             "parties": result}
     save_file(destination_file, data, year)
     return
 
 
-def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
+def gen_vote(updatedAt, county_code, polling_data, year, candidate_info = candidate_info):
     result = []
     if polling_data:
         polling_data = polling_data[county_code]
@@ -80,7 +85,7 @@ def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
                     'imgSrc': c_info['name_img'] if c_info['name_img'] else ''
                 },
                 'party': {
-                    'label': c_info['party'] if c_info['party'] != '無' else '',
+                    'label': c_info['party'] if c_info['party'] != '無' else '無黨籍',
                     'href': '',
                     'imgSrc': c_info['party_img'] if c_info['party_img'] else ''
                 },
@@ -105,8 +110,6 @@ def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
              "type": region_candidates['type'],
              "candidates": candidates})
 
-    # year = datetime.now().year
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     VERSION = os.environ['VERSION']
     try:
         english_districts_name = districts_mapping[mapping_county_town[county_code]]
@@ -116,9 +119,9 @@ def gen_vote(county_code, polling_data, year, candidate_info = candidate_info):
         chinese_districts_name = mapping_county_town[county_code]
     except KeyError:
         chinese_districts_name = county_code
-    data = {"updatedAt": now,
+    data = {"updatedAt": updatedAt,
             "year": str(year),
-            "type": 'mayor',
+            "type": 'councilMember',
             "title": f"縣市議員選舉({chinese_districts_name})",
             "version": VERSION,
             "districts": result}
@@ -152,7 +155,7 @@ def map_candidate(region_candidates, polling_data):
 
     return candidates
 
-def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
+def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_region=''):
     result = []
     county_votes = 0
     county_eligible_voters = 0
@@ -187,7 +190,7 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
             for vill_code, vill in sub_region[region_code].items():
                 area_code = scope_code
                 vill_name = vill.split("_")[-1]
-                range = f'{mapping_county_town[county_code]} 第{region_code}選區 {vill_name}'
+                range = f'{mapping_county_town[county_code]} 第{area_code}選區 {vill_name}'
                 candidate_info_scope = candidate_info[county_code][area_code]
 
                 if polling_data:
@@ -207,8 +210,7 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
                     "profRate": profRate,
                     "candidates": candidates})
     year = datetime.now().year
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    data = {"updatedAt": now,
+    data = {"updatedAt": updatedAt,
             "districts": result}
     if scope == 'county':
         data['summary'] = {
@@ -216,7 +218,7 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
             "county": county_code[:-4].replace('_', ''),
             "town": None,
             "vill": None,
-            "profRate": round(county_votes / county_eligible_voters * 100, 2) if polling_data else 0
+            "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0
         }
     dest_county = county_code[:-3].replace("_", "")
     if scope == 'county':
@@ -228,33 +230,32 @@ def gen_map(county_code, polling_data, scope='', scope_code='', sub_region=''):
     return
 
 
-def gen_councilMember(data=''):
+def gen_councilMember(updatedAt = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S'), data=''):
     year = datetime.now().year
     for county_code, areas in mapping_county_area_town_vill.items():
         county_code = county_code + '_000'
         print(mapping_county_town[county_code])
-        gen_seat(county_code, data)
-        gen_vote(county_code, data, year)
-        gen_map(county_code, data, 'county', county_code, areas)
+        gen_seat(updatedAt, county_code, data)
+        gen_vote(updatedAt, county_code, data, year)
+        gen_map(updatedAt, county_code, data, 'county', county_code, areas)
         if os.environ['isSTARTED'] != 'true':
             for area_code, towns in areas.items():
                 print(area_code)
-                gen_map(county_code, data, 'area', area_code, towns)
+                gen_map(updatedAt, county_code, data, 'area', area_code, towns)
     return
 
 
 if __name__ == '__main__':
     if os.environ['isSTARTED'] == 'true':
-        # jsonfile = request_cec()
-        with open('running.json') as f:
-            jsonfile = json.loads(f.read())
+        jsonfile = request_cec('running.json')
         if jsonfile:
             # polling_data = parse_cec_mayor(jsonfile["TC"])
             # gen_mayor(polling_data)
             # print("mayor done")
-            council_data = parse_cec_council(
-                jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            gen_councilMember(council_data)
+            council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
+            updatedAt = jsonfile["ST"] 
+            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
+            gen_councilMember(updatedAt, council_data)
             print("councilMember done")
 
             # return 'done'
