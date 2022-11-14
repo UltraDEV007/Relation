@@ -2,13 +2,15 @@ from datetime import datetime, timedelta
 import json
 import os
 from tools.uploadGCS import save_file
-from tools.cec_data import request_cec
+from tools.cec_data import request_cec_by_type
 from configs import districts_mapping
 
 with open('mapping/mapping_county_town.json') as f:
     mapping_county_town = json.loads(f.read())
 with open('mapping/mapping_county_area_town_vill.json') as f:
     mapping_county_area_town_vill = json.loads(f.read())
+with open('mapping/mapping_county_town_vill.json') as f:
+    mapping_county_town_vill = json.loads(f.read())
 with open('mapping/councilMember_candidate_2022.json') as f:
     candidate_info = json.loads(f.read())
 VOTES = 'prof3'
@@ -19,26 +21,35 @@ ENV_FOLDER = os.environ['ENV_FOLDER']
 def parse_cec_council(raw_data):
     organized_data = {}
     for district in raw_data:
+        county_code = f"{district['prvCode']}_{district['cityCode']}_000"
+        county = organized_data.setdefault(county_code,{"area": {}, "town": {}})
         if district['deptCode'] is None or district['deptCode'] == '000':
-            county_code = f"{district['prvCode']}_{district['cityCode']}_000"
             region_code = district['areaCode']
-            county = organized_data.setdefault(county_code, {})
-            region = county.setdefault(region_code, {'detailed': {
+            region = county["area"].setdefault(region_code, {'detailed': {
                 VOTES: district[VOTES],
                 ELEGIBLE_VOTERS: district[ELEGIBLE_VOTERS],
                 'profRate': district['profRate'],
             }})
-            for c in district['candTksInfo']:
-                candNo = region.setdefault(c['candNo'], c)
-                candNo = c
-    return organized_data
+        elif district['liCode'] is None or district['liCode'] == '000':
+            # region_code = f"{district['prvCode']}_{district['cityCode']}_{district['deptCode']}"
+            region_code = f"{district['areaCode']}{district['deptCode']}"
+            region = county["town"].setdefault(region_code, {'detailed': {
+                VOTES: district[VOTES],
+                ELEGIBLE_VOTERS: district[ELEGIBLE_VOTERS],
+                'profRate': district['profRate'],
+            }})
+        for c in district['candTksInfo']:
+            candNo = region.setdefault(c['candNo'], c)
+            candNo = c
+            
+    return organized_data 
 
 
 def gen_seat(updatedAt, county_code, polling_data):
     result = []
     parties = {}
     if polling_data:
-        for area_code, area in polling_data[county_code].items():
+        for area_code, area in polling_data[county_code]["area"].items():
             for canNo, candidate in area.items():
                 if canNo == 'detailed':
                     continue
@@ -58,8 +69,7 @@ def gen_seat(updatedAt, county_code, polling_data):
                 "label": party,
                 "seats": count,
             })
-        result = sorted(result, key=lambda x: x['seats'], reverse=True) 
-        # result = result.sort(key= lambda x:  x['seats'])
+        result = sorted(result, key=lambda x: x['seats'], reverse=True)
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/councilMember/seat/county/{county_code[:-4].replace("_", "")}.json'
     data = {"updatedAt": updatedAt,
@@ -71,7 +81,7 @@ def gen_seat(updatedAt, county_code, polling_data):
 def gen_vote(updatedAt, county_code, polling_data, year, candidate_info = candidate_info):
     result = []
     if polling_data:
-        polling_data = polling_data[county_code]
+        polling_data = polling_data[county_code]["area"]
     for region_code, region_candidates in candidate_info[county_code].items():
         candidates = []
         for candNo, c_info in region_candidates.items():
@@ -155,78 +165,88 @@ def map_candidate(region_candidates, polling_data):
 
     return candidates
 
-def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_region=''):
-    result = []
+
+def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_region='', area_code='', year = datetime.now().year):
+    result = {'normal': [], 'indigenous': []}
     county_votes = 0
     county_eligible_voters = 0
-    for region_code in sub_region.keys():
-        if scope == 'county':
-
-            vill_code = '000'
-            area_code = region_code
-            range = f'{mapping_county_town[scope_code]} 第{region_code}選區'
-            candidate_info_scope = candidate_info[county_code][region_code]
-
-            if polling_data:
-                area_polling = polling_data[county_code][area_code]
-                candidates = map_candidate(
-                    candidate_info_scope, area_polling)
-                profRate = area_polling['detailed']['profRate'] if area_polling['detailed']['profRate'] else 0
-                county_votes += area_polling['detailed'][VOTES]
-                county_eligible_voters += area_polling['detailed'][ELEGIBLE_VOTERS]
-            else:
-                candidates = map_candidate(candidate_info_scope, '')
-                profRate = 0
-            result.append({
-                "range": range,
-                "county": county_code[:-4].replace("_", ""),
-                "area": None if area_code == '000' else area_code,
-                "vill": None if vill_code == '000' else vill_code,
-                "type": candidate_info_scope['type'],
-                "profRate": profRate,
-                "candidates": candidates})
-        else:
-            town_code = region_code
-            for vill_code, vill in sub_region[region_code].items():
-                area_code = scope_code
-                vill_name = vill.split("_")[-1]
-                range = f'{mapping_county_town[county_code]} 第{area_code}選區 {vill_name}'
+    if scope == 'county':
+        for area_code, towns in sub_region.items():
+            for region_code in towns:
+                town_code = region_code
+                vill_code = '000'
+                range = f'{mapping_county_town[county_code]} {mapping_county_town[f"{county_code[:-3]}{town_code}"]}'
                 candidate_info_scope = candidate_info[county_code][area_code]
 
                 if polling_data:
-                    vill_polling = polling_data[county_code][area_code][town_code][vill_code]
-                    candidates = map_candidate(
-                        candidate_info_scope, vill_polling)
-                    profRate = vill_polling['detailed']['profRate'] if vill_polling['detailed']['profRate'] else 0
+                    town_polling = polling_data[county_code]["town"][f"{area_code}{town_code}"]
+                    candidates = map_candidate(candidate_info_scope, town_polling)
+                    profRate = town_polling['detailed']['profRate'] if town_polling['detailed']['profRate'] else 0
+                    county_votes += town_polling['detailed'][VOTES]
+                    county_eligible_voters += town_polling['detailed'][ELEGIBLE_VOTERS]
                 else:
-                    candidates = None
-                    profRate = None
-                result.append({
-                    "range": range,
-                    "county": county_code[:-4].replace("_", ""),
-                    "area": None if area_code == '000' else area_code,
-                    "vill": None if vill_code == '000' else vill_code,
-                    "type": candidate_info_scope['type'],
-                    "profRate": profRate,
-                    "candidates": candidates})
-    year = datetime.now().year
-    data = {"updatedAt": updatedAt,
-            "districts": result}
-    if scope == 'county':
-        data['summary'] = {
-            "range": mapping_county_town[county_code],
-            "county": county_code[:-4].replace('_', ''),
-            "town": None,
-            "vill": None,
-            "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0
-        }
-    dest_county = county_code[:-3].replace("_", "")
-    if scope == 'county':
-        destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{dest_county}.json'
+                    candidates = map_candidate(candidate_info_scope, '')
+                    profRate = 0
+                district = {
+                "range": range,
+                "county": county_code[:-4].replace("_", ""),
+                "area": None if area_code == '000' else area_code,
+                "town": None if town_code == '000' else town_code,
+                "vill": None if vill_code == '000' else vill_code,
+                "type": candidate_info_scope['type'],
+                "profRate": profRate,
+                "candidates": candidates}
+                if candidate_info_scope['type'] == 'normal':
+                    result['normal'].append(district)
+                else:
+                    result['indigenous'].append(district)
+        
+    
     else:
-        destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{dest_county}{scope_code}.json'
+        for region_code in sub_region.keys():
+            town_code = scope_code
+            vill_code = region_code
+            range = sub_region[region_code].replace("_", " ")
+            candidate_info_scope = candidate_info[county_code][area_code]
+            if polling_data:
+                vill_polling = polling_data[county_code][area_code][town_code][vill_code]
+                candidates = map_candidate(candidate_info_scope, vill_polling)
+                profRate = vill_polling['detailed']['profRate'] if vill_polling['detailed']['profRate'] else 0
+            else:
+                candidates = None
+                profRate = None
+            district = {
+                "range": range,
+                "county": county_code[:-4].replace("_", ""),
+                "area": None if area_code == '000' else area_code,
+                "town": None if town_code == '000' else town_code,
+                "vill": None if vill_code == '000' else vill_code,
+                "type": candidate_info_scope['type'],
+                "profRate": profRate,
+                "candidates": candidates}
+            if candidate_info_scope['type'] == 'normal':
+                result['normal'].append(district)
+            else:
+                result['indigenous'].append(district)
+    for type in result:
+        if result[type]:
+            data = {"updatedAt": updatedAt,
+                    "districts": result[type]}
+            if scope == 'county':
+                data['summary'] = {
+                    "range": mapping_county_town[county_code],
+                    "county": county_code[:-4].replace('_', ''),
+                    "town": None,
+                    "vill": None,
+                    "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0
+                }
+            dest_county = county_code[:-3].replace("_", "")
+            if scope == 'county':
+                destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{type}/{dest_county}.json'
+            else:
+                destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{type}/{dest_county}{town_code}.json'
 
-    save_file(destination_file, dict(sorted(data.items(), reverse=True)), year)
+            save_file(destination_file, dict(sorted(data.items(), reverse=True)), year)
     return
 
 
@@ -240,29 +260,35 @@ def gen_councilMember(updatedAt = (datetime.utcnow()+timedelta(hours=8)).strftim
         gen_map(updatedAt, county_code, data, 'county', county_code, areas)
         if os.environ['isSTARTED'] != 'true':
             for area_code, towns in areas.items():
-                print(area_code)
-                gen_map(updatedAt, county_code, data, 'area', area_code, towns)
+                for town_code, vills in towns.items():
+                    updatedAt = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                    gen_map(updatedAt, county_code, data, 'town', town_code, vills, area_code)
     return
 
 
 if __name__ == '__main__':
     if os.environ['isSTARTED'] == 'true':
-        jsonfile = request_cec('running.json')
+        jsonfile = request_cec_by_type()
         if jsonfile:
-            # polling_data = parse_cec_mayor(jsonfile["TC"])
-            # gen_mayor(polling_data)
-            # print("mayor done")
-            council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            updatedAt = jsonfile["ST"] 
-            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
-            gen_councilMember(updatedAt, council_data)
-            print("councilMember done")
-
-            # return 'done'
-        # return 'problem of cec data '
+                # polling_data = parse_cec_mayor(jsonfile["TC"])
+                updatedAt = jsonfile["ST"] 
+                updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
+                # gen_mayor(updatedAt, polling_data)
+                # print("mayor done")
+                council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
+                gen_councilMember(updatedAt, council_data)
+                print("councilMember done")
+                # try:
+                #     sht_data, source = parse_tv_sht()
+                #     gen_tv_mayor(updatedAt, source, sht_data, polling_data)
+                #     print('tv mayoe done')
+                # except googleapiclient.errors.HttpError:
+                #     print('sht failed')
     else:
         # gen_mayor()
+        # gen_tv_mayor()
         # print("mayor done")
         gen_councilMember()
-
+        print("councilMember done")
+        
         # return 'done'
