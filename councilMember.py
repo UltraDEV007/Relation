@@ -157,8 +157,7 @@ def map_candidate(region_candidates, polling_data):
     return candidates
 
 def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_region='', area_code='', year = datetime.now().year):
-    result = []
-    result_indigenous = []
+    result = {'normal': [], 'indigenous': []}
     county_votes = 0
     county_eligible_voters = 0
     for region_code in sub_region.keys():
@@ -178,15 +177,6 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
             else:
                 candidates = map_candidate(candidate_info_scope, '')
                 profRate = 0
-            # result.append({
-            #     "range": range,
-            #     "county": county_code[:-4].replace("_", ""),
-            #     "area": None if area_code == '000' else area_code,
-            #     "town": None if town_code == '000' else town_code,
-            #     "vill": None if vill_code == '000' else vill_code,
-            #     "type": candidate_info_scope['type'],
-            #     "profRate": profRate,
-            #     "candidates": candidates})
         else:
             town_code = scope_code
             vill_code = region_code
@@ -199,8 +189,7 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
             else:
                 candidates = None
                 profRate = None
-        # if candidate_info_scope['type'] == 'normal':
-        result.append({
+        district = {
             "range": range,
             "county": county_code[:-4].replace("_", ""),
             "area": None if area_code == '000' else area_code,
@@ -208,36 +197,30 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
             "vill": None if vill_code == '000' else vill_code,
             "type": candidate_info_scope['type'],
             "profRate": profRate,
-            "candidates": candidates})
-        # elif result_indigenous:
-        #     result_indigenous.append({
-        #     "range": range,
-        #     "county": county_code[:-4].replace("_", ""),
-        #     "area": None if area_code == '000' else area_code,
-        #     "town": None if town_code == '000' else town_code,
-        #     "vill": None if vill_code == '000' else vill_code,
-        #     "type": candidate_info_scope['type'],
-        #     "profRate": profRate,
-        #     "candidates": candidates})
-    
-    data = {"updatedAt": updatedAt,
-            "districts": result}
-    
-    if scope == 'county':
-        data['summary'] = {
-            "range": mapping_county_town[county_code],
-            "county": county_code[:-4].replace('_', ''),
-            "town": None,
-            "vill": None,
-            "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0
-        }
-    dest_county = county_code[:-3].replace("_", "")
-    if scope == 'county':
-        destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{dest_county}.json'
-    else:
-        destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{dest_county}{town_code}.json'
+            "candidates": candidates}
+        if candidate_info_scope['type'] == 'normal':
+            result['normal'].append(district)
+        else:
+            result['indigenous'].append(district)
+    for type in result:
+        if result[type]:
+            data = {"updatedAt": updatedAt,
+                    "districts": result[type]}
+            if scope == 'county':
+                data['summary'] = {
+                    "range": mapping_county_town[county_code],
+                    "county": county_code[:-4].replace('_', ''),
+                    "town": None,
+                    "vill": None,
+                    "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0
+                }
+            dest_county = county_code[:-3].replace("_", "")
+            if scope == 'county':
+                destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{type}/{dest_county}.json'
+            else:
+                destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{type}/{dest_county}{town_code}.json'
 
-    save_file(destination_file, dict(sorted(data.items(), reverse=True)), year)
+            save_file(destination_file, dict(sorted(data.items(), reverse=True)), year)
     return
 
 
