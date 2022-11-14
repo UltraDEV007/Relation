@@ -9,6 +9,8 @@ with open('mapping/mapping_county_town.json') as f:
     mapping_county_town = json.loads(f.read())
 with open('mapping/mapping_county_area_town_vill.json') as f:
     mapping_county_area_town_vill = json.loads(f.read())
+with open('mapping/mapping_county_town_vill.json') as f:
+    mapping_county_town_vill = json.loads(f.read())
 with open('mapping/councilMember_candidate_2022.json') as f:
     candidate_info = json.loads(f.read())
 VOTES = 'prof3'
@@ -58,8 +60,7 @@ def gen_seat(updatedAt, county_code, polling_data):
                 "label": party,
                 "seats": count,
             })
-        result = sorted(result, key=lambda x: x['seats'], reverse=True) 
-        # result = result.sort(key= lambda x:  x['seats'])
+        result = sorted(result, key=lambda x: x['seats'], reverse=True)
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/councilMember/seat/county/{county_code[:-4].replace("_", "")}.json'
     data = {"updatedAt": updatedAt,
@@ -155,13 +156,14 @@ def map_candidate(region_candidates, polling_data):
 
     return candidates
 
-def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_region=''):
+def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_region='', area_code='', year = datetime.now().year):
     result = []
+    result_indigenous = []
     county_votes = 0
     county_eligible_voters = 0
     for region_code in sub_region.keys():
         if scope == 'county':
-
+            town_code = '000'
             vill_code = '000'
             area_code = region_code
             range = f'{mapping_county_town[scope_code]} 第{region_code}選區'
@@ -169,49 +171,58 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
 
             if polling_data:
                 area_polling = polling_data[county_code][area_code]
-                candidates = map_candidate(
-                    candidate_info_scope, area_polling)
+                candidates = map_candidate(candidate_info_scope, area_polling)
                 profRate = area_polling['detailed']['profRate'] if area_polling['detailed']['profRate'] else 0
                 county_votes += area_polling['detailed'][VOTES]
                 county_eligible_voters += area_polling['detailed'][ELEGIBLE_VOTERS]
             else:
                 candidates = map_candidate(candidate_info_scope, '')
                 profRate = 0
-            result.append({
-                "range": range,
-                "county": county_code[:-4].replace("_", ""),
-                "area": None if area_code == '000' else area_code,
-                "vill": None if vill_code == '000' else vill_code,
-                "type": candidate_info_scope['type'],
-                "profRate": profRate,
-                "candidates": candidates})
+            # result.append({
+            #     "range": range,
+            #     "county": county_code[:-4].replace("_", ""),
+            #     "area": None if area_code == '000' else area_code,
+            #     "town": None if town_code == '000' else town_code,
+            #     "vill": None if vill_code == '000' else vill_code,
+            #     "type": candidate_info_scope['type'],
+            #     "profRate": profRate,
+            #     "candidates": candidates})
         else:
-            town_code = region_code
-            for vill_code, vill in sub_region[region_code].items():
-                area_code = scope_code
-                vill_name = vill.split("_")[-1]
-                range = f'{mapping_county_town[county_code]} 第{area_code}選區 {vill_name}'
-                candidate_info_scope = candidate_info[county_code][area_code]
-
-                if polling_data:
-                    vill_polling = polling_data[county_code][area_code][town_code][vill_code]
-                    candidates = map_candidate(
-                        candidate_info_scope, vill_polling)
-                    profRate = vill_polling['detailed']['profRate'] if vill_polling['detailed']['profRate'] else 0
-                else:
-                    candidates = None
-                    profRate = None
-                result.append({
-                    "range": range,
-                    "county": county_code[:-4].replace("_", ""),
-                    "area": None if area_code == '000' else area_code,
-                    "vill": None if vill_code == '000' else vill_code,
-                    "type": candidate_info_scope['type'],
-                    "profRate": profRate,
-                    "candidates": candidates})
-    year = datetime.now().year
+            town_code = scope_code
+            vill_code = region_code
+            range = sub_region[region_code].replace("_", " ")
+            candidate_info_scope = candidate_info[county_code][area_code]
+            if polling_data:
+                vill_polling = polling_data[county_code][area_code][town_code][vill_code]
+                candidates = map_candidate(candidate_info_scope, vill_polling)
+                profRate = vill_polling['detailed']['profRate'] if vill_polling['detailed']['profRate'] else 0
+            else:
+                candidates = None
+                profRate = None
+        # if candidate_info_scope['type'] == 'normal':
+        result.append({
+            "range": range,
+            "county": county_code[:-4].replace("_", ""),
+            "area": None if area_code == '000' else area_code,
+            "town": None if town_code == '000' else town_code,
+            "vill": None if vill_code == '000' else vill_code,
+            "type": candidate_info_scope['type'],
+            "profRate": profRate,
+            "candidates": candidates})
+        # elif result_indigenous:
+        #     result_indigenous.append({
+        #     "range": range,
+        #     "county": county_code[:-4].replace("_", ""),
+        #     "area": None if area_code == '000' else area_code,
+        #     "town": None if town_code == '000' else town_code,
+        #     "vill": None if vill_code == '000' else vill_code,
+        #     "type": candidate_info_scope['type'],
+        #     "profRate": profRate,
+        #     "candidates": candidates})
+    
     data = {"updatedAt": updatedAt,
             "districts": result}
+    
     if scope == 'county':
         data['summary'] = {
             "range": mapping_county_town[county_code],
@@ -224,7 +235,7 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
     if scope == 'county':
         destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{dest_county}.json'
     else:
-        destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{dest_county}{scope_code}.json'
+        destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{dest_county}{town_code}.json'
 
     save_file(destination_file, dict(sorted(data.items(), reverse=True)), year)
     return
@@ -240,8 +251,9 @@ def gen_councilMember(updatedAt = (datetime.utcnow()+timedelta(hours=8)).strftim
         gen_map(updatedAt, county_code, data, 'county', county_code, areas)
         if os.environ['isSTARTED'] != 'true':
             for area_code, towns in areas.items():
-                print(area_code)
-                gen_map(updatedAt, county_code, data, 'area', area_code, towns)
+                for town_code, vills in towns.items():
+                    updatedAt = (datetime.utcnow()+timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                    gen_map(updatedAt, county_code, data, 'town', town_code, vills, area_code)
     return
 
 
