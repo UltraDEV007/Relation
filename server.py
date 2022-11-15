@@ -13,15 +13,15 @@ app = Flask(__name__)
 @app.route("/gen_elections_json", methods=['GET'])
 def elections():
     if os.environ['isSTARTED'] == 'true':
-        jsonfile = request_cec_by_type()
+        jsonfile, is_running = request_cec_by_type()
         if jsonfile:
             polling_data = parse_cec_mayor(jsonfile["TC"])
             updatedAt = jsonfile["ST"] 
             updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
-            gen_mayor(updatedAt, polling_data)
+            gen_mayor(updatedAt, polling_data, is_running)
             print("mayor done")
             council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            gen_councilMember(updatedAt, council_data)
+            gen_councilMember(updatedAt, council_data, is_running)
             print("councilMember done")
             try:
                 sht_data, source = parse_tv_sht()
@@ -34,12 +34,12 @@ def elections():
             sht_data, source = parse_tv_sht()
             if 'cec' not in source.values():
                 gen_tv_mayor(source=source, sht_data=sht_data)
-        referendumfile = request_cec_by_type('rf')
+        referendumfile, is_running = request_cec_by_type('rf')
         if referendumfile:
             polling_data = parse_cec_referendum(referendumfile)
-            updatedAt = jsonfile["ST"] 
+            updatedAt = referendumfile["ST"] 
             updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
-            gen_referendum(updatedAt,polling_data)
+            gen_referendum(updatedAt,polling_data, is_running=is_running)
             print("referendum done")
         else:
             print('problem of cec referendum data ')

@@ -34,13 +34,16 @@ def request_cec_by_type(type='general'):
         fin_url = f"{os.environ['CECURL_RF']}RF{FINAL}"
         run_url = f"{os.environ['CECURL_RF']}RF{RUNNING}"
     fin_data = check_url(fin_url)
+    is_running = False
     if fin_data:
-        return fin_data
+        return fin_data, is_running
     else:
+        is_running = True
         run_data = check_url(run_url)
         if run_data:
-            return run_data
-    return False
+            return run_data, is_running
+    return False, is_running
+
 
 if __name__=='__main__':
     data = request_cec('running.json')
