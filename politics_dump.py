@@ -22,7 +22,7 @@ def dump_politics(election_id):
     }
     connection = psycopg2.connect(database=db, user=db_user,password=db_pw, host=db_host, port=db_port, **keepalive_kwargs)
     cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    dump_query = """SELECT "desc", "content", "Person"."name", "Election"."name", "ElectionArea"."name", "Organization"."name", "Tag"."name" FROM "Politic", "PersonElection", "Person", "Election", "ElectionArea", "Organization", "Tag" WHERE "Politic".person = "PersonElection".id AND "PersonElection".election = "Election"."id" AND "PersonElection"."person_id" = "Person"."id" AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Organization"."id" = "PersonElection"."party" AND "Politic"."status" = 'verified' AND "Politic"."tag" = "Tag"."id" AND "Election".id = """ + str(election_id)
+    dump_query = """SELECT "Politic"."id", "desc", "content", "Person"."name", "Election"."name", "ElectionArea"."name", "Organization"."name", "Tag"."name" FROM "Politic", "PersonElection", "Person", "Election", "ElectionArea", "Organization", "Tag" WHERE "Politic".person = "PersonElection".id AND "PersonElection".election = "Election"."id" AND "PersonElection"."person_id" = "Person"."id" AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Organization"."id" = "PersonElection"."party" AND "Politic"."status" = 'verified' AND "Politic"."tag" = "Tag"."id" AND "Election".id = """ + str(election_id)
     cursor.execute(dump_query)
     all_politics = cursor.fetchall()
     destination_file = 'politics/politics-' + str(election_id) + ".csv"
@@ -31,7 +31,7 @@ def dump_politics(election_id):
 
     with open(destination_file, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['政見', '政見補充', '候選人', '選舉', '選區', '政黨', '分類'])
+        writer.writerow(['政見 id', '政見', '政見補充', '候選人', '選舉', '選區', '政黨', '分類'])
         writer.writerows(all_politics)
         upload_blob(destination_file, 2022)
     connection.close()
