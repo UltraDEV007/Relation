@@ -5,10 +5,13 @@ import os
 import json
 
 
-def upload_blob(destination_file, year):
-
-    storage_client = storage.Client().from_service_account_json('readr-key.json')
-    bucket = storage_client.bucket(upload_configs['bucket_name'])
+def upload_blob(destination_file, year, project):
+    if project == 'tv':
+        storage_client = storage.Client().from_service_account_json('tv-key.json')
+        bucket = storage_client.bucket(os.environ['TV_BUCKET'])
+    else:
+        storage_client = storage.Client().from_service_account_json('readr-key.json')
+        bucket = storage_client.bucket(upload_configs['bucket_name'])
     blob = bucket.blob(destination_file)
     blob.upload_from_filename(destination_file)
     print("File {} uploaded to {}.".format(destination_file, destination_file))
@@ -21,9 +24,11 @@ def upload_blob(destination_file, year):
     print("The metadata configuration for the blob is complete")
 
 
-def save_file(destination_file, data, year):
+def save_file(destination_file, data, year, project='readr'):
+    if project == 'tv':
+        destination_file = 'json/' + destination_file.replace('-dev', '')
     if not os.path.exists(os.path.dirname(destination_file)):
         os.makedirs(os.path.dirname(destination_file))
     with open(destination_file, 'w') as f:
         f.write(json.dumps(data, ensure_ascii=False))
-    upload_blob(destination_file, year)
+    upload_blob(destination_file, year, project)
