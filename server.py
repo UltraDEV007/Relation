@@ -26,7 +26,7 @@ def elections():
             try:
                 sht_data, source = parse_tv_sht()
                 gen_tv_mayor(updatedAt, source, sht_data, polling_data)
-                print('tv mayoe done')
+                print('tv mayor done')
             except googleapiclient.errors.HttpError:
                 print('sht failed')
         else:
