@@ -127,7 +127,7 @@ def gen_tv_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime
     destination_file = f'{ENV_FOLDER}/{year}/mayor/tv.json'
     data = {"updatedAt": updatedAt,
             "polling": result}
-    save_file(destination_file, data, year)
+    save_file(destination_file, data, year, 'tv')
     return
 
 
@@ -230,6 +230,7 @@ def gen_vote(updatedAt, polling_data='', candidate_info=candidate_info, year=dat
     destination_file = f'{ENV_FOLDER}/{VERSION}/{year}/mayor/all.json'
 
     save_file(destination_file, data, year)
+    save_file(destination_file, data, year, 'tv')
     return
 
 
@@ -336,7 +337,7 @@ if __name__ == '__main__':
             try:
                 sht_data, source = parse_tv_sht()
                 gen_tv_mayor(updatedAt, source, sht_data, polling_data)
-                print('tv mayoe done')
+                print('tv mayor done')
             except googleapiclient.errors.HttpError:
                 print('sht failed')
         else:
