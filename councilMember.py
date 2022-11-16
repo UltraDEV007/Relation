@@ -137,6 +137,7 @@ def gen_vote(updatedAt, county_code, polling_data, year, candidate_info=candidat
     destination_file = f'{ENV_FOLDER}/{VERSION}/{year}/councilMember/{english_districts_name}.json'
 
     save_file(destination_file, data, year)
+    save_file(destination_file, data, year, 'tv')
     return
 
 
