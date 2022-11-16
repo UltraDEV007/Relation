@@ -171,7 +171,32 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
     county_votes = 0
     county_eligible_voters = 0
     if scope == 'county':
+        summary = {'normal': [], 'indigenous': []}
         for area_code, towns in sub_region.items():
+            summary_range = f'{mapping_county_town[county_code]} 第{area_code}選區'
+            candidate_info_scope = candidate_info[county_code][area_code]
+            if polling_data:
+                area_polling = polling_data[county_code]["area"][area_code]
+                candidates = map_candidate(candidate_info_scope, area_polling)
+                profRate = area_polling['detailed']['profRate'] if area_polling['detailed']['profRate'] else 0
+                # county_votes += area_polling['detailed'][VOTES]
+                # county_eligible_voters += area_polling['detailed'][ELEGIBLE_VOTERS]
+            else:
+                candidates = map_candidate(candidate_info_scope, '')
+                profRate = 0
+            district = {
+                "range": summary_range,
+                "county": county_code[:-4].replace("_", ""),
+                "area": None if area_code == '00' else area_code,
+                "town": None,
+                "vill": None,
+                "type": candidate_info_scope['type'],
+                "profRate": profRate,
+                "candidates": candidates}
+            if candidate_info_scope['type'] == 'normal':
+                summary['normal'].append(district)
+            else:
+                summary['indigenous'].append(district)
             for region_code in towns:
                 town_code = region_code
                 vill_code = '000'
@@ -238,7 +263,8 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
                     "county": county_code[:-4].replace('_', ''),
                     "town": None,
                     "vill": None,
-                    "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0
+                    "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0,
+                    "districts": summary[type]
                 }
             dest_county = county_code[:-3].replace("_", "")
             if scope == 'county':
