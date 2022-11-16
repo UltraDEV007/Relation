@@ -7,7 +7,7 @@ import json
 
 def upload_blob(destination_file, year, project):
     if project == 'tv':
-        storage_client = storage.Client()
+        storage_client = storage.Client().from_service_account_json('tv-key.json')
         bucket = storage_client.bucket(os.environ['TV_BUCKET'])
     else:
         storage_client = storage.Client().from_service_account_json('readr-key.json')
