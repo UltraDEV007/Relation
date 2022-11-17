@@ -137,7 +137,6 @@ def gen_vote(updatedAt, county_code, polling_data, year, candidate_info=candidat
     destination_file = f'{ENV_FOLDER}/{VERSION}/{year}/councilMember/{english_districts_name}.json'
 
     save_file(destination_file, data, year)
-    save_file(destination_file, data, year, 'tv')
     return
 
 
@@ -184,7 +183,7 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
             else:
                 candidates = map_candidate(candidate_info_scope, '')
                 profRate = 0
-            district = {
+            summary_district = {
                 "range": summary_range,
                 "county": county_code[:-4].replace("_", ""),
                 "area": None if area_code == '00' else area_code,
@@ -194,9 +193,9 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
                 "profRate": profRate,
                 "candidates": candidates}
             if candidate_info_scope['type'] == 'normal':
-                summary['normal'].append(district)
+                summary['normal'].append(summary_district)
             else:
-                summary['indigenous'].append(district)
+                summary['indigenous'].append(summary_district)
             for region_code in towns:
                 town_code = region_code
                 vill_code = '000'
@@ -281,14 +280,15 @@ def gen_councilMember(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).str
     for county_code, areas in mapping_county_area_town_vill.items():
         county_code = county_code + '_000'
         print(mapping_county_town[county_code])
-        gen_seat(updatedAt, county_code, data)
+        if os.environ['IS_TV'] =='false':
+            gen_seat(updatedAt, county_code, data)
+            gen_map(updatedAt, county_code, data, 'county',county_code, areas, is_running)
+            if os.environ['isSTARTED'] != 'true':
+                for area_code, towns in areas.items():
+                    for town_code, vills in towns.items():
+                        updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S')
+                        gen_map(updatedAt, county_code, data, 'town', town_code, vills, area_code)
         gen_vote(updatedAt, county_code, data, year)
-        gen_map(updatedAt, county_code, data, 'county',county_code, areas, is_running)
-        if os.environ['isSTARTED'] != 'true':
-            for area_code, towns in areas.items():
-                for town_code, vills in towns.items():
-                    updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S')
-                    gen_map(updatedAt, county_code, data, 'town', town_code, vills, area_code)
     return
 
 

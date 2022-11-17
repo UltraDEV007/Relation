@@ -176,9 +176,9 @@ if __name__ == "__main__":
         referendumfile, is_running = request_cec_by_type('rf')
         if referendumfile:
             polling_data = parse_cec_referendum(referendumfile)
-            updatedAt = referendumfile["ST"]
-            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"
-            gen_referendum(updatedAt, polling_data, is_running=is_running)
+            updatedAt = referendumfile["ST"] 
+            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
+            gen_referendum(updatedAt,polling_data, is_running=is_running)
             print("referendum done")
         else:
             print('problem of cec referendum data ')

@@ -128,7 +128,7 @@ def gen_tv_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime
     data = {"updatedAt": updatedAt,
             "is_running": is_running,
             "polling": result}
-    save_file(destination_file, data, year, 'tv')
+    save_file(destination_file, data, year)
     return
 
 
@@ -232,7 +232,6 @@ def gen_vote(updatedAt, polling_data='', candidate_info=candidate_info, year=dat
     destination_file = f'{ENV_FOLDER}/{VERSION}/{year}/mayor/all.json'
 
     save_file(destination_file, data, year)
-    save_file(destination_file, data, year, 'tv')
     return
 
 
@@ -311,43 +310,49 @@ def gen_map(updatedAt, scope, polling_data,  scope_code='', sub_region='', is_ru
 
 
 def gen_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S'), data = '', is_running = False):
-    gen_special_municipality(updatedAt, data, is_running)
+    if os.environ['IS_TV'] == 'false':
+        gen_special_municipality(updatedAt, data, is_running)
+        gen_map(updatedAt, 'country', data, '00_000_000', candidate_info, is_running=is_running)
+        for county_code, towns in mapping_county_town_vill.items():
+            if county_code == '10_020':  # 2022嘉義市長選舉延後
+                continue
+            county_code = county_code + '_000'
+            gen_map(updatedAt, 'county', data, county_code, towns, is_running=is_running)
+            if os.environ['isSTARTED'] != 'true':
+                for town_code, vills in towns.items():
+                    town_code = county_code[:-3] + town_code
+                    gen_map(updatedAt, 'town', polling_data='',
+                            scope_code = town_code, sub_region=vills)
     gen_vote(updatedAt, data)
-    gen_map(updatedAt, 'country', data, '00_000_000', candidate_info, is_running=is_running)
-    for county_code, towns in mapping_county_town_vill.items():
-        if county_code == '10_020':  # 2022嘉義市長選舉延後
-            continue
-        county_code = county_code + '_000'
-        gen_map(updatedAt, 'county', data, county_code, towns, is_running=is_running)
-        if os.environ['isSTARTED'] != 'true':
-            for town_code, vills in towns.items():
-                town_code = county_code[:-3] + town_code
-                gen_map(updatedAt, 'town', polling_data='',
-                        scope_code = town_code, sub_region=vills)
+    
     return
 
 
 if __name__ == '__main__':
     if os.environ['isSTARTED'] == 'true':
         jsonfile, is_running = request_cec_by_type()
-        if jsonfile:
+        if jsonfile is False:
+            print('problem of cec data ')
+            if os.environ['IS_TV']  == 'true':
+                sht_data, source = parse_tv_sht()
+                if 'cec' not in source.values():
+                    gen_tv_mayor(source=source, sht_data=sht_data)
+                    print('tv mayor done')
+        else:
+            updatedAt = jsonfile["ST"] 
+            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
             polling_data = parse_cec_mayor(jsonfile["TC"])
-            updatedAt = jsonfile["ST"]
-            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"
+            if os.environ['IS_TV'] == 'true':
+                try:
+                    sht_data, source = parse_tv_sht()
+                    gen_tv_mayor(updatedAt, source, sht_data, polling_data)
+                    print('tv mayor done')
+                except googleapiclient.errors.HttpError:
+                    print('sht failed')
             gen_mayor(updatedAt, polling_data, is_running)
             print("mayor done")
-            try:
-                sht_data, source = parse_tv_sht()
-                gen_tv_mayor(updatedAt, source, sht_data, polling_data, is_running)
-                print('tv mayor done')
-            except googleapiclient.errors.HttpError:
-                print('sht failed')
-        else:
-            print('problem of cec data ')
-            sht_data, source = parse_tv_sht()
-            if 'cec' not in source.values():
-                gen_tv_mayor(source, sht_data, is_running=True)
     else:
-        gen_mayor()  # default
-        gen_tv_mayor()
+        if os.environ['IS_TV'] == 'true':
+            gen_tv_mayor()
+        gen_mayor()
         print("mayor done")
