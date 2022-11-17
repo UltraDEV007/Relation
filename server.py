@@ -9,6 +9,24 @@ from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
 app = Flask(__name__)
 
+@app.route("/elections_json_rf", methods=['GET'])
+def elections_rf():
+    if os.environ['isSTARTED'] == 'true':
+        referendumfile, is_running = request_cec_by_type('rf')
+        if referendumfile:
+            polling_data = parse_cec_referendum(referendumfile)
+            updatedAt = referendumfile["ST"] 
+            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
+            gen_referendum(updatedAt,polling_data, is_running=is_running)
+            print("referendum done")
+        else:
+            print('problem of cec referendum data ')
+    else:
+        gen_referendum()
+        print("referendum done")
+    return 'done'
+
+        
 
 @app.route("/gen_elections_json", methods=['GET'])
 def elections():
@@ -34,25 +52,13 @@ def elections():
             sht_data, source = parse_tv_sht()
             if 'cec' not in source.values():
                 gen_tv_mayor(source=source, sht_data=sht_data)
-        referendumfile, is_running = request_cec_by_type('rf')
-        if referendumfile:
-            polling_data = parse_cec_referendum(referendumfile)
-            updatedAt = referendumfile["ST"] 
-            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
-            gen_referendum(updatedAt,polling_data, is_running=is_running)
-            print("referendum done")
-        else:
-            print('problem of cec referendum data ')
-        return 'done'
     else:
         gen_mayor()
         gen_tv_mayor()
         print("mayor done")
         gen_councilMember()
         print("councilMember done")
-        gen_referendum()
-        print("referendum done")
-        return 'done'
+    return 'done'
 
 
 @app.route("/dump_politics", methods=['GET'])
