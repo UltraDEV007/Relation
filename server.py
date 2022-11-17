@@ -32,29 +32,32 @@ def elections_rf():
 def elections():
     if os.environ['isSTARTED'] == 'true':
         jsonfile, is_running = request_cec_by_type()
-        if jsonfile:
+        if jsonfile is False:
+            print('problem of cec data ')
+            sht_data, source = parse_tv_sht()
+            if 'cec' not in source.values():
+                gen_tv_mayor(source=source, sht_data=sht_data)
+                print('tv mayor done')
+            
+        else:
             polling_data = parse_cec_mayor(jsonfile["TC"])
             updatedAt = jsonfile["ST"] 
             updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"# ‘0727172530’
-            gen_mayor(updatedAt, polling_data, is_running)
-            print("mayor done")
-            council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            gen_councilMember(updatedAt, council_data, is_running)
-            print("councilMember done")
             try:
                 sht_data, source = parse_tv_sht()
                 gen_tv_mayor(updatedAt, source, sht_data, polling_data)
                 print('tv mayor done')
             except googleapiclient.errors.HttpError:
                 print('sht failed')
-        else:
-            print('problem of cec data ')
-            sht_data, source = parse_tv_sht()
-            if 'cec' not in source.values():
-                gen_tv_mayor(source=source, sht_data=sht_data)
+            gen_mayor(updatedAt, polling_data, is_running)
+            print("mayor done")
+            council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
+            gen_councilMember(updatedAt, council_data, is_running)
+            print("councilMember done")
+            
     else:
-        gen_mayor()
         gen_tv_mayor()
+        gen_mayor()
         print("mayor done")
         gen_councilMember()
         print("councilMember done")
