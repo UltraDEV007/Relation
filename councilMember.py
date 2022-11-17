@@ -16,6 +16,8 @@ with open('mapping/councilMember_candidate_2022.json') as f:
 VOTES = 'prof3'
 ELEGIBLE_VOTERS = 'prof7'
 ENV_FOLDER = os.environ['ENV_FOLDER']
+IS_TV =  os.environ['IS_TV'] == 'true' 
+IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 
 def parse_cec_council(raw_data):
@@ -283,7 +285,7 @@ def gen_councilMember(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).str
         if os.environ['IS_TV'] =='false':
             gen_seat(updatedAt, county_code, data)
             gen_map(updatedAt, county_code, data, 'county',county_code, areas, is_running)
-            if os.environ['isSTARTED'] != 'true':
+            if IS_STARTED:
                 for area_code, towns in areas.items():
                     for town_code, vills in towns.items():
                         updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S')
@@ -293,16 +295,17 @@ def gen_councilMember(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).str
 
 
 if __name__ == '__main__':
-    if os.environ['isSTARTED'] == 'true':
+    if IS_STARTED:
         jsonfile, is_running = request_cec_by_type()
-        if jsonfile:
+        if jsonfile is False:
+            print('problem of cec data ')
+        else:
             updatedAt = jsonfile["ST"]
             updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"
             council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            gen_councilMember(updatedAt, council_data, is_running=is_running)
+            gen_councilMember(updatedAt, council_data, is_running)
             print("councilMember done")
-        else:
-            print('problem of cec referendum data ')
     else:
         gen_councilMember()
         print("councilMember done")
+    # upload_multiple_files()
