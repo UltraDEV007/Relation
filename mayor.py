@@ -68,7 +68,7 @@ def parse_tv_sht():
     return sht_data, source
 
 
-def gen_tv_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S'), source = '', sht_data = '', polling_data = ''):
+def gen_tv_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S'), source = '', sht_data = '', polling_data = '', is_running=False):
     result = []
     if source:
         for county_name, candNos in sht_data.items():
@@ -126,12 +126,13 @@ def gen_tv_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/mayor/tv.json'
     data = {"updatedAt": updatedAt,
+            "is_running": is_running,
             "polling": result}
     save_file(destination_file, data, year, 'tv')
     return
 
 
-def gen_special_municipality(updatedAt, polling_data):
+def gen_special_municipality(updatedAt, polling_data, is_running=False):
     result = []
     for county_code, default_candidates in default_special_municipality.items():
         candidates = []
@@ -174,6 +175,7 @@ def gen_special_municipality(updatedAt, polling_data):
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/mayor/special_municipality.json'
     data = {"updatedAt": updatedAt,
+            "is_running": is_running,
             "polling": result}
     save_file(destination_file, data, year)
     return
@@ -309,7 +311,7 @@ def gen_map(updatedAt, scope, polling_data,  scope_code='', sub_region='', is_ru
 
 
 def gen_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S'), data = '', is_running = False):
-    gen_special_municipality(updatedAt, data)
+    gen_special_municipality(updatedAt, data, is_running)
     gen_vote(updatedAt, data)
     gen_map(updatedAt, 'country', data, '00_000_000', candidate_info, is_running=is_running)
     for county_code, towns in mapping_county_town_vill.items():
@@ -336,7 +338,7 @@ if __name__ == '__main__':
             print("mayor done")
             try:
                 sht_data, source = parse_tv_sht()
-                gen_tv_mayor(updatedAt, source, sht_data, polling_data)
+                gen_tv_mayor(updatedAt, source, sht_data, polling_data, is_running)
                 print('tv mayor done')
             except googleapiclient.errors.HttpError:
                 print('sht failed')
@@ -344,7 +346,7 @@ if __name__ == '__main__':
             print('problem of cec data ')
             sht_data, source = parse_tv_sht()
             if 'cec' not in source.values():
-                gen_tv_mayor(source, sht_data)
+                gen_tv_mayor(source, sht_data, is_running=True)
     else:
         gen_mayor()  # default
         gen_tv_mayor()
