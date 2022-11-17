@@ -4,15 +4,19 @@ import os
 import googleapiclient
 from datetime import datetime
 from tools.cec_data import request_cec_by_type
+from tools.uploadGCS import upload_multiple_files
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
 app = Flask(__name__)
 
+IS_TV =  os.environ['IS_TV'] == 'true' 
+IS_STARTED = os.environ['IS_STARTED'] == 'true'
+
 
 @app.route("/elections_json_rf", methods=['GET'])
 def elections_rf():
-    if os.environ['isSTARTED'] == 'true':
+    if IS_STARTED:
         referendumfile, is_running = request_cec_by_type('rf')
         if referendumfile:
             polling_data = parse_cec_referendum(referendumfile)
@@ -25,16 +29,17 @@ def elections_rf():
     else:
         gen_referendum()
         print("referendum done")
+    # upload_multiple_files()
     return 'done'
 
 
 @app.route("/gen_elections_json", methods=['GET'])
 def elections():
-    if os.environ['isSTARTED'] == 'true':
+    if IS_STARTED:
         jsonfile, is_running = request_cec_by_type()
         if jsonfile is False:
             print('problem of cec data ')
-            if os.environ['IS_TV'] == 'true':
+            if IS_TV:
                 sht_data, source = parse_tv_sht()
                 if 'cec' not in source.values():
                     gen_tv_mayor(source=source, sht_data=sht_data)
@@ -44,7 +49,7 @@ def elections():
             updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"
             mayor_data = parse_cec_mayor(jsonfile["TC"])
             council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            if os.environ['IS_TV'] == 'true':
+            if IS_TV:
                 try:
                     sht_data, source = parse_tv_sht()
                     gen_tv_mayor(updatedAt, source, sht_data, mayor_data)
@@ -56,13 +61,14 @@ def elections():
             gen_councilMember(updatedAt, council_data, is_running)
             print("councilMember done")
     else:
-        if os.environ['IS_TV'] == 'true':
+        if IS_TV:
             gen_tv_mayor()
         else:
             gen_councilMember()
             print("councilMember done")
         gen_mayor()
         print("mayor done")
+    upload_multiple_files()
     return 'done'
 
 
