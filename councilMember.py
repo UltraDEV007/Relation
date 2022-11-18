@@ -281,7 +281,6 @@ def gen_councilMember(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).str
     year = datetime.now().year
     for county_code, areas in mapping_county_area_town_vill.items():
         county_code = county_code + '_000'
-        print(mapping_county_town[county_code])
         gen_vote(updatedAt, county_code, data, year)
         if IS_TV:
             return
