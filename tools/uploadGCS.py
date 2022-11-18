@@ -18,10 +18,7 @@ def upload_multiple_folders():
         os.system(f'gsutil -m -h "Cache-Control: max-age=30" rsync -r {ENV_FOLDER}/v2/2022 gs://{BUCKET}/{ENV_FOLDER}/v2/2022')
     
 def upload_blob(destination_file, year):
-    if IS_TV:
-        storage_client = storage.Client().from_service_account_json('tv-key.json')
-    else:
-        storage_client = storage.Client().from_service_account_json('readr-key.json')
+    storage_client = storage.Client().from_service_account_json('gcs-key.json')
     bucket = storage_client.bucket(os.environ['BUCKET'])
     blob = bucket.blob(destination_file)
     blob.upload_from_filename(destination_file)
