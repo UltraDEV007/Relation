@@ -5,13 +5,13 @@ from tools.uploadGCS import save_file
 from tools.cec_data import request_cec_by_type
 from configs import districts_mapping
 
-with open('mapping/mapping_county_town.json') as f:
+with open('mapping/mapping_county_town.json', encoding='utf-8') as f:
     mapping_county_town = json.loads(f.read())
-with open('mapping/mapping_county_area_town_vill.json') as f:
+with open('mapping/mapping_county_area_town_vill.json', encoding='utf-8') as f:
     mapping_county_area_town_vill = json.loads(f.read())
-with open('mapping/mapping_county_town_vill.json') as f:
+with open('mapping/mapping_county_town_vill.json', encoding='utf-8') as f:
     mapping_county_town_vill = json.loads(f.read())
-with open('mapping/councilMember_candidate_2022.json') as f:
+with open('mapping/councilMember_candidate_2022.json', encoding='utf-8') as f:
     candidate_info = json.loads(f.read())
 VOTES = 'prof3'
 ELEGIBLE_VOTERS = 'prof7'
