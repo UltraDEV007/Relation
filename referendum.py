@@ -6,11 +6,11 @@ from tools.uploadGCS import save_file
 ENV_FOLDER = os.environ['ENV_FOLDER']
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
-with open('mapping/mapping_county_town.json') as f:
+with open('mapping/mapping_county_town.json', encoding='utf-8') as f:
     mapping_county_town = json.loads(f.read())
-with open('mapping/mapping_county_town_vill.json') as f:
+with open('mapping/mapping_county_town_vill.json', encoding='utf-8') as f:
     mapping_county_town_vill = json.loads(f.read())
-with open('mapping/referendum_topic.json') as f:
+with open('mapping/referendum_topic.json', encoding='utf-8') as f:
     referendum_topic = json.loads(f.read())
 
 

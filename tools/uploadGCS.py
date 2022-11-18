@@ -33,6 +33,6 @@ def upload_blob(destination_file, year):
 def save_file(destination_file, data, year):
     if not os.path.exists(os.path.dirname(destination_file)):
         os.makedirs(os.path.dirname(destination_file))
-    with open(destination_file, 'w') as f:
+    with open(destination_file, 'w', encoding='utf-8') as f:
         f.write(json.dumps(data, ensure_ascii=False))
     # print(destination_file)

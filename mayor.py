@@ -6,11 +6,11 @@ from tools.cec_data import request_cec_by_type
 from tools.conn import get_sht_data
 from configs import default_special_municipality, default_tv
 import googleapiclient
-with open('mapping/mapping_county_town.json') as f:
+with open('mapping/mapping_county_town.json', encoding='utf-8') as f:
     mapping_county_town = json.loads(f.read())
-with open('mapping/mapping_county_town_vill.json') as f:
+with open('mapping/mapping_county_town_vill.json', encoding='utf-8') as f:
     mapping_county_town_vill = json.loads(f.read())
-with open('mapping/mayor_candidate_2022.json') as f:
+with open('mapping/mayor_candidate_2022.json', encoding='utf-8') as f:
     candidate_info = json.loads(f.read())
 ENV_FOLDER = os.environ['ENV_FOLDER']
 IS_TV =  os.environ['PROJECT'] == 'tv'
