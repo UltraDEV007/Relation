@@ -181,4 +181,4 @@ if __name__ == "__main__":
     else:
         gen_referendum()
         print("referendum done")
-    # upload_multiple_files()
+    # upload_multiple_folders()

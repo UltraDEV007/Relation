@@ -13,7 +13,7 @@ with open('mapping/mapping_county_town_vill.json') as f:
 with open('mapping/mayor_candidate_2022.json') as f:
     candidate_info = json.loads(f.read())
 ENV_FOLDER = os.environ['ENV_FOLDER']
-IS_TV =  os.environ['IS_TV'] == 'true'
+IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 
@@ -327,24 +327,15 @@ def gen_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%
                 town_code = county_code[:-3] + town_code
                 gen_map(updatedAt, 'town', polling_data='',
                         scope_code = town_code, sub_region=vills)
-    
-    
     return
 
 
 if __name__ == '__main__':
     if IS_STARTED:
         jsonfile, is_running = request_cec_by_type()
-        if jsonfile is False:
-            print('problem of cec data ')
-            if IS_TV:
-                sht_data, source = parse_tv_sht()
-                if 'cec' not in source.values():
-                    gen_tv_mayor(source=source, sht_data=sht_data)
-                    print('tv mayor done')
-        else:
-            updatedAt = jsonfile["ST"]
-            updatedAt = f"{datetime.now().year}-{updatedAt[:2]}-{updatedAt[2:4]} {updatedAt[4:6]}:{updatedAt[6:8]}:{updatedAt[8:10]}"
+        if jsonfile:
+            updatedAt = datetime.strptime(jsonfile["ST"], '%m%d%H%M%S')
+            updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
             mayor_data = parse_cec_mayor(jsonfile["TC"])
             if IS_TV:
                 try:
@@ -355,9 +346,16 @@ if __name__ == '__main__':
                     print('sht failed')
             gen_mayor(updatedAt, mayor_data, is_running)
             print("mayor done")
+        else:
+            print('problem of cec data ')
+            if IS_TV:
+                sht_data, source = parse_tv_sht()
+                if 'cec' not in source.values():
+                    gen_tv_mayor(source=source, sht_data=sht_data)
+                    print('tv mayor done')
     else:
         if IS_TV:
             gen_tv_mayor()
         gen_mayor()
         print("mayor done")
-    # upload_multiple_files()
+    # upload_multiple_folders()
