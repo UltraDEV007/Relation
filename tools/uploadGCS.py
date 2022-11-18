@@ -8,6 +8,7 @@ IS_TV =  os.environ['PROJECT'] == 'tv'
 BUCKET = os.environ['BUCKET']
 ENV_FOLDER = os.environ['ENV_FOLDER']
 
+
 def upload_multiple_folders():
     os.system('gcloud auth activate-service-account --key-file=gcs-key.json')
     if IS_TV:
