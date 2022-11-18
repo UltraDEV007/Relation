@@ -22,7 +22,8 @@ def dump_politics(election_id):
     }
     connection = psycopg2.connect(database=db, user=db_user,password=db_pw, host=db_host, port=db_port, **keepalive_kwargs)
     cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    dump_query = """SELECT "desc", "content", "Person"."name", "Election"."name", "ElectionArea"."name", "Organization"."name" FROM "Politic", "PersonElection", "Person", "Election", "ElectionArea", "Organization" WHERE "Politic".person = "PersonElection".id AND "PersonElection".election = "Election"."id" AND "PersonElection"."person_id" = "Person"."id" AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Organization"."id" = "PersonElection"."party" AND "Politic"."status" = 'verified' AND "Election".id = """ + str(election_id)
+    #dump_query = """SELECT "Politic"."id", "desc", "content", "Person"."name", "Election"."name", "ElectionArea"."name", "Organization"."name", "Tag"."name" FROM "Politic", "PersonElection", "Person", "Election", "ElectionArea", "Organization", "Tag" WHERE "Politic".person = "PersonElection".id AND "PersonElection".election = "Election"."id" AND "PersonElection"."person_id" = "Person"."id" AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND ("Organization"."id" = "PersonElection"."party" OR "PersonElection"."party" is NULL) AND "Politic"."status" = 'verified' AND "Politic"."tag" = "Tag"."id" AND "Election".id = """ + str(election_id)
+    dump_query = """SELECT "Politic"."id", "desc", "content", "Person"."name", "Election"."name", "ElectionArea"."name", "Tag"."name" FROM "Politic", "PersonElection", "Person", "Election", "ElectionArea", "Tag" WHERE "Politic".person = "PersonElection".id AND "PersonElection".election = "Election"."id" AND "PersonElection"."person_id" = "Person"."id" AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."status" = 'verified' AND "Politic"."tag" = "Tag"."id" AND "Election".id = """ + str(election_id)
     cursor.execute(dump_query)
     all_politics = cursor.fetchall()
     destination_file = 'politics/politics-' + str(election_id) + ".csv"
@@ -31,7 +32,7 @@ def dump_politics(election_id):
 
     with open(destination_file, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['政見', '政見補充', '候選人', '選舉', '選區', '政黨'])
+        writer.writerow(['政見 id', '政見', '政見補充', '候選人', '選舉', '選區', '政黨', '分類'])
         writer.writerows(all_politics)
         upload_blob(destination_file, 2022)
     connection.close()
@@ -58,7 +59,14 @@ def landing():
     cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     for election in election_id:
+        if isinstance(election["id"], list):
+            multiple_election = True
+        else:
+            multiple_election = False 
+
         get_election_areas = """SELECT "ElectionArea"."id", "ElectionArea"."name", substring("ElectionArea"."name", 0, 4), substring("ElectionArea"."name", 5, 2) FROM "ElectionArea"  WHERE "ElectionArea"."election" = {};""".format(str(election["id"]))
+        if multiple_election == True and len(election["id"]) == 2:
+            get_election_areas = """SELECT "ElectionArea"."id", "ElectionArea"."name", substring("ElectionArea"."name", 0, 4), substring("ElectionArea"."name", 5, 2) FROM "ElectionArea"  WHERE "ElectionArea"."election" = {} OR "ElectionArea"."election" = {};""".format(str(election["id"][0]), str(election["id"][1]))
         cursor.execute(get_election_areas)
         election_areas = cursor.fetchall()
         area_hash = {}
@@ -72,7 +80,9 @@ def landing():
             area_hash[area[2]].append({ "id": area[0], "order": order, "name": area[1], "city": area[2], "candidates": [] })
                 
         #fetch politics
-        dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
+        dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
+        if multiple_election == True and len(election["id"]) == 2:
+            dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND ("PersonElection"."election" = {} OR "PersonElection"."election" = {}) GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"][0]), str(election["id"][1]))
         cursor.execute(dump_query)
         all_politics = cursor.fetchall()
         dist_politic = {}
@@ -85,7 +95,9 @@ def landing():
                 dist_amount[count[2]] = 1
         result[election["total"]] = len(dist_politic)
         #fetch all candidates
-        get_candidates = """SELECT "Person"."birth_date_year", "PersonElection".id, "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
+        get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
+        if multiple_election == True and len(election["id"]) == 2:
+            get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE ("Election".id = {} OR "Election".id = {}) AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"][0]), str(election["id"][1]))
         cursor.execute(get_candidates)
         all_candidates = cursor.fetchall()
         area_candidates = {}
@@ -118,24 +130,25 @@ def landing():
                 {"name": "南投縣", "city": "南投縣", "total": 0 },
                 {"name": "臺中市", "city": "臺中市", "total": 0 },
             ]} )
-            result['mayorAndPolitics'].append( {"key": "south", "name": "南部", "amount": 0, "total": 0, "areas": [
+            result['mayorAndPolitics'].append( {"key": "south", "name": "南部", "amount": 0, "total": 17, "areas": [
                 {"name": "臺南市", "city": "臺南市", "total": 0 },
                 {"name": "屏東縣", "city": "屏東縣", "total": 0 },
                 {"name": "嘉義縣", "city": "嘉義縣", "total": 0 },
                 {"name": "高雄市", "city": "高雄市", "total": 0 },
                 {"name": "嘉義市", "city": "嘉義市", "total": 0 },
             ]} )
-            result['mayorAndPolitics'].append( {"key": "east", "name": "東部", "amount": 0, "total": 0, "areas": [
+            result['mayorAndPolitics'].append( {"key": "east", "name": "東部", "amount": 0, "total": 6, "areas": [
                 {"name": "花蓮縣", "city": "花蓮縣", "total": 0 },
                 {"name": "臺東縣", "city": "臺東縣", "total": 0 },
             ]} )
-            result['mayorAndPolitics'].append( {"key": "island", "name": "離島", "amount": 0, "total": 0, "areas": [
+            result['mayorAndPolitics'].append( {"key": "island", "name": "離島", "amount": 0, "total": 12, "areas": [
                 {"name": "金門縣", "city": "金門縣", "total": 0 },
                 {"name": "澎湖縣", "city": "澎湖縣", "total": 0 },
                 {"name": "連江縣", "city": "連江縣", "total": 0 },
             ]} )
             for section in result['mayorAndPolitics']:
                 section_amount = 0
+                section_total = 0
                 for section_area in section['areas']:
                     section_area_amount = 0
                     if section_area['name'] in area_hash:
@@ -148,8 +161,10 @@ def landing():
                             section_area["done"] = 0
                         section_area["candidates"] = area_candidates[section_area['name']]
                         section_area["total"] = len(area_candidates[section_area['name']])
+                        section_total = section_total + section_area["total"]
                         section_area_amount = section_area_amount = section_area["total"]
                 section['amount'] = section_amount
+                section['total'] = section_total
                     
         elif election['type'] == 'councilorAndPolitics':
             result["councilorAndPolitics"] = []
