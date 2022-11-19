@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import json
 import os
-from tools.uploadGCS import save_file
+from tools.uploadGCS import save_file, upload_multiple_folders
 from tools.cec_data import request_cec_by_type
 from configs import districts_mapping
 
@@ -286,11 +286,11 @@ def gen_councilMember(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).str
         county_code = county_code + '_000'
         gen_vote(updatedAt, county_code, data, year)
         if IS_TV:
-            return
+            continue
         gen_seat(updatedAt, county_code, data)
         gen_map(updatedAt, county_code, data, 'county', county_code, areas, is_running)
         if IS_STARTED:
-            return
+            continue
         for area_code, towns in areas.items():
             for town_code, vills in towns.items():
                 updatedAt = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
@@ -315,4 +315,4 @@ if __name__ == '__main__':
     else:
         gen_councilMember()
         print("councilMember done")
-    # upload_multiple_folders()
+    # upload_multiple_folders(datetime.now().year)
