@@ -29,7 +29,7 @@ def elections_rf():
     else:
         gen_referendum()
         print("referendum done")
-    upload_multiple_folders()
+    upload_multiple_folders(datetime.now().year)
     return 'done'
 
 
@@ -67,7 +67,7 @@ def elections():
         print("councilMember done")
         gen_mayor()
         print("mayor done")
-    upload_multiple_folders()
+    upload_multiple_folders(datetime.now().year)
     return 'done'
 
 

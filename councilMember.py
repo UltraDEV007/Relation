@@ -16,7 +16,7 @@ with open('mapping/councilMember_candidate_2022.json', encoding='utf-8') as f:
 VOTES = 'prof3'
 ELEGIBLE_VOTERS = 'prof7'
 ENV_FOLDER = os.environ['ENV_FOLDER']
-IS_TV =  os.environ['PROJECT'] == 'tv' 
+IS_TV = os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 
@@ -24,7 +24,7 @@ def parse_cec_council(raw_data):
     organized_data = {}
     for district in raw_data:
         county_code = f"{district['prvCode']}_{district['cityCode']}_000"
-        county = organized_data.setdefault(county_code,{"area": {}, "town": {}})
+        county = organized_data.setdefault(county_code, {"area": {}, "town": {}})
         if district['deptCode'] is None or district['deptCode'] == '000':
             region_code = district['areaCode']
             region = county["area"].setdefault(region_code, {'detailed': {
@@ -255,25 +255,28 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
                 result['indigenous'].append(district)
     for type in result:
         if result[type]:
-            data = {"updatedAt": updatedAt,
-                    "is_running": is_running,
-                    "districts": result[type]}
             if scope == 'county':
-                data['summary'] = {
-                    "range": mapping_county_town[county_code],
-                    "county": county_code[:-4].replace('_', ''),
-                    "town": None,
-                    "vill": None,
-                    "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0,
-                    "districts": summary[type]
-                }
+                data = {"updatedAt": updatedAt,
+                        "is_running": is_running,
+                        'summary': {
+                            "range": mapping_county_town[county_code],
+                            "county": county_code[:-4].replace('_', ''),
+                            "town": None,
+                            "vill": None,
+                            "profRate": round(county_votes / county_eligible_voters * 100, 2) if county_eligible_voters else 0,
+                            "districts": summary[type]
+                        },
+                        "districts": result[type]}
+            else:
+                data = {"updatedAt": updatedAt,
+                        "is_running": is_running,
+                        "districts": result[type]}
             dest_county = county_code[:-3].replace("_", "")
             if scope == 'county':
                 destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{type}/{dest_county}.json'
             else:
                 destination_file = f'{ENV_FOLDER}/{year}/councilMember/map/{scope}/{type}/{dest_county}{town_code}.json'
-
-            save_file(destination_file, dict(sorted(data.items(), reverse=True)), year)
+            save_file(destination_file, data, year)
     return
 
 
@@ -285,13 +288,15 @@ def gen_councilMember(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).str
         if IS_TV:
             return
         gen_seat(updatedAt, county_code, data)
-        gen_map(updatedAt, county_code, data, 'county',county_code, areas, is_running)
+        gen_map(updatedAt, county_code, data, 'county', county_code, areas, is_running)
         if IS_STARTED:
-            for area_code, towns in areas.items():
-                for town_code, vills in towns.items():
-                    updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S')
-                    gen_map(updatedAt, county_code, data, 'town', town_code, vills, area_code)
-        
+            return
+        for area_code, towns in areas.items():
+            for town_code, vills in towns.items():
+                updatedAt = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                gen_map(updatedAt, county_code, data,
+                        'town', town_code, vills, area_code)
+
     return
 
 
@@ -301,7 +306,8 @@ if __name__ == '__main__':
         if jsonfile:
             updatedAt = datetime.strptime(jsonfile["ST"], '%m%d%H%M%S')
             updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
-            council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
+            council_data = parse_cec_council(
+                jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
             gen_councilMember(updatedAt, council_data, is_running)
             print("councilMember done")
         else:
