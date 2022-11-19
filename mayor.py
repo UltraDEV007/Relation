@@ -322,11 +322,12 @@ def gen_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%
             continue
         county_code = county_code + '_000'
         gen_map(updatedAt, 'county', data, county_code, towns, is_running=is_running)
-        if not IS_STARTED:
-            for town_code, vills in towns.items():
-                town_code = county_code[:-3] + town_code
-                gen_map(updatedAt, 'town', polling_data='',
-                        scope_code = town_code, sub_region=vills)
+        if IS_STARTED:
+            continue
+        for town_code, vills in towns.items():
+            town_code = county_code[:-3] + town_code
+            gen_map(updatedAt, 'town', polling_data='',
+                    scope_code = town_code, sub_region=vills)
     return
 
 
