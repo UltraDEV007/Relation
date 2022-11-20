@@ -5877,6 +5877,17 @@
                 "tksRate": 0,
                 "candVictor": false
             },
+            "05": {
+                "name": "黄建昌",
+                "name_id": "43348",
+                "name_img": "https://whoareyou-gcs.readr.tw/person/43348.jpg",
+                "party": "台灣基進",
+                "party_id": "62",
+                "party_img": null,
+                "tks": 0,
+                "tksRate": 0,
+                "candVictor": false
+            },
             "06": {
                 "name": "蔣琦君",
                 "name_id": "43350",
@@ -5894,17 +5905,6 @@
                 "name_img": "https://whoareyou-gcs.readr.tw/person/38650.jpg",
                 "party": "中國國民黨",
                 "party_id": "22",
-                "party_img": null,
-                "tks": 0,
-                "tksRate": 0,
-                "candVictor": false
-            },
-            "09": {
-                "name": "黄建昌",
-                "name_id": "43348",
-                "name_img": "https://whoareyou-gcs.readr.tw/person/43348.jpg",
-                "party": "台灣基進",
-                "party_id": "62",
                 "party_img": null,
                 "tks": 0,
                 "tksRate": 0,
@@ -6154,9 +6154,9 @@
                 "candVictor": false
             },
             "05": {
-                "name": "黃麗招",
-                "name_id": "38674",
-                "name_img": "https://whoareyou-gcs.readr.tw/person/38674.jpg",
+                "name": "陳進星",
+                "name_id": "43357",
+                "name_img": "https://whoareyou-gcs.readr.tw/person/43357.jpg",
                 "party": "無",
                 "party_id": "",
                 "party_img": "",
@@ -6190,6 +6190,17 @@
                 "name": "林緯",
                 "name_id": "38676",
                 "name_img": "https://whoareyou-gcs.readr.tw/person/38676.jpg",
+                "party": "無",
+                "party_id": "",
+                "party_img": "",
+                "tks": 0,
+                "tksRate": 0,
+                "candVictor": false
+            },
+            "09": {
+                "name": "黃麗招",
+                "name_id": "38674",
+                "name_img": "https://whoareyou-gcs.readr.tw/person/38674.jpg",
                 "party": "無",
                 "party_id": "",
                 "party_img": "",
@@ -12528,6 +12539,17 @@
                 "tksRate": 0,
                 "candVictor": false
             },
+            "16": {
+                "name": "曾琮愷",
+                "name_id": "43435",
+                "name_img": "https://whoareyou-gcs.readr.tw/person/43435.jpg",
+                "party": "民主進步黨",
+                "party_id": "25",
+                "party_img": null,
+                "tks": 0,
+                "tksRate": 0,
+                "candVictor": false
+            },
             "17": {
                 "name": "王鵬霖",
                 "name_id": "43437",
@@ -15435,6 +15457,17 @@
                 "name": "王薇茗",
                 "name_id": "40046",
                 "name_img": "https://whoareyou-gcs.readr.tw/person/40046.jpg",
+                "party": "無",
+                "party_id": "",
+                "party_img": "",
+                "tks": 0,
+                "tksRate": 0,
+                "candVictor": false
+            },
+            "02": {
+                "name": "許允良",
+                "name_id": "6541",
+                "name_img": "https://whoareyou-gcs.readr.tw/person/6541.jpg",
                 "party": "無",
                 "party_id": "",
                 "party_img": "",
