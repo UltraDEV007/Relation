@@ -45,7 +45,7 @@ default_seat = {
     "09_020_000": 19,
     "09_007_000": 9
 }
-default_seat_name = "尚未獲得的席次"
+default_seat_name = "開票中 席次尚未確認"
 
 districts_mapping = {"臺北市": "taipeiCity", "新北市": "newTaipeiCity", "桃園市": "taoyuanCity", "臺中市": "taichungCity", "臺南市": "tainanCity", "高雄市": "kaohsiungCity",
                      "新竹縣": "hsinchuCounty", "苗栗縣": "miaoliCounty", "彰化縣": "changhuaCounty", "南投縣": "nantouCounty", "雲林縣": "yunlinCounty", "嘉義縣": "chiayiCounty",
