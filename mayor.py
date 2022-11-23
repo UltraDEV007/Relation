@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import json
 import os
-from tools.uploadGCS import save_file
+from tools.uploadGCS import save_file, upload_multiple_folders
 from tools.cec_data import request_cec_by_type
 from tools.conn import get_sht_data
 from configs import default_special_municipality, default_tv
@@ -15,7 +15,7 @@ with open('mapping/mayor_candidate_2022.json', encoding='utf-8') as f:
 ENV_FOLDER = os.environ['ENV_FOLDER']
 IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
-
+POLITICS_URL = os.environ['POLITICS_URL']
 
 def parse_cec_mayor(data):
     organized_data = {}
@@ -70,7 +70,8 @@ def parse_tv_sht():
     return sht_data, source
 
 
-def gen_tv_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S'), source = '', sht_data = '', polling_data = '', is_running=False):
+def gen_tv_mayor(updatedAt = '', source = '', sht_data = '', polling_data = '', is_running=False):
+    updatedAt = updatedAt if updatedAt else (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S')
     result = []
     if source:
         for county_name, candNos in sht_data.items():
@@ -192,7 +193,7 @@ def gen_vote(updatedAt, polling_data='', candidate_info=candidate_info, year=dat
                 'candNo': candNo,
                 'name': {
                     'label': c_info['name'],
-                    'href': f"./person/{c_info['name_id']}",
+                    'href': f"{POLITICS_URL}/person/{c_info['name_id']}",
                     'imgSrc': c_info['name_img'] if c_info['name_img'] else ''
                 },
                 'party': {
@@ -359,4 +360,4 @@ if __name__ == '__main__':
             gen_tv_mayor()
         gen_mayor()
         print("mayor done")
-    # upload_multiple_folders()
+    # upload_multiple_folders(2022)
