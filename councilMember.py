@@ -3,7 +3,7 @@ import json
 import os
 from tools.uploadGCS import save_file, upload_multiple_folders
 from tools.cec_data import request_cec_by_type
-from configs import districts_mapping
+from configs import districts_mapping, default_seat, default_seat_name
 
 with open('mapping/mapping_county_town.json', encoding='utf-8') as f:
     mapping_county_town = json.loads(f.read())
@@ -48,24 +48,26 @@ def parse_cec_council(raw_data):
 
 def gen_seat(updatedAt, county_code, polling_data):
     result = []
-    parties = {}
+    parties = {default_seat_name: default_seat[county_code]}
     if polling_data:
         for area_code, area in polling_data[county_code]["area"].items():
             for canNo, candidate in area.items():
                 if canNo == 'detailed':
                     continue
-                if candidate['candVictor'] == '*':
+                if candidate['candVictor'] == '*' or candidate['candVictor'] == '!':
                     try:
                         party = candidate_info[county_code][area_code][str(
                             canNo).zfill(2)]['party']
                     except KeyError:
                         continue
                     party = party if party != '無' else '無黨籍及未經政黨推薦'
+                    parties[default_seat_name] -= 1
                     if party in parties:
                         parties[party] += 1
                     else:
                         parties[party] = 1
-        for party, count in parties.items():
+    for party, count in parties.items():
+        if count:
             result.append({
                 "label": party,
                 "seats": count,
