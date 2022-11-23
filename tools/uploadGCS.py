@@ -36,4 +36,4 @@ def save_file(destination_file, data, year):
         os.makedirs(os.path.dirname(destination_file))
     with open(destination_file, 'w', encoding='utf-8') as f:
         f.write(json.dumps(data, ensure_ascii=False))
-    print(destination_file)
+    # print(destination_file)
