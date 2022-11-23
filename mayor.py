@@ -15,7 +15,7 @@ with open('mapping/mayor_candidate_2022.json', encoding='utf-8') as f:
 ENV_FOLDER = os.environ['ENV_FOLDER']
 IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
-
+POLITICS_URL = os.environ['POLITICS_URL']
 
 def parse_cec_mayor(data):
     organized_data = {}
@@ -193,7 +193,7 @@ def gen_vote(updatedAt, polling_data='', candidate_info=candidate_info, year=dat
                 'candNo': candNo,
                 'name': {
                     'label': c_info['name'],
-                    'href': f"./person/{c_info['name_id']}",
+                    'href': f"{POLITICS_URL}/person/{c_info['name_id']}",
                     'imgSrc': c_info['name_img'] if c_info['name_img'] else ''
                 },
                 'party': {

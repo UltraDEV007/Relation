@@ -13,11 +13,14 @@ with open('mapping/mapping_county_town_vill.json', encoding='utf-8') as f:
     mapping_county_town_vill = json.loads(f.read())
 with open('mapping/councilMember_candidate_2022.json', encoding='utf-8') as f:
     candidate_info = json.loads(f.read())
+
+
 VOTES = 'prof3'
 ELEGIBLE_VOTERS = 'prof7'
 ENV_FOLDER = os.environ['ENV_FOLDER']
 IS_TV = os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
+POLITICS_URL = os.environ['POLITICS_URL']
 
 
 def parse_cec_council(raw_data):
@@ -94,7 +97,7 @@ def gen_vote(updatedAt, county_code, polling_data, year, candidate_info=candidat
                 'candNo': candNo.lstrip('0'),
                 'name': {
                     'label': c_info['name'],
-                    'href': f"./person/{c_info['name_id']}",
+                    'href': f"{POLITICS_URL}/person/{c_info['name_id']}",
                     'imgSrc': c_info['name_img'] if c_info['name_img'] else ''
                 },
                 'party': {
