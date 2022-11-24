@@ -84,11 +84,12 @@ def gen_tv_mayor(updatedAt = '', source = '', sht_data = '', polling_data = '', 
                 county_code = [k for k in mapping_county_town.keys()][[v for v in mapping_county_town.values()].index(county_name)]
                 cand_infos = polling_data[county_code]
             for candNo in candNos.keys():
+                party = '無黨籍' if sht_data[county_name][candNo]['party'] == '無' else sht_data[county_name][candNo]['party']
                 try:
                     candidate = {
                         "candNo": str(candNo).zfill(2),
                         "name": sht_data[county_name][candNo]['name'],
-                        "party": sht_data[county_name][candNo]['party'],
+                        "party": party,
                         "tks": cand_infos[candNo]['tks'],
                         "tksRate": cand_infos[candNo]['tksRate'],
                         "candVictor": True if cand_infos[candNo]['candVictor'] == "*" else False
@@ -97,7 +98,7 @@ def gen_tv_mayor(updatedAt = '', source = '', sht_data = '', polling_data = '', 
                     candidate = {
                         "candNo": str(candNo).zfill(2),
                         "name": sht_data[county_name][candNo]['name'],
-                        "party": sht_data[county_name][candNo]['party'],
+                        "party": party,
                         "tks": 0,
                         "tksRate": 0,
                         "candVictor": False
@@ -114,10 +115,11 @@ def gen_tv_mayor(updatedAt = '', source = '', sht_data = '', polling_data = '', 
             county_name = mapping_county_town[county_code]
             for candNo in default_candidates:
                 c_info = candidate_info[county_code][str(candNo)]
+                party = '無黨籍' if c_info['party'] == '無' else c_info['party']
                 candTks = {
                     "candNo": str(candNo).zfill(2),
                     "name": c_info['name'],
-                    "party": c_info['party'],
+                    "party": party,
                     "tks": 0,
                     "tksRate": 0,
                     "candVictor": False,
