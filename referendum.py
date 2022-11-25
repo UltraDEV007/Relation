@@ -3,7 +3,7 @@ import json
 from datetime import datetime, timedelta
 from tools.cec_data import request_cec_by_type
 from tools.uploadGCS import save_file
-ENV_FOLDER = '/usr/src/app/gcs/' + os.environ['ENV_FOLDER']
+ENV_FOLDER = os.environ['ENV_FOLDER']
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 with open('mapping/mapping_county_town.json', encoding='utf-8') as f:

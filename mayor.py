@@ -12,7 +12,7 @@ with open('mapping/mapping_county_town_vill.json', encoding='utf-8') as f:
     mapping_county_town_vill = json.loads(f.read())
 with open('mapping/mayor_candidate_2022.json', encoding='utf-8') as f:
     candidate_info = json.loads(f.read())
-ENV_FOLDER = '/usr/src/app/gcs/' + os.environ['ENV_FOLDER']
+ENV_FOLDER = os.environ['ENV_FOLDER']
 IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 POLITICS_URL = os.environ['POLITICS_URL']
