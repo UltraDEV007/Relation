@@ -118,6 +118,7 @@ def gen_map(updatedAt, case_id, scope, polling_data,  scope_code, sub_region, co
         result.append(tks_info)
     data = {"updatedAt": updatedAt,
             "is_running": is_running,
+            "is_started": IS_STARTED,
             "districts": result}
 
     if scope == 'country':

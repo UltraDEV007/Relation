@@ -3,7 +3,7 @@ FROM gcr.io/google.com/cloudsdktool/cloud-sdk:slim
 COPY .  /usr/src/app/openrelation-elections
 WORKDIR  /usr/src/app/openrelation-elections
 
-
+ENV MNT_DIR /usr/src/app/gcs
 RUN addgroup user && adduser -h /home/user -D user -G user -s /bin/sh
 
 RUN apt-get update \
