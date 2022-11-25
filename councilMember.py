@@ -314,7 +314,7 @@ if __name__ == '__main__':
             updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
             council_data = parse_cec_council(
                 jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            gen_councilMember(updatedAt, council_data, is_running)
+            gen_councilMember(updatedAt, council_data, is_running=is_running)
             print("councilMember done")
         else:
             print('problem of cec data ')
