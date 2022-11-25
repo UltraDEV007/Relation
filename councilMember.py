@@ -17,7 +17,7 @@ with open('mapping/councilMember_candidate_2022.json', encoding='utf-8') as f:
 
 VOTES = 'prof3'
 ELEGIBLE_VOTERS = 'prof7'
-ENV_FOLDER = os.environ['ENV_FOLDER']
+ENV_FOLDER = '/usr/src/app/gcs/' + os.environ['ENV_FOLDER']
 IS_TV = os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 POLITICS_URL = os.environ['POLITICS_URL']
