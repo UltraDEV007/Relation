@@ -285,7 +285,8 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
     return
 
 
-def gen_councilMember(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S'), data = '', is_running = False):
+def gen_councilMember(updatedAt = '', data = '', is_running = False):
+    updatedAt = updatedAt if updatedAt else (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S')
     year = datetime.now().year
     for county_code, areas in mapping_county_area_town_vill.items():
         county_code = county_code + '_000'
