@@ -16,12 +16,13 @@ IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 @app.route("/elections_json_rf", methods=['GET'])
 def elections_rf():
+    year = datetime.now().year
     if IS_STARTED:
         referendumfile, is_running = request_cec_by_type('rf')
         if referendumfile:
             polling_data = parse_cec_referendum(referendumfile)
             updatedAt = datetime.strptime(referendumfile["ST"], '%m%d%H%M%S')
-            updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+            updatedAt = f"{year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
             gen_referendum(updatedAt, polling_data, is_running=is_running)
             print("referendum done")
         else:
@@ -29,23 +30,24 @@ def elections_rf():
     else:
         gen_referendum()
         print("referendum done")
-    upload_multiple_folders(datetime.now().year)
+    upload_multiple_folders(year)
     return 'done'
 
 
 @app.route("/gen_elections_json", methods=['GET'])
 def elections():
+    year = datetime.now().year
     if IS_STARTED:
         jsonfile, is_running = request_cec_by_type()
         if jsonfile:
             updatedAt = datetime.strptime(jsonfile["ST"], '%m%d%H%M%S')
-            updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+            updatedAt = f"{year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
             mayor_data = parse_cec_mayor(jsonfile["TC"])
             council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
             if IS_TV:
                 try:
                     sht_data, source = parse_tv_sht()
-                    gen_tv_mayor(updatedAt, source, sht_data, mayor_data)
+                    gen_tv_mayor(updatedAt, source, sht_data, mayor_data, is_running=is_running)
                     print('tv mayor done')
                 except googleapiclient.errors.HttpError:
                     print('sht failed')
@@ -58,7 +60,7 @@ def elections():
             if IS_TV:
                 sht_data, source = parse_tv_sht()
                 if 'cec' not in source.values():
-                    gen_tv_mayor(source=source, sht_data=sht_data)
+                    gen_tv_mayor(source=source, sht_data=sht_data, is_running=True)
                     print('tv mayor done')
     else:
         if IS_TV:
@@ -67,7 +69,7 @@ def elections():
         print("councilMember done")
         gen_mayor()
         print("mayor done")
-    upload_multiple_folders(datetime.now().year)
+    upload_multiple_folders(year)
     return 'done'
 
 

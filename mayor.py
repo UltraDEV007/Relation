@@ -314,7 +314,8 @@ def gen_map(updatedAt, scope, polling_data,  scope_code='', sub_region='', is_ru
     return
 
 
-def gen_mayor(updatedAt = (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S'), data = '', is_running = False):
+def gen_mayor(update = '', data = '', is_running = False):
+    updatedAt = update if update else (datetime.utcnow() + timedelta(hours = 8)).strftime('%Y-%m-%d %H:%M:%S')
     gen_vote(updatedAt, data)
     if IS_TV:
         return
@@ -344,7 +345,7 @@ if __name__ == '__main__':
             if IS_TV:
                 try:
                     sht_data, source = parse_tv_sht()
-                    gen_tv_mayor(updatedAt, source, sht_data, mayor_data)
+                    gen_tv_mayor(updatedAt, source, sht_data, mayor_data, is_running)
                     print('tv mayor done')
                 except googleapiclient.errors.HttpError:
                     print('sht failed')
@@ -355,7 +356,7 @@ if __name__ == '__main__':
             if IS_TV:
                 sht_data, source = parse_tv_sht()
                 if 'cec' not in source.values():
-                    gen_tv_mayor(source=source, sht_data=sht_data)
+                    gen_tv_mayor(source=source, sht_data=sht_data, is_running=True)
                     print('tv mayor done')
     else:
         if IS_TV:
