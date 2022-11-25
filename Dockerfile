@@ -24,6 +24,7 @@ RUN apt-get update \
     && pip install --upgrade pip \
     && pip install -r requirements.txt
 
+RUN chmod +x run.sh 
 EXPOSE 8080
 #CMD ["/usr/local/bin/uwsgi", "--ini", "server.ini"]
 CMD [ "/usr/src/app/openrelation-elections/run.sh"] 
