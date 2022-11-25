@@ -26,4 +26,4 @@ RUN apt-get update \
 
 EXPOSE 8080
 #CMD ["/usr/local/bin/uwsgi", "--ini", "server.ini"]
-CMD [ "/app/run.sh"] 
+CMD [ "/usr/src/app/openrelation-elections/run.sh"] 
