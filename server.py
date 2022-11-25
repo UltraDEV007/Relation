@@ -53,7 +53,7 @@ def elections():
                     print('sht failed')
             gen_mayor(updatedAt, mayor_data, is_running)
             print("mayor done")
-            gen_councilMember(updatedAt, council_data, is_running=is_running)
+            gen_councilMember(updatedAt, council_data, is_running)
             print("councilMember done")
         else:
             print('problem of cec data ')

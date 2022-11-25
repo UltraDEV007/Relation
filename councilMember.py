@@ -294,13 +294,14 @@ def gen_councilMember(updatedAt = '', data = '', is_running = False):
         if IS_TV:
             continue
         gen_seat(updatedAt, county_code, data)
+        gen_map(updatedAt, county_code, data, 'county', county_code, areas, is_running)
         if IS_STARTED:
-            gen_map(updatedAt, county_code, data, 'county', county_code, areas, is_running=is_running)
-            # for area_code, towns in areas.items():
-            #     for town_code, vills in towns.items():
-            #         updatedAt = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
-            #         gen_map(updatedAt, county_code, data,
-            #                 'town', town_code, vills, area_code)
+            continue
+        for area_code, towns in areas.items():
+            for town_code, vills in towns.items():
+                updatedAt = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                gen_map(updatedAt, county_code, data,
+                        'town', town_code, vills, area_code)
 
     return
 
@@ -313,7 +314,7 @@ if __name__ == '__main__':
             updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
             council_data = parse_cec_council(
                 jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            gen_councilMember(updatedAt, council_data, is_running=is_running)
+            gen_councilMember(updatedAt, council_data, is_running)
             print("councilMember done")
         else:
             print('problem of cec data ')
