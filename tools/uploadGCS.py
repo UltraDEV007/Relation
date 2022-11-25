@@ -15,8 +15,8 @@ def upload_multiple_folders(year):
     if IS_TV:
         os.system(f'gsutil -m -h "Cache-Control: {max_age},must-revalidate" rsync -r {ENV_FOLDER} gs://{BUCKET}/{ENV_FOLDER}')
     else:
-        os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{year} gs://{BUCKET}/{ENV_FOLDER}/{year}')#map infobox seat
-        os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{VERSION}/{year} gs://{BUCKET}/{ENV_FOLDER}/{VERSION}/{year}')# vote comparing
+        os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{year} gs://{BUCKET}/{ENV_FOLDER}/{year} &')#map infobox seat
+        os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{VERSION}/{year} gs://{BUCKET}/{ENV_FOLDER}/{VERSION}/{year} &')# vote comparing
     
 def upload_blob(destination_file, year):
     storage_client = storage.Client().from_service_account_json('gcs-key.json')
