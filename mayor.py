@@ -320,18 +320,17 @@ def gen_mayor(update = '', data = '', is_running = False):
     if IS_TV:
         return
     gen_special_municipality(updatedAt, data, is_running)
-    gen_map(updatedAt, 'country', data, '00_000_000', candidate_info, is_running=is_running)
-    for county_code, towns in mapping_county_town_vill.items():
-        if county_code == '10_020':  # 2022嘉義市長選舉延後
-            continue
-        county_code = county_code + '_000'
-        gen_map(updatedAt, 'county', data, county_code, towns, is_running=is_running)
-        if IS_STARTED:
-            continue
-        for town_code, vills in towns.items():
-            town_code = county_code[:-3] + town_code
-            gen_map(updatedAt, 'town', polling_data='',
-                    scope_code = town_code, sub_region=vills)
+    if IS_STARTED:
+        gen_map(updatedAt, 'country', data, '00_000_000', candidate_info, is_running=is_running)
+        for county_code, towns in mapping_county_town_vill.items():
+            if county_code == '10_020':  # 2022嘉義市長選舉延後
+                continue
+            county_code = county_code + '_000'
+            gen_map(updatedAt, 'county', data, county_code, towns, is_running=is_running)
+            # for town_code, vills in towns.items():
+            #     town_code = county_code[:-3] + town_code
+            #     gen_map(updatedAt, 'town', polling_data='',
+            #             scope_code = town_code, sub_region=vills)
     return
 
 
