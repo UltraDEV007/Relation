@@ -263,6 +263,7 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
             if scope == 'county':
                 data = {"updatedAt": updatedAt,
                         "is_running": is_running,
+                        "is_started": IS_STARTED,
                         'summary': {
                             "range": mapping_county_town[county_code],
                             "county": county_code[:-4].replace('_', ''),
@@ -275,6 +276,7 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
             else:
                 data = {"updatedAt": updatedAt,
                         "is_running": is_running,
+                        "is_started": IS_STARTED,
                         "districts": result[type]}
             dest_county = county_code[:-3].replace("_", "")
             if scope == 'county':

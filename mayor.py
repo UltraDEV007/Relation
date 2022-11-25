@@ -302,6 +302,7 @@ def gen_map(updatedAt, scope, polling_data,  scope_code='', sub_region='', is_ru
     year = datetime.now().year
     data = {"updatedAt": updatedAt,
             "is_running": is_running,
+            "is_started": IS_STARTED,
             "districts": result}
     if scope == 'country':
         destination_file = f'{ENV_FOLDER}/{year}/mayor/map/{scope}.json'
