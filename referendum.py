@@ -118,6 +118,7 @@ def gen_map(updatedAt, case_id, scope, polling_data,  scope_code, sub_region, co
         result.append(tks_info)
     data = {"updatedAt": updatedAt,
             "is_running": is_running,
+            "is_started": IS_STARTED,
             "districts": result}
 
     if scope == 'country':
@@ -151,18 +152,18 @@ def gen_referendum(updatedAt=(datetime.utcnow()+timedelta(hours=8)).strftime('%Y
     gen_vote(updatedAt, data, year)
     if IS_STARTED:
         cases = [case_id for case_id in data.keys()]
-    # else:
-    #     cases = ["F1"]
+    else:
+        cases = ["F1"]
     for case_id in cases:
         gen_map(updatedAt, case_id, 'country', data, '00_000_000', sub_region=[
                 k for k in mapping_county_town_vill.keys()], year=year, is_running=is_running)
         for county_code, towns in mapping_county_town_vill.items():
             gen_map(updatedAt, case_id, 'county', data, county_code,
                     towns, year=year, is_running=is_running)
-            # if not IS_STARTED:
-                # for town_code, vills in towns.items():
-                #     gen_map(updatedAt, case_id, 'town', data, town_code,
-                #             vills, county_code, year=year, is_running=is_running)
+            if not IS_STARTED:
+                for town_code, vills in towns.items():
+                    gen_map(updatedAt, case_id, 'town', data, town_code,
+                            vills, county_code, year=year, is_running=is_running)
 
     return
 

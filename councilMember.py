@@ -263,6 +263,7 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
             if scope == 'county':
                 data = {"updatedAt": updatedAt,
                         "is_running": is_running,
+                        "is_started": IS_STARTED,
                         'summary': {
                             "range": mapping_county_town[county_code],
                             "county": county_code[:-4].replace('_', ''),
@@ -275,6 +276,7 @@ def gen_map(updatedAt, county_code, polling_data, scope='', scope_code='', sub_r
             else:
                 data = {"updatedAt": updatedAt,
                         "is_running": is_running,
+                        "is_started": IS_STARTED,
                         "districts": result[type]}
             dest_county = county_code[:-3].replace("_", "")
             if scope == 'county':
@@ -294,13 +296,14 @@ def gen_councilMember(updatedAt = '', data = '', is_running = False):
         if IS_TV:
             continue
         gen_seat(updatedAt, county_code, data)
+        gen_map(updatedAt, county_code, data, 'county', county_code, areas, is_running)
         if IS_STARTED:
-            gen_map(updatedAt, county_code, data, 'county', county_code, areas, is_running=is_running)
-            # for area_code, towns in areas.items():
-            #     for town_code, vills in towns.items():
-            #         updatedAt = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
-            #         gen_map(updatedAt, county_code, data,
-            #                 'town', town_code, vills, area_code)
+            continue
+        for area_code, towns in areas.items():
+            for town_code, vills in towns.items():
+                updatedAt = (datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                gen_map(updatedAt, county_code, data,
+                        'town', town_code, vills, area_code)
 
     return
 
