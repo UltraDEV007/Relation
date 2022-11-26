@@ -296,7 +296,7 @@ def gen_councilMember(updatedAt = '', data = '', is_running = False):
         if IS_TV:
             continue
         gen_seat(updatedAt, county_code, data)
-        gen_map(updatedAt, county_code, data, 'county', county_code, areas, is_running)
+        gen_map(updatedAt, county_code, data, 'county', county_code, areas, is_running=is_running)
         if IS_STARTED:
             continue
         for area_code, towns in areas.items():
