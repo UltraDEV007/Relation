@@ -70,12 +70,16 @@ def gen_seat(updatedAt, county_code, polling_data):
                     else:
                         parties[party] = 1
     for party, count in parties.items():
+        if party == default_seat_name:
+            continue
         if count:
             result.append({
                 "label": party,
                 "seats": count,
             })
-        result = sorted(result, key=lambda x: x['seats'], reverse=True)
+    result = sorted(result, key=lambda x: x['seats'], reverse=True)
+    result.append({"label": default_seat_name,
+                "seats": parties[default_seat_name],})
     year = datetime.now().year
     destination_file = f'{ENV_FOLDER}/{year}/councilMember/seat/county/{county_code[:-4].replace("_", "")}.json'
     data = {"updatedAt": updatedAt,
