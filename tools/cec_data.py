@@ -2,51 +2,54 @@ import requests
 import os
 import json
 
-def check_url(url):
-    r = requests.get(url = url,auth=(os.environ['USERNAME'], os.environ['PASSWD']))
+CECURL_RF = os.environ.get('CECURL_RF')
+CECURL_GENERAL = os.environ.get('CECURL_GENERAL')
+
+def check_updated_and_save(url):
     filename = url.split('/')[-1]
-    if r.status_code == 200:
-        new_data = json.loads(r.text)
-        if os.path.isfile(filename):
-            with open(filename) as f:
-                running = json.loads(f.read())
-            if running['ST'] == new_data['ST']:
-                print('the same cec data.')
-                return False
-        with open(filename, 'w') as f:
-            f.write(r.text)
-        return new_data
-    print(f'cant get cec {filename} data.')
-    return False
+    r = requests.get(url=url, auth=(os.environ['USERNAME'], os.environ['PASSWD']))
+    try:
+        r.raise_for_status()
+    except requests.exceptions.HTTPError:
+        print(f"Couldn't get CEC data from {url}")
+        return
+    
+    new_data = json.loads(r.text)
+    if os.path.isfile(filename):
+        with open(filename) as f:
+            old_data = json.load(f)
+        if old_data['ST'] == new_data['ST']: # update time
+            print('The same CEC data.')
+            return
+    with open(filename, 'w') as f:
+        json.dump(new_data, f)
+    return new_data
 
 
 def request_cec(filename):
     url = f"{os.environ['CECURL']}{filename}"
-    return check_url(url)
+    return check_updated_and_save(url)
 
-def request_cec_by_type(type='general'):
-    RUNNING = 'running.json'
-    FINAL = 'final.json'
-    if type == 'general':
-        fin_url = f"{os.environ['CECURL_GENERAL']}{FINAL}"
-        run_url = f"{os.environ['CECURL_GENERAL']}{RUNNING}"
-    elif type == 'rf':
-        fin_url = f"{os.environ['CECURL_RF']}RF{FINAL}"
-        run_url = f"{os.environ['CECURL_RF']}RF{RUNNING}"
-    fin_data = check_url(fin_url)
-    is_running = False
+
+def request_cec_by_type(type: str = 'general'):
+    cec_url = CECURL_RF if type == 'rf' else CECURL_GENERAL
+    fin_url = f"{cec_url}final.json"
+    run_url = f"{cec_url}running.json"
+    
+    fin_data = check_updated_and_save(fin_url)
     if fin_data:
-        return fin_data, is_running
-    else:
-        is_running = True
-        run_data = check_url(run_url)
-        if run_data:
-            return run_data, is_running
-    return False, is_running
+        return fin_data, False
+
+    run_data = check_updated_and_save(run_url)
+    if run_data:
+        return run_data, True
+
+    print("Couldn't get CEC data from either final or running URL.")
+    return None, None
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     data = request_cec('running.json')
-    # data = request_cec('final.json')
-    data = request_cec()
+    data = request_cec('final.json')
+    # data = request_cec()
     print("done")
