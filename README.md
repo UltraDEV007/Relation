@@ -11,9 +11,9 @@ Environment variables
 8. VERSION: vote component data version
 9. SHT_URL: election source sht
 10. WKS_ID: sht's worksheet id
-11. ENV_FOLDER
-12. BUCKET
-13. PROJECT
+11. ENV_FOLDER: dest folder
+12. BUCKET: dest bucket
+13. PROJECT: tv/readr(control data source for different project)
 14. DATABASE
 15. DATABASE_USER
 16. DATABASE_PASSWORD

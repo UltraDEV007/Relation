@@ -1,18 +1,24 @@
-from flask import Flask, request
-from politics_dump import dump_politics, landing
 import os
 import googleapiclient
+from flask import Flask, request
+from politics_dump import dump_politics, landing
 from datetime import datetime
 from tools.cec_data import request_cec_by_type
 from tools.uploadGCS import upload_multiple_folders
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
+from election import factcheck_data, election2024
 app = Flask(__name__)
 
 IS_TV =  os.environ['PROJECT'] == 'tv' 
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
+@app.route("/president_factcheck")
+def president_fackcheck_json():
+	factcheck_data()
+	election2024()
+	return "ok"
 
 @app.route("/elections_json_rf", methods=['GET'])
 def elections_rf():
@@ -27,7 +33,7 @@ def elections_rf():
             print("referendum done")
         else:
             print('problem of cec referendum data ')
-    else:
+    else: # gen default data, like: name, no. and tks = 0
         gen_referendum()
         print("referendum done")
     upload_multiple_folders(year)
@@ -38,13 +44,16 @@ def elections_rf():
 def elections():
     year = datetime.now().year
     if IS_STARTED:
+        # Fetch and parse election data if the election has started
         jsonfile, is_running = request_cec_by_type()
         if jsonfile:
             updatedAt = datetime.strptime(jsonfile["ST"], '%m%d%H%M%S')
             updatedAt = f"{year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
             mayor_data = parse_cec_mayor(jsonfile["TC"])
             council_data = parse_cec_council(jsonfile["T1"] + jsonfile["T2"] + jsonfile["T3"])
-            if IS_TV:
+            # Generate data for mayor and council members
+            if IS_TV: 
+                # Generate data for TV mayor
                 try:
                     sht_data, source = parse_tv_sht()
                     gen_tv_mayor(updatedAt, source, sht_data, mayor_data, is_running=is_running)
@@ -52,25 +61,27 @@ def elections():
                 except googleapiclient.errors.HttpError:
                     print('sht failed')
             gen_mayor(updatedAt, mayor_data, is_running)
-            print("mayor done")
+            print("Generated mayor data")
             gen_councilMember(updatedAt, council_data, is_running=is_running)
-            print("councilMember done")
+            print("Generated council member data")
         else:
-            print('problem of cec data ')
+            print('problem of get cec data ')
             if IS_TV:
                 sht_data, source = parse_tv_sht()
                 if 'cec' not in source.values():
                     gen_tv_mayor(source=source, sht_data=sht_data, is_running=True)
                     print('tv mayor done')
-    else:
+    else:# Generate default data if the election has not started and tks = 0
         if IS_TV:
             gen_tv_mayor()
+            print("Generated TV mayor data")
         gen_councilMember()
-        print("councilMember done")
+        print("Generated council member data")
         gen_mayor()
-        print("mayor done")
+        print("Generated mayor data")
+    # Upload generated data
     upload_multiple_folders(year)
-    return 'done'
+    return 'Done'
 
 
 @app.route("/dump_politics", methods=['GET'])
