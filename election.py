@@ -6,10 +6,10 @@ from datetime import datetime, timezone, timedelta
 def election2024():
     # just for 2024 election homepage json
     #DATA_SERVICE = os.environ['DATA_SERVICE']
-    #WHORU_BUCKET = os.environ['WHORU_BUCKET']
-    WHORU_BUCKET = 'whoareyou-gcs-dev.readr.tw'
-    #gql_endpoint = os.environ['WHORU_GQL_ENDPOINT']
-    gql_endpoint = 'https://openrelationship-gql-dev-4g6paft7cq-de.a.run.app/api/graphql'
+    WHORU_BUCKET = os.environ['WHORU_BUCKET']
+    #WHORU_BUCKET = 'whoareyou-gcs-dev.readr.tw'
+    gql_endpoint = os.environ['WHORU_GQL_ENDPOINT']
+    #gql_endpoint = 'https://openrelationship-gql-dev-4g6paft7cq-de.a.run.app/api/graphql'
     gql_string = """
 query GetPresidents {
   personElections(
