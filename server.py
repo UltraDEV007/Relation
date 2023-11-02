@@ -15,6 +15,7 @@ IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 @app.route("politics_data_dump")
+def tracker_data_dump():
 	politics_dump()
 	return "ok"
 
