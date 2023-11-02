@@ -3,6 +3,61 @@ import json
 from data_export import sheet2json, gql2json, upload_data
 from datetime import datetime, timezone, timedelta
 
+def politics_dump():
+    # just for 2024 election homepage json
+    #DATA_SERVICE = os.environ['DATA_SERVICE']
+    WHORU_BUCKET = os.environ['WHORU_BUCKET']
+    #WHORU_BUCKET = 'whoareyou-gcs-dev.readr.tw'
+    gql_endpoint = os.environ['WHORU_GQL_ENDPOINT']
+    #gql_endpoint = 'https://openrelationship-gql-dev-4g6paft7cq-de.a.run.app/api/graphql'
+    #elections = [{"id": "85", "dest": "2024president.json"}]
+    elections = json.loads(os.environ['WHORU_DUMP_ELECTIONS'])
+    for election in elections:
+        gql_string = """
+query GetPresidents {
+  personElections(
+    orderBy:{ number: asc },
+    where: {
+      election: {id: { equals: %s } },
+      mainCandidate: null
+    }) {
+    id
+    number
+    person_id {
+      id
+      name
+    }
+    politicsCount(
+      where: {
+        status: { equals: "verified" },
+        reviewed: { equals: true },
+      })
+    politics(
+      where: {
+        status: { equals: "verified" },
+        reviewed: { equals: true }
+      }) {
+        id
+        desc
+        politicCategory {
+          id
+          name
+        }
+        positionChangeCount
+        expertPointCount
+        factCheckCount
+        repeatCount
+    }
+  }
+}
+""" % (int(election["id"]))
+        all_candidates = gql2json(gql_endpoint, gql_string)
+        #==============================================
+        dest_file = "json/" + election["dest"]
+        upload_data(WHORU_BUCKET, json.dumps(all_candidates, ensure_ascii=False).encode('utf8'), 'application/json', dest_file)
+    return "ok"
+
+
 def election2024():
     # just for 2024 election homepage json
     #DATA_SERVICE = os.environ['DATA_SERVICE']
@@ -186,4 +241,5 @@ query GetPresidents {
     return "ok"
 
 if __name__=="__main__":
-    election2024()
+    #election2024()
+    politics_dump()
