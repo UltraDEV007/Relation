@@ -8,11 +8,16 @@ from tools.uploadGCS import upload_multiple_folders
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
-from election import factcheck_data, election2024
+from election import factcheck_data, election2024, politics_dump
 app = Flask(__name__)
 
 IS_TV =  os.environ['PROJECT'] == 'tv' 
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
+
+@app.route("/politics_data_dump")
+def tracker_data_dump():
+	politics_dump()
+	return "ok"
 
 @app.route("/president_factcheck")
 def president_fackcheck_json():
