@@ -77,16 +77,16 @@ query { politicCategories {
         candidate_data["person_id"] = candidate["person_id"]["id"]
         candidate_data["categories_count"] = {}
         if "politics" in candidate:
+            for category in categories["politicCategories"]:
+                candidate_data["categories_count"][category["name"]] = {"count": 0,  "id": category["id"], "displayColor": category["displayColor"]}
             for policy in candidate["politics"]:
-                for category in categories["politicCategories"]:
-                    candidate_data["categories_count"][category["name"]] = 0
                 candidate_data["positionChangeCount"] += policy["positionChangeCount"]
                 candidate_data["expertPointCount"] += policy["expertPointCount"]
                 candidate_data["factCheckCount"] += policy["factCheckCount"]
                 candidate_data["repeatCount"] += policy["repeatCount"]
                 if policy is not None and "politicCategory" in policy and policy["politicCategory"] is not None and "name" in policy["politicCategory"]:
                     if policy["politicCategory"]["name"] in candidate_data["categories_count"]:
-                        candidate_data["categories_count"][policy["politicCategory"]["name"]] += 1
+                        candidate_data["categories_count"][policy["politicCategory"]["name"]]["count"] += 1
                         all_categories[policy["politicCategory"]["name"]]["count"] += 1
         candidate_statistics[candidate["person_id"]["name"]] = candidate_data
     full_data = {"categories": all_categories, "president_candidates": candidate_statistics}
