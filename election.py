@@ -11,7 +11,7 @@ def politics_dump():
     gql_endpoint = os.environ['WHORU_GQL_ENDPOINT']
     #gql_endpoint = 'https://openrelationship-gql-dev-4g6paft7cq-de.a.run.app/api/graphql'
     #elections = [{"id": "85", "dest": "2024president.json"}]
-    elections = os.environ['WHORU_DUMP_ELECTIONS']
+    elections = json.loads(os.environ['WHORU_DUMP_ELECTIONS'])
     for election in elections:
         gql_string = """
 query GetPresidents {
