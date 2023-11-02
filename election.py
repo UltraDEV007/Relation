@@ -50,7 +50,7 @@ query GetPresidents {
     }
   }
 }
-""" % (election["id"])
+""" % (int(election["id"]))
         all_candidates = gql2json(gql_endpoint, gql_string)
         #==============================================
         dest_file = "json/" + election["dest"]
