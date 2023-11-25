@@ -71,6 +71,7 @@ query GetPresidents {
     orderBy:{ number: asc },
     where: {
       election: {id: { equals: 85 } },
+      status: {equals: "active"},
       mainCandidate: null
     }) {
     id
@@ -169,7 +170,8 @@ query GetPresidents {
     orderBy:{ number: asc },
     where: {
       election: {id: { equals: 85 } },
-      mainCandidate: null
+      mainCandidate: null,
+      status: {equals: "active"}
     }) {
     id
     number
