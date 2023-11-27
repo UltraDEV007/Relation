@@ -166,31 +166,31 @@ def landing():
                 section['amount'] = section_amount
                 section['total'] = section_total
                     
-        elif election['type'] == 'councilorAndPolitics':
-            result["councilorAndPolitics"] = []
-            result["councilorAndPolitics"].append( {"name": "基隆市", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "高雄市", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "嘉義市", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "金門縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "屏東縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "宜蘭縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "桃園市", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "苗栗縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "臺中市", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "新竹市", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "嘉義縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "澎湖縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "彰化縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "臺南市", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "臺北市", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "連江縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "新竹縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "雲林縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "新北市", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "花蓮縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "南投縣", "amount": 0, "total": 0, "areas": []} )
-            result["councilorAndPolitics"].append( {"name": "臺東縣", "amount": 0, "total": 0, "areas": []} )
-            for councilor in result["councilorAndPolitics"]:
+        elif election['type'] == 'councilorAndPolitics' or election['type'] == 'regionalLegislator':
+            result[election['type']] = []
+            result[election['type']].append( {"name": "基隆市", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "高雄市", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "嘉義市", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "金門縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "屏東縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "宜蘭縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "桃園市", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "苗栗縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "臺中市", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "新竹市", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "嘉義縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "澎湖縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "彰化縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "臺南市", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "臺北市", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "連江縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "新竹縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "雲林縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "新北市", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "花蓮縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "南投縣", "amount": 0, "total": 0, "areas": []} )
+            result[election['type']].append( {"name": "臺東縣", "amount": 0, "total": 0, "areas": []} )
+            for councilor in result[election['type']]:
                 councilor_amount = 0
                 councilor_total = 0
                 if councilor["name"] in area_hash:
@@ -218,7 +218,7 @@ def landing():
             result_json = json.dumps(result, ensure_ascii=False)
             json_file.write(result_json)
         
-        upload_blob(dest_file, 2022)
+        upload_blob(dest_file, 2024)
     connection.close()
 
 
