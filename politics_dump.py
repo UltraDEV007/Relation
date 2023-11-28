@@ -208,8 +208,81 @@ def landing():
                         councilor_amount = councilor_amount + area_amount
                     councilor['amount'] = councilor_amount
                     councilor['total'] = councilor_total
+        elif election['type'] == 'aboriginalLegislator' or election['type'] == 'flatAboriginalLegislator':
+            result[election['type']] = []
+            result[election['type']].append( {"name": "全國", "amount": 0, "total": 0, "areas": []} )
+            for councilor in result[election['type']]:
+                councilor_amount = 0
+                councilor_total = 0
+                if councilor["name"] in area_hash:
+                    councilor["areas"] = area_hash[councilor["name"]]
+                    for area in councilor["areas"]:
+                        area_amount = 0
+                        if area['name'] in area_candidates:
+                            area["candidates"] = area_candidates[area['name']]
+                            area["total"] = len(area_candidates[area['name']])
+                            councilor_total = councilor_total + area["total"]
+                            for candidate in area['candidates']:
+                                if candidate['done'] > 0:
+                                    area_amount = area_amount + 1
+                        area['done'] = area_amount
+                        councilor_amount = councilor_amount + area_amount
+                    councilor['amount'] = councilor_amount
+                    councilor['total'] = councilor_total
+        elif election['type'] == 'unregionalLegislator':
+            #fetch politics
+            dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
+            if multiple_election == True and len(election["id"]) == 2:
+                dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND ("PersonElection"."election" = {} OR "PersonElection"."election" = {}) GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"][0]), str(election["id"][1]))
+            cursor.execute(dump_query)
+            all_politics = cursor.fetchall()
+            dist_politic = {}
+            dist_amount = {}
+            for count in all_politics:
+                dist_politic[count[1]] = count[0]
+                if count[2] in dist_amount:
+                    dist_amount[count[2]] = dist_amount[count[2]] + 1
+                else:
+                    dist_amount[count[2]] = 1
+            result[election["total"]] = len(dist_politic)
+            #fetch all candidates
+            get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
+            if multiple_election == True and len(election["id"]) == 2:
+                get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE ("Election".id = {} OR "Election".id = {}) AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"][0]), str(election["id"][1]))
+            cursor.execute(get_candidates)
+            all_candidates = cursor.fetchall()
+            area_candidates = {}
+            for candidate in all_candidates:
+                if candidate[1] in dist_politic:
+                    done = dist_politic[candidate[1]]
+                else:
+                    done = 0
+                if candidate[3] not in area_candidates:
+                    area_candidates[candidate[3]] = []
 
-                
+                area_candidates[candidate[3]].append( { "id": candidate[1], "name": candidate[2], "year": candidate[0], "done": done } )
+
+        # parse data    
+            result[election['type']] = []
+            result[election['type']].append( {"name": "全國", "amount": 0, "total": 0, "areas": []} )
+            for councilor in result[election['type']]:
+                councilor_amount = 0
+                councilor_total = 0
+                if councilor["name"] in area_hash:
+                    councilor["areas"] = area_hash[councilor["name"]]
+                    for area in councilor["areas"]:
+                        area_amount = 0
+                        if area['name'] in area_candidates:
+                            area["candidates"] = area_candidates[area['name']]
+                            area["total"] = len(area_candidates[area['name']])
+                            councilor_total = councilor_total + area["total"]
+                            for candidate in area['candidates']:
+                                if candidate['done'] > 0:
+                                    area_amount = area_amount + 1
+                        area['done'] = area_amount
+                        councilor_amount = councilor_amount + area_amount
+                    councilor['amount'] = councilor_amount
+                    councilor['total'] = councilor_total
         # parse candidates
         if not os.path.exists(os.path.dirname(dest_file)):
             os.makedirs(os.path.dirname(dest_file))
