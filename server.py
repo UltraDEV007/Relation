@@ -17,7 +17,7 @@ IS_STARTED = os.environ['IS_STARTED'] == 'true'
 @app.route("/test_cec_2024")
 def cec_data_2024():
     new_data = check_cec_2024()
-    print('2024ST: ', new_data.get['ST'])
+    print('2024ST: ', new_data['ST'])
     return "ok"
 
 @app.route("/politics_data_dump")
