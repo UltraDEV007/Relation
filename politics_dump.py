@@ -229,38 +229,31 @@ def landing():
                         councilor_amount = councilor_amount + area_amount
                     councilor['amount'] = councilor_amount
                     councilor['total'] = councilor_total
-        elif election['type'] == 'unregionalLegislator':
+        elif election['type'] == 'nonRegionalLegislator':
             #fetch politics
-            dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
-            if multiple_election == True and len(election["id"]) == 2:
-                dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND ("PersonElection"."election" = {} OR "PersonElection"."election" = {}) GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"][0]), str(election["id"][1]))
+            dump_query = """SELECT count("Politic"."id"), "Organization"."name", "OrganizationsElection"."organization_id" FROM "Politic", "OrganizationsElection", "Organization" WHERE "Politic"."organization" = "Organization"."id" AND "Organization"."id" = "OrganizationsElection"."organization_id" AND "OrganizationsElection"."elections" = {} GROUP BY "OrganizationsElection"."organization_id", "Organization"."name";""".format(str(election["id"]))
             cursor.execute(dump_query)
             all_politics = cursor.fetchall()
             dist_politic = {}
-            dist_amount = {}
+            dist_amount = { '全國': 0 }
             for count in all_politics:
                 dist_politic[count[1]] = count[0]
-                if count[2] in dist_amount:
-                    dist_amount[count[2]] = dist_amount[count[2]] + 1
-                else:
-                    dist_amount[count[2]] = 1
+                dist_amount['全國'] = dist_amount['全國'] + 1
             result[election["total"]] = len(dist_politic)
             #fetch all candidates
-            get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
-            if multiple_election == True and len(election["id"]) == 2:
-                get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE ("Election".id = {} OR "Election".id = {}) AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"][0]), str(election["id"][1]))
+            get_candidates = """SELECT "Organization"."name", "OrganizationsElection"."organization_id", '全國' as area FROM "OrganizationsElection", "Organization" WHERE "Organization"."id" = "OrganizationsElection"."organization_id" AND "OrganizationsElection"."elections" = {}""".format(str(election["id"]))
             cursor.execute(get_candidates)
             all_candidates = cursor.fetchall()
             area_candidates = {}
             for candidate in all_candidates:
-                if candidate[1] in dist_politic:
-                    done = dist_politic[candidate[1]]
+                if candidate[0] in dist_politic:
+                    done = dist_politic[candidate[0]]
                 else:
                     done = 0
-                if candidate[3] not in area_candidates:
-                    area_candidates[candidate[3]] = []
+                if candidate[2] not in area_candidates:
+                    area_candidates[candidate[2]] = []
 
-                area_candidates[candidate[3]].append( { "id": candidate[1], "name": candidate[2], "year": candidate[0], "done": done } )
+                area_candidates[candidate[2]].append( { "id": candidate[1], "name": candidate[0], "done": done } )
 
         # parse data    
             result[election['type']] = []
