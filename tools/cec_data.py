@@ -11,7 +11,8 @@ def check_cec_2024():
     filename = "running.json"
     url = f"{CECURL_2024}{filename}"
     
-    r = requests.get(url=url, auth=(os.environ['USERNAME_2024'], os.environ['PASSWD_2024']))
+    ### We disable SSL certificate authentication here...but it might need...
+    r = requests.get(url=url, auth=(os.environ['USERNAME_2024'], os.environ['PASSWD_2024']), verify=False)
     try:
         r.raise_for_status()
     except requests.exceptions.HTTPError:
