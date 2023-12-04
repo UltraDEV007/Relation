@@ -5,6 +5,22 @@ import json
 CECURL_RF = os.environ.get('CECURL_RF')
 CECURL_GENERAL = os.environ.get('CECURL_GENERAL')
 
+CECURL_2024 = os.environ.get('CECURL_2024')
+
+def check_cec_2024():
+    filename = "running.json"
+    url = f"{CECURL_2024}{filename}"
+    
+    ### We disable SSL certificate authentication here...but it might need...
+    r = requests.get(url=url, auth=(os.environ['USERNAME_2024'], os.environ['PASSWD_2024']), verify=False)
+    try:
+        r.raise_for_status()
+    except requests.exceptions.HTTPError:
+        print(f"Couldn't get CEC data from {url}")
+        return
+    new_data = json.loads(r.text)
+    return new_data
+
 def check_updated_and_save(url):
     filename = url.split('/')[-1]
     r = requests.get(url=url, auth=(os.environ['USERNAME'], os.environ['PASSWD']))

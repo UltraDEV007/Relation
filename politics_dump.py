@@ -231,7 +231,7 @@ def landing():
                     councilor['total'] = councilor_total
         elif election['type'] == 'nonRegionalLegislator':
             #fetch politics
-            dump_query = """SELECT count("Politic"."id"), "Organization"."name", "OrganizationsElection"."organization_id" FROM "Politic", "OrganizationsElection", "Organization" WHERE "Politic"."organization" = "Organization"."id" AND "Organization"."id" = "OrganizationsElection"."organization_id" AND "OrganizationsElection"."elections" = {} GROUP BY "OrganizationsElection"."organization_id", "Organization"."name";""".format(str(election["id"]))
+            dump_query = """SELECT count("Politic".id), "Organization"."name", "OrganizationsElection"."organization_id" FROM "Politic", "Organization", "OrganizationsElection", "Election" WHERE "Politic"."organization" = "OrganizationsElection"."id" AND "OrganizationsElection"."elections" = "Election"."id" AND "OrganizationsElection"."organization_id" = "Organization"."id" AND "Politic"."status" = 'verified' AND "Election"."id" = {} GROUP BY "Organization"."name", "OrganizationsElection"."organization_id";""".format(str(election["id"]))
             cursor.execute(dump_query)
             all_politics = cursor.fetchall()
             dist_politic = {}
