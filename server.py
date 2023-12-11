@@ -3,7 +3,7 @@ import googleapiclient
 from flask import Flask, request
 from politics_dump import dump_politics, landing
 from datetime import datetime
-from tools.cec_data import request_cec_by_type, check_cec_2024
+from tools.cec_data import request_cec_by_type, request_cec
 from tools.uploadGCS import upload_multiple_folders
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
@@ -16,8 +16,8 @@ IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 @app.route("/test_cec_2024")
 def cec_data_2024():
-    new_data = check_cec_2024()
-    print('2024ST: ', new_data['ST'])
+    # TODO: Test the secure mode HTTPS request
+    new_data = request_cec('running.json', verify=True)
     return "ok"
 
 @app.route("/politics_data_dump")
