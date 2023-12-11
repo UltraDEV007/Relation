@@ -14,12 +14,22 @@ app = Flask(__name__)
 IS_TV =  os.environ['PROJECT'] == 'tv' 
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
-@app.route("/test_cec_2024")
-def cec_data_2024():
-    # TODO: Test the secure mode HTTPS request
-    new_data = request_cec('running.json', verify=True)
+### new version implementations
+@app.route('/elections/presidents', methods=['POST'])
+def president():
+    '''
+        Generate result for presidents and vice presidents election
+    '''
+    year = datetime.now().year
+    if IS_STARTED:
+        election_data, is_running = request_cec_by_type()
+        if election_data:
+            # TODO: Parse election_data and store
+            print(f'{election_data}')
     return "ok"
 
+
+### old version implementations
 @app.route("/politics_data_dump")
 def tracker_data_dump():
 	politics_dump()
@@ -33,6 +43,9 @@ def president_fackcheck_json():
 
 @app.route("/elections_json_rf", methods=['GET'])
 def elections_rf():
+    '''
+        Generate result for referendum(公投)
+    '''
     year = datetime.now().year
     if IS_STARTED:
         referendumfile, is_running = request_cec_by_type('rf')
@@ -53,6 +66,9 @@ def elections_rf():
 
 @app.route("/gen_elections_json", methods=['GET'])
 def elections():
+    '''
+        Generate result for elections
+    '''
     year = datetime.now().year
     if IS_STARTED:
         # Fetch and parse election data if the election has started
