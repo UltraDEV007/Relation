@@ -15,7 +15,7 @@ def pipeline_2024(raw_data, is_started: bool=True, is_running: bool=False):
     preprocessing_data = preprocessor.parse_president_cec(raw_data, helper)
     
     country_json = pd_generator.generate_country_json(preprocessing_data, is_started, is_running, helper)
-    county_sample_json = pd_generator.generate_county_json(preprocessing_data, '09007', helper) ### Just testing
+    county_sample_json = pd_generator.generate_county_json(preprocessing_data, '09007', is_started, is_running, helper) ### Just testing
 
     ### TODO: Store the data to GCS
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map')
