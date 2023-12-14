@@ -1,8 +1,6 @@
 from datetime import datetime
-from helpers import helpers
-
-import data_handlers.helpers as hp
 from data_handlers.helpers import helpers
+import data_handlers.helpers as hp
 
 def parse_president_cec(data, helper=helpers['2024']):
     '''
