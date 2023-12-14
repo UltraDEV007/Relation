@@ -1,10 +1,9 @@
 import os
-import preprocessor
+import data_handlers.preprocessor as preprocessor
+import data_handlers.president.generator as pd_generator
 
+from data_handlers.helpers import helpers
 from tools.uploadGCS import upload_blob, save_file
-
-from helpers import helpers
-from president import generator as pd_generator
 
 def pipeline_2024(raw_data, is_started: bool=True, is_running: bool=False):
     if raw_data==None:

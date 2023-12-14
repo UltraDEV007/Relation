@@ -2,12 +2,12 @@ import os
 import json
 import copy
 
-import templates as tp
-import helpers as hp
-from helpers import helpers
+import data_handlers.president.templates as tp
+import data_handlers.helpers as hp
+from data_handlers.helpers import helpers
 
 ### Load mapping_city.json
-root = os.path.join('..', '..', 'mapping', '2024')
+root = os.path.join('mapping', '2024')
 path = os.path.join(root, 'mapping_city.json')
 with open(path, mode='r', encoding='utf-8') as f:
     mapping_city = json.load(f)
