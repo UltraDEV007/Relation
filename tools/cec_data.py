@@ -6,7 +6,8 @@ CECURL_RF = os.environ.get('CECURL_RF')
 CECURL_GENERAL = os.environ.get('CECURL_GENERAL')
 TEST_MODE = os.environ.get('TEST_MODE', False)
 
-cec_filename = ['final.json', 'final_A.json', 'running.json']
+cec_filename = ['final.json', 'running.json']
+cec_legislator = ['final_A.json'] # TODO: How to deal with it?
 
 def check_updated_and_save(url, secure_mode=False):
     filename = url.split('/')[-1]

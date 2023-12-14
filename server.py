@@ -9,23 +9,33 @@ from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
 from election import factcheck_data, election2024, politics_dump
+
+from data_handlers import pipeline
+
 app = Flask(__name__)
 
 IS_TV =  os.environ['PROJECT'] == 'tv' 
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 ### new version implementations
-@app.route('/elections/presidents', methods=['POST'])
-def president():
+@app.route('/elections/presidents/2024', methods=['POST'])
+def president_2024():
     '''
         Generate result for presidents and vice presidents election
     '''
-    year = datetime.now().year
+    # if IS_STARTED:
+    #     raw_data, is_running = request_cec_by_type()
+    #     if raw_data:
+    #         # TODO: Parse election_data and store
+    #         preprocessing_data = preprocessor.parse_president_cec(raw_data)
     if IS_STARTED:
-        election_data, is_running = request_cec_by_type()
-        if election_data:
-            # TODO: Parse election_data and store
-            print(f'{election_data}')
+        raw_data = request_cec('running.json')
+        if raw_data:
+            result = pipeline.pipeline_2024(raw_data, is_started = IS_STARTED, is_running = True)
+            if result == False:
+                print('Running pipeline 2024 failed.')
+            else:
+                print('Running pipeline 2024 successed.')
     return "ok"
 
 
