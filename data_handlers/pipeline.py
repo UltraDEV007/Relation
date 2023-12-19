@@ -30,7 +30,7 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
     )
     filename = os.path.join(root_path, 'country', 'country.json')
     save_file(filename, country_json)
-    # upload_blob(filename, year)
+    upload_blob(filename, year)
 
     ### Parse and store county
     generated_county_json = pd_generator.generate_county_json(
@@ -41,7 +41,7 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
     for county_code, county_json in generated_county_json.items():
         filename = os.path.join(root_path, 'county', county_code)
         save_file(filename, county_json)
-        # upload_blob(filename, year)
+        upload_blob(filename, year)
 
     ### Parse town
     if is_running == False:
@@ -61,6 +61,7 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
             for key, value in vill_data.items():
                 filename = os.path.join(root_path, 'town', key)
                 save_file(filename, value)
-                # upload_blob(filename, year)
+                upload_blob(filename, year)
+    # TODO: Upload multiple data
     upload_multiple_test(year)
     return True
