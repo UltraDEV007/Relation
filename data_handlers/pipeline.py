@@ -33,26 +33,26 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
     # upload_blob(filename, year)
 
     ### Parse and store county
-    generate_county_result = pd_generator.generate_county_json(
-        preprocessing_data = country_json,
+    generated_county_json = pd_generator.generate_county_json(
+        preprocessing_data = parsed_county,
         is_running = is_running,
         is_started = is_started
     )
-    for county_code, county_json in generate_county_result.items():
+    for county_code, county_json in generated_county_json.items():
         filename = os.path.join(root_path, 'county', county_code)
         save_file(filename, county_json)
         # upload_blob(filename, year)
 
     ### Parse town
     if is_running == False:
-        county_codes = list(country_json['districts'].keys())
+        county_codes = list(parsed_county['districts'].keys())
         county_codes.remove(hp.COUNTRY_CODE)        ### 移除全國代碼
         county_codes.remove(hp.FUJIAN_PRV_CODE)     ### 移除福建省碼
         
         result = []
-        updateAt = country_json.get('updateAt', None)
+        updateAt = parsed_county.get('updateAt', None)
         for county_code in county_codes:
-            county_data         = country_json['districts'].get(county_code, None)
+            county_data         = parsed_county['districts'].get(county_code, None)
             town_data           = pd_parser.parse_town(county_code, county_data)
             vill_data, errors   = pd_generator.generate_town_json(town_data, updateAt, is_running, is_started)
             result.append(vill_data)
