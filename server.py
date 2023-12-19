@@ -29,9 +29,9 @@ def president_2024():
     #         # TODO: Parse election_data and store
     #         preprocessing_data = preprocessor.parse_president_cec(raw_data)
     if IS_STARTED:
-        raw_data = request_cec('running.json')
+        raw_data = request_cec('final.json')
         if raw_data:
-            result = pipeline.pipeline_2024(raw_data, is_started = IS_STARTED, is_running = True)
+            result = pipeline.pipeline_2024(raw_data, is_started = IS_STARTED, is_running = False)
             if result == False:
                 print('Running pipeline 2024 failed.')
             else:

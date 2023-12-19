@@ -1,30 +1,66 @@
 import os
-import data_handlers.preprocessor as preprocessor
+import data_handlers.president.parser    as pd_parser
 import data_handlers.president.generator as pd_generator
+import data_handlers.helpers as hp
 
-from data_handlers.helpers import helpers
-from tools.uploadGCS import upload_blob, save_file
+from tools.uploadGCS import upload_blob, save_file, upload_multiple_test
+from datetime import datetime
 
 def pipeline_2024(raw_data, is_started: bool=True, is_running: bool=False):
-    if raw_data==None:
-        print("Don't call pipeline function without providing raw_data")
-        return False
+    result = True
+    ### Generate data for president
+    result = pipeline_president_2024(
+        raw_data, 
+        is_started = is_started,
+        is_running = is_running
+    )
+    ### Generate data for legislator
+    return result
 
-    year = 2024
-    helper = helpers['2024']
-    preprocessing_data = preprocessor.parse_president_cec(raw_data, helper)
-    
-    country_json = pd_generator.generate_country_json(preprocessing_data, is_started, is_running, helper)
-    county_sample_json = pd_generator.generate_county_json(preprocessing_data, '09007', is_started, is_running, helper) ### Just testing
-
-    ### TODO: Store the data to GCS
+def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=False):
+    year = datetime.now().year
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map')
-    country_filename = os.path.join(root_path, 'country', 'country.json')
-    save_file(country_filename, country_json)
-    upload_blob(country_filename, year)
+    parsed_county = pd_parser.parse_county(raw_data)
+    
+    ### Parse and store country
+    country_json  = pd_generator.generate_country_json(
+        preprocessing_data = parsed_county, 
+        is_running = is_running,
+        is_started = is_started    
+    )
+    filename = os.path.join(root_path, 'country', 'country.json')
+    save_file(filename, country_json)
+    # upload_blob(filename, year)
 
-    county_filename = os.path.join(root_path, 'county', '09007.json')
-    save_file(county_filename, county_sample_json)
-    upload_blob(county_filename, year)
+    ### Parse and store county
+    generate_county_result = pd_generator.generate_county_json(
+        preprocessing_data = country_json,
+        is_running = is_running,
+        is_started = is_started
+    )
+    for county_code, county_json in generate_county_result.items():
+        filename = os.path.join(root_path, 'county', county_code)
+        save_file(filename, county_json)
+        # upload_blob(filename, year)
 
+    ### Parse town
+    if is_running == False:
+        county_codes = list(country_json['districts'].keys())
+        county_codes.remove(hp.COUNTRY_CODE)        ### 移除全國代碼
+        county_codes.remove(hp.FUJIAN_PRV_CODE)     ### 移除福建省碼
+        
+        result = []
+        updateAt = country_json.get('updateAt', None)
+        for county_code in county_codes:
+            county_data         = country_json['districts'].get(county_code, None)
+            town_data           = pd_parser.parse_town(county_code, county_data)
+            vill_data, errors   = pd_generator.generate_town_json(town_data, updateAt, is_running, is_started)
+            result.append(vill_data)
+            # You can use errors to track the problematic tboxNo
+        for vill_data in result:
+            for key, value in vill_data.items():
+                filename = os.path.join(root_path, 'town', key)
+                save_file(filename, value)
+                # upload_blob(filename, year)
+    upload_multiple_test(year)
     return True

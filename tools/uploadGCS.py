@@ -9,6 +9,11 @@ BUCKET = os.environ['BUCKET']
 ENV_FOLDER = os.environ['ENV_FOLDER']
 VERSION = os.environ['VERSION']
 
+def upload_multiple_test(year):
+    os.system('gcloud auth activate-service-account --key-file=gcs-key.json')
+    max_age = upload_configs['cache_control_short'] if year == datetime.now().year else upload_configs['cache_control']
+    os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/2024 gs://{BUCKET}/{ENV_FOLDER}/2024 &')
+
 def upload_multiple_folders(year):
     os.system('gcloud auth activate-service-account --key-file=gcs-key.json')
     max_age = upload_configs['cache_control_short'] if year == datetime.now().year else upload_configs['cache_control']
@@ -58,7 +63,18 @@ def save_file(dest_filename, data, year=None):
         input parameter 'year' will be deprecated in the future.
     '''
     dirname = os.path.dirname(dest_filename)
-    if not os.path.exists(dirname):
+    if len(dirname)>0 and not os.path.exists(dirname):
         os.makedirs(dirname)
     with open(dest_filename, 'w', encoding='utf-8') as f:
         f.write(json.dumps(data, ensure_ascii=False))
+
+def open_file(filename, encoding='utf-8'):
+    '''
+     The type of encoding depends on os environment,
+     For example, default encoding of Windows is cp1252 or utf-8, and Linux is utf-8.
+    '''
+    data = {}
+    if os.path.isfile(filename):
+        with open(filename, encoding=encoding) as f:
+            data = json.load(f)
+    return data

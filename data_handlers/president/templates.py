@@ -14,11 +14,7 @@ class NoteTemplate:
         self.text = displayText
         self.displayVotes = displayVotes
     def to_json(self):
-        return {
-            'text': self.text,
-            'displayVotes': self.displayVotes
-        }
-
+        return vars(self)
 '''
 Description
     The skeleton template of each json file. For example,
@@ -31,38 +27,35 @@ class CountryTemplate:
         self.is_running = is_running
         self.is_started = is_started
         self.summary    = copy.deepcopy(summary)
-        self.districts  = copy.deepcopy(districts)
+        self.districts  = copy.deepcopy(districts) #You need to append DistrictTemplate
     def to_json(self):
-        return {
-            'updateAt': self.updateAt,
-            'is_running': self.is_running,
-            'is_started': self.is_started,
-            'summary': self.summary,
-            'districts': self.districts
-        }
-    
+        return vars(self)
+
 class CountyTemplate:
     def __init__(self, updateAt: str='', is_running: bool=False, is_started: bool=False, districts: list=[]):
         self.updateAt   = updateAt
         self.is_running = is_running
         self.is_started = is_started
-        self.districts  = copy.deepcopy(districts)
+        self.districts  = copy.deepcopy(districts) #You need to append DistrictTemplate
     def to_json(self):
-        return {
-            'updateAt': self.updateAt,
-            'is_running': self.is_running,
-            'is_started': self.is_started,
-            'districts': self.districts
-        }
-    
+        return vars(self)
+
+class TownTemplate:
+    def __init__(self, updateAt: str='', is_running: bool=False, is_started: bool=False, districts: list=[]):
+        self.updateAt = updateAt
+        self.is_running = is_running
+        self.is_started = is_started
+        self.districts = copy.deepcopy(districts) #You need to append DistrictTemplate, content the data of villages
+    def to_json(self):
+        return vars(self)
 
 '''
 Description:
     Some component templates that you should equip them into skeleton.
 '''
 class DistrictTemplate:
-    def __init__(self, county_str: str='', county_code: str=None, town: str=None, vill: str=None, profRate: float=0.0, candidates: list=[]):
-        self.county_str  = county_str
+    def __init__(self, region: str='', county_code: str=None, town: str=None, vill: str=None, profRate: float=0.0, candidates: list=[]):
+        self.region      = region
         self.county_code = county_code
         self.town       = town
         self.vill       = vill
@@ -73,7 +66,7 @@ class DistrictTemplate:
         self.note = NoteTemplate(displayText, displayVotes)
     def to_json(self):
         district = {
-            'range': self.county_str,
+            'range': self.region,        ### Warning: You can't use vars because range is keyword...
             'county': self.county_code,
             'town': self.town,
             'vill': self.vill,
@@ -84,6 +77,18 @@ class DistrictTemplate:
             district['note'] = self.note.to_json()
         return district
 
+class VillCalcTemplate:
+    def __init__(self, region: str='', county: str=None, town: str=None, vill: str=None, voterTurnout: int=0, eligibleVoters: int=0, candidates: list=[]):
+        self.region     = region
+        self.county     = county
+        self.town       = town
+        self.vill       = vill
+        self.voterTurnout   = voterTurnout
+        self.eligibleVoters = eligibleVoters
+        self.candidates = copy.deepcopy(candidates)
+    def to_json(self):
+        return vars(self)
+
 class CandidateTemplate:
     def __init__(self, candNo: int=0, name: str='', party: str='', tksRate: float=0.0, candVictor: str=' ', tks: int=0):
         self.candNo = candNo
@@ -93,11 +98,13 @@ class CandidateTemplate:
         self.candVictor = candVictor
         self.tks = tks
     def to_json(self):
-        return {
-            'candNo': self.candNo,
-            'name': self.name,
-            'party': self.party,
-            'tksRate': self.tksRate,
-            'candVictor': self.candVictor,
-            'tks': self.tks
-        }
+        return vars(self)
+    
+class ErrorTemplate:
+    def __init__(self, county=None, town=None, vill=None, reason=None):
+        self.county = county
+        self.town = town
+        self.vill = vill
+        self.reason = reason
+    def to_json(self):
+        return vars(self)
