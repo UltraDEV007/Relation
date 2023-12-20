@@ -9,6 +9,7 @@ from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
 from election import factcheck_data, election2024, politics_dump
+from data_export import president2024_realtime
 
 from data_handlers import pipeline
 
@@ -38,6 +39,9 @@ def president_2024():
                 print('Running pipeline 2024 successed.')
     return "ok"
 
+@app.route("/election2024_homepage")
+def election_homepage():
+    realtime_data = president2024_realtime()
 
 ### old version implementations
 @app.route("/politics_data_dump")

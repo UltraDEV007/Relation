@@ -1,10 +1,79 @@
 import os
 import json
-
+import requests
 import pygsheets
 from gql.transport.aiohttp import AIOHTTPTransport
 from gql import gql, Client
 from google.cloud import storage
+
+def president2024_realtime( url ):
+    gc = pygsheets.authorize(service_account_env_var = 'GDRIVE_API_CREDENTIALS')
+    sht = gc.open_by_url( url )
+    voting_data = { "result": [] }
+    try:
+        meta_sheet = sht.worksheet_by_title("官網切換相關")
+    except Exception as e:
+        print("Exception: {}".format(type(e).__name__))
+        print("Exception message: {}".format(e))
+
+    voting_data['title'] = meta_sheet.get_value("B2")
+    get_cec_data = meta_sheet.get_value("B3")
+    switch_view = meta_sheet.get_value("B4")
+    cec_data = {}
+    if switch_view == 'T' or get_cec_data == 'T':
+        cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
+        if cec_json.status_code == 200:
+            cec_data = json.loads(cec_json.text)
+
+    if switch_view == 'T':
+        print("Getting the final data")
+        voting_data["result"] = presindent2024_cec( cec_data["summary"], 2 )
+    else:
+        try:
+            result_sheet = sht.worksheet_by_title("官網票數")
+        except Exception as e:
+            print("Exception: {}".format(type(e).__name__))
+            print("Exception message: {}".format(e))
+
+        candidates = result_sheet.get_values("B1", "D1")
+        sheet_tks = result_sheet.get_values("A2", "D6")
+        for row in sheet_tks:
+            unit_tks = { "key": row[0], "value": [] }
+            for number in range(len(candidates[0])):
+                unit_tks['value'].append( { candidates[0][number]: row[number + 1] })
+                #unit_tks[candidates[0][number]] = row[number]
+            voting_data["result"].append(unit_tks)
+                
+        print("Getting data from sheet")
+        if get_cec_data == 'T':
+            for result in voting_data["result"]:
+                if "key" in result and result["key"] == '鏡新聞':
+                    result["value"] = presindent2024_cec( cec_data["summary"] )
+            print("Replace the mnews data by cec data")
+
+    return voting_data
+
+def presindent2024_cec( summary, phase = 1 ):
+    tks = []
+    tksRate = []
+    candVictor = []
+    show_victor = False
+    for candidate in summary["candidates"]:
+        tks.append({candidate["candNo"]: candidate["tks"]})
+        tksRate.append({candidate["candNo"]: candidate["tksRate"]})
+        candVictor.append({candidate["candNo"]: candidate["candVictor"]})
+        if candidate["candVictor"]:
+            show_victor = True
+    if phase == 1:
+        final = tks
+    else:
+        cec_candidates = [{"key": "得票數", "value": tks}]
+        cec_candidates.append({"key": "得票數", "value": tksRate})
+        if show_victor:
+            cec_candidates.append({"key": "當選", "value": candVictor})
+        final = cec_candidates
+    upload_data('whoareyou-gcs.readr.tw', json.dumps(final, ensure_ascii=False).encode('utf8'), 'application/json', "json/2024homepage.json")
+    return "OK"
 
 def sheet2json( url, sheet ):
     gc = pygsheets.authorize(service_account_env_var = 'GDRIVE_API_CREDENTIALS')
@@ -111,7 +180,8 @@ query { allPosts(where: { tags_every: {name_in: "疫苗"}, state: published }, o
 """
     #gql_endpoint = "https://api-dev.example.com"
     #gql2json(gql_endpoint, gql_string)
-    keyfile = { }
+    keyfile = {
+    }
     os.environ['GDRIVE_API_CREDENTIALS'] = json.dumps(keyfile)
-    sheet_content = sheet2json("https://docs.google.com/spreadsheets/d/19Z9vgm9nIV1ZltljKQIzHDR_HhVp3WO0N4K2dCYzmrY/edit#gid=1662192222", "Content")
+    sheet_content = president2024_realtime("https://docs.google.com/spreadsheets/d/1Ar9r7j5LN6eCirNnQ5Lkbl4IEw3UaDQMfdBq5b2oDOE/edit#gid=1764492368")
     print(sheet_content)
