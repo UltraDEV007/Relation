@@ -52,7 +52,8 @@ def president2024_realtime():
                     result["value"] = presindent2024_cec( cec_data["summary"] )
             print("Replace the mnews data by cec data")
 
-    return voting_data
+    upload_data('whoareyou-gcs.readr.tw', json.dumps(voting_data, ensure_ascii=False).encode('utf8'), 'application/json', "json/2024homepage.json")
+    return "OK"
 
 def presindent2024_cec( summary, phase = 1 ):
     tks = []
@@ -73,8 +74,7 @@ def presindent2024_cec( summary, phase = 1 ):
         if show_victor:
             cec_candidates.append({"key": "當選", "value": candVictor})
         final = cec_candidates
-    upload_data('whoareyou-gcs.readr.tw', json.dumps(final, ensure_ascii=False).encode('utf8'), 'application/json', "json/2024homepage.json")
-    return "OK"
+    return final
 
 def sheet2json( url, sheet ):
     gc = pygsheets.authorize(service_account_env_var = 'GDRIVE_API_CREDENTIALS')
