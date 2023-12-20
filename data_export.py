@@ -6,8 +6,9 @@ from gql.transport.aiohttp import AIOHTTPTransport
 from gql import gql, Client
 from google.cloud import storage
 
-def president2024_realtime( url ):
+def president2024_realtime():
     gc = pygsheets.authorize(service_account_env_var = 'GDRIVE_API_CREDENTIALS')
+    url = "https://docs.google.com/spreadsheets/d/1Ar9r7j5LN6eCirNnQ5Lkbl4IEw3UaDQMfdBq5b2oDOE/edit#gid=1764492368"
     sht = gc.open_by_url( url )
     voting_data = { "result": [] }
     try:
