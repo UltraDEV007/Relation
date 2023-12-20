@@ -42,6 +42,7 @@ def president_2024():
 @app.route("/election2024_homepage")
 def election_homepage():
     realtime_data = president2024_realtime()
+    return "ok"
 
 ### old version implementations
 @app.route("/politics_data_dump")
