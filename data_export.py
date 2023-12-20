@@ -41,7 +41,7 @@ def president2024_realtime():
         for row in sheet_tks:
             unit_tks = { "key": row[0], "value": [] }
             for number in range(len(candidates[0])):
-                unit_tks['value'].append( { candidates[0][number]: row[number + 1] })
+                unit_tks['value'].append( { candidates[0][number][0:1]: row[number + 1] })
                 #unit_tks[candidates[0][number]] = row[number]
             voting_data["result"].append(unit_tks)
                 
@@ -69,7 +69,7 @@ def presindent2024_cec( summary, phase = 1 ):
         final = tks
     else:
         cec_candidates = [{"key": "得票數", "value": tks}]
-        cec_candidates.append({"key": "得票數", "value": tksRate})
+        cec_candidates.append({"key": "得票率", "value": tksRate})
         if show_victor:
             cec_candidates.append({"key": "當選", "value": candVictor})
         final = cec_candidates
