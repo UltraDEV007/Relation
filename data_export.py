@@ -61,11 +61,12 @@ def presindent2024_cec( summary, phase = 1 ):
     candVictor = []
     show_victor = False
     for candidate in summary["candidates"]:
-        tks.append({candidate["candNo"]: candidate["tks"]})
-        tksRate.append({candidate["candNo"]: candidate["tksRate"]})
-        candVictor.append({candidate["candNo"]: candidate["candVictor"]})
-        if candidate["candVictor"]:
-            show_victor = True
+        if candidate["candNo"] < 4:
+            tks.append({candidate["candNo"]: candidate["tks"]})
+            tksRate.append({candidate["candNo"]: candidate["tksRate"]})
+            candVictor.append({candidate["candNo"]: candidate["candVictor"]})
+            if candidate["candVictor"]:
+                show_victor = True
     if phase == 1:
         final = tks
     else:
