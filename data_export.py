@@ -69,10 +69,10 @@ def presindent2024_cec( summary, phase = 1 ):
     if phase == 1:
         final = tks
     else:
-        cec_candidates = [{"key": "得票數", "value": tks}]
-        cec_candidates.append({"key": "得票率", "value": tksRate})
         if show_victor:
             cec_candidates.append({"key": "當選", "value": candVictor})
+        cec_candidates.append([{"key": "得票數", "value": tks}])
+        cec_candidates.append({"key": "得票率", "value": tksRate})
         final = cec_candidates
     return final
 
