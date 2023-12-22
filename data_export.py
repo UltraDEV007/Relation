@@ -72,7 +72,7 @@ def presindent2024_cec( summary, phase = 1 ):
         cec_candidates = []
         if show_victor:
             cec_candidates.append({"key": "當選", "value": candVictor})
-        cec_candidates.append([{"key": "得票數", "value": tks}])
+        cec_candidates.append({"key": "得票數", "value": tks})
         cec_candidates.append({"key": "得票率", "value": tksRate})
         final = cec_candidates
     return final
