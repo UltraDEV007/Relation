@@ -19,7 +19,8 @@ query GetPresidents {
     orderBy:{ number: asc },
     where: {
       election: {id: { equals: %s } },
-      mainCandidate: null
+      mainCandidate: null,
+      status: { equals: "active" }
     }) {
     id
     number
