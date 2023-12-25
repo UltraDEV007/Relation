@@ -19,6 +19,6 @@ def convert_candidate_president(raw_candidates, helper):
         candidate_tmp['party']      = hp.mapping_president.get(str(candNo), hp.UNKNOWN_CANDIDATE).get('party', None)
         candidate_tmp['tks']        = cand.get('tks', hp.DEFAULT_INT)
         candidate_tmp['tksRate']    = round(cand.get('tksRate', hp.DEFAULT_FLOAT), hp.ROUND_DECIMAL)
-        candidate_tmp['candVictor'] = cand.get('candVictor', hp.DEFAULT_CANDTKSINFO)
+        candidate_tmp['candVictor'] = cand.get('candVictor', '')
         result.append(candidate_tmp)
     return result
