@@ -1,4 +1,5 @@
 #FROM gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+#FROM gcr.io/google.com/cloudsdktool/google-cloud-cli:slim
 FROM python:3.9-slim
 
 COPY .  /usr/src/app/openrelation-elections

@@ -43,3 +43,19 @@ async def adapter_president_v2():
             }
     return mapping_president
 
+def adapter_indigeous_v2(gql_president):
+    mapping_indigeous    = {}
+    gql_data = gql_president['personElections']
+    for idx, data in enumerate(gql_data):
+        candNo      = data.get('number', str(idx))  ###如果實際candNo尚不存在，使用idx作為假資料
+        person_info = data.get('person_id', None)
+        party_info  = data.get('party', None)
+        if person_info == None:
+            continue
+        if candNo == '':
+            candNo = str(idx)
+        mapping_indigeous[candNo] = {
+            'person': person_info,
+            'party': party_info,
+        }
+    return mapping_indigeous

@@ -211,7 +211,7 @@ class V2Template:
         return template
 
 class PersonInfoTemplate:
-    def __init__(self, label: str='', href: str='', imgSrc: str=None):
+    def __init__(self, label: str='', href: str=None, imgSrc: str=None):
         self.label  = label
         self.href   = href
         self.imgSrc = imgSrc
@@ -220,6 +220,17 @@ class PersonInfoTemplate:
 PartyInfoTemplate = PersonInfoTemplate # alias naming
 
 class PersonCandidateTemplate:
+    def __init__(self, candNo: int=0, name: dict=None, party: dict=None, tks: int=0, tksRate: float=0.0, candVictor: bool=False):
+        self.candNo     = candNo
+        self.name       = name            # You should append PersonInfoTemplate
+        self.party      = party           # You should append PartyInfoTemplate
+        self.tks        = tks
+        self.tksRate    = tksRate
+        self.candVictor = candVictor
+    def to_json(self):
+        return copy.deepcopy(vars(self))
+
+class PresidentCandidateTemplate:
     def __init__(self, candNo: int=0, name: list=[], party: list=[], tks: int=0, tksRate: float=0.0, candVictor: bool=False):
         self.candNo     = candNo
         self.name       = name            # You should append PersonInfoTemplate

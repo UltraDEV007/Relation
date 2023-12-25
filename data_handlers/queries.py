@@ -47,3 +47,49 @@ query GetPresidents {
   }
 }
 """
+
+gql_mountainIndigeous_2024 = """
+query GetMountainIndigeous {
+  personElections(
+    orderBy:{ number: asc },
+    where: {
+      election: {id: { equals: 89 } },
+      status: {equals: "active"},
+    }) {
+    id
+    number
+    party {
+      id
+      name
+    }
+    person_id {
+      id
+      name
+      image
+    }
+  }
+}
+"""
+
+gql_plainIndigeous_2024 = """
+query GetPlainIndigeous {
+  personElections(
+    orderBy:{ number: asc },
+    where: {
+      election: {id: { equals: 88 } },
+      status: {equals: "active"},
+    }) {
+    id
+    number
+    party {
+      id
+      name
+    }
+    person_id {
+      id
+      name
+      image
+    }
+  }
+}
+"""
