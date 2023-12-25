@@ -43,7 +43,7 @@ def convert_candidate(raw_candidates, election_type, helper):
             candidate_tmp['candNo']  = patyNo
             candidate_tmp['party']   = mapping_json.get(str(patyNo), hp.UNKNOWN_PARTY).get('name', None)
             candidate_tmp['seats']   = mapping_json.get(str(patyNo), hp.UNKNOWN_PARTY).get('seat', None)
-            candidate_tmp['tksRate'] = round(cand.get('tksRate1', hp.DEFAULT_FLOAT), hp.ROUNR_DECIMAL) ### Don't use tksRate2
+            candidate_tmp['tksRate'] = round(cand.get('tksRate1', hp.DEFAULT_FLOAT), hp.ROUND_DECIMAL) ### Don't use tksRate2
             candidate_tmp['tks']     = cand.get('tks', hp.DEFAULT_INT)
             result.append(candidate_tmp)
     return result
