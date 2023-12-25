@@ -1,47 +1,113 @@
 import copy
-
-import data_handlers.president.converter as converter
-import data_handlers.parser as parser
-import data_handlers.templates as tp
 import data_handlers.helpers as hp
-from data_handlers.helpers import helpers
+import data_handlers.templates as tp
+import data_handlers.parser as parser
+import data_handlers.legislator.converter as converter
 
-### Generator functions
-def generate_country_json(preprocessing_data, is_running, is_started , helper=helpers['2024']):
+'''
+    Generate constituency(區域立委)
+'''
+def generate_constituency_json(preprocessing_data, is_running, is_started , helper=hp.helpers['2024']):
+    '''
+    Input:
+        preprocessing_data - cec constituency data(L1) after preprocessing area
+        helper             - helper file which helps you map the name in raw cec
+    Output:
+        country_json - result
+    '''
+    if is_running == True:
+        print("Don't call generate_constituency_json when the data is running.json")
+        return None
+    
+    result = {}
+    election_type = 'constituency'
+    preprocessing_data = copy.deepcopy(preprocessing_data)
+    
+    ### 在每一個行政區(district)下有很多投票所，將這些資料進行整理計算並存到result
+    for county_area_code, tbox_data in preprocessing_data['districts'].items():
+        constituency_json = tp.ConstituencyTemplate(
+            is_running = is_running,
+            is_started = is_started
+        ).to_json()
+        constituency_json['updateAt'] = preprocessing_data['updateAt']
+        
+        ### 當為全省(台灣省,福建省)資料和無地區資料時不處理
+        county_code = county_area_code[:hp.COUNTY_CODE_LENGTH]
+        area_code   = county_area_code[hp.COUNTY_CODE_LENGTH:]  
+        if county_code in hp.NO_PROCESSING_CODE or area_code == hp.DEFAULT_AREACODE:
+            continue
+        
+        ### 票數計算
+        for data in tbox_data:
+            tboxNo    = data.get('tboxNo', hp.DEFAULT_INT)
+            town_code = data.get('deptCode', hp.DEFAULT_TOWNCODE)
+            area_code = data.get('areaCode', hp.DEFAULT_AREACODE)
+            profRate  = data.get('profRate', hp.DEFAULT_FLOAT)
+            if tboxNo == hp.DEFAULT_INT or town_code == hp.DEFAULT_TOWNCODE or area_code == hp.DEFAULT_AREACODE:
+                continue
+                
+            vill_name = hp.mapping_tboxno_vill.get(county_code+town_code, {}).get(str(tboxNo), None)
+            vill_code = hp.mapping_vill_code.get(county_code+town_code, {}).get(vill_name, None)
+            
+            #TODO: 產生地區字串(範例: 連江縣 第01選區 南竿鄉介壽村)，須重構
+            town_name = hp.mapping_town[f'{county_code}{town_code}']
+            city_name = town_name[:3] ## TODO: Should refactor
+            region = f'{city_name} 第{area_code}選區 {town_name[3:]}{vill_name}'
+            
+            district_tmp = tp.ConstituencyDistrictTemplate(
+                region = region,          
+                area_nickname = hp.mapping_nickname[f'{county_code}{area_code}'],
+                county_code = county_code,
+                area = area_code,
+                town = town_code,
+                vill = vill_code,
+                type_str = "normal",
+                profRate = profRate
+            ).to_json()
+            raw_candidate = data.get('candTksInfo', [])
+            candidates = converter.convert_candidate(raw_candidate, election_type, helper)
+            district_tmp['candidates'] = candidates
+            constituency_json['districts'].append(district_tmp)
+        result[f'{county_area_code}.json'] = constituency_json
+    return result
+
+def generate_country_json(preprocessing_data, is_running, is_started , election_type, helper=hp.helper):
     '''
     Input:
         preprocessing_data - cec president data after preprocessing county
-        helper             - helper file which helps you map some data in raw cec
+        is_running         - is_running file?
+        is_started         - is_started?
+        election_type      - 'mountainIndigenous'/'plainIndigenous'/'party'
+        helper             - helper file which helps you map the name in raw cec
     Output:
         country_json - result
     '''
     ### Categorize the original data, and save it in country template
     preprocessing_data = copy.deepcopy(preprocessing_data)
     country_json = tp.CountryTemplate(
-        updateAt = preprocessing_data['updateAt'],
         is_running = is_running,
         is_started = is_started
     ).to_json()
+    country_json['updateAt'] = preprocessing_data['updateAt']
 
     ### Generate summary
     preprocessing_districts = preprocessing_data['districts']
     summary_data = preprocessing_districts[hp.COUNTRY_CODE][0]
 
     raw_candidates = summary_data.get('candTksInfo', hp.DEFAULT_LIST)
-    candidates = converter.convert_candidate_president(raw_candidates, helper)
+    candidates = converter.convert_candidate(raw_candidates, election_type, helper)
 
     country_json['summary'] = tp.DistrictTemplate(
-        region    = hp.mapping_city[hp.COUNTRY_CODE],
+        region     = hp.mapping_city[hp.COUNTRY_CODE],
         profRate   = summary_data.get('profRate', hp.DEFAULT_FLOAT),
-        candidates  = candidates
+        type_str   = None if election_type=='president' else election_type, ###總統大選以外需要標明type
+        candidates = candidates
     ).to_json()
-    try:
-        del preprocessing_districts[hp.COUNTRY_CODE]
-    except KeyError as e:
-        print(f"Delete COUNTRY_CODE data failed at {country_json['updateAt']}")
-
+        
     ### Generate districts
     for county_code, values in preprocessing_districts.items():
+        if county_code in hp.NO_PROCESSING_CODE:
+            continue
         county_str  = hp.mapping_city.get(county_code, None)
         county_data = values[0]
         if county_str == None:
@@ -54,18 +120,17 @@ def generate_country_json(preprocessing_data, is_running, is_started , helper=he
         district_tmp['profRate'] = county_data.get(helper['PROFRATE'], hp.DEFAULT_FLOAT)
 
         raw_candidate = county_data.get('candTksInfo', [])
-        candidates = converter.convert_candidate_president(raw_candidate, helper)
+        candidates = converter.convert_candidate(raw_candidate, election_type, helper)
 
         district_tmp['candidates'] = candidates
         country_json['districts'].append(district_tmp)
     return country_json
 
-
-def generate_county_json(preprocessing_data, is_running, is_started, helper=helpers['2024']):
+def generate_county_json(preprocessing_data, is_running, is_started, election_type, helper=hp.helper):
     '''
         Generate county json for assigned county_code
         Input:
-            preprocessing_data  - cec data after preprocessing county`
+            preprocessing_data  - cec data after preprocessing county
         Output:
             result - {filename, county_json}
     '''
@@ -83,9 +148,9 @@ def generate_county_json(preprocessing_data, is_running, is_started, helper=help
     updateAt = preprocessing_data['updateAt']
 
     for county_code, raw_county_data in districts.items():
-        if county_code==hp.COUNTRY_CODE or county_code==hp.FUJIAN_PRV_CODE or raw_county_data==None:
+        if (county_code in hp.NO_PROCESSING_CODE) or raw_county_data==None:
             continue
-        preprocessing_town = parser.parse_town(county_code, raw_county_data) # This operation may can be reused
+        preprocessing_town = parser.parse_town(county_code, raw_county_data)
 
         ### Transform the data
         county_json = tp.CountyTemplate(
@@ -106,26 +171,23 @@ def generate_county_json(preprocessing_data, is_running, is_started, helper=help
 
             ).to_json()
             raw_candidates = town_data[0].get(helper['CANDIDATES'], [])
-            district_tmp['candidates'] = converter.convert_candidate_president(raw_candidates, helper)
+            district_tmp['candidates'] = converter.convert_candidate(raw_candidates, election_type, helper)
 
             county_json['districts'].append(district_tmp)
         result[f'{county_code}.json'] = county_json
     return result
 
-
-def generate_town_json(town_data, updateAt, is_running, is_started, helper=helpers['2024']):
+def generate_town_json(town_data, updateAt, is_running, is_started, election_type, helper=hp.helper):
     '''
-    Warning:
-        Village data only exist in final.json, don't call this function when the data is running.json
-
     Description:
         Given the data of the town, generate the json data for the village.
         There are no direct village code in raw data, you should map the tboxNo to it.
         Besides, the village data only exist in final.json
 
     Input:
-        town_data - The data after parse_president_town(county_code, county_data)
-        helper    - helper dict
+        town_data     - The data after parse_president_town(county_code, county_data)
+        election_type - 'mountainIndigenous'/'plainIndigenous'
+        helper        - helper dict
 
     Output:
         result - The dict content {str: filename, dict: json}.
@@ -135,19 +197,13 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=helpe
             '09007020', 09007020.json <= this is the data you need to generate
             ...
         }
-
-        errors - The error list which record all the problematic tboxNo
     '''
-    if is_running == True:
-        print('generate_town_json can only be called when the data is final.json')
-        return None
-
     result = {}
-    errors = []
-    county_code = town_data.get('county_code', None)
-    if county_code == None:
-        print('invalid town data without county_code provided')
 
+    county_code = town_data.get('county_code', None)
+    if county_code == None or (county_code in hp.NO_PROCESSING_CODE):
+        return None
+    
     for town_code, tbox_data in town_data['towns'].items():
         if town_code == hp.DEFAULT_VILLCODE:
             continue
@@ -164,19 +220,11 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=helpe
             tboxNo    = data.get('tboxNo', hp.DEFAULT_INT)
             voterTurnout   = data.get('voterTurnout', hp.DEFAULT_INT)
             eligibleVoters = data.get('eligibleVoters', hp.DEFAULT_INT)
-            if tboxNo == 0:
+            if tboxNo == hp.DEFAULT_INT:
                 continue
             
             vill_name = hp.mapping_tboxno_vill.get(county_code+town_code, {}).get(str(tboxNo), None)
             vill_code = hp.mapping_vill_code.get(county_code+town_code, {}).get(vill_name, None)
-            if vill_code == None:
-                message = f'tboxNo: {tboxNo} has no mapping data'
-                error = tp.ErrorTemplate(
-                    county = county_code, 
-                    town   = town_code, 
-                    reason = message
-                ).to_json
-                errors.append(error)
             
             all_code = f'{county_code}{town_code}{vill_code}'
             vill_calc = vill_calculator.get(all_code, None)
@@ -191,15 +239,18 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=helpe
                     eligibleVoters = eligibleVoters
                 ).to_json()
                 raw_candidates = data.get('candTksInfo', [])
-                vill_calc_json['candidates'] = converter.convert_candidate_president(raw_candidates, helper)
-                for cand in vill_calc_json['candidates']:
-                    cand['candVictor'] = ' ' ### Haven't finished calculation yet, so no winner for candidates
+                vill_calc_json['candidates'] = converter.convert_candidate(raw_candidates, election_type, helper)
+                
+                ### 在不分區立委(party)當中不會有獲勝者的資料，不需要處理。其他的話由於需要在最後統算時才能得出winner所以要先設為空字串 
+                if election_type != 'party':
+                    for cand in vill_calc_json['candidates']:
+                        cand['candVictor'] = ' '
                 vill_calculator[all_code] = vill_calc_json
             else:
                 vill_calc['voterTurnout']   += voterTurnout
                 vill_calc['eligibleVoters'] += eligibleVoters
                 
-                candidates = converter.convert_candidate_president(data.get('candTksInfo', []), helper)
+                candidates = converter.convert_candidate(data.get('candTksInfo', []), election_type, helper)
                 for idx, cand in enumerate(vill_calc['candidates']):
                     cand['tks'] += candidates[idx]['tks']
         
@@ -207,7 +258,7 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=helpe
             region, county, town, vill = vill_calc['region'], vill_calc['county'], vill_calc['town'], vill_calc['vill']
             total_voterTurnout   = vill_calc.get('voterTurnout', hp.DEFAULT_INT)
             total_eligibleVoters = vill_calc.get('eligibleVoters', hp.DEFAULT_INT)
-            profRate = round((total_voterTurnout/total_eligibleVoters)*100, hp.ROUND_DECIMAL)
+            profRate = round((total_voterTurnout/total_eligibleVoters)*100, 2) if total_eligibleVoters!=hp.DEFAULT_INT else hp.DEFAULT_FLOAT
             
             total_tks, winner_idx = 0,0
             candidates = vill_calc['candidates']
@@ -217,8 +268,9 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=helpe
                 if tks>candidates[winner_idx]['tks']:
                     winner_idx = idx
             for idx, cand in enumerate(candidates):
-                cand['tksRate'] = round((cand['tks']/total_tks)*100, hp.ROUND_DECIMAL)
-            candidates[winner_idx]['candVictor'] = '*' 
+                cand['tksRate'] = round((cand['tks']/total_tks)*100, 2) if total_tks!=hp.DEFAULT_INT else hp.DEFAULT_FLOAT
+            if election_type != 'party':
+                candidates[winner_idx]['candVictor'] = '*' 
             
             ### Store the calculated result into DistrictTemplate
             district_json = tp.DistrictTemplate(
@@ -232,4 +284,4 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=helpe
             district_json['candidates'] = candidates
             vill_json['districts'].append(district_json)
         result[filename] = vill_json
-    return result, errors
+    return result

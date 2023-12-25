@@ -19,10 +19,17 @@ helpers = {
         'START_TIME': 'ST',
         ### For running.json and final.json
         'PRESIDENT': 'P1',
-        'LOCAL_LEGISLATOR': 'L1',
-        'PLAIN_INDIGENOUS_LEGISLATOR': 'L2',
-        'MOUNTAIN_INDIGENOUS_LEGISLATOR': 'L3',
-        'PARTY_LEGISLATOR': 'L4',
+        'LOCAL_LEGISLATOR': 'L1',                 #區域立委(選人)
+        'PLAIN_INDIGENOUS_LEGISLATOR': 'L2',      #平地原住民立委(選人)
+        'MOUNTAIN_INDIGENOUS_LEGISLATOR': 'L3',   #山地原住民立委(選人)
+        'PARTY_LEGISLATOR': 'L4',                 #不分區立委(選黨)
+        
+        ### 立委資料的統一格式字串及較簡易的KEY
+        'plain': 'L2',
+        'plainIndigenous': 'L2',
+        'mountain': 'L3',
+        'mountainIndigenous': 'L3',
+        'party': 'L4',
         
         ### For final_A.json
         'PARTY_QUOTA': 'M4',
@@ -34,45 +41,34 @@ helpers = {
         'TOWN': 'deptCode', 
         'PROFRATE': 'profRate',
         'CANDIDATES': 'candTksInfo',
-        
-        ### Candidate ID mapping for presidents
-        'CAND_PRESIDENT_MAPPING': {
-            1: {
-                "name": "柯文哲 吳欣盈",
-                "party": "台灣民眾黨"
-            },
-            2: {
-                "name": "賴清德 蕭美琴",
-                "party": "民主進步黨"
-            },
-            3: {
-                "name": "侯友宜 趙少康",
-                "party": "中國國民黨"
-            }
-        },
     }
 }
 helper = helpers['2024']
-helper['MAX_CAND_NUMBER'] = max(helper['CAND_PRESIDENT_MAPPING'].keys())
 
-COUNTRY_CODE = '00000'    ### 全國代碼
-FUJIAN_PRV_CODE = '09000' ### 福建省省碼
+COUNTRY_CODE    = '00000' ## 國碼
+TAIWAN_PRV_CODE = '10000' ## 台灣省省碼
+FUJIAN_PRV_CODE = '09000' ## 福建省省碼
+COUNTRY_CODE_LEN = len(COUNTRY_CODE)
+NO_PROCESSING_CODE = [COUNTRY_CODE, TAIWAN_PRV_CODE, FUJIAN_PRV_CODE]
 
-DEFAULT_CANDVICTOR = ' '  ### Empty string with len=1
-DEFAULT_PRVCODE = '00'
+DEFAULT_PRVCODE = DEFAULT_AREACODE = '00'
 DEFAULT_CITYCODE = '000'
 DEFAULT_DEPTCODE = DEFAULT_TOWNCODE = DEFAULT_VILLCODE = '000'
 DEFAULT_FLOAT = DEFAULT_PROFRATE = 0.0
 DEFAULT_LIST  = DEFAULT_CANDTKSINFO = []
 DEFAULT_INT   = 0
-ROUND_DECIMAL = 2
+ROUNR_DECIMAL = 2
 
 UNKNOWN_CANDIDATE = {
     "name": "未知",
     "party": "未知黨"
 }
 
-### 首都(Municipality)列表
+UNKNOWN_PARTY = {
+    "name": "未知黨",
+    "seat": DEFAULT_INT
+}
+
 MUNICIPALITY = [
     '臺北市', '新北市', '桃園市', '臺中市', '臺南市', '高雄市'
 ]
@@ -106,6 +102,22 @@ mapping_president = open_file(path)
 
 path = os.path.join(root, 'mapping_tboxNo_vill.json')
 mapping_tboxno_vill = open_file(path)
+
+### 立委相關的對照表
+path = os.path.join(root, 'mapping_mountain_cand.json')
+mapping_mountain_cand = open_file(path)
+
+path = os.path.join(root, 'mapping_plain_cand.json')
+mapping_plain_cand = open_file(path)
+
+path = os.path.join(root, 'mapping_constituency_cand.json')
+mapping_constituency_cand = open_file(path)
+
+path = os.path.join(root, 'mapping_party_seat.json')
+mapping_party_seat = open_file(path)
+
+path = os.path.join(root, 'mapping_nickname.json')
+mapping_nickname = open_file(path) ### Mapping relationship: [areaCode, nickname]
 
 ### Reverse mapping
 reverse_mapping_town = reverse_mapping(mapping_town)
