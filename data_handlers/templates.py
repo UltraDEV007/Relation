@@ -191,3 +191,52 @@ class ErrorTemplate:
         self.reason = reason
     def to_json(self):
         return vars(self)
+    
+'''
+    Templates for V2
+'''
+class V2Template:
+    def __init__(self, updateAt: str='', year: str='', type: str='', title: str='', version: str=''):
+        self.updateAt   = updateAt
+        self.year = year
+        self.type = type
+        self.title    = title
+        self.version  = version
+    def to_json(self):
+        template = vars(self)
+        if self.type == 'legislator-party':
+            template['parties'] = []     ### You should append PartyCandidateTemplate
+        else:
+            template['candidates'] = []  ### You should append PersonCandidateTemplate
+        return template
+
+class PersonInfoTemplate:
+    def __init__(self, label: str='', href: str='', imgSrc: str=None):
+        self.label  = label
+        self.href   = href
+        self.imgSrc = imgSrc
+    def to_json(self):
+        return copy.deepcopy(vars(self))
+PartyInfoTemplate = PersonInfoTemplate # alias naming
+
+class PersonCandidateTemplate:
+    def __init__(self, candNo: int=0, name: list=[], party: list=[], tks: int=0, tksRate: float=0.0, candVictor: bool=False):
+        self.candNo     = candNo
+        self.name       = name            # You should append PersonInfoTemplate
+        self.party      = party           # You should append PartyInfoTemplate
+        self.tks        = tks
+        self.tksRate    = tksRate
+        self.candVictor = candVictor
+    def to_json(self):
+        return copy.deepcopy(vars(self))
+
+class PartyCandidateTemplate:
+    def __init__(self, candNo: int=0, party: list=[], tks: int=0, tksRate1: float=0.0, tksRate2: float=0.0, seats: int=0):
+        self.candNo     = candNo
+        self.party      = party           # You should append PartyInfoTemplate
+        self.tks        = tks
+        self.tksRate1   = tksRate1
+        self.tksRate2   = tksRate2
+        self.seats      = seats
+    def to_json(self):
+        return copy.deepcopy(vars(self))
