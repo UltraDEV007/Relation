@@ -5,7 +5,7 @@ import pygsheets
 from gql.transport.aiohttp import AIOHTTPTransport
 from gql import gql, Client
 from google.cloud import storage
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 def president2024_realtime():
     gc = pygsheets.authorize(service_account_env_var = 'GDRIVE_API_CREDENTIALS')
@@ -23,7 +23,8 @@ def president2024_realtime():
     switch_view = meta_sheet.get_value("B4")
     cec_data = {}
     readr_data = {}
-    now = datetime.now()
+    tz = timezone(timedelta(hours=+8))
+    now = datetime.now(tz)
     date_time = now.strftime("%Y-%m-%d, %H:%M:%S")
     voting_data["updateAt"] = date_time
 #    if switch_view == 'T' or get_cec_data == 'T':
