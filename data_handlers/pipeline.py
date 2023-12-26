@@ -53,7 +53,6 @@ def pipeline_map_2024(raw_data, final_A=None, is_started: bool=True, is_running:
     prev_time = time.time()
     result = pipeline_legislator_party_2024(
         raw_data,
-        None,      ### We just pass it when we have final_A.json
         is_started=is_started,
         is_running=is_running
     )
