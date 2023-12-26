@@ -24,7 +24,7 @@ def generate_country_json(preprocessing_data, is_running, is_started , helper=hp
     summary_data = preprocessing_districts[hp.COUNTRY_CODE][0]
 
     raw_candidates = summary_data.get('candTksInfo', hp.DEFAULT_LIST)
-    candidates = converter.convert_candidate_president(raw_candidates, helper)
+    candidates = converter.convert_candidate_president(raw_candidates)
 
     country_json['summary'] = tp.DistrictTemplate(
         region    = hp.mapping_city[hp.COUNTRY_CODE],
@@ -48,7 +48,7 @@ def generate_country_json(preprocessing_data, is_running, is_started , helper=hp
         district_tmp['profRate'] = county_data.get(helper['PROFRATE'], hp.DEFAULT_FLOAT)
 
         raw_candidate = county_data.get('candTksInfo', [])
-        candidates = converter.convert_candidate_president(raw_candidate, helper)
+        candidates = converter.convert_candidate_president(raw_candidate)
 
         district_tmp['candidates'] = candidates
         country_json['districts'].append(district_tmp)
@@ -100,7 +100,7 @@ def generate_county_json(preprocessing_data, is_running, is_started, helper=hp.h
 
             ).to_json()
             raw_candidates = town_data[0].get(helper['CANDIDATES'], [])
-            district_tmp['candidates'] = converter.convert_candidate_president(raw_candidates, helper)
+            district_tmp['candidates'] = converter.convert_candidate_president(raw_candidates)
 
             county_json['districts'].append(district_tmp)
         result[f'{county_code}.json'] = county_json
@@ -185,7 +185,7 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=hp.he
                     eligibleVoters = eligibleVoters
                 ).to_json()
                 raw_candidates = data.get('candTksInfo', [])
-                vill_calc_json['candidates'] = converter.convert_candidate_president(raw_candidates, helper)
+                vill_calc_json['candidates'] = converter.convert_candidate_president(raw_candidates)
                 for cand in vill_calc_json['candidates']:
                     cand['candVictor'] = ' ' ### Haven't finished calculation yet, so no winner for candidates
                 vill_calculator[all_code] = vill_calc_json
@@ -193,7 +193,7 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=hp.he
                 vill_calc['voterTurnout']   += voterTurnout
                 vill_calc['eligibleVoters'] += eligibleVoters
                 
-                candidates = converter.convert_candidate_president(data.get('candTksInfo', []), helper)
+                candidates = converter.convert_candidate_president(data.get('candTksInfo', []))
                 for idx, cand in enumerate(vill_calc['candidates']):
                     cand['tks'] += candidates[idx]['tks']
         
