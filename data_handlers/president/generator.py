@@ -7,7 +7,7 @@ import data_handlers.helpers as hp
 from data_handlers.helpers import helpers
 
 ### Generator functions
-def generate_country_json(preprocessing_data, is_running, is_started , helper=helpers['2024']):
+def generate_country_json(preprocessing_data, is_running, is_started , helper=hp.helper):
     '''
     Input:
         preprocessing_data - cec president data after preprocessing county
@@ -16,7 +16,6 @@ def generate_country_json(preprocessing_data, is_running, is_started , helper=he
         country_json - result
     '''
     ### Categorize the original data, and save it in country template
-    preprocessing_data = copy.deepcopy(preprocessing_data)
     country_json = tp.CountryTemplate(
         updateAt = preprocessing_data['updateAt'],
         is_running = is_running,
@@ -35,13 +34,11 @@ def generate_country_json(preprocessing_data, is_running, is_started , helper=he
         profRate   = summary_data.get('profRate', hp.DEFAULT_FLOAT),
         candidates  = candidates
     ).to_json()
-    try:
-        del preprocessing_districts[hp.COUNTRY_CODE]
-    except KeyError as e:
-        print(f"Delete COUNTRY_CODE data failed at {country_json['updateAt']}")
 
     ### Generate districts
     for county_code, values in preprocessing_districts.items():
+        if county_code in hp.NO_PROCESSING_CODE:
+            continue
         county_str  = hp.mapping_city.get(county_code, None)
         county_data = values[0]
         if county_str == None:
@@ -61,7 +58,7 @@ def generate_country_json(preprocessing_data, is_running, is_started , helper=he
     return country_json
 
 
-def generate_county_json(preprocessing_data, is_running, is_started, helper=helpers['2024']):
+def generate_county_json(preprocessing_data, is_running, is_started, helper=hp.helper):
     '''
         Generate county json for assigned county_code
         Input:
@@ -83,7 +80,7 @@ def generate_county_json(preprocessing_data, is_running, is_started, helper=help
     updateAt = preprocessing_data['updateAt']
 
     for county_code, raw_county_data in districts.items():
-        if county_code==hp.COUNTRY_CODE or county_code==hp.FUJIAN_PRV_CODE or raw_county_data==None:
+        if county_code in hp.NO_PROCESSING_CODE or raw_county_data==None:
             continue
         preprocessing_town = parser.parse_town(county_code, raw_county_data) # This operation may can be reused
 
@@ -113,7 +110,7 @@ def generate_county_json(preprocessing_data, is_running, is_started, helper=help
     return result
 
 
-def generate_town_json(town_data, updateAt, is_running, is_started, helper=helpers['2024']):
+def generate_town_json(town_data, updateAt, is_running, is_started, helper=hp.helper):
     '''
     Warning:
         Village data only exist in final.json, don't call this function when the data is running.json

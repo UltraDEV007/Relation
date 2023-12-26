@@ -19,8 +19,8 @@ IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 ### new version implementations
-@app.route('/elections/presidents/2024', methods=['POST'])
-def president_2024():
+@app.route('/elections/map/2024', methods=['POST'])
+def election_map_2024():
     '''
         Generate result for presidents and vice presidents election
     '''
@@ -31,8 +31,24 @@ def president_2024():
     #         preprocessing_data = preprocessor.parse_president_cec(raw_data)
     if IS_STARTED:
         raw_data = request_cec('final.json')
+        final_A  = request_cec('final_A.json')
         if raw_data:
-            result = pipeline.pipeline_2024(raw_data, is_started = IS_STARTED, is_running = False)
+            result = pipeline.pipeline_map_2024(raw_data, final_A, is_started = IS_STARTED, is_running = False)
+            if result == False:
+                print('Running pipeline 2024 failed.')
+            else:
+                print('Running pipeline 2024 successed.')
+    return "ok"
+
+@app.route('/elections/v2/2024', methods=['POST'])
+def election_v2_2024():
+    '''
+        Test pipeline of v2, will be removed in the future
+    '''
+    if IS_STARTED:
+        raw_data = request_cec('running.json')
+        if raw_data:
+            result = pipeline.pipeline_v2(raw_data)
             if result == False:
                 print('Running pipeline 2024 failed.')
             else:

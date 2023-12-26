@@ -2,7 +2,7 @@ from datetime import datetime
 from data_handlers.helpers import helpers
 import data_handlers.helpers as hp
 
-def parse_county(data, election_type, helper=helpers['2024']):
+def parse_county(data, election_type, helper=hp.helper):
     '''
         Parse the raw data into two level(county, town).
     '''
@@ -78,7 +78,7 @@ def parse_town(county_code, county_data):
         subLevel.append(villInfo)
     return preprocessing_result
 
-def parse_constituency_area(data, helper=helpers['2024']):
+def parse_constituency_area(data, helper=hp.helper):
     '''
         Parse the raw data into two level(county, town).
     '''
@@ -122,7 +122,7 @@ def parse_constituency_area(data, helper=helpers['2024']):
         subLevel.append(areaInfo)
     return preprocessing_result
 
-def parse_seat(data, mapping_party_seat, helper=helpers['2024']):
+def parse_seat(data, mapping_party_seat):
     '''
     Description:
         從final_A.json資料當中抓出各政黨的不分區立委中選席次，並將其寫入到不分區政黨對照表中

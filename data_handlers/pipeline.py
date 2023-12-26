@@ -9,32 +9,57 @@ import data_handlers.helpers as hp
 
 from tools.uploadGCS import upload_blob, save_file, upload_multiple_test
 from datetime import datetime
+import time
 
-def pipeline_2024(raw_data, is_started: bool=True, is_running: bool=False):
+def pipeline_map_2024(raw_data, final_A=None, is_started: bool=True, is_running: bool=False):
     result = True
+    
+    ### If final_A exist, write the seats result into mapping file
+    if final_A!=None:
+        parser.parse_seat(final_A, hp.mapping_party_seat) ### 將席次統計結果寫入對照表
+
     ### Generate data for president
+    prev_time = time.time()
     result = pipeline_president_2024(
         raw_data, 
         is_started = is_started,
         is_running = is_running
     )
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'pipeline for president costed {exe_time} sec, is_running={is_running}')
+
     ### Generate data for legislator
+    prev_time = time.time()
     result = pipeline_legislator_constituency_2024(
         raw_data,
         is_started = is_started,
         is_running = is_running
     )
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'pipeline for legislator constituency costed {exe_time} sec, is_running={is_running}')
+
+    prev_time = time.time()
     result = pipeline_legislator_special_2024(
         raw_data,
         is_started = is_started,
         is_running = is_running
     )
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'pipeline for legislator mountain and plain legislator costed {exe_time} sec, is_running={is_running}')
+
+    prev_time = time.time()
     result = pipeline_legislator_party_2024(
         raw_data,
         None,      ### We just pass it when we have final_A.json
         is_started=is_started,
         is_running=is_running
     )
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'pipeline for legislator party costed {exe_time} sec, is_running={is_running}')
     return result
 
 def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=False):
@@ -142,14 +167,11 @@ def pipeline_legislator_special_2024(raw_data, is_started: bool=True, is_running
                     upload_blob(filename, year)
     return True
 
-def pipeline_legislator_party_2024(raw_data, final_A, is_started: bool=True, is_running: bool=False):
+def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: bool=False):
     year = datetime.now().year
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
     election_type = 'party'
-    
-    if final_A!=None:
-        parser.parse_seat(final_A, hp.mapping_party_seat) ### 將席次統計結果寫入對照表
-    
+
     ### Generate country
     parsed_county = parser.parse_county(raw_data, election_type)
     country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)

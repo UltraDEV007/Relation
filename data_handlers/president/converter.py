@@ -5,7 +5,7 @@ import data_handlers.helpers as hp
     Converters are used to convert some raw data into object template
 '''
 
-def convert_candidate_president(raw_candidates, helper):
+def convert_candidate_president(raw_candidates):
     '''
     Description:
         Convert the raw candidates data into CandidateTemplate

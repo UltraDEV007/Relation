@@ -14,8 +14,7 @@ PARTY: 不分區
 QUOTA: 名額(PARTY_QUOTA指的是不分區配額)
 '''
 
-helpers = {
-    '2024':{
+helper = {
         'START_TIME': 'ST',
         ### For running.json and final.json
         'PRESIDENT': 'P1',
@@ -24,6 +23,14 @@ helpers = {
         'MOUNTAIN_INDIGENOUS_LEGISLATOR': 'L3',   #山地原住民立委(選人)
         'PARTY_LEGISLATOR': 'L4',                 #不分區立委(選黨)
         
+        ### For v2
+        'president': 'P1',
+        'legislator-district': 'L1',
+        'legislator-plainIndigenous': 'L2',
+        'legislator-mountainIndigenous': 'L3',
+        'legislator-party': 'L4',
+        'WHORU_WEBSITE_PERSON': 'https://whoareyou.readr.tw/person/',
+
         ### 立委資料的統一格式字串及較簡易的KEY
         'plain': 'L2',
         'plainIndigenous': 'L2',
@@ -41,9 +48,7 @@ helpers = {
         'TOWN': 'deptCode', 
         'PROFRATE': 'profRate',
         'CANDIDATES': 'candTksInfo',
-    }
 }
-helper = helpers['2024']
 
 COUNTRY_CODE    = '00000' ## 國碼
 TAIWAN_PRV_CODE = '10000' ## 台灣省省碼

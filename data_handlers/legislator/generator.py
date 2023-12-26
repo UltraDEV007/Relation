@@ -7,7 +7,7 @@ import data_handlers.legislator.converter as converter
 '''
     Generate constituency(區域立委)
 '''
-def generate_constituency_json(preprocessing_data, is_running, is_started , helper=hp.helpers['2024']):
+def generate_constituency_json(preprocessing_data, is_running, is_started , helper=hp.helper):
     '''
     Input:
         preprocessing_data - cec constituency data(L1) after preprocessing area
@@ -65,7 +65,7 @@ def generate_constituency_json(preprocessing_data, is_running, is_started , help
                 profRate = profRate
             ).to_json()
             raw_candidate = data.get('candTksInfo', [])
-            candidates = converter.convert_candidate(raw_candidate, election_type, helper)
+            candidates = converter.convert_constituency_candidate(raw_candidate, county_code, area_code)
             district_tmp['candidates'] = candidates
             constituency_json['districts'].append(district_tmp)
         result[f'{county_area_code}.json'] = constituency_json
@@ -95,7 +95,7 @@ def generate_country_json(preprocessing_data, is_running, is_started , election_
     summary_data = preprocessing_districts[hp.COUNTRY_CODE][0]
 
     raw_candidates = summary_data.get('candTksInfo', hp.DEFAULT_LIST)
-    candidates = converter.convert_candidate(raw_candidates, election_type, helper)
+    candidates = converter.convert_candidate(raw_candidates, election_type)
 
     country_json['summary'] = tp.DistrictTemplate(
         region     = hp.mapping_city[hp.COUNTRY_CODE],
@@ -120,7 +120,7 @@ def generate_country_json(preprocessing_data, is_running, is_started , election_
         district_tmp['profRate'] = county_data.get(helper['PROFRATE'], hp.DEFAULT_FLOAT)
 
         raw_candidate = county_data.get('candTksInfo', [])
-        candidates = converter.convert_candidate(raw_candidate, election_type, helper)
+        candidates = converter.convert_candidate(raw_candidate, election_type)
 
         district_tmp['candidates'] = candidates
         country_json['districts'].append(district_tmp)
@@ -171,7 +171,7 @@ def generate_county_json(preprocessing_data, is_running, is_started, election_ty
 
             ).to_json()
             raw_candidates = town_data[0].get(helper['CANDIDATES'], [])
-            district_tmp['candidates'] = converter.convert_candidate(raw_candidates, election_type, helper)
+            district_tmp['candidates'] = converter.convert_candidate(raw_candidates, election_type)
 
             county_json['districts'].append(district_tmp)
         result[f'{county_code}.json'] = county_json
@@ -239,7 +239,7 @@ def generate_town_json(town_data, updateAt, is_running, is_started, election_typ
                     eligibleVoters = eligibleVoters
                 ).to_json()
                 raw_candidates = data.get('candTksInfo', [])
-                vill_calc_json['candidates'] = converter.convert_candidate(raw_candidates, election_type, helper)
+                vill_calc_json['candidates'] = converter.convert_candidate(raw_candidates, election_type)
                 
                 ### 在不分區立委(party)當中不會有獲勝者的資料，不需要處理。其他的話由於需要在最後統算時才能得出winner所以要先設為空字串 
                 if election_type != 'party':
@@ -250,7 +250,7 @@ def generate_town_json(town_data, updateAt, is_running, is_started, election_typ
                 vill_calc['voterTurnout']   += voterTurnout
                 vill_calc['eligibleVoters'] += eligibleVoters
                 
-                candidates = converter.convert_candidate(data.get('candTksInfo', []), election_type, helper)
+                candidates = converter.convert_candidate(data.get('candTksInfo', []), election_type)
                 for idx, cand in enumerate(vill_calc['candidates']):
                     cand['tks'] += candidates[idx]['tks']
         
@@ -268,7 +268,7 @@ def generate_town_json(town_data, updateAt, is_running, is_started, election_typ
                 if tks>candidates[winner_idx]['tks']:
                     winner_idx = idx
             for idx, cand in enumerate(candidates):
-                cand['tksRate'] = round((cand['tks']/total_tks)*100, 2) if total_tks!=hp.DEFAULT_INT else hp.DEFAULT_FLOAT
+                cand['tksRate'] = round((cand['tks']/total_tks)*100, hp.ROUND_DECIMAL) if total_tks!=hp.DEFAULT_INT else hp.DEFAULT_FLOAT
             if election_type != 'party':
                 candidates[winner_idx]['candVictor'] = '*' 
             
