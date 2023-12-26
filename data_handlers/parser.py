@@ -1,5 +1,4 @@
 from datetime import datetime
-from data_handlers.helpers import helpers
 import data_handlers.helpers as hp
 
 def parse_county(data, election_type, helper=hp.helper):

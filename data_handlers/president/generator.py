@@ -1,10 +1,7 @@
-import copy
-
 import data_handlers.president.converter as converter
 import data_handlers.parser as parser
 import data_handlers.templates as tp
 import data_handlers.helpers as hp
-from data_handlers.helpers import helpers
 
 ### Generator functions
 def generate_country_json(preprocessing_data, is_running, is_started , helper=hp.helper):
