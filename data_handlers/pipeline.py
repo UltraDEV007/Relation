@@ -118,8 +118,9 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'constituency', 'normal')
     parsed_area = parser.parse_constituency_area(raw_data)
     constituency_result = lg_generator.generate_constituency_json(parsed_area, is_running, is_started)
-    for filename, data in constituency_result.items():
-        save_file(os.path.join(root_path, filename), data)
+    for name, data in constituency_result.items():
+        filename = os.path.join(root_path, name)
+        save_file(filename, data)
         upload_blob(filename, year)
     return True
 

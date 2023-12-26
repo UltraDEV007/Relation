@@ -20,8 +20,6 @@ def generate_constituency_json(preprocessing_data, is_running, is_started , help
         return None
     
     result = {}
-    election_type = 'constituency'
-    preprocessing_data = copy.deepcopy(preprocessing_data)
     
     ### 在每一個行政區(district)下有很多投票所，將這些資料進行整理計算並存到result
     for county_area_code, tbox_data in preprocessing_data['districts'].items():
