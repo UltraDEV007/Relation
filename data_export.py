@@ -26,8 +26,8 @@ def president2024_realtime():
     cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
     if cec_json.status_code == 200:
         cec_data = json.loads(cec_json.text)
-        readr_data["updateAt"] = cec_json["updateAt"]
-        voting_data["updateAt"] = cec_json["updateAt"]
+        readr_data["updateAt"] = cec_data["updateAt"]
+        voting_data["updateAt"] = cec_data["updateAt"]
         # upload for pure cec data
         readr_data["title"] = "2024 總統大選即時開票"
         readr_data["result"] = presindent2024_cec( cec_data["summary"], 2 )
