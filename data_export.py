@@ -21,13 +21,14 @@ def president2024_realtime():
     get_cec_data = meta_sheet.get_value("B3")
     switch_view = meta_sheet.get_value("B4")
     cec_data = {}
+    readr_data = {}
 #    if switch_view == 'T' or get_cec_data == 'T':
     cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
     if cec_json.status_code == 200:
         cec_data = json.loads(cec_json.text)
         # upload for pure cec data
-        readr_data["result"] = presindent2024_cec( cec_data["summary"], 2 )
         readr_data["title"] = "2024 總統大選即時開票"
+        readr_data["result"] = presindent2024_cec( cec_data["summary"], 2 )
         upload_data('whoareyou-gcs.readr.tw', json.dumps(readr_data, ensure_ascii=False).encode('utf8'), 'application/json', "json/2024cec_homepage.json")
 
     if switch_view == 'T':
