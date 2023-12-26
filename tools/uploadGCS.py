@@ -41,7 +41,7 @@ def upload_blob(dest_filename, year):
     bucket = storage_client.bucket(os.environ['BUCKET'])
     blob = bucket.blob(dest_filename)
     blob.upload_from_filename(dest_filename)
-    print("File {} uploaded to {}.".format(dest_filename, dest_filename))
+    #print("File {} uploaded to {}.".format(dest_filename, dest_filename))
     if year == datetime.now().year:
         blob.cache_control = upload_configs['cache_control_short']
     else:

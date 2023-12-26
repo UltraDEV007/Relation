@@ -136,7 +136,7 @@ def pipeline_legislator_special_2024(raw_data, is_started: bool=True, is_running
 
         ### Generate country
         country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
-        filename = os.path.join(root_path, 'country', election_type)
+        filename = os.path.join(root_path, 'country', election_type, 'country.json')
         save_file(filename, country_json)
         upload_blob(filename, year)
 
@@ -176,7 +176,7 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
     ### Generate country
     parsed_county = parser.parse_county(raw_data, election_type)
     country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
-    filename = os.path.join(root_path, 'country', election_type)
+    filename = os.path.join(root_path, 'country', election_type, 'country.json')
     save_file(filename, country_json)
     upload_blob(filename, year)
 
