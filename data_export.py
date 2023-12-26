@@ -46,7 +46,7 @@ def president2024_realtime():
         for row in sheet_tks:
             unit_tks = { "key": row[0], "value": [] }
             for number in range(len(candidates[0])):
-                unit_tks['value'].append( { candidates[0][number][0:1]: row[number + 1] })
+                unit_tks['value'].append( { candidates[0][number][0:1]: row[number + 1].replace(",", "") })
                 #unit_tks[candidates[0][number]] = row[number]
             voting_data["result"].append(unit_tks)
                 
