@@ -19,26 +19,26 @@ def pipeline_map_2024(raw_data, final_A=None, is_started: bool=True, is_running:
         parser.parse_seat(final_A, hp.mapping_party_seat) ### 將席次統計結果寫入對照表
 
     ### Generate data for president
-    prev_time = time.time()
-    result = pipeline_president_2024(
-        raw_data, 
-        is_started = is_started,
-        is_running = is_running
-    )
-    cur_time = time.time()
-    exe_time = round(cur_time-prev_time, 2)
-    print(f'pipeline for president costed {exe_time} sec, is_running={is_running}')
+    # prev_time = time.time()
+    # result = pipeline_president_2024(
+    #     raw_data, 
+    #     is_started = is_started,
+    #     is_running = is_running
+    # )
+    # cur_time = time.time()
+    # exe_time = round(cur_time-prev_time, 2)
+    # print(f'pipeline for president costed {exe_time} sec, is_running={is_running}')
 
     ### Generate data for legislator
-    prev_time = time.time()
-    result = pipeline_legislator_constituency_2024(
-        raw_data,
-        is_started = is_started,
-        is_running = is_running
-    )
-    cur_time = time.time()
-    exe_time = round(cur_time-prev_time, 2)
-    print(f'pipeline for legislator constituency costed {exe_time} sec, is_running={is_running}')
+    # prev_time = time.time()
+    # result = pipeline_legislator_constituency_2024(
+    #     raw_data,
+    #     is_started = is_started,
+    #     is_running = is_running
+    # )
+    # cur_time = time.time()
+    # exe_time = round(cur_time-prev_time, 2)
+    # print(f'pipeline for legislator constituency costed {exe_time} sec, is_running={is_running}')
 
     prev_time = time.time()
     result = pipeline_legislator_special_2024(
