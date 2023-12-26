@@ -5,6 +5,7 @@ import pygsheets
 from gql.transport.aiohttp import AIOHTTPTransport
 from gql import gql, Client
 from google.cloud import storage
+from datetime import datetime
 
 def president2024_realtime():
     gc = pygsheets.authorize(service_account_env_var = 'GDRIVE_API_CREDENTIALS')
@@ -22,12 +23,14 @@ def president2024_realtime():
     switch_view = meta_sheet.get_value("B4")
     cec_data = {}
     readr_data = {}
+    now = datetime.now()
+    date_time = now.strftime("%Y-%m-%d, %H:%M:%S")
+    voting_data["updateAt"] = date_time
 #    if switch_view == 'T' or get_cec_data == 'T':
     cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
     if cec_json.status_code == 200:
         cec_data = json.loads(cec_json.text)
         readr_data["updateAt"] = cec_data["updateAt"]
-        voting_data["updateAt"] = cec_data["updateAt"]
         # upload for pure cec data
         readr_data["title"] = "2024 總統大選即時開票"
         readr_data["result"] = presindent2024_cec( cec_data["summary"], 2 )
