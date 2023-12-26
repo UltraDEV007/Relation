@@ -21,10 +21,17 @@ def president2024_realtime():
     get_cec_data = meta_sheet.get_value("B3")
     switch_view = meta_sheet.get_value("B4")
     cec_data = {}
-    if switch_view == 'T' or get_cec_data == 'T':
-        cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
-        if cec_json.status_code == 200:
-            cec_data = json.loads(cec_json.text)
+    readr_data = {}
+#    if switch_view == 'T' or get_cec_data == 'T':
+    cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
+    if cec_json.status_code == 200:
+        cec_data = json.loads(cec_json.text)
+        readr_data["updateAt"] = cec_data["updateAt"]
+        voting_data["updateAt"] = cec_data["updateAt"]
+        # upload for pure cec data
+        readr_data["title"] = "2024 總統大選即時開票"
+        readr_data["result"] = presindent2024_cec( cec_data["summary"], 2 )
+        upload_data('whoareyou-gcs.readr.tw', json.dumps(readr_data, ensure_ascii=False).encode('utf8'), 'application/json', "json/2024cec_homepage.json")
 
     if switch_view == 'T':
         print("Getting the final data")
@@ -41,7 +48,7 @@ def president2024_realtime():
         for row in sheet_tks:
             unit_tks = { "key": row[0], "value": [] }
             for number in range(len(candidates[0])):
-                unit_tks['value'].append( { candidates[0][number][0:1]: row[number + 1] })
+                unit_tks['value'].append( { candidates[0][number][0:1]: row[number + 1].replace(",", "") })
                 #unit_tks[candidates[0][number]] = row[number]
             voting_data["result"].append(unit_tks)
                 
@@ -186,5 +193,6 @@ query { allPosts(where: { tags_every: {name_in: "疫苗"}, state: published }, o
     keyfile = {
     }
     os.environ['GDRIVE_API_CREDENTIALS'] = json.dumps(keyfile)
-    sheet_content = president2024_realtime("https://docs.google.com/spreadsheets/d/1Ar9r7j5LN6eCirNnQ5Lkbl4IEw3UaDQMfdBq5b2oDOE/edit#gid=1764492368")
+    #sheet_content = president2024_realtime("https://docs.google.com/spreadsheets/d/1Ar9r7j5LN6eCirNnQ5Lkbl4IEw3UaDQMfdBq5b2oDOE/edit#gid=1764492368")
+    sheet_content = president2024_realtime()
     print(sheet_content)
