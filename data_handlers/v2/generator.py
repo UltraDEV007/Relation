@@ -174,6 +174,11 @@ def generate_v2_district_legislator(raw_data, year: str):
                 ).to_json()
                 
                 candInfo = search_constituency_candidate(countyCode, areaCode.zfill(2), str(candNo))
+
+                ### debug
+                if countyCode=='10007' or countyCode=='10021' or countyCode=='10009':
+                    print(f'{countyCode}, {areaCode.zfill(2)}, {candNo}: get {candInfo}')
+
                 if candInfo:
                     person_template['name'] = candInfo.get('person', None)
                     person_template['party'] = candInfo.get('party', None)
