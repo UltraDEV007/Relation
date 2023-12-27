@@ -42,7 +42,6 @@ def convert_candidate(raw_candidates, election_type):
     
     ### Choose the correct mapping file
     mapping_relationship = {
-        'constituency': hp.mapping_constituency_cand,
         'plainIndigenous': hp.mapping_plain_cand,
         'mountainIndigenous': hp.mapping_mountain_cand,
         'party': hp.mapping_party_seat,
@@ -61,7 +60,11 @@ def convert_candidate(raw_candidates, election_type):
             candidate_tmp['party']      = mapping_json.get(str(candNo), hp.UNKNOWN_CANDIDATE).get('party', None)
             candidate_tmp['tks']        = cand.get('tks', hp.DEFAULT_INT)
             candidate_tmp['tksRate']    = round(cand.get('tksRate', hp.DEFAULT_FLOAT), 2)
-            candidate_tmp['candVictor'] = cand.get('candVictor', ' ')
+            
+            candVictor = cand.get('candVictor', ' ')
+            if len(candVictor) == 0:
+                candVictor = ' '
+            candidate_tmp['candVictor'] = candVictor
             result.append(candidate_tmp)
     else:
         for cand in raw_candidates:

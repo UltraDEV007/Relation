@@ -30,15 +30,16 @@ def pipeline_map_2024(raw_data, final_A=None, is_started: bool=True, is_running:
     # print(f'pipeline for president costed {exe_time} sec, is_running={is_running}')
 
     ### Generate data for legislator
-    # prev_time = time.time()
-    # result = pipeline_legislator_constituency_2024(
-    #     raw_data,
-    #     is_started = is_started,
-    #     is_running = is_running
-    # )
-    # cur_time = time.time()
-    # exe_time = round(cur_time-prev_time, 2)
-    # print(f'pipeline for legislator constituency costed {exe_time} sec, is_running={is_running}')
+    if is_running == False:
+        prev_time = time.time()
+        result = pipeline_legislator_constituency_2024(
+            raw_data,
+            is_started = is_started,
+            is_running = is_running
+        )
+        cur_time = time.time()
+        exe_time = round(cur_time-prev_time, 2)
+        print(f'pipeline for legislator constituency costed {exe_time} sec, is_running={is_running}')
 
     prev_time = time.time()
     result = pipeline_legislator_special_2024(
@@ -106,8 +107,6 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
                 filename = os.path.join(root_path, 'town', key)
                 save_file(filename, value)
                 upload_blob(filename, year)
-    # TODO: Upload multiple data
-    upload_multiple_test(year)
     return True
 
 def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False):

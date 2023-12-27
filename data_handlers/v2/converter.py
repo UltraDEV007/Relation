@@ -72,7 +72,7 @@ def convert_v2_person_candidates(raw_candidates, mapping_json):
     result = []
     website = helper['WHORU_WEBSITE_PERSON']
     for candidate in raw_candidates:
-        candidateTemplate = tp.PersonCandidateTemplate(
+        candidateTemplate = tp.V2PersonCandidateTemplate(
             tks = candidate.get('tks', hp.DEFAULT_INT),
             tksRate = candidate.get('tksRate', hp.DEFAULT_FLOAT),
             candVictor = True if (candidate.get('candVictor')=='*') else False,
@@ -87,14 +87,14 @@ def convert_v2_person_candidates(raw_candidates, mapping_json):
         personInfo, partyInfo = candInfo['person'], candInfo['party']
 
         person_id = personInfo.get('id', '')
-        candidateTemplate['name'] = tp.PersonInfoTemplate(
+        candidateTemplate['name'] = tp.V2PersonInfoTemplate(
             label = personInfo.get('name', None), 
             href  = f'{website}{person_id}', 
             imgSrc= personInfo.get('image', None)
         ).to_json()
 
         if partyInfo:
-            candidateTemplate['party'] = tp.PartyInfoTemplate(
+            candidateTemplate['party'] = tp.V2PartyInfoTemplate(
                 label = partyInfo.get('name', None),
             ).to_json()
         result.append(candidateTemplate)

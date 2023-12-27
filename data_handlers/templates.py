@@ -210,16 +210,16 @@ class V2Template:
             template['candidates'] = []  ### You should append PersonCandidateTemplate
         return template
 
-class PersonInfoTemplate:
+class V2PersonInfoTemplate:
     def __init__(self, label: str='', href: str=None, imgSrc: str=None):
         self.label  = label
         self.href   = href
         self.imgSrc = imgSrc
     def to_json(self):
         return copy.deepcopy(vars(self))
-PartyInfoTemplate = PersonInfoTemplate # alias naming
+V2PartyInfoTemplate = V2PersonInfoTemplate # alias naming
 
-class PersonCandidateTemplate:
+class V2PersonCandidateTemplate:
     def __init__(self, candNo: int=0, name: dict=None, party: dict=None, tks: int=0, tksRate: float=0.0, candVictor: bool=False):
         self.candNo     = candNo
         self.name       = name            # You should append PersonInfoTemplate
@@ -230,7 +230,7 @@ class PersonCandidateTemplate:
     def to_json(self):
         return copy.deepcopy(vars(self))
 
-class PresidentCandidateTemplate:
+class V2PresidentCandidateTemplate:
     def __init__(self, candNo: int=0, name: list=[], party: list=[], tks: int=0, tksRate: float=0.0, candVictor: bool=False):
         self.candNo     = candNo
         self.name       = name            # You should append PersonInfoTemplate
@@ -241,7 +241,7 @@ class PresidentCandidateTemplate:
     def to_json(self):
         return copy.deepcopy(vars(self))
 
-class PartyCandidateTemplate:
+class V2PartyCandidateTemplate:
     def __init__(self, candNo: int=0, party: list=[], tks: int=0, tksRate1: float=0.0, tksRate2: float=0.0, seats: int=0):
         self.candNo     = candNo
         self.party      = party           # You should append PartyInfoTemplate

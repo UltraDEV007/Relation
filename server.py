@@ -31,9 +31,9 @@ def election_map_2024():
     #         preprocessing_data = preprocessor.parse_president_cec(raw_data)
     if IS_STARTED:
         raw_data = request_cec('running.json')
-        #final_A  = request_cec('final_A.json')
+        final_A  = request_cec('final_A.json')
         if raw_data:
-            result = pipeline.pipeline_map_2024(raw_data, None, is_started = IS_STARTED, is_running = True)
+            result = pipeline.pipeline_map_2024(raw_data, final_A, is_started = IS_STARTED, is_running = True)
             if result == False:
                 print('Running pipeline 2024 failed.')
             else:
