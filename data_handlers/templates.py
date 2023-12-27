@@ -235,7 +235,7 @@ class V2PresidentCandidateTemplate:
 class V2PersonCandidateTemplate:
     def __init__(self, candNo: int=0, name: dict=None, party: dict=None, tks: int=0, tksRate: float=0.0, candVictor: bool=False):
         self.candNo     = candNo
-        self.name       = name          # You should append PersonInfoTemplate
+        self.name       = name            # You should append PersonInfoTemplate
         self.party      = party           # You should append PartyInfoTemplate
         self.tks        = tks
         self.tksRate    = tksRate

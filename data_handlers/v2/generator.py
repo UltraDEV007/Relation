@@ -184,8 +184,5 @@ def generate_v2_district_legislator(raw_data, year: str):
                         person_template['party'] = converter.convert_district_party({'name': partyInfo})
                 v2_area_template['candidates'].append(person_template)
             v2_template['districts'].append(v2_area_template)
-            ### debug
-            if countyCode=='10007' or countyCode=='10009' or countyCode=='10021':
-                print(f'{countyCode}: ',v2_area_template)
         result[f'{city_v2}.json'] = v2_template
     return result
