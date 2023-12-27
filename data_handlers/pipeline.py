@@ -21,7 +21,7 @@ def pipeline_v2(raw_data, seats_data, year:str):
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
 
     ### Check the record execution time
-    cec_time    = raw_data['ST']
+    cec_time    = int(raw_data['ST'])
     record_time = hp.RECORD_EXECUTION_TIME['v2']
     if cec_time <= record_time:
         return False
@@ -147,7 +147,7 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map')
     
     ### Check the record execution time
-    cec_time    = raw_data['ST']
+    cec_time    = int(raw_data['ST'])
     record_time = hp.RECORD_EXECUTION_TIME['map']['president']
     if cec_time <= record_time:
         return False
@@ -207,7 +207,7 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
         return False ### We don't deal with constituency data when it's not final.json
     
     ### Check the record execution time
-    cec_time    = raw_data['ST']
+    cec_time    = int(raw_data['ST'])
     record_time = hp.RECORD_EXECUTION_TIME['map']['constituency']
     if cec_time <= record_time:
         return False
@@ -235,7 +235,7 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
     
     ### Check the record execution time
-    cec_time    = raw_data['ST']
+    cec_time    = int(raw_data['ST'])
     record_time = hp.RECORD_EXECUTION_TIME['map']['indigeous']
     if cec_time <= record_time:
         return False
@@ -290,7 +290,7 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
     election_type = 'party'
 
     ### Check the record execution time
-    cec_time    = raw_data['ST']
+    cec_time    = int(raw_data['ST'])
     record_time = hp.RECORD_EXECUTION_TIME['map']['party']
     if cec_time <= record_time:
         return False
