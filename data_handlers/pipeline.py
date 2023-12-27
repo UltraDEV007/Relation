@@ -86,6 +86,7 @@ def pipeline_v2(raw_data, seats_data, year:str):
         upload_blob_realtime(filename)
     print('Upload V2 constituency district data successed.')
 
+    hp.RECORD_EXECUTION_TIME['v2'] = cec_time
     return True
 
 '''
