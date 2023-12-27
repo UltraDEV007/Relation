@@ -210,6 +210,7 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
 '''
 def pipeline_v2(raw_data, seats_data, year:str):
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
+    year_gcs = datetime.now().year
 
     ### Generate the v2 president data
     mapping_president =  v2_adapter.adapter_president_v2()
@@ -217,7 +218,7 @@ def pipeline_v2(raw_data, seats_data, year:str):
 
     filename = os.path.join(root_path, 'president', 'all.json')
     save_file(filename, v2_president)
-    upload_blob(filename, year)
+    upload_blob(filename, year_gcs)
     print('Upload V2 president data successed.')
 
     ### Generate the v2 special legislator data(mountainIndigeous and plainIndigeous)
@@ -233,7 +234,7 @@ def pipeline_v2(raw_data, seats_data, year:str):
 
     filename = os.path.join(root_path, 'legislator', 'plainIndigenous','all.json')
     save_file(filename, v2_plain_indigeous)
-    upload_blob(filename, year)
+    upload_blob(filename, year_gcs)
     print('Upload V2 plain indigeous legislator data successed.')
     # Mountain
     gql_mountain_indigeous = query.gql2json(gql_endpoint, query.gql_mountainIndigeous_2024)
@@ -247,7 +248,7 @@ def pipeline_v2(raw_data, seats_data, year:str):
 
     filename = os.path.join(root_path, 'legislator', 'mountainIndigenous','all.json')
     save_file(filename, v2_mountain_indigeous)
-    upload_blob(filename, year)
+    upload_blob(filename, year_gcs)
     print('Upload V2 mountain indigeous legislator data successed.')
 
     ### Generate the v2 party legislator data
@@ -259,7 +260,7 @@ def pipeline_v2(raw_data, seats_data, year:str):
 
     filename = os.path.join(root_path, 'legislator', 'party','all.json')
     save_file(filename, v2_party)
-    upload_blob(filename, year)
+    upload_blob(filename, year_gcs)
     print('Upload V2 party legislator data successed.')
 
     ### Generate the v2 constituency legislator data, you don't need to pass the mapping file
@@ -268,7 +269,7 @@ def pipeline_v2(raw_data, seats_data, year:str):
     for districtName, districtData in v2_district.items():
         filename = os.path.join(districtRoot, districtName)
         save_file(filename, districtData)
-        upload_blob(filename, year)
+        upload_blob(filename, year_gcs)
     print('Upload V2 constituency district data successed.')
 
     return True
