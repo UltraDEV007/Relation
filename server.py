@@ -64,13 +64,13 @@ def election_map_type(election_type):
     if IS_STARTED:
         raw_data, is_running = check_existed_cec_file()
         if election_type == 'president':
-            _ = pipeline.pipeline_president_2024(raw_data, is_started=IS_STARTED, is_running=is_running)
+            _ = pipeline.pipeline_president_2024(raw_data, is_started=IS_STARTED, is_running=is_running, upload=True)
         elif election_type == 'party':
-            _ = pipeline.pipeline_legislator_party_2024(raw_data, is_started=IS_STARTED, is_running=is_running)
+            _ = pipeline.pipeline_legislator_party_2024(raw_data, is_started=IS_STARTED, is_running=is_running, upload=True)
         elif election_type == 'indigeous':
-            _ = pipeline.pipeline_legislator_indigeous_2024(raw_data, is_started=IS_STARTED, is_running=is_running)
+            _ = pipeline.pipeline_legislator_indigeous_2024(raw_data, is_started=IS_STARTED, is_running=is_running, upload=True)
         elif election_type == 'constituency':
-            _ = pipeline.pipeline_legislator_constituency_2024(raw_data, is_started=IS_STARTED, is_running=is_running)
+            _ = pipeline.pipeline_legislator_constituency_2024(raw_data, is_started=IS_STARTED, is_running=is_running, upload=True)
     return "ok"
 
 
