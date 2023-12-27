@@ -5,13 +5,12 @@ import asyncio
 '''
   GQL function
 '''
-async def gql2json(gql_endpoint, gql_string):
+def gql2json(gql_endpoint, gql_string):
     gql_transport = AIOHTTPTransport(url=gql_endpoint)
     gql_client = Client(transport=gql_transport,
-                        fetch_schema_from_transport=False)
+                        fetch_schema_from_transport=True)
 
-    query = gql(gql_string)
-    json_data = await gql_client.execute_async(query)
+    json_data = gql_client.execute(gql(gql_string))
     return json_data
 
 

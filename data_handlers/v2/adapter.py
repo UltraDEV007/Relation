@@ -4,7 +4,7 @@ import os
 
 gql_endpoint = os.environ['WHORU_GQL_PROD']
 
-async def adapter_president_v2():
+def adapter_president_v2():
     '''
     Description:
         Fetch the presidents data in the GQL database and organize them into the
@@ -19,7 +19,7 @@ async def adapter_president_v2():
         }
     '''
     mapping_president    = {}
-    gql_presidents = await query.gql2json(gql_endpoint, query.gql_president_2024)
+    gql_presidents = query.gql2json(gql_endpoint, query.gql_president_2024)
     
     gql_data = gql_presidents['personElections']
     for idx, data in enumerate(gql_data):

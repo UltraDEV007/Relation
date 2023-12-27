@@ -209,12 +209,12 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
 '''
     接下來的實作是v2的，我們會在一個v2的流水線內完成所有資料的產生
 '''
-async def pipeline_v2(raw_data):
+def pipeline_v2(raw_data):
     year = datetime.now().year
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
 
     ### Generate the v2 president data
-    mapping_president =  await v2_adapter.adapter_president_v2()
+    mapping_president =  v2_adapter.adapter_president_v2()
     v2_president = v2_generator.generate_v2_president(raw_data, mapping_president)
 
     filename = os.path.join(root_path, 'president', 'all.json')
