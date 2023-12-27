@@ -5,7 +5,7 @@ import data_handlers.v2.converter as converter
 
 from data_handlers.helpers import helper
 
-def search_constituency_candidate(countyCode:str, areaCode: str, candNo: int):
+def search_constituency_candidate(countyCode:str, areaCode: str, candNo: str):
     candInfo = hp.mapping_constituency_cand.get(countyCode,{}).get(areaCode,{}).get(candNo, None)
     return candInfo
 
@@ -173,7 +173,7 @@ def generate_v2_district_legislator(raw_data, year: str):
                     tksRate    = round((tks/total_tks)*100, hp.ROUND_DECIMAL) if total_tks!=0 else 0
                 ).to_json()
                 
-                candInfo = search_constituency_candidate(countyCode, areaCode, int(candNo))
+                candInfo = search_constituency_candidate(countyCode, areaCode, candNo)
                 if candInfo:
                     person_template['name'] = candInfo.get('person', None)
                     person_template['party'] = candInfo.get('party', None)
