@@ -9,6 +9,22 @@ TEST_MODE = os.environ.get('TEST_MODE', False)
 cec_filename = ['final.json', 'running.json']
 cec_legislator = ['final_A.json'] # TODO: How to deal with it?
 
+def check_existed_cec_file():
+    raw_data = None
+    is_running = False
+
+    ### check final.json
+    if os.path.isfile(cec_filename[0]):
+        with open(filename) as f:
+            raw_data = json.load(f)
+    else:
+        if os.path.isfile(cec_filename[1]):
+            with open(filename) as f:
+                raw_data = json.load(f)
+                is_running = True
+    return raw_data, is_running
+            
+
 def check_updated_and_save(url, secure_mode=False):
     filename = url.split('/')[-1]
     

@@ -50,6 +50,18 @@ helper = {
         'CANDIDATES': 'candTksInfo',
 }
 
+### RECORD_EXECUTION_TIME: 用來紀錄各個資料產生的時間
+RECORD_EXECUTION_TIME = {
+    'map': {
+        'all': 0,
+        'president': 0,
+        'party': 0,
+        'indigeous': 0,
+        'constituency': 0,
+    },
+    'v2': 0,
+}
+
 COUNTRY_CODE    = '00000' ## 國碼
 TAIWAN_PRV_CODE = '10000' ## 台灣省省碼
 FUJIAN_PRV_CODE = '09000' ## 福建省省碼

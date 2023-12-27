@@ -14,199 +14,8 @@ import time
 
 gql_endpoint = os.environ['WHORU_GQL_PROD']
 
-def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False):
-    result = True
-
-    ### Generate data for president
-    prev_time = time.time()
-    result = pipeline_president_2024(
-        raw_data, 
-        is_started = is_started,
-        is_running = is_running
-    )
-    cur_time = time.time()
-    exe_time = round(cur_time-prev_time, 2)
-    print(f'pipeline for president costed {exe_time} sec, is_running={is_running}')
-
-    ### Generate data for legislator
-    if is_running == False:
-        prev_time = time.time()
-        result = pipeline_legislator_constituency_2024(
-            raw_data,
-            is_started = is_started,
-            is_running = is_running
-        )
-        cur_time = time.time()
-        exe_time = round(cur_time-prev_time, 2)
-        print(f'pipeline for legislator constituency costed {exe_time} sec, is_running={is_running}')
-
-    prev_time = time.time()
-    result = pipeline_legislator_special_2024(
-        raw_data,
-        is_started = is_started,
-        is_running = is_running
-    )
-    cur_time = time.time()
-    exe_time = round(cur_time-prev_time, 2)
-    print(f'pipeline for legislator mountain and plain legislator costed {exe_time} sec, is_running={is_running}')
-
-    prev_time = time.time()
-    result = pipeline_legislator_party_2024(
-        raw_data,
-        is_started=is_started,
-        is_running=is_running
-    )
-    cur_time = time.time()
-    exe_time = round(cur_time-prev_time, 2)
-    print(f'pipeline for legislator party costed {exe_time} sec, is_running={is_running}')
-    return result
-
-def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=False):
-    year = datetime.now().year
-    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map')
-    parsed_county = parser.parse_county(raw_data, election_type='president')
-    
-    ### Parse and store country
-    country_json  = pd_generator.generate_country_json(
-        preprocessing_data = parsed_county, 
-        is_running = is_running,
-        is_started = is_started    
-    )
-    filename = os.path.join(root_path, 'country', 'country.json')
-    save_file(filename, country_json)
-    upload_blob_realtime(filename)
-
-    ### Parse and store county
-    generated_county_json = pd_generator.generate_county_json(
-        preprocessing_data = parsed_county,
-        is_running = is_running,
-        is_started = is_started
-    )
-    for county_code, county_json in generated_county_json.items():
-        filename = os.path.join(root_path, 'county', county_code)
-        save_file(filename, county_json)
-        upload_blob_realtime(filename)
-
-    ### Parse town
-    if is_running == False:
-        county_codes = list(parsed_county['districts'].keys())
-        county_codes.remove(hp.COUNTRY_CODE)        ### 移除全國代碼
-        county_codes.remove(hp.FUJIAN_PRV_CODE)     ### 移除福建省碼
-        
-        result = []
-        updateAt = parsed_county.get('updateAt', None)
-        for county_code in county_codes:
-            county_data         = parsed_county['districts'].get(county_code, None)
-            town_data           = parser.parse_town(county_code, county_data)
-            vill_data, errors   = pd_generator.generate_town_json(town_data, updateAt, is_running, is_started)
-            result.append(vill_data)
-            # You can use errors to track the problematic tboxNo
-        for vill_data in result:
-            for key, value in vill_data.items():
-                filename = os.path.join(root_path, 'town', key)
-                save_file(filename, value)
-                upload_blob_realtime(filename)
-    return True
-
-def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False):
-    year = datetime.now().year
-    if is_running:
-        return False ### We don't deal with constituency data when it's not final.json
-    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'constituency', 'normal')
-    parsed_area = parser.parse_constituency_area(raw_data)
-    constituency_result = lg_generator.generate_constituency_json(parsed_area, is_running, is_started)
-    for name, data in constituency_result.items():
-        filename = os.path.join(root_path, name)
-        save_file(filename, data)
-        upload_blob_realtime(filename)
-    return True
-
-def pipeline_legislator_special_2024(raw_data, is_started: bool=True, is_running: bool=False):
-    '''
-        In this pipeline, we generate mountain and plain indigenous in one pipeline
-    '''
-    year = datetime.now().year
-    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
-    
-    for election_type in ['mountainIndigenous', 'plainIndigenous']:
-        parsed_county = parser.parse_county(raw_data, election_type)
-
-        ### Generate country
-        country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
-        filename = os.path.join(root_path, 'country', election_type, 'country.json')
-        save_file(filename, country_json)
-        upload_blob_realtime(filename)
-
-        ### Generate county
-        county_result = lg_generator.generate_county_json(parsed_county, is_running, is_started, election_type)
-        for name, county_json in county_result.items():
-            filename = os.path.join(root_path, 'county', election_type, name)
-            save_file(filename, county_json)
-            upload_blob_realtime(filename)
-        
-        ### Generate town(only in final.json)
-        if is_running==False:
-            county_codes = list(parsed_county['districts'].keys())
-            for code in hp.NO_PROCESSING_CODE:
-                county_codes.remove(code)
-            updateAt = parsed_county['updateAt']
-
-            vill_result = []
-            for county_code in county_codes:
-                county_data = parsed_county['districts'].get(county_code, None)
-                town_data   = parser.parse_town(county_code, county_data)
-                vill_data   = lg_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
-                vill_result.append(vill_data)
-            
-            for vill_data in vill_result:
-                for name, value in vill_data.items():
-                    filename = os.path.join(root_path, 'town', election_type, name)
-                    save_file(filename, value)
-                    upload_blob_realtime(filename)
-    return True
-
-def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: bool=False):
-    year = datetime.now().year
-    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
-    election_type = 'party'
-
-    ### Generate country
-    parsed_county = parser.parse_county(raw_data, election_type)
-    country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
-    filename = os.path.join(root_path, 'country', election_type, 'country.json')
-    save_file(filename, country_json)
-    upload_blob_realtime(filename)
-
-    ### Generate county
-    county_result = lg_generator.generate_county_json(parsed_county, is_running, is_started, election_type)
-    for name, county_json in county_result.items():
-        filename = os.path.join(root_path, 'county', election_type, name)
-        save_file(filename, county_json)
-        upload_blob_realtime(filename)
-
-    ### Generate town
-    county_codes = list(parsed_county['districts'].keys())
-    for code in hp.NO_PROCESSING_CODE:
-        county_codes.remove(code)
-    updateAt = parsed_county['updateAt']
-
-    vill_result = []
-    for county_code in county_codes:
-        county_data = parsed_county['districts'].get(county_code, None)
-        town_data   = parser.parse_town(county_code, county_data)
-        vill_data   = lg_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
-        vill_result.append(vill_data)
-    
-    for vill_data in vill_result:
-        for name, value in vill_data.items():
-            filename = os.path.join(root_path, 'town', election_type, name)
-            save_file(filename, value)
-            upload_blob_realtime(filename)
-
-    return True
-
 '''
-    接下來的實作是v2的，我們會在一個v2的流水線內完成所有資料的產生
+    V2: pipeline_v2會產生所有V2的資料
 '''
 def pipeline_v2(raw_data, seats_data, year:str):
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
@@ -272,3 +81,251 @@ def pipeline_v2(raw_data, seats_data, year:str):
     print('Upload V2 constituency district data successed.')
 
     return True
+
+'''
+    Map: pipeline_map_2024
+    warning: 由於地圖的資料量較大，建議拆分成多個endpoint來實作
+'''
+def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False, upload: bool=False):
+    '''
+        raw_data - running.json or final.json
+        upload   - False:單次上傳(upload_blob), True:批次上傳(upload_multiple)
+    '''
+    result = True
+
+    ### Generate data for president
+    result = pipeline_president_2024(
+        raw_data, 
+        is_started = is_started,
+        is_running = is_running,
+        upload = upload,
+    )
+    if result==False:
+        print("No new president map data generated")
+
+    ### Generate data for legislator
+    result = pipeline_legislator_constituency_2024(
+        raw_data,
+        is_started = is_started,
+        is_running = is_running,
+        upload = upload,
+    )
+    if result==False:
+        print("No new constituency map data generated")
+
+    result = pipeline_legislator_indigeous_2024(
+        raw_data,
+        is_started = is_started,
+        is_running = is_running,
+        upload = upload,
+    )
+    if result==False:
+        print("No new indigeous map data generated")
+
+    result = pipeline_legislator_party_2024(
+        raw_data,
+        is_started=is_started,
+        is_running=is_running,
+        upload = upload,
+    )
+    if result==False:
+        print("No new party map data generated")
+
+    ### TODO: Upload all the data using gsutil
+
+    return result
+
+def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=False, upload=False):
+    prev_time = time.time()
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map')
+    
+    ### Check the record execution time
+    cec_time    = raw_data['ST']
+    record_time = hp.RECORD_EXECUTION_TIME['map']['president']
+    if cec_time <= record_time:
+        return False
+    
+    ### Parse and store country
+    parsed_county = parser.parse_county(raw_data, election_type='president')
+    country_json  = pd_generator.generate_country_json(
+        preprocessing_data = parsed_county, 
+        is_running = is_running,
+        is_started = is_started    
+    )
+    filename = os.path.join(root_path, 'country', 'country.json')
+    save_file(filename, country_json)
+    if upload:
+        upload_blob_realtime(filename)
+
+    ### Parse and store county
+    generated_county_json = pd_generator.generate_county_json(
+        preprocessing_data = parsed_county,
+        is_running = is_running,
+        is_started = is_started
+    )
+    for county_code, county_json in generated_county_json.items():
+        filename = os.path.join(root_path, 'county', county_code)
+        save_file(filename, county_json)
+        if upload:
+            upload_blob_realtime(filename)
+
+    ### Parse town
+    if is_running == False:
+        county_codes = list(parsed_county['districts'].keys())       
+        result = []
+        updateAt = parsed_county.get('updateAt', None)
+        for county_code in county_codes:
+            if county_code in hp.NO_PROCESSING_CODE:
+                continue
+            county_data         = parsed_county['districts'].get(county_code, None)
+            town_data           = parser.parse_town(county_code, county_data)
+            vill_data, errors   = pd_generator.generate_town_json(town_data, updateAt, is_running, is_started)
+            result.append(vill_data)
+            # You can use errors to track the problematic tboxNo
+        for vill_data in result:
+            for key, value in vill_data.items():
+                filename = os.path.join(root_path, 'town', key)
+                save_file(filename, value)
+                if upload:
+                    upload_blob_realtime(filename)
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'[MAP] President costed {exe_time} sec, is_running={is_running}')
+    hp.RECORD_EXECUTION_TIME['map']['president'] = cec_time
+    return True
+
+def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False, upload=False):
+    prev_time = time.time()
+    if is_running:
+        return False ### We don't deal with constituency data when it's not final.json
+    
+    ### Check the record execution time
+    cec_time    = raw_data['ST']
+    record_time = hp.RECORD_EXECUTION_TIME['map']['constituency']
+    if cec_time <= record_time:
+        return False
+
+    ### Generate the data for constituency
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'constituency', 'normal')
+    parsed_area = parser.parse_constituency_area(raw_data)
+    constituency_result = lg_generator.generate_constituency_json(parsed_area, is_running, is_started)
+    for name, data in constituency_result.items():
+        filename = os.path.join(root_path, name)
+        save_file(filename, data)
+        if upload:
+            upload_blob_realtime(filename)
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'[MAP] Legislator constituency costed {exe_time} sec, is_running={is_running}')
+    hp.RECORD_EXECUTION_TIME['map']['constituency'] = cec_time
+    return True
+
+def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_running: bool=False, upload: bool=False):
+    '''
+        In this pipeline, we generate mountain and plain indigenous in one pipeline
+    '''
+    prev_time = time().time()
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
+    
+    ### Check the record execution time
+    cec_time    = raw_data['ST']
+    record_time = hp.RECORD_EXECUTION_TIME['map']['indigeous']
+    if cec_time <= record_time:
+        return False
+    
+    for election_type in ['mountainIndigenous', 'plainIndigenous']:
+        parsed_county = parser.parse_county(raw_data, election_type)
+
+        ### Generate country
+        country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
+        filename = os.path.join(root_path, 'country', election_type, 'country.json')
+        save_file(filename, country_json)
+        if upload:
+            upload_blob_realtime(filename)
+
+        ### Generate county
+        county_result = lg_generator.generate_county_json(parsed_county, is_running, is_started, election_type)
+        for name, county_json in county_result.items():
+            filename = os.path.join(root_path, 'county', election_type, name)
+            save_file(filename, county_json)
+            if upload:
+                upload_blob_realtime(filename)
+        
+        ### Generate town(only in final.json)
+        if is_running==False:
+            county_codes = list(parsed_county['districts'].keys())
+            updateAt = parsed_county['updateAt']
+
+            vill_result = []
+            for county_code in county_codes:
+                if county_code in hp.NO_PROCESSING_CODE:
+                    continue
+                county_data = parsed_county['districts'].get(county_code, None)
+                town_data   = parser.parse_town(county_code, county_data)
+                vill_data   = lg_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
+                vill_result.append(vill_data)
+            
+            for vill_data in vill_result:
+                for name, value in vill_data.items():
+                    filename = os.path.join(root_path, 'town', election_type, name)
+                    save_file(filename, value)
+                    if upload:
+                        upload_blob_realtime(filename)
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'[MAP] Legislator special(mountain&plain) costed {exe_time} sec, is_running={is_running}')
+    hp.RECORD_EXECUTION_TIME['map']['indigeous'] = cec_time
+    return True
+
+def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: bool=False, upload: bool=False):
+    prev_time = time().time()
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
+    election_type = 'party'
+
+    ### Check the record execution time
+    cec_time    = raw_data['ST']
+    record_time = hp.RECORD_EXECUTION_TIME['map']['party']
+    if cec_time <= record_time:
+        return False
+
+    ### Generate country
+    parsed_county = parser.parse_county(raw_data, election_type)
+    country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
+    filename = os.path.join(root_path, 'country', election_type, 'country.json')
+    save_file(filename, country_json)
+    if upload:
+        upload_blob_realtime(filename)
+
+    ### Generate county
+    county_result = lg_generator.generate_county_json(parsed_county, is_running, is_started, election_type)
+    for name, county_json in county_result.items():
+        filename = os.path.join(root_path, 'county', election_type, name)
+        save_file(filename, county_json)
+        if upload:
+            upload_blob_realtime(filename)
+
+    ### Generate town
+    county_codes = list(parsed_county['districts'].keys())
+    updateAt = parsed_county['updateAt']
+
+    vill_result = []
+    for county_code in county_codes:
+        if county_code in hp.NO_PROCESSING_CODE:
+            continue
+        county_data = parsed_county['districts'].get(county_code, None)
+        town_data   = parser.parse_town(county_code, county_data)
+        vill_data   = lg_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
+        vill_result.append(vill_data)
+    
+    for vill_data in vill_result:
+        for name, value in vill_data.items():
+            filename = os.path.join(root_path, 'town', election_type, name)
+            save_file(filename, value)
+            if upload:
+                upload_blob_realtime(filename)
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'[MAP] Legislator party costed {exe_time} sec, is_running={is_running}')
+    hp.RECORD_EXECUTION_TIME['map']['party'] = cec_time
+    return True
+
