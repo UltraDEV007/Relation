@@ -20,68 +20,6 @@ def generate_constituency_json(preprocessing_data, is_running, is_started , help
         return None
     
     result = {}
-    
-    ### 在每一個行政區(district)下有很多投票所，將這些資料進行整理計算並存到result
-    for county_area_code, tbox_data in preprocessing_data['districts'].items():
-        constituency_json = tp.ConstituencyTemplate(
-            updatedAt  = preprocessing_data['updateAt'],
-            is_running = is_running,
-            is_started = is_started,
-        ).to_json()
-        
-        ### 當為全省(台灣省,福建省)資料和無地區資料時不處理
-        county_code = county_area_code[:hp.COUNTY_CODE_LENGTH]
-        area_code   = county_area_code[hp.COUNTY_CODE_LENGTH:]  
-        if county_code in hp.NO_PROCESSING_CODE or area_code == hp.DEFAULT_AREACODE:
-            continue
-        
-        ### 票數計算
-        for data in tbox_data:
-            tboxNo    = data.get('tboxNo', hp.DEFAULT_INT)
-            town_code = data.get('deptCode', hp.DEFAULT_TOWNCODE)
-            area_code = data.get('areaCode', hp.DEFAULT_AREACODE)
-            profRate  = data.get('profRate', hp.DEFAULT_FLOAT)
-            if tboxNo == hp.DEFAULT_INT or town_code == hp.DEFAULT_TOWNCODE or area_code == hp.DEFAULT_AREACODE:
-                continue
-                
-            vill_name = hp.mapping_tboxno_vill.get(county_code+town_code, {}).get(str(tboxNo), None)
-            vill_code = hp.mapping_vill_code.get(county_code+town_code, {}).get(vill_name, None)
-            
-            #TODO: 產生地區字串(範例: 連江縣 第01選區 南竿鄉介壽村)，須重構
-            town_name = hp.mapping_town[f'{county_code}{town_code}']
-            city_name = town_name[:3] ## TODO: Should refactor
-            region = f'{city_name} 第{area_code}選區 {town_name[3:]}{vill_name}'
-            
-            district_tmp = tp.ConstituencyDistrictTemplate(
-                region = region,          
-                area_nickname = hp.mapping_nickname[f'{county_code}{area_code}'],
-                county_code = county_code,
-                area = area_code,
-                town = town_code,
-                vill = vill_code,
-                type_str = "normal",
-                profRate = profRate
-            ).to_json()
-            raw_candidate = data.get('candTksInfo', [])
-            candidates = converter.convert_constituency_candidate(raw_candidate, county_code, area_code)
-            district_tmp['candidates'] = candidates
-            constituency_json['districts'].append(district_tmp)
-        result[f'{county_area_code}.json'] = constituency_json
-    return result
-
-def generate_constituency_json(preprocessing_data, is_running, is_started , helper=hp.helper):
-    '''
-    Input:
-        preprocessing_data - cec constituency data(L1) after preprocessing area
-        helper             - helper file which helps you map the name in raw cec
-    Output:
-        country_json - result
-    '''
-    if is_running == True:
-        print("Don't call generate_constituency_json when the data is running.json")
-        return None
-    
-    result = {}
     preprocessing_data = copy.deepcopy(preprocessing_data)
     
     ### 在每一個行政區(district)下有很多投票所，將這些資料進行整理計算並存到result
