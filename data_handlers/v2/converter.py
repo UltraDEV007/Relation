@@ -11,7 +11,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
     result = []
     whoru_person = helper['WHORU_WEBSITE_PERSON']
     for candidate in raw_candidates:
-        candidateTemplate = tp.PresidentCandidateTemplate(
+        candidateTemplate = tp.V2PresidentCandidateTemplate(
             tks = candidate.get('tks', hp.DEFAULT_INT),
             tksRate = candidate.get('tksRate', hp.DEFAULT_FLOAT),
             candVictor = True if (candidate.get('candVictor')=='*') else False,
@@ -27,7 +27,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
 
         person_id = president['person'].get('id', '')
         candidateTemplate['name'].append(        
-            tp.PersonInfoTemplate(
+            tp.V2PersonInfoTemplate(
                 label  = president['person'].get('name', None),
                 href   = f'{whoru_person}{person_id}',
                 imgSrc = president['person'].get('image', None),
@@ -36,7 +36,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
 
         person_id = vice['person'].get('id', '')
         candidateTemplate['name'].append(
-            tp.PersonInfoTemplate(
+            tp.V2PersonInfoTemplate(
                 label  = vice['person'].get('name', None),
                 href   = f'{whoru_person}{person_id}',
                 imgSrc = vice['person'].get('image', None),
@@ -44,7 +44,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
         )
 
         candidateTemplate['party'].append(
-            tp.PartyInfoTemplate(
+            tp.V2PartyInfoTemplate(
                 label = president['party'].get('name', None),
             ).to_json()
         )
@@ -54,7 +54,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
         party_second = vice['party'].get('id', '')
         if party_first!=party_second:
             candidateTemplate['party'].append(
-                tp.PartyInfoTemplate(
+                tp.V2PartyInfoTemplate(
                     label = vice['party'].get('name', None),
                 ).to_json()
             )
