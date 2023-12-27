@@ -8,7 +8,7 @@ import copy
 
 def search_constituency_candidate(countyCode:str, areaCode: str, candNo: str):
     candInfo = hp.mapping_constituency_cand.get(countyCode,{}).get(areaCode,{}).get(candNo, None)
-    return copy.deepcopy(candInfo)
+    return candInfo
 
 def generate_v2_president(raw_data, mapping_json, year: str):
     election_type = 'president'
@@ -181,5 +181,8 @@ def generate_v2_district_legislator(raw_data, year: str):
                 
                 v2_area_template['candidates'].append(person_template)
             v2_template['districts'].append(v2_area_template)
+            ### debug
+            if countyCode=='10007' or countyCode=='10009' or countyCode=='10021':
+                print(f'{countyCode}: ',v2_area_template)
         result[f'{city_v2}.json'] = v2_template
     return result
