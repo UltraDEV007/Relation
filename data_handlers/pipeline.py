@@ -231,7 +231,7 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
     '''
         In this pipeline, we generate mountain and plain indigenous in one pipeline
     '''
-    prev_time = time().time()
+    prev_time = time.time()
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
     
     ### Check the record execution time
@@ -285,7 +285,7 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
     return True
 
 def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: bool=False, upload: bool=False):
-    prev_time = time().time()
+    prev_time = time.time()
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
     election_type = 'party'
 
