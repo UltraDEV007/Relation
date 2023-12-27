@@ -155,6 +155,20 @@ class VillCalcTemplate:
         self.candidates = copy.deepcopy(candidates)
     def to_json(self):
         return copy.deepcopy(vars(self))
+    
+class ConstituencyCalcTemplate:
+    def __init__(self, region: str='', county: str=None, town: str=None, vill: str=None, area: str=None, area_nickname: str=None, voterTurnout: int=0, eligibleVoters: int=0, candidates: list=[]):
+        self.region     = region
+        self.county     = county
+        self.town       = town
+        self.vill       = vill
+        self.area       = area
+        self.area_nickname  = area_nickname
+        self.voterTurnout   = voterTurnout
+        self.eligibleVoters = eligibleVoters
+        self.candidates = copy.deepcopy(candidates)
+    def to_json(self):
+        return copy.deepcopy(vars(self))
 
 class CandidateTemplate:
     '''
