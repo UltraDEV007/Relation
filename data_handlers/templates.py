@@ -206,6 +206,8 @@ class V2Template:
         template = vars(self)
         if self.type == 'legislator-party':
             template['parties'] = []     ### You should append PartyCandidateTemplate
+        elif self.type == 'legislator-district':
+            template['districts'] = []   ### You should append V2ConstituencyAreaTemplate
         else:
             template['candidates'] = []  ### You should append PersonCandidateTemplate
         return template
