@@ -143,11 +143,11 @@ def generate_v2_district_legislator(raw_data, year: str):
         if city_v2 == None:
             continue
         v2_template =  tp.V2Template(
-            updateAt = updatedAt,
-            year     = year,
-            type     = election_type,
-            title    = f"立法委員選舉（{city}）",
-            version  = 'v2'
+            updatedAt = updatedAt,
+            year      = year,
+            type      = election_type,
+            title     = f"立法委員選舉（{city}）",
+            version   = 'v2'
         ).to_json()
         for areaCode, areaData in countyData.items():
             v2_area_template = tp.V2ConstituencyAreaTemplate(
