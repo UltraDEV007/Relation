@@ -209,7 +209,6 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
     接下來的實作是v2的，我們會在一個v2的流水線內完成所有資料的產生
 '''
 def pipeline_v2(raw_data, seats_data, year:str):
-    year = datetime.now().year
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
 
     ### Generate the v2 president data

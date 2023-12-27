@@ -220,9 +220,9 @@ class V2PersonInfoTemplate:
 V2PartyInfoTemplate = V2PersonInfoTemplate # alias naming
 
 class V2PresidentCandidateTemplate:
-    def __init__(self, candNo: int=0, name: list=[], parties: list=[], tks: int=0, tksRate: float=0.0, candVictor: bool=False):
+    def __init__(self, candNo: int=0, names: list=[], parties: list=[], tks: int=0, tksRate: float=0.0, candVictor: bool=False):
         self.candNo     = candNo
-        self.name       = name            # You should append PersonInfoTemplate
+        self.names      = names            # You should append PersonInfoTemplate
         self.parties    = parties         # You should append PartyInfoTemplate
         self.tks        = tks
         self.tksRate    = tksRate

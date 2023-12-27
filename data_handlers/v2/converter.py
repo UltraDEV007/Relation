@@ -26,7 +26,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
         candidateTemplate['candNo'] = candNo
 
         person_id = president['person'].get('id', '')
-        candidateTemplate['name'].append(        
+        candidateTemplate['names'].append(        
             tp.V2PersonInfoTemplate(
                 label  = president['person'].get('name', None),
                 href   = f'{whoru_person}{person_id}',
@@ -35,7 +35,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
         )
 
         person_id = vice['person'].get('id', '')
-        candidateTemplate['name'].append(
+        candidateTemplate['names'].append(
             tp.V2PersonInfoTemplate(
                 label  = vice['person'].get('name', None),
                 href   = f'{whoru_person}{person_id}',
