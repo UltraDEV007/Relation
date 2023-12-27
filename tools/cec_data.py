@@ -15,11 +15,11 @@ def check_existed_cec_file():
 
     ### check final.json
     if os.path.isfile(cec_filename[0]):
-        with open(filename) as f:
+        with open(cec_filename[0]) as f:
             raw_data = json.load(f)
     else:
         if os.path.isfile(cec_filename[1]):
-            with open(filename) as f:
+            with open(cec_filename[1]) as f:
                 raw_data = json.load(f)
                 is_running = True
     return raw_data, is_running
