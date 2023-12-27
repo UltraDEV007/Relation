@@ -43,7 +43,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
             ).to_json()
         )
 
-        candidateTemplate['party'].append(
+        candidateTemplate['parties'].append(
             tp.V2PartyInfoTemplate(
                 label = president['party'].get('name', None),
             ).to_json()
@@ -53,7 +53,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
         party_first = president['party'].get('id', '')
         party_second = vice['party'].get('id', '')
         if party_first!=party_second:
-            candidateTemplate['party'].append(
+            candidateTemplate['parties'].append(
                 tp.V2PartyInfoTemplate(
                     label = vice['party'].get('name', None),
                 ).to_json()
@@ -97,5 +97,25 @@ def convert_v2_person_candidates(raw_candidates, mapping_json):
             candidateTemplate['party'] = tp.V2PartyInfoTemplate(
                 label = partyInfo.get('name', None),
             ).to_json()
+        result.append(candidateTemplate)
+    return result
+
+def convert_v2_party_candidates(raw_candidates, mapping_json):
+    result = []
+    for candidate in raw_candidates:
+        candidateTemplate = tp.V2PartyCandidateTemplate(
+            tks      = candidate.get('tks', hp.DEFAULT_INT),
+            tksRate1 = candidate.get('tksRate1', hp.DEFAULT_FLOAT),
+            tksRate2 = candidate.get('tksRate2', hp.DEFAULT_FLOAT),
+            seats    = 0  ### TODO: Correct the value of seats
+        ).to_json()
+        candNo = candidate.get('patyNo', hp.DEFAULT_INT)
+        candidateTemplate['candNo'] = candNo
+        
+        partyInfo = mapping_json.get(str(candNo), {}).get('party', None)
+        seatsInfo  = mapping_json.get(str(candNo), {}).get('seats', hp.DEFAULT_INT)
+        
+        candidateTemplate['party'] = partyInfo
+        candidateTemplate['seats'] = seatsInfo
         result.append(candidateTemplate)
     return result

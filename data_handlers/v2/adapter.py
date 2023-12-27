@@ -23,7 +23,7 @@ def adapter_president_v2():
     
     gql_data = gql_presidents['personElections']
     for idx, data in enumerate(gql_data):
-        candNo      = data.get('number', str(idx))  ###如果實際candNo尚不存在，使用idx作為假資料
+        candNo      = data.get('number', str(idx+1))  ###如果實際candNo尚不存在，使用idx作為假資料
         person_info = data.get('person_id', None)
         party_info  = data.get('party', None)
         if person_info == None:
@@ -47,7 +47,7 @@ def adapter_indigeous_v2(gql_president):
     mapping_indigeous    = {}
     gql_data = gql_president['personElections']
     for idx, data in enumerate(gql_data):
-        candNo      = data.get('number', str(idx))  ###如果實際candNo尚不存在，使用idx作為假資料
+        candNo      = data.get('number', str(idx+1))  ###如果實際candNo尚不存在，使用idx作為假資料
         person_info = data.get('person_id', None)
         party_info  = data.get('party', None)
         if person_info == None:
@@ -59,3 +59,22 @@ def adapter_indigeous_v2(gql_president):
             'party': party_info,
         }
     return mapping_indigeous
+
+def adapter_party_v2(gql_party):
+    mapping_party    = {}
+    gql_data = gql_party['organizationsElections']
+    for idx, data in enumerate(gql_data):
+        candNo      = data.get('number', str(idx+1))  ###如果實際candNo尚不存在，使用idx作為假資料
+        party_info  = data.get('organization_id', None)
+        if party_info == None:
+            continue
+        if candNo == '':
+            candNo = str(idx)
+        new_party_info = {}
+        new_party_info['party'] = {
+            "label": party_info.get('name', None),
+            "href": None,
+            "imgSrc": None,
+        }
+        mapping_party[candNo] = new_party_info
+    return mapping_party

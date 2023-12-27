@@ -92,3 +92,20 @@ query GetPlainIndigeous {
   }
 }
 """
+
+gql_party_2024 = """
+query GetParty {
+  organizationsElections(
+    orderBy:{ number: asc },
+    where: {
+      elections: {id: { equals: 86 } },
+    }) {
+    id
+    number
+    organization_id {
+      id
+      name
+    }
+  }
+}
+"""

@@ -3,6 +3,7 @@ import data_handlers.parser    as parser
 import data_handlers.president.generator as pd_generator
 import data_handlers.legislator.generator as lg_generator
 
+import data_handlers.queries as query
 import data_handlers.v2.adapter as v2_adapter
 import data_handlers.v2.generator as v2_generator
 import data_handlers.helpers as hp
@@ -10,6 +11,8 @@ import data_handlers.helpers as hp
 from tools.uploadGCS import upload_blob, save_file, upload_multiple_test
 from datetime import datetime
 import time
+
+gql_endpoint = os.environ['WHORU_GQL_PROD']
 
 def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False):
     result = True
@@ -205,16 +208,49 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
 '''
     接下來的實作是v2的，我們會在一個v2的流水線內完成所有資料的產生
 '''
-def pipeline_v2(raw_data):
+def pipeline_v2(raw_data, seats_data, year:str):
     year = datetime.now().year
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
 
     ### Generate the v2 president data
     mapping_president =  v2_adapter.adapter_president_v2()
-    v2_president = v2_generator.generate_v2_president(raw_data, mapping_president, '2024')
+    v2_president = v2_generator.generate_v2_president(raw_data, mapping_president, year)
 
     filename = os.path.join(root_path, 'president', 'all.json')
     save_file(filename, v2_president)
     upload_blob(filename, year)
+    print('Upload V2 president data successed.')
+
+    ### Generate the v2 special legislator data(mountainIndigeous and plainIndigeous)
+    # Plain 
+    gql_plain_indigeous = query.gql2json(gql_endpoint, query.gql_plainIndigeous_2024)
+    mapping_plain_indigeous = v2_adapter.adapter_indigeous_v2(gql_plain_indigeous)
+    v2_plain_indigeous = v2_generator.generate_v2_special_legislator(raw_data, mapping_plain_indigeous, year)
+
+    filename = os.path.join(root_path, 'legislator', 'plainIndigenous','all.json')
+    save_file(filename, v2_plain_indigeous)
+    upload_blob(filename, year)
+    print('Upload V2 plain indigeous legislator data successed.')
+    # Mountain
+    gql_mountain_indigeous = query.gql2json(gql_endpoint, query.gql_mountainIndigeous_2024)
+    mapping_mountain_indigeous = v2_adapter.adapter_indigeous_v2(gql_mountain_indigeous)
+    v2_mountain_indigeous = v2_generator.generate_v2_special_legislator(raw_data, mapping_mountain_indigeous, year)
+
+    filename = os.path.join(root_path, 'legislator', 'mountainIndigenous','all.json')
+    save_file(filename, v2_mountain_indigeous)
+    upload_blob(filename, year)
+    print('Upload V2 mountain indigeous legislator data successed.')
+
+    ### Generate the v2 party legislator data
+    gql_party = query.gql2json(gql_endpoint, query.gql_party_2024)
+    mapping_party = v2_adapter.adapter_party_v2(gql_party)
+    if seats_data:
+        parser.parse_seat(seats_data, mapping_party)
+    v2_party = v2_generator.generate_v2_party_legislator(raw_data, mapping_party, year)
+
+    filename = os.path.join(root_path, 'legislator', 'party','all.json')
+    save_file(filename, v2_party)
+    upload_blob(filename, year)
+    print('Upload V2 party legislator data successed.')
 
     return True

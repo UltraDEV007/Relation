@@ -1,0 +1,2639 @@
+{
+  "ST" : "1030094345",
+  "M4" : {
+    "totalTks" : 13873386,
+    "totalVote" : 34,
+    "patyCount" : 19,
+    "patyInfo" : [ {
+      "patyNo" : 1,
+      "candTotal" : 8,
+      "tks" : 639969,
+      "tksRate1" : 4.6129,
+      "tksRate2" : 0.0,
+      "victorCount" : 0,
+      "victorRmn" : 0,
+      "victorTotal" : 0,
+      "victorFemale" : 0,
+      "victorMarkCount" : 0,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : " "
+      }, {
+        "candNo" : 2,
+        "victor" : " "
+      }, {
+        "candNo" : 3,
+        "victor" : " "
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      }, {
+        "candNo" : 8,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 2,
+      "candTotal" : 7,
+      "tks" : 898084,
+      "tksRate1" : 6.4734,
+      "tksRate2" : 9.5021,
+      "victorCount" : 3,
+      "victorRmn" : 0,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 3,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : "*"
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 3,
+      "candTotal" : 22,
+      "tks" : 888130,
+      "tksRate1" : 6.4017,
+      "tksRate2" : 9.3968,
+      "victorCount" : 3,
+      "victorRmn" : 0,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 3,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : "-"
+      }, {
+        "candNo" : 4,
+        "victor" : "!"
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      }, {
+        "candNo" : 8,
+        "victor" : " "
+      }, {
+        "candNo" : 9,
+        "victor" : " "
+      }, {
+        "candNo" : 10,
+        "victor" : " "
+      }, {
+        "candNo" : 11,
+        "victor" : " "
+      }, {
+        "candNo" : 12,
+        "victor" : " "
+      }, {
+        "candNo" : 13,
+        "victor" : " "
+      }, {
+        "candNo" : 14,
+        "victor" : " "
+      }, {
+        "candNo" : 15,
+        "victor" : " "
+      }, {
+        "candNo" : 16,
+        "victor" : " "
+      }, {
+        "candNo" : 17,
+        "victor" : " "
+      }, {
+        "candNo" : 18,
+        "victor" : " "
+      }, {
+        "candNo" : 19,
+        "victor" : " "
+      }, {
+        "candNo" : 20,
+        "victor" : " "
+      }, {
+        "candNo" : 21,
+        "victor" : " "
+      }, {
+        "candNo" : 22,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 4,
+      "candTotal" : 10,
+      "tks" : 658414,
+      "tksRate1" : 4.7459,
+      "tksRate2" : 0.0,
+      "victorCount" : 0,
+      "victorRmn" : 0,
+      "victorTotal" : 0,
+      "victorFemale" : 0,
+      "victorMarkCount" : 0,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : " "
+      }, {
+        "candNo" : 2,
+        "victor" : " "
+      }, {
+        "candNo" : 3,
+        "victor" : " "
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      }, {
+        "candNo" : 8,
+        "victor" : " "
+      }, {
+        "candNo" : 9,
+        "victor" : " "
+      }, {
+        "candNo" : 10,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 5,
+      "candTotal" : 6,
+      "tks" : 745522,
+      "tksRate1" : 5.3738,
+      "tksRate2" : 7.8879,
+      "victorCount" : 2,
+      "victorRmn" : 1,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 3,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : "*"
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 6,
+      "candTotal" : 11,
+      "tks" : 618409,
+      "tksRate1" : 4.4575,
+      "tksRate2" : 0.0,
+      "victorCount" : 0,
+      "victorRmn" : 0,
+      "victorTotal" : 0,
+      "victorFemale" : 0,
+      "victorMarkCount" : 0,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : " "
+      }, {
+        "candNo" : 2,
+        "victor" : " "
+      }, {
+        "candNo" : 3,
+        "victor" : " "
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      }, {
+        "candNo" : 8,
+        "victor" : " "
+      }, {
+        "candNo" : 9,
+        "victor" : " "
+      }, {
+        "candNo" : 10,
+        "victor" : " "
+      }, {
+        "candNo" : 11,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 7,
+      "candTotal" : 10,
+      "tks" : 650375,
+      "tksRate1" : 4.6879,
+      "tksRate2" : 0.0,
+      "victorCount" : 0,
+      "victorRmn" : 0,
+      "victorTotal" : 0,
+      "victorFemale" : 0,
+      "victorMarkCount" : 0,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : " "
+      }, {
+        "candNo" : 2,
+        "victor" : " "
+      }, {
+        "candNo" : 3,
+        "victor" : " "
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      }, {
+        "candNo" : 8,
+        "victor" : " "
+      }, {
+        "candNo" : 9,
+        "victor" : " "
+      }, {
+        "candNo" : 10,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 8,
+      "candTotal" : 6,
+      "tks" : 754450,
+      "tksRate1" : 5.4381,
+      "tksRate2" : 7.9824,
+      "victorCount" : 2,
+      "victorRmn" : 1,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 3,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : "-"
+      }, {
+        "candNo" : 4,
+        "victor" : "!"
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 9,
+      "candTotal" : 31,
+      "tks" : 624147,
+      "tksRate1" : 4.4989,
+      "tksRate2" : 0.0,
+      "victorCount" : 0,
+      "victorRmn" : 0,
+      "victorTotal" : 0,
+      "victorFemale" : 0,
+      "victorMarkCount" : 0,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : " "
+      }, {
+        "candNo" : 2,
+        "victor" : " "
+      }, {
+        "candNo" : 3,
+        "victor" : " "
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      }, {
+        "candNo" : 8,
+        "victor" : " "
+      }, {
+        "candNo" : 9,
+        "victor" : " "
+      }, {
+        "candNo" : 10,
+        "victor" : " "
+      }, {
+        "candNo" : 11,
+        "victor" : " "
+      }, {
+        "candNo" : 12,
+        "victor" : " "
+      }, {
+        "candNo" : 13,
+        "victor" : " "
+      }, {
+        "candNo" : 14,
+        "victor" : " "
+      }, {
+        "candNo" : 15,
+        "victor" : " "
+      }, {
+        "candNo" : 16,
+        "victor" : " "
+      }, {
+        "candNo" : 17,
+        "victor" : " "
+      }, {
+        "candNo" : 18,
+        "victor" : " "
+      }, {
+        "candNo" : 19,
+        "victor" : " "
+      }, {
+        "candNo" : 20,
+        "victor" : " "
+      }, {
+        "candNo" : 21,
+        "victor" : " "
+      }, {
+        "candNo" : 22,
+        "victor" : " "
+      }, {
+        "candNo" : 23,
+        "victor" : " "
+      }, {
+        "candNo" : 24,
+        "victor" : " "
+      }, {
+        "candNo" : 25,
+        "victor" : " "
+      }, {
+        "candNo" : 26,
+        "victor" : " "
+      }, {
+        "candNo" : 27,
+        "victor" : " "
+      }, {
+        "candNo" : 28,
+        "victor" : " "
+      }, {
+        "candNo" : 29,
+        "victor" : " "
+      }, {
+        "candNo" : 30,
+        "victor" : " "
+      }, {
+        "candNo" : 31,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 10,
+      "candTotal" : 5,
+      "tks" : 735996,
+      "tksRate1" : 5.3051,
+      "tksRate2" : 7.7871,
+      "victorCount" : 2,
+      "victorRmn" : 0,
+      "victorTotal" : 2,
+      "victorFemale" : 1,
+      "victorMarkCount" : 2,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : " "
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 11,
+      "candTotal" : 2,
+      "tks" : 630303,
+      "tksRate1" : 4.5433,
+      "tksRate2" : 0.0,
+      "victorCount" : 0,
+      "victorRmn" : 0,
+      "victorTotal" : 0,
+      "victorFemale" : 0,
+      "victorMarkCount" : 0,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : " "
+      }, {
+        "candNo" : 2,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 12,
+      "candTotal" : 6,
+      "tks" : 704854,
+      "tksRate1" : 5.0806,
+      "tksRate2" : 7.4577,
+      "victorCount" : 2,
+      "victorRmn" : 0,
+      "victorTotal" : 2,
+      "victorFemale" : 1,
+      "victorMarkCount" : 2,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : " "
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 13,
+      "candTotal" : 8,
+      "tks" : 792011,
+      "tksRate1" : 5.7089,
+      "tksRate2" : 8.3798,
+      "victorCount" : 2,
+      "victorRmn" : 1,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 3,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : "*"
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      }, {
+        "candNo" : 8,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 14,
+      "candTotal" : 33,
+      "tks" : 745681,
+      "tksRate1" : 5.3749,
+      "tksRate2" : 7.8896,
+      "victorCount" : 2,
+      "victorRmn" : 1,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 3,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : "*"
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      }, {
+        "candNo" : 8,
+        "victor" : " "
+      }, {
+        "candNo" : 9,
+        "victor" : " "
+      }, {
+        "candNo" : 10,
+        "victor" : " "
+      }, {
+        "candNo" : 11,
+        "victor" : " "
+      }, {
+        "candNo" : 12,
+        "victor" : " "
+      }, {
+        "candNo" : 13,
+        "victor" : " "
+      }, {
+        "candNo" : 14,
+        "victor" : " "
+      }, {
+        "candNo" : 15,
+        "victor" : " "
+      }, {
+        "candNo" : 16,
+        "victor" : " "
+      }, {
+        "candNo" : 17,
+        "victor" : " "
+      }, {
+        "candNo" : 18,
+        "victor" : " "
+      }, {
+        "candNo" : 19,
+        "victor" : " "
+      }, {
+        "candNo" : 20,
+        "victor" : " "
+      }, {
+        "candNo" : 21,
+        "victor" : " "
+      }, {
+        "candNo" : 22,
+        "victor" : " "
+      }, {
+        "candNo" : 23,
+        "victor" : " "
+      }, {
+        "candNo" : 24,
+        "victor" : " "
+      }, {
+        "candNo" : 25,
+        "victor" : " "
+      }, {
+        "candNo" : 26,
+        "victor" : " "
+      }, {
+        "candNo" : 27,
+        "victor" : " "
+      }, {
+        "candNo" : 28,
+        "victor" : " "
+      }, {
+        "candNo" : 29,
+        "victor" : " "
+      }, {
+        "candNo" : 30,
+        "victor" : " "
+      }, {
+        "candNo" : 31,
+        "victor" : " "
+      }, {
+        "candNo" : 32,
+        "victor" : " "
+      }, {
+        "candNo" : 33,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 15,
+      "candTotal" : 28,
+      "tks" : 852173,
+      "tksRate1" : 6.1425,
+      "tksRate2" : 9.0164,
+      "victorCount" : 3,
+      "victorRmn" : 0,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 3,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : "*"
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      }, {
+        "candNo" : 8,
+        "victor" : " "
+      }, {
+        "candNo" : 9,
+        "victor" : " "
+      }, {
+        "candNo" : 10,
+        "victor" : " "
+      }, {
+        "candNo" : 11,
+        "victor" : " "
+      }, {
+        "candNo" : 12,
+        "victor" : " "
+      }, {
+        "candNo" : 13,
+        "victor" : " "
+      }, {
+        "candNo" : 14,
+        "victor" : " "
+      }, {
+        "candNo" : 15,
+        "victor" : " "
+      }, {
+        "candNo" : 16,
+        "victor" : " "
+      }, {
+        "candNo" : 17,
+        "victor" : " "
+      }, {
+        "candNo" : 18,
+        "victor" : " "
+      }, {
+        "candNo" : 19,
+        "victor" : " "
+      }, {
+        "candNo" : 20,
+        "victor" : " "
+      }, {
+        "candNo" : 21,
+        "victor" : " "
+      }, {
+        "candNo" : 22,
+        "victor" : " "
+      }, {
+        "candNo" : 23,
+        "victor" : " "
+      }, {
+        "candNo" : 24,
+        "victor" : " "
+      }, {
+        "candNo" : 25,
+        "victor" : " "
+      }, {
+        "candNo" : 26,
+        "victor" : " "
+      }, {
+        "candNo" : 27,
+        "victor" : " "
+      }, {
+        "candNo" : 28,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 16,
+      "candTotal" : 6,
+      "tks" : 600351,
+      "tksRate1" : 4.3274,
+      "tksRate2" : 0.0,
+      "victorCount" : 0,
+      "victorRmn" : 0,
+      "victorTotal" : 0,
+      "victorFemale" : 0,
+      "victorMarkCount" : 0,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : " "
+      }, {
+        "candNo" : 2,
+        "victor" : " "
+      }, {
+        "candNo" : 3,
+        "victor" : " "
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 17,
+      "candTotal" : 4,
+      "tks" : 775765,
+      "tksRate1" : 5.5917,
+      "tksRate2" : 8.2079,
+      "victorCount" : 2,
+      "victorRmn" : 1,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 2,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "-"
+      }, {
+        "candNo" : 3,
+        "victor" : "-"
+      }, {
+        "candNo" : 4,
+        "victor" : "!"
+      } ]
+    }, {
+      "patyNo" : 18,
+      "candTotal" : 6,
+      "tks" : 812631,
+      "tksRate1" : 5.8575,
+      "tksRate2" : 8.598,
+      "victorCount" : 2,
+      "victorRmn" : 1,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 3,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : "*"
+      }, {
+        "candNo" : 4,
+        "victor" : " "
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      } ]
+    }, {
+      "patyNo" : 19,
+      "candTotal" : 7,
+      "tks" : 746121,
+      "tksRate1" : 5.3781,
+      "tksRate2" : 7.8943,
+      "victorCount" : 2,
+      "victorRmn" : 1,
+      "victorTotal" : 3,
+      "victorFemale" : 2,
+      "victorMarkCount" : 3,
+      "candInfo" : [ {
+        "candNo" : 1,
+        "victor" : "*"
+      }, {
+        "candNo" : 2,
+        "victor" : "*"
+      }, {
+        "candNo" : 3,
+        "victor" : "-"
+      }, {
+        "candNo" : 4,
+        "victor" : "!"
+      }, {
+        "candNo" : 5,
+        "victor" : " "
+      }, {
+        "candNo" : 6,
+        "victor" : " "
+      }, {
+        "candNo" : 7,
+        "victor" : " "
+      } ]
+    } ]
+  },
+  "AL" : {
+    "L0" : [ {
+      "prvCode" : "00",
+      "cityCode" : "000",
+      "ageAvg" : 52.61,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 45,
+        "rate" : 40.18
+      }, {
+        "genderCode" : "1",
+        "count" : 67,
+        "rate" : 59.82
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 18,
+        "rate" : 16.07
+      }, {
+        "educCode" : "ma",
+        "count" : 36,
+        "rate" : 32.14
+      }, {
+        "educCode" : "ba",
+        "count" : 34,
+        "rate" : 30.36
+      }, {
+        "educCode" : "co",
+        "count" : 6,
+        "rate" : 5.36
+      }, {
+        "educCode" : "hs",
+        "count" : 6,
+        "rate" : 5.36
+      }, {
+        "educCode" : "uh",
+        "count" : 5,
+        "rate" : 4.46
+      }, {
+        "educCode" : "ot",
+        "count" : 7,
+        "rate" : 6.25
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 17,
+        "victorRate" : 15.1786
+      }, {
+        "patyUni" : "15",
+        "victorCount" : 3,
+        "victorRate" : 2.6786
+      }, {
+        "patyUni" : "16",
+        "victorCount" : 15,
+        "victorRate" : 13.3929
+      }, {
+        "patyUni" : "79",
+        "victorCount" : 2,
+        "victorRate" : 1.7857
+      }, {
+        "patyUni" : "90",
+        "victorCount" : 4,
+        "victorRate" : 3.5714
+      }, {
+        "patyUni" : "95",
+        "victorCount" : 3,
+        "victorRate" : 2.6786
+      }, {
+        "patyUni" : "113",
+        "victorCount" : 6,
+        "victorRate" : 5.3571
+      }, {
+        "patyUni" : "278",
+        "victorCount" : 1,
+        "victorRate" : 0.8929
+      }, {
+        "patyUni" : "303",
+        "victorCount" : 4,
+        "victorRate" : 3.5714
+      }, {
+        "patyUni" : "319",
+        "victorCount" : 7,
+        "victorRate" : 6.25
+      }, {
+        "patyUni" : "339",
+        "victorCount" : 1,
+        "victorRate" : 0.8929
+      }, {
+        "patyUni" : "341",
+        "victorCount" : 4,
+        "victorRate" : 3.5714
+      }, {
+        "patyUni" : "342",
+        "victorCount" : 3,
+        "victorRate" : 2.6786
+      }, {
+        "patyUni" : "346",
+        "victorCount" : 3,
+        "victorRate" : 2.6786
+      }, {
+        "patyUni" : "348",
+        "victorCount" : 4,
+        "victorRate" : 3.5714
+      }, {
+        "patyUni" : "350",
+        "victorCount" : 7,
+        "victorRate" : 6.25
+      }, {
+        "patyUni" : "352",
+        "victorCount" : 5,
+        "victorRate" : 4.4643
+      }, {
+        "patyUni" : "355",
+        "victorCount" : 6,
+        "victorRate" : 5.3571
+      }, {
+        "patyUni" : "356",
+        "victorCount" : 3,
+        "victorRate" : 2.6786
+      }, {
+        "patyUni" : "999",
+        "victorCount" : 14,
+        "victorRate" : 12.5
+      } ]
+    } ],
+    "L1" : [ {
+      "prvCode" : "00",
+      "cityCode" : "000",
+      "ageAvg" : 51.05,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 23,
+        "rate" : 31.51
+      }, {
+        "genderCode" : "1",
+        "count" : 50,
+        "rate" : 68.49
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 11,
+        "rate" : 15.07
+      }, {
+        "educCode" : "ma",
+        "count" : 22,
+        "rate" : 30.14
+      }, {
+        "educCode" : "ba",
+        "count" : 23,
+        "rate" : 31.51
+      }, {
+        "educCode" : "co",
+        "count" : 5,
+        "rate" : 6.85
+      }, {
+        "educCode" : "hs",
+        "count" : 4,
+        "rate" : 5.48
+      }, {
+        "educCode" : "uh",
+        "count" : 4,
+        "rate" : 5.48
+      }, {
+        "educCode" : "ot",
+        "count" : 4,
+        "rate" : 5.48
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 15,
+        "victorRate" : 20.5479
+      }, {
+        "patyUni" : "15",
+        "victorCount" : 3,
+        "victorRate" : 4.1096
+      }, {
+        "patyUni" : "16",
+        "victorCount" : 11,
+        "victorRate" : 15.0685
+      }, {
+        "patyUni" : "90",
+        "victorCount" : 1,
+        "victorRate" : 1.3699
+      }, {
+        "patyUni" : "113",
+        "victorCount" : 3,
+        "victorRate" : 4.1096
+      }, {
+        "patyUni" : "278",
+        "victorCount" : 1,
+        "victorRate" : 1.3699
+      }, {
+        "patyUni" : "303",
+        "victorCount" : 1,
+        "victorRate" : 1.3699
+      }, {
+        "patyUni" : "319",
+        "victorCount" : 4,
+        "victorRate" : 5.4795
+      }, {
+        "patyUni" : "339",
+        "victorCount" : 1,
+        "victorRate" : 1.3699
+      }, {
+        "patyUni" : "341",
+        "victorCount" : 1,
+        "victorRate" : 1.3699
+      }, {
+        "patyUni" : "342",
+        "victorCount" : 2,
+        "victorRate" : 2.7397
+      }, {
+        "patyUni" : "346",
+        "victorCount" : 3,
+        "victorRate" : 4.1096
+      }, {
+        "patyUni" : "348",
+        "victorCount" : 1,
+        "victorRate" : 1.3699
+      }, {
+        "patyUni" : "350",
+        "victorCount" : 4,
+        "victorRate" : 5.4795
+      }, {
+        "patyUni" : "352",
+        "victorCount" : 3,
+        "victorRate" : 4.1096
+      }, {
+        "patyUni" : "355",
+        "victorCount" : 3,
+        "victorRate" : 4.1096
+      }, {
+        "patyUni" : "356",
+        "victorCount" : 3,
+        "victorRate" : 4.1096
+      }, {
+        "patyUni" : "999",
+        "victorCount" : 13,
+        "victorRate" : 17.8082
+      } ]
+    }, {
+      "prvCode" : "09",
+      "cityCode" : "000",
+      "ageAvg" : 62.5,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 2,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "999",
+        "victorCount" : 2,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "09",
+      "cityCode" : "007",
+      "ageAvg" : 61.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 1,
+        "rate" : 100.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "999",
+        "victorCount" : 1,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "09",
+      "cityCode" : "020",
+      "ageAvg" : 64.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 1,
+        "rate" : 100.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "999",
+        "victorCount" : 1,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "000",
+      "ageAvg" : 52.39,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 5,
+        "rate" : 21.74
+      }, {
+        "genderCode" : "1",
+        "count" : 18,
+        "rate" : 78.26
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 3,
+        "rate" : 13.04
+      }, {
+        "educCode" : "ma",
+        "count" : 8,
+        "rate" : 34.78
+      }, {
+        "educCode" : "ba",
+        "count" : 5,
+        "rate" : 21.74
+      }, {
+        "educCode" : "co",
+        "count" : 3,
+        "rate" : 13.04
+      }, {
+        "educCode" : "hs",
+        "count" : 3,
+        "rate" : 13.04
+      }, {
+        "educCode" : "uh",
+        "count" : 1,
+        "rate" : 4.35
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 5,
+        "victorRate" : 21.7391
+      }, {
+        "patyUni" : "16",
+        "victorCount" : 3,
+        "victorRate" : 13.0435
+      }, {
+        "patyUni" : "113",
+        "victorCount" : 2,
+        "victorRate" : 8.6957
+      }, {
+        "patyUni" : "278",
+        "victorCount" : 1,
+        "victorRate" : 4.3478
+      }, {
+        "patyUni" : "319",
+        "victorCount" : 1,
+        "victorRate" : 4.3478
+      }, {
+        "patyUni" : "341",
+        "victorCount" : 1,
+        "victorRate" : 4.3478
+      }, {
+        "patyUni" : "346",
+        "victorCount" : 1,
+        "victorRate" : 4.3478
+      }, {
+        "patyUni" : "350",
+        "victorCount" : 1,
+        "victorRate" : 4.3478
+      }, {
+        "patyUni" : "355",
+        "victorCount" : 1,
+        "victorRate" : 4.3478
+      }, {
+        "patyUni" : "356",
+        "victorCount" : 1,
+        "victorRate" : 4.3478
+      }, {
+        "patyUni" : "999",
+        "victorCount" : 6,
+        "victorRate" : 26.087
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "002",
+      "ageAvg" : 61.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 1,
+        "rate" : 100.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "356",
+        "victorCount" : 1,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "004",
+      "ageAvg" : 43.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 2,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "ma",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "341",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      }, {
+        "patyUni" : "350",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "005",
+      "ageAvg" : 51.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 50.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      }, {
+        "patyUni" : "113",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "007",
+      "ageAvg" : 50.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 4,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 3,
+        "rate" : 75.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 1,
+        "rate" : 25.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 2,
+        "victorRate" : 50.0
+      }, {
+        "patyUni" : "16",
+        "victorCount" : 1,
+        "victorRate" : 25.0
+      }, {
+        "patyUni" : "346",
+        "victorCount" : 1,
+        "victorRate" : 25.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "008",
+      "ageAvg" : 61.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 50.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 2,
+        "rate" : 100.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      }, {
+        "patyUni" : "319",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "009",
+      "ageAvg" : 38.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 2,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "999",
+        "victorCount" : 2,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "010",
+      "ageAvg" : 53.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 50.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "113",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      }, {
+        "patyUni" : "999",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "013",
+      "ageAvg" : 59.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 2,
+        "rate" : 100.0
+      }, {
+        "genderCode" : "1",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "hs",
+        "count" : 1,
+        "rate" : 50.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "355",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      }, {
+        "patyUni" : "999",
+        "victorCount" : 1,
+        "victorRate" : 50.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "014",
+      "ageAvg" : 66.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 1,
+        "rate" : 100.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "999",
+        "victorCount" : 1,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "015",
+      "ageAvg" : 65.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 1,
+        "rate" : 100.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "278",
+        "victorCount" : 1,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "016",
+      "ageAvg" : 53.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 1,
+        "rate" : 100.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "16",
+        "victorCount" : 1,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "017",
+      "ageAvg" : 46.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 1,
+        "rate" : 100.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "16",
+        "victorCount" : 1,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "018",
+      "ageAvg" : 50.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 1,
+        "rate" : 100.0
+      }, {
+        "educCode" : "ma",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 1,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "10",
+      "cityCode" : "020",
+      "ageAvg" : 54.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 1,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 1,
+        "rate" : 100.0
+      }, {
+        "educCode" : "ba",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "999",
+        "victorCount" : 1,
+        "victorRate" : 100.0
+      } ]
+    }, {
+      "prvCode" : "63",
+      "cityCode" : "000",
+      "ageAvg" : 49.38,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 3,
+        "rate" : 37.5
+      }, {
+        "genderCode" : "1",
+        "count" : 5,
+        "rate" : 62.5
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 2,
+        "rate" : 25.0
+      }, {
+        "educCode" : "ma",
+        "count" : 1,
+        "rate" : 12.5
+      }, {
+        "educCode" : "ba",
+        "count" : 2,
+        "rate" : 25.0
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 3,
+        "rate" : 37.5
+      } ],
+      "paty" : [ {
+        "patyUni" : "15",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "16",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "113",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "339",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "350",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "352",
+        "victorCount" : 2,
+        "victorRate" : 25.0
+      }, {
+        "patyUni" : "999",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      } ]
+    }, {
+      "prvCode" : "64",
+      "cityCode" : "000",
+      "ageAvg" : 53.13,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 4,
+        "rate" : 50.0
+      }, {
+        "genderCode" : "1",
+        "count" : 4,
+        "rate" : 50.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 1,
+        "rate" : 12.5
+      }, {
+        "educCode" : "ma",
+        "count" : 3,
+        "rate" : 37.5
+      }, {
+        "educCode" : "ba",
+        "count" : 3,
+        "rate" : 37.5
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 1,
+        "rate" : 12.5
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 2,
+        "victorRate" : 25.0
+      }, {
+        "patyUni" : "16",
+        "victorCount" : 2,
+        "victorRate" : 25.0
+      }, {
+        "patyUni" : "350",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "355",
+        "victorCount" : 2,
+        "victorRate" : 25.0
+      }, {
+        "patyUni" : "356",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      } ]
+    }, {
+      "prvCode" : "65",
+      "cityCode" : "000",
+      "ageAvg" : 49.25,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 3,
+        "rate" : 25.0
+      }, {
+        "genderCode" : "1",
+        "count" : 9,
+        "rate" : 75.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 3,
+        "rate" : 25.0
+      }, {
+        "educCode" : "ma",
+        "count" : 3,
+        "rate" : 25.0
+      }, {
+        "educCode" : "ba",
+        "count" : 4,
+        "rate" : 33.33
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 1,
+        "rate" : 8.33
+      }, {
+        "educCode" : "ot",
+        "count" : 1,
+        "rate" : 8.33
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 1,
+        "victorRate" : 8.3333
+      }, {
+        "patyUni" : "15",
+        "victorCount" : 1,
+        "victorRate" : 8.3333
+      }, {
+        "patyUni" : "16",
+        "victorCount" : 3,
+        "victorRate" : 25.0
+      }, {
+        "patyUni" : "342",
+        "victorCount" : 1,
+        "victorRate" : 8.3333
+      }, {
+        "patyUni" : "346",
+        "victorCount" : 1,
+        "victorRate" : 8.3333
+      }, {
+        "patyUni" : "350",
+        "victorCount" : 1,
+        "victorRate" : 8.3333
+      }, {
+        "patyUni" : "999",
+        "victorCount" : 4,
+        "victorRate" : 33.3333
+      } ]
+    }, {
+      "prvCode" : "66",
+      "cityCode" : "000",
+      "ageAvg" : 49.38,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 3,
+        "rate" : 37.5
+      }, {
+        "genderCode" : "1",
+        "count" : 5,
+        "rate" : 62.5
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 2,
+        "rate" : 25.0
+      }, {
+        "educCode" : "ba",
+        "count" : 5,
+        "rate" : 62.5
+      }, {
+        "educCode" : "co",
+        "count" : 1,
+        "rate" : 12.5
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 2,
+        "victorRate" : 25.0
+      }, {
+        "patyUni" : "90",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "303",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "319",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "342",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "348",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      }, {
+        "patyUni" : "356",
+        "victorCount" : 1,
+        "victorRate" : 12.5
+      } ]
+    }, {
+      "prvCode" : "67",
+      "cityCode" : "000",
+      "ageAvg" : 50.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 3,
+        "rate" : 50.0
+      }, {
+        "genderCode" : "1",
+        "count" : 3,
+        "rate" : 50.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 1,
+        "rate" : 16.67
+      }, {
+        "educCode" : "ma",
+        "count" : 1,
+        "rate" : 16.67
+      }, {
+        "educCode" : "ba",
+        "count" : 3,
+        "rate" : 50.0
+      }, {
+        "educCode" : "co",
+        "count" : 1,
+        "rate" : 16.67
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 3,
+        "victorRate" : 50.0
+      }, {
+        "patyUni" : "16",
+        "victorCount" : 1,
+        "victorRate" : 16.6667
+      }, {
+        "patyUni" : "319",
+        "victorCount" : 1,
+        "victorRate" : 16.6667
+      }, {
+        "patyUni" : "346",
+        "victorCount" : 1,
+        "victorRate" : 16.6667
+      } ]
+    }, {
+      "prvCode" : "68",
+      "cityCode" : "000",
+      "ageAvg" : 48.5,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 2,
+        "rate" : 33.33
+      }, {
+        "genderCode" : "1",
+        "count" : 4,
+        "rate" : 66.67
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 4,
+        "rate" : 66.67
+      }, {
+        "educCode" : "ba",
+        "count" : 1,
+        "rate" : 16.67
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 1,
+        "rate" : 16.67
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 2,
+        "victorRate" : 33.3333
+      }, {
+        "patyUni" : "15",
+        "victorCount" : 1,
+        "victorRate" : 16.6667
+      }, {
+        "patyUni" : "16",
+        "victorCount" : 1,
+        "victorRate" : 16.6667
+      }, {
+        "patyUni" : "319",
+        "victorCount" : 1,
+        "victorRate" : 16.6667
+      }, {
+        "patyUni" : "352",
+        "victorCount" : 1,
+        "victorRate" : 16.6667
+      } ]
+    } ],
+    "L2" : [ {
+      "prvCode" : "00",
+      "cityCode" : "000",
+      "ageAvg" : 59.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "genderCode" : "1",
+        "count" : 3,
+        "rate" : 100.0
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 1,
+        "rate" : 33.33
+      }, {
+        "educCode" : "ba",
+        "count" : 2,
+        "rate" : 66.67
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "1",
+        "victorCount" : 2,
+        "victorRate" : 66.6667
+      }, {
+        "patyUni" : "342",
+        "victorCount" : 1,
+        "victorRate" : 33.3333
+      } ]
+    } ],
+    "L3" : [ {
+      "prvCode" : "00",
+      "cityCode" : "000",
+      "ageAvg" : 62.0,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 1,
+        "rate" : 33.33
+      }, {
+        "genderCode" : "1",
+        "count" : 2,
+        "rate" : 66.67
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ma",
+        "count" : 1,
+        "rate" : 33.33
+      }, {
+        "educCode" : "ba",
+        "count" : 1,
+        "rate" : 33.33
+      }, {
+        "educCode" : "co",
+        "count" : 1,
+        "rate" : 33.33
+      }, {
+        "educCode" : "hs",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "uh",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "ot",
+        "count" : 0,
+        "rate" : 0.0
+      } ],
+      "paty" : [ {
+        "patyUni" : "16",
+        "victorCount" : 1,
+        "victorRate" : 33.3333
+      }, {
+        "patyUni" : "355",
+        "victorCount" : 1,
+        "victorRate" : 33.3333
+      }, {
+        "patyUni" : "999",
+        "victorCount" : 1,
+        "victorRate" : 33.3333
+      } ]
+    } ],
+    "L4" : [ {
+      "prvCode" : "00",
+      "cityCode" : "000",
+      "ageAvg" : 54.61,
+      "gender" : [ {
+        "genderCode" : "0",
+        "count" : 21,
+        "rate" : 63.64
+      }, {
+        "genderCode" : "1",
+        "count" : 12,
+        "rate" : 36.36
+      } ],
+      "educ" : [ {
+        "educCode" : "dr",
+        "count" : 7,
+        "rate" : 21.21
+      }, {
+        "educCode" : "ma",
+        "count" : 12,
+        "rate" : 36.36
+      }, {
+        "educCode" : "ba",
+        "count" : 8,
+        "rate" : 24.24
+      }, {
+        "educCode" : "co",
+        "count" : 0,
+        "rate" : 0.0
+      }, {
+        "educCode" : "hs",
+        "count" : 2,
+        "rate" : 6.06
+      }, {
+        "educCode" : "uh",
+        "count" : 1,
+        "rate" : 3.03
+      }, {
+        "educCode" : "ot",
+        "count" : 3,
+        "rate" : 9.09
+      } ],
+      "paty" : [ {
+        "patyUni" : "16",
+        "victorCount" : 3,
+        "victorRate" : 9.0909
+      }, {
+        "patyUni" : "79",
+        "victorCount" : 2,
+        "victorRate" : 6.0606
+      }, {
+        "patyUni" : "90",
+        "victorCount" : 3,
+        "victorRate" : 9.0909
+      }, {
+        "patyUni" : "95",
+        "victorCount" : 3,
+        "victorRate" : 9.0909
+      }, {
+        "patyUni" : "113",
+        "victorCount" : 3,
+        "victorRate" : 9.0909
+      }, {
+        "patyUni" : "303",
+        "victorCount" : 3,
+        "victorRate" : 9.0909
+      }, {
+        "patyUni" : "319",
+        "victorCount" : 3,
+        "victorRate" : 9.0909
+      }, {
+        "patyUni" : "341",
+        "victorCount" : 3,
+        "victorRate" : 9.0909
+      }, {
+        "patyUni" : "348",
+        "victorCount" : 3,
+        "victorRate" : 9.0909
+      }, {
+        "patyUni" : "350",
+        "victorCount" : 3,
+        "victorRate" : 9.0909
+      }, {
+        "patyUni" : "352",
+        "victorCount" : 2,
+        "victorRate" : 6.0606
+      }, {
+        "patyUni" : "355",
+        "victorCount" : 2,
+        "victorRate" : 6.0606
+      } ]
+    } ]
+  }
+}

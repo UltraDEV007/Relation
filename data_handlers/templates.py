@@ -196,8 +196,8 @@ class ErrorTemplate:
     Templates for V2
 '''
 class V2Template:
-    def __init__(self, updateAt: str='', year: str='', type: str='', title: str='', version: str=''):
-        self.updatedAt   = updateAt
+    def __init__(self, updatedAt: str='', year: str='', type: str='', title: str='', version: str=''):
+        self.updatedAt   = updatedAt
         self.year = year
         self.type = type
         self.title    = title
@@ -219,22 +219,22 @@ class V2PersonInfoTemplate:
         return copy.deepcopy(vars(self))
 V2PartyInfoTemplate = V2PersonInfoTemplate # alias naming
 
-class V2PersonCandidateTemplate:
-    def __init__(self, candNo: int=0, name: dict=None, party: dict=None, tks: int=0, tksRate: float=0.0, candVictor: bool=False):
+class V2PresidentCandidateTemplate:
+    def __init__(self, candNo: int=0, name: list=[], parties: list=[], tks: int=0, tksRate: float=0.0, candVictor: bool=False):
         self.candNo     = candNo
         self.name       = name            # You should append PersonInfoTemplate
-        self.party      = party           # You should append PartyInfoTemplate
+        self.parties    = parties         # You should append PartyInfoTemplate
         self.tks        = tks
         self.tksRate    = tksRate
         self.candVictor = candVictor
     def to_json(self):
         return copy.deepcopy(vars(self))
 
-class V2PresidentCandidateTemplate:
-    def __init__(self, candNo: int=0, name: list=[], party: list=[], tks: int=0, tksRate: float=0.0, candVictor: bool=False):
+class V2PersonCandidateTemplate:
+    def __init__(self, candNo: int=0, name: dict=None, party: dict=None, tks: int=0, tksRate: float=0.0, candVictor: bool=False):
         self.candNo     = candNo
-        self.name       = name            # You should append PersonInfoTemplate
-        self.party      = party           # You should append PartyInfoTemplate
+        self.name       = name          # You should append PersonInfoTemplate
+        self.party    = party           # You should append PartyInfoTemplate
         self.tks        = tks
         self.tksRate    = tksRate
         self.candVictor = candVictor
