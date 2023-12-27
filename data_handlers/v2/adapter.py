@@ -1,6 +1,8 @@
 import data_handlers.queries as query
 import asyncio
 import os
+import data_handlers.helpers as hp
+import re
 
 gql_endpoint = os.environ['WHORU_GQL_PROD']
 
@@ -78,3 +80,38 @@ def adapter_party_v2(gql_party):
         }
         mapping_party[candNo] = new_party_info
     return mapping_party
+
+def adapter_constituency(gql_constituency):
+    '''
+        Create mapping_constituency_cand.json, which shows the hierarchy from city_code to candidates.
+        <Example>
+            mapping_constituency_cand = {
+                '68000': {        => First level: cityCode(countyCode) [string]
+                    '01': {       => Second level: areaCode [string]
+                        1: DATA   => Third level: candNo [Int]
+                    }
+                    ...
+                }
+                ...
+            }
+    '''
+    mapping_constituency_cand = {}
+    person_data = gql_constituency['personElections']
+    reverse_city_mapping = { value: key for key, value in hp.mapping_city.items() }
+    pattern = r'\d+'  ###用來找選區編號
+    for data in person_data:
+        candNo = data['number']
+        party_info  = data.get('party')
+        party = party_info.get('name', None) if party_info else None
+        person = data['person_id']
+        city_code   = reverse_city_mapping[data['electoral_district']['city']]
+        area_code   = re.findall(pattern, data['electoral_district']['name'])[0]
+
+        subCity = mapping_constituency_cand.setdefault(city_code, {})
+        subArea = subCity.setdefault(area_code, {})
+        if candNo=='' or candNo==None:
+            candNo = len(subCity[area_code])+1
+        subCand = subArea.setdefault(candNo, {})
+        subCand['party'] = party
+        subCand['person'] = person
+    return mapping_constituency_cand

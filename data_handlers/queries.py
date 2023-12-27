@@ -109,3 +109,28 @@ query GetParty {
   }
 }
 """
+
+gql_constituency_2024 = """
+query GetConstituency {
+  personElections(
+    orderBy:{ number: asc },
+    where: {
+      election: {id: { equals: 87 } },
+      status: {equals: "active"},
+    }) {
+    number
+    electoral_district{
+      city
+      name
+    }
+    party {
+      name
+    }
+    person_id {
+      id
+      name
+      image
+    }
+  }
+}
+"""

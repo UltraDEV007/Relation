@@ -251,3 +251,10 @@ class V2PartyCandidateTemplate:
         self.seats      = seats
     def to_json(self):
         return copy.deepcopy(vars(self))
+    
+class V2ConstituencyAreaTemplate:
+    def __init__(self, districtName: str='', candidates: list=[]):
+        self.districtName = districtName
+        self.candidates = candidates
+    def to_json(self):
+        return copy.deepcopy(vars(self))

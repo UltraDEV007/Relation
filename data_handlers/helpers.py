@@ -124,5 +124,9 @@ mapping_party_seat = open_file(path)
 path = os.path.join(root, 'mapping_nickname.json')
 mapping_nickname = open_file(path) ### Mapping relationship: [areaCode, nickname]
 
+### V2地區英文名稱對照表
+path = os.path.join(root, 'v2_electionDistricts.json')
+v2_electionDistricts = open_file(path)
+
 ### Reverse mapping
 reverse_mapping_town = reverse_mapping(mapping_town)

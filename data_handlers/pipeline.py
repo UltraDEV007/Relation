@@ -262,4 +262,13 @@ def pipeline_v2(raw_data, seats_data, year:str):
     upload_blob(filename, year)
     print('Upload V2 party legislator data successed.')
 
+    ### Generate the v2 constituency legislator data, you don't need to pass the mapping file
+    v2_district = v2_generator.generate_v2_district_legislator(raw_data, year)
+    districtRoot = os.path.join(root_path, 'legislator', 'district')
+    for districtName, districtData in v2_district.items():
+        filename = os.path.join(districtRoot, districtName)
+        save_file(filename, districtData)
+        upload_blob(filename, year)
+    print('Upload V2 constituency district data successed.')
+
     return True
