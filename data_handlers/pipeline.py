@@ -215,7 +215,7 @@ def pipeline_v2(raw_data):
 
     ### Generate the v2 president data
     mapping_president =  v2_adapter.adapter_president_v2()
-    v2_president = v2_generator.generate_v2_president(raw_data, mapping_president)
+    v2_president = v2_generator.generate_v2_president(raw_data, mapping_president, '2024')
 
     filename = os.path.join(root_path, 'president', 'all.json')
     save_file(filename, v2_president)
