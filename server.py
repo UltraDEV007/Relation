@@ -43,7 +43,7 @@ def election_map_2024():
         if final_A:
             parser.parse_seat(final_A, hp.mapping_party_seat) ### 將席次統計結果寫入對照表
         if raw_data:
-            result = pipeline.pipeline_map_2024(raw_data, final_A, is_started = IS_STARTED, is_running = False)
+            result = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running = False)
             if result == False:
                 print('Running pipeline 2024 failed.')
             else:
