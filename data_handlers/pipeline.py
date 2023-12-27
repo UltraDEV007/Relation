@@ -20,6 +20,12 @@ gql_endpoint = os.environ['WHORU_GQL_PROD']
 def pipeline_v2(raw_data, seats_data, year:str):
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
 
+    ### Check the record execution time
+    cec_time    = raw_data['ST']
+    record_time = hp.RECORD_EXECUTION_TIME['v2']
+    if cec_time <= record_time:
+        return False
+
     ### Generate the v2 president data
     mapping_president =  v2_adapter.adapter_president_v2()
     v2_president = v2_generator.generate_v2_president(raw_data, mapping_president, year)
