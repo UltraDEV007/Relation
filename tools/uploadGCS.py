@@ -22,7 +22,15 @@ def upload_multiple_folders(year):
     else:
         os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{year} gs://{BUCKET}/{ENV_FOLDER}/{year} &')#map infobox seat
         os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{VERSION}/{year} gs://{BUCKET}/{ENV_FOLDER}/{VERSION}/{year} &')# vote comparing
-    
+
+def upload_blob_realtime(dest_filename):
+    storage_client = storage.Client().from_service_account_json('gcs-key.json')
+    bucket = storage_client.bucket(os.environ['BUCKET'])
+    blob = bucket.blob(dest_filename)
+    blob.upload_from_filename(dest_filename)
+    blob.cache_control = upload_configs['real_time']
+    blob.patch()
+
 def upload_blob(dest_filename, year):
     '''
     Description:
