@@ -56,7 +56,7 @@ def cec_fetch():
             parser.parse_seat(seats_data, hp.mapping_party_seat)
     return "ok"
 
-@app.route('/elections/map/<string:election_type>', method=['POST'])
+@app.route('/elections/map/<election_type>', method=['POST'])
 def election_map_type(election_type):
     '''
         Open the existing file in the local and generate data
@@ -67,7 +67,7 @@ def election_map_type(election_type):
             _ = pipeline.pipeline_president_2024(raw_data, is_started=IS_STARTED, is_running=is_running)
         elif election_type == 'party':
             _ = pipeline.pipeline_legislator_party_2024(raw_data, is_started=IS_STARTED, is_running=is_running)
-        elif election_type == 'special':
+        elif election_type == 'indigeous':
             _ = pipeline.pipeline_legislator_indigeous_2024(raw_data, is_started=IS_STARTED, is_running=is_running)
         elif election_type == 'constituency':
             _ = pipeline.pipeline_legislator_constituency_2024(raw_data, is_started=IS_STARTED, is_running=is_running)
