@@ -4,10 +4,11 @@ import data_handlers.templates as tp
 import data_handlers.v2.converter as converter
 
 from data_handlers.helpers import helper
+import copy
 
 def search_constituency_candidate(countyCode:str, areaCode: str, candNo: str):
     candInfo = hp.mapping_constituency_cand.get(countyCode,{}).get(areaCode,{}).get(candNo, None)
-    return candInfo
+    return copy.deepcopy(candInfo)
 
 def generate_v2_president(raw_data, mapping_json, year: str):
     election_type = 'president'
@@ -174,13 +175,8 @@ def generate_v2_district_legislator(raw_data, year: str):
                 ).to_json()
                 
                 candInfo = search_constituency_candidate(countyCode, areaCode.zfill(2), str(candNo))
-
-                ### debug
-                if countyCode=='10007' or countyCode=='10021' or countyCode=='10009':
-                    print(f'{countyCode}, {areaCode.zfill(2)}, {candNo}: get {candInfo}')
-
                 if candInfo:
-                    person_template['name'] = candInfo.get('person', None)
+                    person_template['name']  = candInfo.get('person', None)
                     person_template['party'] = candInfo.get('party', None)
                 
                 v2_area_template['candidates'].append(person_template)
