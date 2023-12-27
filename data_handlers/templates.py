@@ -20,8 +20,8 @@ Description
     The skeleton template of each json file. For example,
 '''
 class CountryTemplate:
-    def __init__(self, updateAt: str='', is_running: bool=False, is_started: bool=False, summary: dict={}, districts: list=[]):
-        self.updateAt   = updateAt
+    def __init__(self, updatedAt: str='', is_running: bool=False, is_started: bool=False, summary: dict={}, districts: list=[]):
+        self.updatedAt   = updatedAt
         self.is_running = is_running
         self.is_started = is_started
         self.summary    = copy.deepcopy(summary)
@@ -30,8 +30,8 @@ class CountryTemplate:
         return copy.deepcopy(vars(self))
 
 class ConstituencyTemplate:
-    def __init__(self, updateAt: str='', is_running: bool=False, is_started: bool=False, districts: list=[]):
-        self.updateAt   = updateAt
+    def __init__(self, updatedAt: str='', is_running: bool=False, is_started: bool=False, districts: list=[]):
+        self.updatedAt   = updatedAt
         self.is_running = is_running
         self.is_started = is_started
         self.districts  = copy.deepcopy(districts) #You need to append ConstituencyDistrictTemplate
@@ -39,8 +39,8 @@ class ConstituencyTemplate:
         return copy.deepcopy(vars(self))
 
 class CountyTemplate:
-    def __init__(self, updateAt: str='', is_running: bool=False, is_started: bool=False, districts: list=[]):
-        self.updateAt   = updateAt
+    def __init__(self, updatedAt: str='', is_running: bool=False, is_started: bool=False, districts: list=[]):
+        self.updatedAt   = updatedAt
         self.is_running = is_running
         self.is_started = is_started
         self.districts  = copy.deepcopy(districts) #You need to append DistrictTemplate
@@ -48,8 +48,8 @@ class CountyTemplate:
         return copy.deepcopy(vars(self))
 
 class TownTemplate:
-    def __init__(self, updateAt: str='', is_running: bool=False, is_started: bool=False, districts: list=[]):
-        self.updateAt = updateAt
+    def __init__(self, updatedAt: str='', is_running: bool=False, is_started: bool=False, districts: list=[]):
+        self.updatedAt = updatedAt
         self.is_running = is_running
         self.is_started = is_started
         self.districts = copy.deepcopy(districts) #You need to append DistrictTemplate, content the data of villages
@@ -197,7 +197,7 @@ class ErrorTemplate:
 '''
 class V2Template:
     def __init__(self, updateAt: str='', year: str='', type: str='', title: str='', version: str=''):
-        self.updateAt   = updateAt
+        self.updatedAt   = updateAt
         self.year = year
         self.type = type
         self.title    = title

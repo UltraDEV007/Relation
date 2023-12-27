@@ -11,23 +11,19 @@ from tools.uploadGCS import upload_blob, save_file, upload_multiple_test
 from datetime import datetime
 import time
 
-def pipeline_map_2024(raw_data, final_A=None, is_started: bool=True, is_running: bool=False):
+def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False):
     result = True
-    
-    ### If final_A exist, write the seats result into mapping file
-    if final_A!=None:
-        parser.parse_seat(final_A, hp.mapping_party_seat) ### 將席次統計結果寫入對照表
 
     ### Generate data for president
-    # prev_time = time.time()
-    # result = pipeline_president_2024(
-    #     raw_data, 
-    #     is_started = is_started,
-    #     is_running = is_running
-    # )
-    # cur_time = time.time()
-    # exe_time = round(cur_time-prev_time, 2)
-    # print(f'pipeline for president costed {exe_time} sec, is_running={is_running}')
+    prev_time = time.time()
+    result = pipeline_president_2024(
+        raw_data, 
+        is_started = is_started,
+        is_running = is_running
+    )
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'pipeline for president costed {exe_time} sec, is_running={is_running}')
 
     ### Generate data for legislator
     if is_running == False:

@@ -14,7 +14,7 @@ def generate_country_json(preprocessing_data, is_running, is_started , helper=hp
     '''
     ### Categorize the original data, and save it in country template
     country_json = tp.CountryTemplate(
-        updateAt = preprocessing_data['updateAt'],
+        updatedAt  = preprocessing_data['updateAt'],
         is_running = is_running,
         is_started = is_started
     ).to_json()
@@ -83,7 +83,7 @@ def generate_county_json(preprocessing_data, is_running, is_started, helper=hp.h
 
         ### Transform the data
         county_json = tp.CountyTemplate(
-            updateAt   = updateAt,
+            updatedAt  = updateAt,
             is_running = is_running,
             is_started = is_started
         ).to_json()
@@ -147,7 +147,7 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=hp.he
             continue
         filename = f'{county_code}{town_code}.json'
         vill_json = tp.TownTemplate(
-            updateAt = updateAt,
+            updatedAt = updateAt,
             is_running = is_running,
             is_started = is_started,
         ).to_json()

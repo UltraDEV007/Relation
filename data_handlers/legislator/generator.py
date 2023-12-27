@@ -24,10 +24,10 @@ def generate_constituency_json(preprocessing_data, is_running, is_started , help
     ### 在每一個行政區(district)下有很多投票所，將這些資料進行整理計算並存到result
     for county_area_code, tbox_data in preprocessing_data['districts'].items():
         constituency_json = tp.ConstituencyTemplate(
+            updatedAt  = preprocessing_data['updateAt'],
             is_running = is_running,
-            is_started = is_started
+            is_started = is_started,
         ).to_json()
-        constituency_json['updateAt'] = preprocessing_data['updateAt']
         
         ### 當為全省(台灣省,福建省)資料和無地區資料時不處理
         county_code = county_area_code[:hp.COUNTY_CODE_LENGTH]
@@ -83,10 +83,10 @@ def generate_country_json(preprocessing_data, is_running, is_started , election_
     ### Categorize the original data, and save it in country template
     preprocessing_data = copy.deepcopy(preprocessing_data)
     country_json = tp.CountryTemplate(
+        updatedAt  = preprocessing_data['updateAt'],
         is_running = is_running,
-        is_started = is_started
+        is_started = is_started,
     ).to_json()
-    country_json['updateAt'] = preprocessing_data['updateAt']
 
     ### Generate summary
     preprocessing_districts = preprocessing_data['districts']
@@ -152,7 +152,7 @@ def generate_county_json(preprocessing_data, is_running, is_started, election_ty
 
         ### Transform the data
         county_json = tp.CountyTemplate(
-            updateAt   = updateAt,
+            updatedAt   = updateAt,
             is_running = is_running,
             is_started = is_started
         ).to_json()
@@ -207,7 +207,7 @@ def generate_town_json(town_data, updateAt, is_running, is_started, election_typ
             continue
         filename = f'{county_code}{town_code}.json'
         vill_json = tp.TownTemplate(
-            updateAt = updateAt,
+            updatedAt = updateAt,
             is_running = is_running,
             is_started = is_started,
         ).to_json()

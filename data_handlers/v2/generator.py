@@ -9,11 +9,11 @@ def generate_v2_president(raw_data, mapping_json, year: str):
     election_type = 'president'
     election_data = raw_data[helper['president']]
     v2Template = tp.V2Template(
-        updateAt = raw_data[helper['START_TIME']],
-        year     = year,
-        type     = election_type,
-        title    = '正副總統選舉',
-        version  = 'v2'
+        updatedAt = raw_data[helper['START_TIME']],
+        year      = year,
+        type      = election_type,
+        title     = '正副總統選舉',
+        version   = 'v2'
     ).to_json()
 
     for data in election_data:

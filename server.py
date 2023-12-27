@@ -11,6 +11,9 @@ from councilMember import gen_councilMember, parse_cec_council
 from election import factcheck_data, election2024, politics_dump
 from data_export import president2024_realtime
 
+import data_handlers.helpers as hp
+import data_handlers.parser as parser
+
 from data_handlers import pipeline
 
 app = Flask(__name__)
@@ -30,10 +33,12 @@ def election_map_2024():
     #         # TODO: Parse election_data and store
     #         preprocessing_data = preprocessor.parse_president_cec(raw_data)
     if IS_STARTED:
-        raw_data = request_cec('running.json')
+        raw_data = request_cec('final.json')
         final_A  = request_cec('final_A.json')
+        if final_A:
+            parser.parse_seat(final_A, hp.mapping_party_seat) ### 將席次統計結果寫入對照表
         if raw_data:
-            result = pipeline.pipeline_map_2024(raw_data, final_A, is_started = IS_STARTED, is_running = True)
+            result = pipeline.pipeline_map_2024(raw_data, final_A, is_started = IS_STARTED, is_running = False)
             if result == False:
                 print('Running pipeline 2024 failed.')
             else:
@@ -47,6 +52,9 @@ def election_v2_2024():
     '''
     if IS_STARTED:
         raw_data = request_cec('running.json')
+        final_A   = request_cec('final_A.json')
+        if final_A:
+            parser.parse_seat(final_A, hp.mapping_party_seat)
         if raw_data:
             result = pipeline.pipeline_v2(raw_data)
             if result == False:
