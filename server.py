@@ -43,7 +43,7 @@ def election_map_2024():
 
     return "ok"
 
-@app.route('/elections/cec/fetch', method=['POST'])
+@app.route('/elections/cec/fetch', methods=['POST'])
 def cec_fetch():
     '''
         Fetch CEC data only
@@ -56,7 +56,7 @@ def cec_fetch():
             parser.parse_seat(seats_data, hp.mapping_party_seat)
     return "ok"
 
-@app.route('/elections/map/<election_type>', method=['POST'])
+@app.route('/elections/map/<election_type>', methods=['POST'])
 def election_map_type(election_type):
     '''
         Open the existing file in the local and generate data
