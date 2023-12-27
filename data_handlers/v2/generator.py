@@ -173,7 +173,7 @@ def generate_v2_district_legislator(raw_data, year: str):
                     tksRate    = round((tks/total_tks)*100, hp.ROUND_DECIMAL) if total_tks!=0 else 0
                 ).to_json()
                 
-                candInfo = search_constituency_candidate(countyCode, areaCode, candNo)
+                candInfo = search_constituency_candidate(countyCode, areaCode.zfill(2), str(candNo))
                 if candInfo:
                     person_template['name'] = candInfo.get('person', None)
                     person_template['party'] = candInfo.get('party', None)
