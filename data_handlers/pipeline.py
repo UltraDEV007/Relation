@@ -225,7 +225,12 @@ def pipeline_v2(raw_data, seats_data, year:str):
     # Plain 
     gql_plain_indigeous = query.gql2json(gql_endpoint, query.gql_plainIndigeous_2024)
     mapping_plain_indigeous = v2_adapter.adapter_indigeous_v2(gql_plain_indigeous)
-    v2_plain_indigeous = v2_generator.generate_v2_special_legislator(raw_data, mapping_plain_indigeous, year)
+    v2_plain_indigeous = v2_generator.generate_v2_special_legislator(
+        raw_data,
+        'legislator-plainIndigenous', 
+        mapping_plain_indigeous, 
+        year
+    )
 
     filename = os.path.join(root_path, 'legislator', 'plainIndigenous','all.json')
     save_file(filename, v2_plain_indigeous)
@@ -234,7 +239,12 @@ def pipeline_v2(raw_data, seats_data, year:str):
     # Mountain
     gql_mountain_indigeous = query.gql2json(gql_endpoint, query.gql_mountainIndigeous_2024)
     mapping_mountain_indigeous = v2_adapter.adapter_indigeous_v2(gql_mountain_indigeous)
-    v2_mountain_indigeous = v2_generator.generate_v2_special_legislator(raw_data, mapping_mountain_indigeous, year)
+    v2_mountain_indigeous = v2_generator.generate_v2_special_legislator(
+        raw_data,
+        'legislator-mountainIndigenous',
+        mapping_mountain_indigeous, 
+        year
+    )
 
     filename = os.path.join(root_path, 'legislator', 'mountainIndigenous','all.json')
     save_file(filename, v2_mountain_indigeous)
