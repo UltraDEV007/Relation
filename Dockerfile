@@ -2,7 +2,6 @@ FROM gcr.io/google.com/cloudsdktool/cloud-sdk:slim
 
 COPY .  /usr/src/app/openrelation-elections
 WORKDIR  /usr/src/app/openrelation-elections
-ENV PORT 8080
 
 ENV MNT_DIR /usr/src/app/gcs
 RUN addgroup user && adduser -h /home/user -D user -G user -s /bin/sh
@@ -14,5 +13,5 @@ RUN apt-get update \
     && pip install --upgrade pip \
     && pip install -r requirements.txt
 
-EXPOSE 8080
+EXPOSE 80
 CMD ["/usr/local/bin/uwsgi", "--ini", "server.ini"]
