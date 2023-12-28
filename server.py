@@ -22,6 +22,29 @@ IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 ### election 2024
+@app.route('/elctions/all/2024', methods=['POST'])
+def election_all_2024():
+    '''
+        Generate both map and v2 data in one batch
+    '''
+    if IS_STARTED:
+        seats_data = request_cec('final_A.json')
+        raw_data, is_running = request_cec_by_type()
+        if seats_data:
+            print('Receive final_A data, write the seats information')
+            parser.parse_seat(seats_data, hp.mapping_party_seat)
+        ### 當raw_data存在時，表示我們目前的資料是最新資料，直接用來跑pipeline
+        if raw_data:
+            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running = is_running, upload=True)
+            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', upload=True)
+        ### 當raw_data不存在時，由於各個選舉種類不一定都能正常產生，所以仍要跑pipeline
+        else:
+            existed_data, is_running = check_existed_cec_file()
+            if existed_data:
+                _ = pipeline.pipeline_map_2024(existed_data, is_started = IS_STARTED, is_running = is_running, upload=True)
+                _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', upload=True)
+    return "ok"
+
 @app.route('/elections/map/2024', methods=['POST'])
 def election_map_2024():
     '''

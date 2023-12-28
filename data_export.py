@@ -8,6 +8,7 @@ from google.cloud import storage
 from datetime import datetime, timezone, timedelta
 
 def president2024_realtime():
+    bucket = os.environ['BUCKET']
     gc = pygsheets.authorize(service_account_env_var = 'GDRIVE_API_CREDENTIALS')
     url = "https://docs.google.com/spreadsheets/d/1Ar9r7j5LN6eCirNnQ5Lkbl4IEw3UaDQMfdBq5b2oDOE/edit#gid=1764492368"
     sht = gc.open_by_url( url )
@@ -67,7 +68,7 @@ def president2024_realtime():
                     result["value"] = presindent2024_cec( cec_data["summary"] )
             print("Replace the mnews data by cec data")
 
-    upload_data('whoareyou-gcs.readr.tw', json.dumps(voting_data, ensure_ascii=False).encode('utf8'), 'application/json', "json/2024homepage.json")
+    upload_data(bucket, json.dumps(voting_data, ensure_ascii=False).encode('utf8'), 'application/json', "json/2024homepage.json")
     return "OK"
 
 def presindent2024_cec( summary, phase = 1 ):
