@@ -54,6 +54,7 @@ districts_mapping = {"臺北市": "taipeiCity", "新北市": "newTaipeiCity", "�
 election_types = {'省長': 'governorProvince', '省議員': 'provinceCouncilMember', '縣市首長': 'mayor', '縣市議員': 'councilMember', '立法委員': 'legislator',
                   '國大代表': 'nationalAssembly', '總統': 'president', '鄉鎮市區長': 'townMayor', '市/區民代表': 'townCouncilMember', '村里長': 'villageRepresentative', }
 upload_configs = {
+                  "real_time": "no-store",
                   "cache_control_short": 'max-age=30',
                   "cache_control": 'max-age=86400',
                   "content_type_json": 'application/json',
