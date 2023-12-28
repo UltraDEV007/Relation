@@ -16,7 +16,6 @@ def check_existed_cec_file():
     if os.path.isfile(cec_filename[0]):
         with open(cec_filename[0]) as f:
             raw_data = json.load(f)
-            return raw_data, 
     else:
         if os.path.isfile(cec_filename[1]):
             with open(cec_filename[1]) as f:
