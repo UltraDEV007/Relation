@@ -39,23 +39,12 @@ def election_all_2024():
         print(f'Time of fetching CEC data is {round(cur_time-prev_time,2)}s, is_running={is_running}')
 
         prev_time = cur_time
-        ### 當raw_data存在時，表示我們目前的資料是最新資料，直接用來跑pipeline
+        ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running = is_running, upload=False)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', upload=False)
-        ### 當raw_data不存在時，由於各個選舉種類不一定都能正常產生，所以仍要跑pipeline
-        else:
-            existed_data, is_running = check_existed_cec_file()
-            if existed_data:
-                _ = pipeline.pipeline_map_2024(existed_data, is_started = IS_STARTED, is_running = is_running, upload=False)
-                _ = pipeline.pipeline_v2(existed_data, seats_data, '2024', upload=False)
-        cur_time = time.time()
-        print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
-
-        prev_time = cur_time
-        upload_multiple('2024', upload_map=True, upload_v2=True)
-        cur_time = time.time()
-        print(f'Time of uploading is {round(cur_time-prev_time,2)}s')
+            print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
+            upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
 
 @app.route('/elections/map/2024', methods=['POST'])
@@ -69,10 +58,8 @@ def election_map_2024():
         if seats_data:
             print('Receive final_A data, write the seats information')
             parser.parse_seat(seats_data, hp.mapping_party_seat)
-        ### 當raw_data存在時，表示我們目前的資料是最新資料，直接用來跑pipeline
         if raw_data:
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running = is_running)
-        ### 當raw_data不存在時，由於各個選舉種類不一定都能正常產生，所以仍要跑pipeline
         else:
             existed_data, is_running = check_existed_cec_file()
             if existed_data:
