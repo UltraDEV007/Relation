@@ -36,7 +36,7 @@ def election_all_2024():
             print('Receive final_A data, write the seats information')
             parser.parse_seat(seats_data, hp.mapping_party_seat)
         cur_time = time.time()
-        print(f'Time of fetching CEC data is {cur_time-prev_time}s, is_running={is_running}')
+        print(f'Time of fetching CEC data is {round(cur_time-prev_time,2)}s, is_running={is_running}')
 
         prev_time = cur_time
         ### 當raw_data存在時，表示我們目前的資料是最新資料，直接用來跑pipeline
@@ -48,14 +48,14 @@ def election_all_2024():
             existed_data, is_running = check_existed_cec_file()
             if existed_data:
                 _ = pipeline.pipeline_map_2024(existed_data, is_started = IS_STARTED, is_running = is_running, upload=False)
-                _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', upload=False)
+                _ = pipeline.pipeline_v2(existed_data, seats_data, '2024', upload=False)
         cur_time = time.time()
-        print(f'Time of map&v2 pipeline is {cur_time-prev_time}s')
+        print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
 
         prev_time = cur_time
         upload_multiple('2024', upload_map=True, upload_v2=True)
         cur_time = time.time()
-        print(f'Time of uploading is {cur_time-prev_time}s')
+        print(f'Time of uploading is {round(cur_time-prev_time,2)}s')
     return "ok"
 
 @app.route('/elections/map/2024', methods=['POST'])
