@@ -71,13 +71,13 @@ def election_map_2024():
             parser.parse_seat(seats_data, hp.mapping_party_seat)
         ### 當raw_data存在時，表示我們目前的資料是最新資料，直接用來跑pipeline
         if raw_data:
-            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running = is_running, upload=True)
+            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running = is_running)
         ### 當raw_data不存在時，由於各個選舉種類不一定都能正常產生，所以仍要跑pipeline
         else:
             existed_data, is_running = check_existed_cec_file()
             if existed_data:
-                _ = pipeline.pipeline_map_2024(existed_data, is_started = IS_STARTED, is_running = is_running, upload=True)
-
+                _ = pipeline.pipeline_map_2024(existed_data, is_started = IS_STARTED, is_running = is_running)
+        upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
 @app.route('/elections/cec/fetch', methods=['POST'])
@@ -121,10 +121,11 @@ def election_v2_2024():
         seats_data = request_cec('final_A.json')
         raw_data, _ = request_cec_by_type()
         if raw_data:
-            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', upload=True)
+            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024')
         else:
             existed_data, _ = check_existed_cec_file()
-            _ = pipeline.pipeline_v2(existed_data, seats_data, '2024', upload=True)
+            _ = pipeline.pipeline_v2(existed_data, seats_data, '2024')
+        upload_multiple('2024', upload_map=False, upload_v2=True)
     return "ok"
 
 @app.route("/election2024_homepage")
