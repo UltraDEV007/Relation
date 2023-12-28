@@ -39,7 +39,8 @@ def election_map_2024():
         ### 當raw_data不存在時，由於各個選舉種類不一定都能正常產生，所以仍要跑pipeline
         else:
             existed_data, is_running = check_existed_cec_file()
-            _ = pipeline.pipeline_map_2024(existed_data, is_started = IS_STARTED, is_running = is_running, upload=True)
+            if existed_data:
+                _ = pipeline.pipeline_map_2024(existed_data, is_started = IS_STARTED, is_running = is_running, upload=True)
 
     return "ok"
 

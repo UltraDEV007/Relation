@@ -96,7 +96,7 @@ def pipeline_v2(raw_data, seats_data, year:str):
 def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False, upload: bool=False):
     '''
         raw_data - running.json or final.json
-        upload   - False:單次上傳(upload_blob), True:批次上傳(upload_multiple)
+        upload   - True:單次上傳(upload_blob), False:批次上傳(upload_multiple)
     '''
     result = True
 
