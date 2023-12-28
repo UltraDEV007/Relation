@@ -210,6 +210,7 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
 def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False, upload=False):
     prev_time = time.time()
     if is_running:
+        print("We don't generate constituency data when file is running.json")
         return False ### We don't deal with constituency data when it's not final.json
     
     ### Check the record execution time
@@ -318,24 +319,25 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
             upload_blob_realtime(filename)
 
     ### Generate town
-    county_codes = list(parsed_county['districts'].keys())
-    updateAt = parsed_county['updateAt']
+    if is_running==False:
+        county_codes = list(parsed_county['districts'].keys())
+        updateAt = parsed_county['updateAt']
 
-    vill_result = []
-    for county_code in county_codes:
-        if county_code in hp.NO_PROCESSING_CODE:
-            continue
-        county_data = parsed_county['districts'].get(county_code, None)
-        town_data   = parser.parse_town(county_code, county_data)
-        vill_data   = lg_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
-        vill_result.append(vill_data)
-    
-    for vill_data in vill_result:
-        for name, value in vill_data.items():
-            filename = os.path.join(root_path, 'town', election_type, name)
-            save_file(filename, value)
-            if upload:
-                upload_blob_realtime(filename)
+        vill_result = []
+        for county_code in county_codes:
+            if county_code in hp.NO_PROCESSING_CODE:
+                continue
+            county_data = parsed_county['districts'].get(county_code, None)
+            town_data   = parser.parse_town(county_code, county_data)
+            vill_data   = lg_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
+            vill_result.append(vill_data)
+        
+        for vill_data in vill_result:
+            for name, value in vill_data.items():
+                filename = os.path.join(root_path, 'town', election_type, name)
+                save_file(filename, value)
+                if upload:
+                    upload_blob_realtime(filename)
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator party costed {exe_time} sec, is_running={is_running}')
