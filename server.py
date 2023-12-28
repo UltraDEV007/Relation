@@ -85,10 +85,10 @@ def election_v2_2024():
         seats_data = request_cec('final_A.json')
         raw_data, _ = request_cec_by_type()
         if raw_data:
-            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024')
+            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', upload=True)
         else:
             existed_data, _ = check_existed_cec_file()
-            _ = pipeline.pipeline_v2(existed_data, seats_data, '2024')
+            _ = pipeline.pipeline_v2(existed_data, seats_data, '2024', upload=True)
     return "ok"
 
 @app.route("/election2024_homepage")
