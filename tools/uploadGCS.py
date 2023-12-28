@@ -9,12 +9,21 @@ BUCKET = os.environ['BUCKET']
 ENV_FOLDER = os.environ['ENV_FOLDER']
 VERSION = os.environ['VERSION']
 
-def upload_multiple_test(year):
+def upload_multiple(year, upload_map: bool=False, upload_v2: bool=False):
+    '''
+        You can call this function to upload folder onto bucket
+    '''
     os.system('gcloud auth activate-service-account --key-file=gcs-key.json')
-    max_age = upload_configs['cache_control_short'] if year == datetime.now().year else upload_configs['cache_control']
-    os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/2024 gs://{BUCKET}/{ENV_FOLDER}/2024 &')
+    max_age = upload_configs['cache_control_short']
+    if upload_map:
+        os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{year} gs://{BUCKET}/{ENV_FOLDER}/2024 &')
+    if upload_v2:
+        os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{VERSION}/{year} gs://{BUCKET}/{ENV_FOLDER}/{VERSION}/{year} &')# vote comparing
 
 def upload_multiple_folders(year):
+    '''
+        You can call this function to upload folder onto bucket, with cache-control
+    '''
     os.system('gcloud auth activate-service-account --key-file=gcs-key.json')
     max_age = upload_configs['cache_control_short'] if year == datetime.now().year else upload_configs['cache_control']
     if IS_TV:
