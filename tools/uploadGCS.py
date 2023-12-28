@@ -16,8 +16,10 @@ def upload_multiple(year, upload_map: bool=False, upload_v2: bool=False):
     os.system('gcloud auth activate-service-account --key-file=gcs-key.json')
     max_age = upload_configs['cache_control_short']
     if upload_map:
+        print('gsutil upload map')
         os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{year} gs://{BUCKET}/{ENV_FOLDER}/2024 &')
     if upload_v2:
+        print('gsutil upload v2')
         os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{VERSION}/{year} gs://{BUCKET}/{ENV_FOLDER}/{VERSION}/{year} &')# vote comparing
 
 def upload_multiple_folders(year):
