@@ -12,12 +12,12 @@ from tools.uploadGCS import upload_blob, save_file, upload_blob_realtime
 from datetime import datetime
 import time
 
-gql_endpoint = os.environ['WHORU_GQL_PROD']
+gql_endpoint = os.environ['GQL_URL']
 
 '''
     V2: pipeline_v2會產生所有V2的資料
 '''
-def pipeline_v2(raw_data, seats_data, year:str):
+def pipeline_v2(raw_data, seats_data, year:str, upload: bool=False):
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
 
     ### Check the record execution time
@@ -32,8 +32,9 @@ def pipeline_v2(raw_data, seats_data, year:str):
 
     filename = os.path.join(root_path, 'president', 'all.json')
     save_file(filename, v2_president)
-    upload_blob_realtime(filename)
-    print('Upload V2 president data successed.')
+    if upload:
+        upload_blob_realtime(filename)
+    print(f'[V2] president data successed. Upload={upload}')
 
     ### Generate the v2 special legislator data(mountainIndigeous and plainIndigeous)
     # Plain 
@@ -48,8 +49,10 @@ def pipeline_v2(raw_data, seats_data, year:str):
 
     filename = os.path.join(root_path, 'legislator', 'plainIndigenous','all.json')
     save_file(filename, v2_plain_indigeous)
-    upload_blob_realtime(filename)
-    print('Upload V2 plain indigeous legislator data successed.')
+    if upload:
+        upload_blob_realtime(filename)
+    print(f'[V2] Plain indigeous legislator data successed. Upload={upload}')
+    
     # Mountain
     gql_mountain_indigeous = query.gql2json(gql_endpoint, query.gql_mountainIndigeous_2024)
     mapping_mountain_indigeous = v2_adapter.adapter_indigeous_v2(gql_mountain_indigeous)
@@ -62,8 +65,9 @@ def pipeline_v2(raw_data, seats_data, year:str):
 
     filename = os.path.join(root_path, 'legislator', 'mountainIndigenous','all.json')
     save_file(filename, v2_mountain_indigeous)
-    upload_blob_realtime(filename)
-    print('Upload V2 mountain indigeous legislator data successed.')
+    if upload:
+        upload_blob_realtime(filename)
+    print(f'[V2] Mountain indigeous legislator data successed. Upload={upload}')
 
     ### Generate the v2 party legislator data
     gql_party = query.gql2json(gql_endpoint, query.gql_party_2024)
@@ -74,8 +78,9 @@ def pipeline_v2(raw_data, seats_data, year:str):
 
     filename = os.path.join(root_path, 'legislator', 'party','all.json')
     save_file(filename, v2_party)
-    upload_blob_realtime(filename)
-    print('Upload V2 party legislator data successed.')
+    if upload:
+        upload_blob_realtime(filename)
+    print(f'[V2] Party legislator data successed. Upload={upload}')
 
     ### Generate the v2 constituency legislator data, you don't need to pass the mapping file
     v2_district = v2_generator.generate_v2_district_legislator(raw_data, year)
@@ -83,8 +88,9 @@ def pipeline_v2(raw_data, seats_data, year:str):
     for districtName, districtData in v2_district.items():
         filename = os.path.join(districtRoot, districtName)
         save_file(filename, districtData)
-        upload_blob_realtime(filename)
-    print('Upload V2 constituency district data successed.')
+        if upload:
+            upload_blob_realtime(filename)
+    print(f'[V2] Constituency district data successed. Upload={upload}')
 
     hp.RECORD_EXECUTION_TIME['v2'] = cec_time
     return True

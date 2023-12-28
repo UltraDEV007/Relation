@@ -4,7 +4,6 @@ import json
 
 CECURL_RF = os.environ.get('CECURL_RF')
 CECURL_GENERAL = os.environ.get('CECURL_GENERAL')
-TEST_MODE = os.environ.get('TEST_MODE', False)
 
 cec_filename = ['final.json', 'running.json']
 cec_legislator = ['final_A.json'] # TODO: How to deal with it?
@@ -57,8 +56,7 @@ def request_cec(filename, secure_mode=False):
         Output:
             received_data   - The received json data
     '''
-    test_url = 'test/' if TEST_MODE else ''
-    url = f"{os.environ['CECURL']}{test_url}{filename}"
+    url = f"{os.environ['CECURL']}{filename}"
     return check_updated_and_save(url, secure_mode)
 
 def request_cec_by_type(type: str = 'general', secure_mode=False):
@@ -73,12 +71,11 @@ def request_cec_by_type(type: str = 'general', secure_mode=False):
             is_running      - False: final, True: running
     '''
     cec_url = CECURL_RF if type == 'rf' else CECURL_GENERAL
-    test_url = 'test/' if TEST_MODE else ''
     is_running = False
 
     for idx, filename in enumerate(cec_filename):
         is_running = True if idx==(len(cec_filename))-1 else False
-        data_url = f"{cec_url}{test_url}{filename}"
+        data_url = f"{cec_url}{filename}"
         received_data = check_updated_and_save(data_url, secure_mode)
         if received_data:
             return received_data, is_running
