@@ -83,7 +83,7 @@ def election_v2_2024():
     '''
     if IS_STARTED:
         seats_data = request_cec('final_A.json')
-        raw_data, is_running = request_cec_by_type()
+        raw_data, _ = request_cec_by_type()
         if raw_data:
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024')
         else:
