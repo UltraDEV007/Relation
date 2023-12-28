@@ -16,6 +16,7 @@ import data_handlers.parser as parser
 
 from data_handlers import pipeline
 import time
+import copy
 
 app = Flask(__name__)
 
@@ -29,6 +30,7 @@ def election_all_2024():
         Generate both map and v2 data in one batch
     '''
     if IS_STARTED:
+        hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         prev_time = time.time()
         seats_data = request_cec('final_A.json')
         raw_data, is_running = request_cec_by_type()
@@ -43,6 +45,7 @@ def election_all_2024():
         if raw_data:
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running = is_running, upload=False)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', upload=False)
+            cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
             upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
@@ -53,6 +56,7 @@ def election_map_2024():
         Generate result for presidents and vice presidents election
     '''
     if IS_STARTED:
+        hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         seats_data = request_cec('final_A.json')
         raw_data, is_running = request_cec_by_type()
         if seats_data:
@@ -73,6 +77,7 @@ def cec_fetch():
         Fetch CEC data only
     '''
     if IS_STARTED:
+        hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         seats_data = request_cec('final_A.json')
         _, _ = request_cec_by_type()
         if seats_data:

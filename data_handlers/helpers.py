@@ -131,6 +131,7 @@ path = os.path.join(root, 'mapping_constituency_cand.json')
 mapping_constituency_cand = open_file(path)
 
 path = os.path.join(root, 'mapping_party_seat.json')
+mapping_party_seat_init = open_file(path) ### Used to initialize the seat data
 mapping_party_seat = open_file(path)
 
 path = os.path.join(root, 'mapping_nickname.json')
