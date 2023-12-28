@@ -4,26 +4,32 @@ import json
 
 CECURL_RF = os.environ.get('CECURL_RF')
 CECURL_GENERAL = os.environ.get('CECURL_GENERAL')
+TEST_MODE = os.environ.get('TEST_MODE', False)
 
-CECURL_2024 = os.environ.get('CECURL_2024')
+cec_filename = ['final.json', 'running.json']
+cec_legislator = ['final_A.json'] # TODO: How to deal with it?
 
-def check_cec_2024():
-    filename = "running.json"
-    url = f"{CECURL_2024}{filename}"
-    
-    ### We disable SSL certificate authentication here...but it might need...
-    r = requests.get(url=url, auth=(os.environ['USERNAME_2024'], os.environ['PASSWD_2024']), verify=False)
-    try:
-        r.raise_for_status()
-    except requests.exceptions.HTTPError:
-        print(f"Couldn't get CEC data from {url}")
-        return
-    new_data = json.loads(r.text)
-    return new_data
+def check_existed_cec_file():
+    raw_data = None
+    is_running = False
 
-def check_updated_and_save(url):
+    ### check final.json
+    if os.path.isfile(cec_filename[0]):
+        with open(cec_filename[0]) as f:
+            raw_data = json.load(f)
+    else:
+        if os.path.isfile(cec_filename[1]):
+            with open(cec_filename[1]) as f:
+                raw_data = json.load(f)
+                is_running = True
+    return raw_data, is_running
+            
+
+def check_updated_and_save(url, secure_mode=False):
     filename = url.split('/')[-1]
-    r = requests.get(url=url, auth=(os.environ['USERNAME'], os.environ['PASSWD']))
+    
+    # TODO: SSL verify mode, we should guarantee SSL mode and None-SSL mode
+    r = requests.get(url=url, auth=(os.environ['USERNAME'], os.environ['PASSWD']), verify=secure_mode)
     try:
         r.raise_for_status()
     except requests.exceptions.HTTPError:
@@ -38,34 +44,51 @@ def check_updated_and_save(url):
             print('The same CEC data.')
             return
     with open(filename, 'w') as f:
+        print(f'Update data for {filename}')
         json.dump(new_data, f)
     return new_data
 
+def request_cec(filename, secure_mode=False):
+    '''
+        Description:
+            Single operation to check the updating state for filename.
+        Input:
+            filename        - "final.json", "final_A.json", "running.json"
+        Output:
+            received_data   - The received json data
+    '''
+    test_url = 'test/' if TEST_MODE else ''
+    url = f"{os.environ['CECURL']}{test_url}{filename}"
+    return check_updated_and_save(url, secure_mode)
 
-def request_cec(filename):
-    url = f"{os.environ['CECURL']}{filename}"
-    return check_updated_and_save(url)
-
-
-def request_cec_by_type(type: str = 'general'):
+def request_cec_by_type(type: str = 'general', secure_mode=False):
+    '''
+        Description:
+            Batch operation to check the updating state for each json in cec_dataname,
+            need to be careful that the sequence in cec_datatype does matter.
+        Input:
+            type            - It's same currently
+        Output:
+            received_data   - The received json data
+            is_running      - False: final, True: running
+    '''
     cec_url = CECURL_RF if type == 'rf' else CECURL_GENERAL
-    fin_url = f"{cec_url}final.json"
-    run_url = f"{cec_url}running.json"
-    
-    fin_data = check_updated_and_save(fin_url)
-    if fin_data:
-        return fin_data, False
+    test_url = 'test/' if TEST_MODE else ''
+    is_running = False
 
-    run_data = check_updated_and_save(run_url)
-    if run_data:
-        return run_data, True
+    for idx, filename in enumerate(cec_filename):
+        is_running = True if idx==(len(cec_filename))-1 else False
+        data_url = f"{cec_url}{test_url}{filename}"
+        received_data = check_updated_and_save(data_url, secure_mode)
+        if received_data:
+            return received_data, is_running
 
     print("Couldn't get CEC data from either final or running URL.")
     return None, None
 
 
 if __name__ == '__main__':
-    data = request_cec('running.json')
-    data = request_cec('final.json')
-    # data = request_cec()
+    for filename in cec_filename:
+        receive_data = request_cec(filename)
+
     print("done")
