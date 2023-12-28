@@ -2,7 +2,7 @@ aiohttp==3.9.1
 Flask==3.0.0
 gql==3.0.0
 graphql-core==3.2.0
-uWSGI==2.0.21
+uWSGI
 psycopg2-binary==2.9.3
 pygsheets==2.0.5
 urllib3==1.25.3

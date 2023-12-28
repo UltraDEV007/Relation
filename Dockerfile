@@ -13,5 +13,5 @@ RUN apt-get update \
     && pip install --upgrade pip \
     && pip install -r requirements.txt
 
-EXPOSE 80
-CMD ["/usr/local/bin/uwsgi", "--ini", "server.ini"]
+EXPOSE 8080
+CMD ["/usr/src/app/openrelation-elections/venv/bin/uwsgi", "--ini", "server.ini"]
