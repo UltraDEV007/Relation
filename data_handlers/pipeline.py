@@ -12,7 +12,7 @@ from tools.uploadGCS import upload_blob, save_file, upload_blob_realtime
 from datetime import datetime
 import time
 
-gql_endpoint = os.environ['WHORU_GQL_PROD']
+gql_endpoint = os.environ['GQL_URL']
 
 '''
     V2: pipeline_v2會產生所有V2的資料

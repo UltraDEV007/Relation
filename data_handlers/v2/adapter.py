@@ -4,7 +4,7 @@ import os
 import data_handlers.helpers as hp
 import re
 
-gql_endpoint = os.environ['WHORU_GQL_PROD']
+gql_endpoint = os.environ['GQL_URL']
 
 def adapter_president_v2():
     '''
