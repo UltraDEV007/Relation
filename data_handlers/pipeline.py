@@ -144,8 +144,6 @@ def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False, u
     if result==False:
         print("No new party map data generated")
 
-    ### TODO: Upload all the data using gsutil
-
     return result
 
 def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=False, upload=False):
@@ -344,3 +342,17 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
     hp.RECORD_EXECUTION_TIME['map']['party'] = cec_time
     return True
 
+def pipeline_map_seats(raw_data):
+    prev_time = time.time()
+    root = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'seat')
+    result = lg_generator.generate_map_seats(raw_data)
+
+    country_list = ['mountain-indigenous', 'plain-indigenous', 'party', 'all']
+    for election_type, election_data in result.items():
+        if election_type in country_list:
+            filename = os.path.join(root, 'country', election_type, 'country.json')
+            save_file(filename, election_data)
+    cur_time = time.time()
+    exe_time = round(cur_time-prev_time, 2)
+    print(f'[MAP] Map seats costed {exe_time} sec')
+    return True

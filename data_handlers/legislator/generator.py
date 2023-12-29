@@ -334,3 +334,80 @@ def generate_town_json(town_data, updateAt, is_running, is_started, election_typ
             vill_json['districts'].append(district_json)
         result[filename] = vill_json
     return result
+
+def generate_map_seats(raw_data, helper=hp.helper):
+    '''
+    Input:
+        raw_data - running.json or final.json
+    Output:
+        result - [{election_type: seats_data}]
+    '''
+    result = {}
+    all_seats = {}
+    mapping_relationship = {
+        'plain-indigenous': hp.mapping_plain_cand,
+        'mountain-indigenous': hp.mapping_mountain_cand,
+        'party': hp.mapping_party_seat,
+    }
+    ### 先計算山地原住民與平地原住民
+    for election_type in ['plain-indigenous', 'mountain-indigenous']:
+        calc_victors = 0
+        election_data = raw_data[helper[election_type]][0] ### we only take the country data
+        mapping_json = mapping_relationship[election_type]
+        raw_candidates = election_data['candTksInfo']
+        
+        ### Calculate the candidate
+        calc_seats = {}
+        whole_seats = helper[f'{election_type}-allseats']
+        for candidate in raw_candidates:
+            candNo = candidate.get('candNo', hp.DEFAULT_INT)
+            candInfo = mapping_json.get(str(candNo), None)
+            if candInfo == None:
+                continue
+            addVictor = 1 if candidate.get('candVictor', ' ')=='*' else 0
+            calc_victors += addVictor
+            label = candInfo.get('party', '無黨籍及未經政黨推薦')
+            calc_seats[label] = calc_seats.get(label, 0) + addVictor
+        
+        ### Store into template
+        seat_template = tp.SeatTemplate().to_json()
+        for label, seats in calc_seats.items():
+            if label==None:
+                continue
+            seat_checked = tp.SeatCandidateTemplate(label=label, seats=seats).to_json()
+            seat_template['parties'].append(seat_checked)
+            all_seats[label] = all_seats.get(label, 0) + seats
+        seat_unchecked = 0 if (whole_seats-calc_victors)<0 else (whole_seats-calc_victors)
+        seat_unchecked_template = tp.SeatCandidateTemplate(label='開票中 席次尚未確認', seats=seat_unchecked).to_json()
+        seat_template['parties'].append(seat_unchecked_template)
+        result[election_type] = seat_template
+
+    ### 計算不分區立委
+    election_type = 'party'
+    seat_template = tp.SeatTemplate().to_json()
+    whole_seats = helper[f'{election_type}-allseats']
+    mapping_json  = mapping_relationship[election_type]
+    for patyNo, patyData in mapping_json.items():
+        label = patyData.get('name', '無黨籍及未經政黨推薦')
+        seats = patyData.get('seat', 0)
+        seat_checked = tp.SeatCandidateTemplate(label=label, seats=seats).to_json()
+        seat_template['parties'].append(seat_checked)
+        all_seats[label] = all_seats.get(label, 0) + seats
+    result[election_type] = seat_template
+    
+    ### 計算總席次
+    election_type = 'all'
+    seat_template = tp.SeatTemplate().to_json()
+    whole_seats = helper[f'{election_type}-allseats']
+    calc_seats  = 0
+    for label, seats in all_seats.items():
+        if label==None:
+            continue
+        calc_seats += seats
+        seat_checked = tp.SeatCandidateTemplate(label=label, seats=seats).to_json()
+        seat_template['parties'].append(seat_checked)
+    seat_unchecked = 0 if (whole_seats-calc_victors)<0 else (whole_seats-calc_victors)
+    seat_unchecked_template = tp.SeatCandidateTemplate(label='開票中 席次尚未確認', seats=seat_unchecked).to_json()
+    seat_template['parties'].append(seat_unchecked_template)
+    result[election_type] = seat_template
+    return result

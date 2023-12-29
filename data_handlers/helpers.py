@@ -31,6 +31,18 @@ helper = {
         'legislator-party': 'L4',
         'WHORU_WEBSITE_PERSON': 'https://whoareyou.readr.tw/person/',
 
+        ### For seats calculation
+        'normal': 'L1',
+        'plain-indigenous': 'L2',
+        'mountain-indigenous': 'L3',
+        'party': 'L4',
+    
+        'plain-indigenous-allseats': 3,
+        'mountain-indigenous-allseats': 3,
+        'normal-allseats': 7, ### TODO: NEED TO MODIFY
+        'party-allseats': 34,
+        'all-allseats': 113,
+        
         ### 立委資料的統一格式字串及較簡易的KEY
         'plain': 'L2',
         'plainIndigenous': 'L2',
