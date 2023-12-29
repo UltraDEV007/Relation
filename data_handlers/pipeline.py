@@ -247,10 +247,11 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
     
     for election_type in ['mountainIndigenous', 'plainIndigenous']:
         parsed_county = parser.parse_county(raw_data, election_type)
+        upload_folder = 'mountain-indigenous' if election_type == 'mountainIndigenous' else 'plain-indigenous'
 
         ### Generate country
         country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
-        filename = os.path.join(root_path, 'country', election_type, 'country.json')
+        filename = os.path.join(root_path, 'country', upload_folder, 'country.json')
         save_file(filename, country_json)
         if upload:
             upload_blob_realtime(filename)
@@ -258,7 +259,7 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
         ### Generate county
         county_result = lg_generator.generate_county_json(parsed_county, is_running, is_started, election_type)
         for name, county_json in county_result.items():
-            filename = os.path.join(root_path, 'county', election_type, name)
+            filename = os.path.join(root_path, 'county', upload_folder, name)
             save_file(filename, county_json)
             if upload:
                 upload_blob_realtime(filename)
@@ -279,7 +280,7 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
             
             for vill_data in vill_result:
                 for name, value in vill_data.items():
-                    filename = os.path.join(root_path, 'town', election_type, name)
+                    filename = os.path.join(root_path, 'town', upload_folder, name)
                     save_file(filename, value)
                     if upload:
                         upload_blob_realtime(filename)
