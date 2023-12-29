@@ -172,7 +172,7 @@ def upload_data(bucket_name: str, data: str, content_type: str, destination_blob
         data,
         content_type=content_type, client=storage_client)
     blob.content_language = 'zh'
-    blob.cache_control = 'max-age=300,public'
+    blob.cache_control = 'max-age=30,public'
     blob.patch()
 
 if __name__ == "__main__":  
