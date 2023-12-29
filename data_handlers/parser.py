@@ -7,8 +7,8 @@ def parse_county(data, election_type, helper=hp.helper):
     '''
     ### Initialize data
     preprocessing_result = {}
-    updatedAt = datetime.strptime(data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
     preprocessing_result['updateAt'] = updatedAt
     preprocessing_result['districts'] = {}
 
@@ -83,8 +83,8 @@ def parse_constituency_area(data, helper=hp.helper):
     '''
     ### Initialize data
     preprocessing_result = {}
-    updatedAt = datetime.strptime(data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
     preprocessing_result['updateAt'] = updatedAt
     preprocessing_result['districts'] = {}
 

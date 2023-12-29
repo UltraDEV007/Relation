@@ -14,8 +14,8 @@ def generate_v2_president(raw_data, mapping_json, year: str):
     election_type = 'president'
     election_data = raw_data[helper['president']]
 
-    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
 
     v2Template = tp.V2Template(
         updatedAt = updatedAt,
@@ -43,8 +43,8 @@ def generate_v2_special_legislator(raw_data, election_type, mapping_json, year: 
     '''
     election_data = raw_data[helper[election_type]]
 
-    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
     
     v2Template = tp.V2Template(
         updatedAt = updatedAt,
@@ -69,8 +69,8 @@ def generate_v2_party_legislator(raw_data, mapping_json, year: str):
     election_type = 'legislator-party'
     election_data = raw_data[helper[election_type]]
 
-    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
     
     v2Template = tp.V2Template(
         updatedAt = updatedAt,
@@ -109,8 +109,8 @@ def generate_v2_district_legislator(raw_data, year: str):
     election_data = raw_data[helper[election_type]]
     districts_list = list(hp.v2_electionDistricts.keys())
 
-    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
 
     ### categorize the data into hierarchy, county_code->area_code->candNo
     hierarchy = {}
