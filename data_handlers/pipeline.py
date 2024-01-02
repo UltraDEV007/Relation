@@ -217,11 +217,10 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
 
     ### Generate county data
     parsed_county = parser.parse_county(raw_data, election_type='normal')
-    generated_county_json = lg_generator.generate_county_json(
+    generated_county_json = lg_generator.generate_constituency_county_json(
         preprocessing_data = parsed_county,
         is_running = is_running,
         is_started = is_started,
-        election_type = election_type,
     )
 
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'county', 'normal')
