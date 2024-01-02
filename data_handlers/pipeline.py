@@ -207,20 +207,38 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
 
 def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False, upload=False):
     prev_time = time.time()
-    if is_running:
-        print("We don't generate constituency data when file is running.json")
-        return False ### We don't deal with constituency data when it's not final.json
     
     ### Check the record execution time
+    election_type = 'normal'
     cec_time    = int(raw_data['ST'])
     record_time = hp.RECORD_EXECUTION_TIME['map']['constituency']
     if cec_time <= record_time:
         return False
 
-    ### Generate the data for constituency
+    ### Generate county data
+    parsed_county = parser.parse_county(raw_data, election_type='normal')
+    generated_county_json = lg_generator.generate_county_json(
+        preprocessing_data = parsed_county,
+        is_running = is_running,
+        is_started = is_started,
+        election_type = election_type,
+    )
+
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'county', 'normal')
+    for county_code, county_json in generated_county_json.items():
+        filename = os.path.join(root_path, 'county', county_code)
+        save_file(filename, county_json)
+        if upload:
+            upload_blob_realtime(filename)
+
+    ### Generate town data
+    if is_running:
+        print("We don't generate constituency town data when file is running.json")
+        return False ### We don't deal with constituency data when it's not final.json
+    
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'constituency', 'normal')
     parsed_area = parser.parse_constituency_area(raw_data)
-    constituency_result = lg_generator.generate_constituency_json(parsed_area, is_running, is_started)
+    constituency_result = lg_generator.generate_constituency_town_json(parsed_area, is_running, is_started)
     for name, data in constituency_result.items():
         filename = os.path.join(root_path, name)
         save_file(filename, data)

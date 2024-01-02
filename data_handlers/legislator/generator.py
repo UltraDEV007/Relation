@@ -7,7 +7,57 @@ import data_handlers.legislator.converter as converter
 '''
     Generate constituency(區域立委)
 '''
-def generate_constituency_json(preprocessing_data, is_running, is_started , helper=hp.helper):
+def generate_constituency_county_json(preprocessing_data, is_running, is_started, helper=hp.helper):
+    '''
+    Input:
+        preprocessing_data - cec constituency data(L1) after preprocessing county
+        helper             - helper file which helps you map the name in raw cec
+    Output:
+        result - {f'{county_code}.json': constituency_json}
+    '''
+    result = {}
+    updatedAt = preprocessing_data.get('updateAt','')
+    for county_code, county_data in preprocessing_data['districts'].items(): 
+        if county_code in hp.NO_PROCESSING_CODE:
+            continue
+        ### 當county_data只有一個時，表示只有第01選區
+        only_one_area = True if len(county_data)==1 else False
+        constituency_json = tp.ConstituencyTemplate(
+            updatedAt = updatedAt,
+            is_running = is_running,
+            is_started = is_started,
+        ).to_json()
+
+        ### 存入districts資料
+        for area_data in county_data:
+            area_code = area_data.get('areaCode', hp.DEFAULT_AREACODE)
+            if only_one_area:
+                area_code = '01'
+            else:
+                if area_code == hp.DEFAULT_AREACODE:
+                    continue
+            area_nickname = hp.mapping_nickname.get(f'{county_code}{area_code}', '')
+            city_name = hp.mapping_city[county_code]
+            region = f'{city_name} 第{area_code}選區'
+            profRate = area_data.get('profRate', hp.DEFAULT_FLOAT)
+            raw_candidates = area_data.get('candTksInfo', None)
+            district_tmp = tp.ConstituencyDistrictTemplate(
+                region = region,          
+                area_nickname = area_nickname,
+                county_code = county_code,
+                area = area_code,
+                town = None,
+                vill = None,
+                type_str = "normal",
+                profRate = profRate
+            ).to_json()
+            district_tmp['candidates'] = converter.convert_constituency_candidate(raw_candidates, county_code, area_code)
+            
+            constituency_json['districts'].append(district_tmp)
+        result[f'{county_code}.json'] = constituency_json
+    return result
+
+def generate_constituency_town_json(preprocessing_data, is_running, is_started , helper=hp.helper):
     '''
     Input:
         preprocessing_data - cec constituency data(L1) after preprocessing area
