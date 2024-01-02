@@ -39,7 +39,7 @@ helper = {
     
         'plain-indigenous-allseats': 3,
         'mountain-indigenous-allseats': 3,
-        'normal-allseats': 7, ### TODO: NEED TO MODIFY
+        'normal-allseats': 73, ### TODO: NEED TO MODIFY
         'party-allseats': 34,
         'all-allseats': 113,
         
