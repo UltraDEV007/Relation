@@ -43,8 +43,8 @@ def election_all_2024():
         prev_time = cur_time
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
-            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running = is_running, upload=False)
-            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', upload=False)
+            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
+            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
             _ = pipeline.pipeline_map_seats(raw_data)
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')

@@ -17,7 +17,7 @@ gql_endpoint = os.environ['GQL_URL']
 '''
     V2: pipeline_v2會產生所有V2的資料
 '''
-def pipeline_v2(raw_data, seats_data, year:str, upload: bool=False):
+def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False, upload: bool=False):
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
 
     ### Check the record execution time
@@ -83,7 +83,7 @@ def pipeline_v2(raw_data, seats_data, year:str, upload: bool=False):
     print(f'[V2] Party legislator data successed. Upload={upload}')
 
     ### Generate the v2 constituency legislator data, you don't need to pass the mapping file
-    v2_district = v2_generator.generate_v2_district_legislator(raw_data, year)
+    v2_district = v2_generator.generate_v2_district_legislator(raw_data, is_running, year)
     districtRoot = os.path.join(root_path, 'legislator', 'district')
     for districtName, districtData in v2_district.items():
         filename = os.path.join(districtRoot, districtName)
@@ -226,7 +226,7 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
 
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'county', 'normal')
     for county_code, county_json in generated_county_json.items():
-        filename = os.path.join(root_path, 'county', county_code)
+        filename = os.path.join(root_path, county_code)
         save_file(filename, county_json)
         if upload:
             upload_blob_realtime(filename)

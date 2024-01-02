@@ -91,7 +91,7 @@ def generate_v2_party_legislator(raw_data, mapping_json, year: str):
             break
     return v2Template
 
-def generate_v2_district_legislator(raw_data, year: str):
+def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
     '''
     Description:
         在區域立委中會產出各縣市的json檔案，這個函式最後會回傳的不是單份json，而是檔案名稱與資料的字典。
@@ -162,7 +162,9 @@ def generate_v2_district_legislator(raw_data, year: str):
                 if tks > max_tks:
                     max_tks, winner = tks, candNo
                 total_tks += tks
-            areaData[winner]['candVictor'] = True
+            ### mark the winner when is final.json
+            if is_running==False:
+                areaData[winner]['candVictor'] = True
             
             for candNo, candData in areaData.items():
                 tks = candData.get('tks', hp.DEFAULT_INT)
