@@ -385,7 +385,7 @@ def generate_town_json(town_data, updateAt, is_running, is_started, election_typ
         result[filename] = vill_json
     return result
 
-def generate_map_seats(raw_data, helper=hp.helper):
+def generate_map_country_seats(raw_data, helper=hp.helper):
     '''
     Input:
         raw_data - running.json or final.json
@@ -460,4 +460,40 @@ def generate_map_seats(raw_data, helper=hp.helper):
     seat_unchecked_template = tp.SeatCandidateTemplate(label='開票中 席次尚未確認', seats=seat_unchecked).to_json()
     seat_template['parties'].append(seat_unchecked_template)
     result[election_type] = seat_template
+    return result
+
+def generate_map_normal_seats(raw_data, helper=hp.helper):
+    '''
+    依照縣市(county)產生區域立委的席次表
+    '''
+    result = {}
+    parsed_county = parser.parse_county(raw_data, election_type='normal')
+    for county_code, county_data in parsed_county['districts'].items():
+        ### calculate the winner number of each party for the county
+        seat_template = tp.SeatTemplate().to_json()
+        seat_table = {}
+        only_one_area = True if len(county_data)==1 else False
+        for area_data in county_data:
+            area_code = area_data.get('areaCode', hp.DEFAULT_AREACODE)
+            if only_one_area==True:
+                area_code = '01'
+            area_candidates = hp.mapping_constituency_cand.get(county_code, {}).get(area_code, None)
+            raw_candidates = area_data.get('candTksInfo', hp.DEFAULT_LIST)
+            for candidate in raw_candidates:
+                candNo    = candidate.get('candNo', hp.DEFAULT_INT)
+                is_winner = (candidate.get('candVictor')=='*')
+                if is_winner:
+                    party = area_candidates.get(str(candNo), {}).get('party', '無黨籍及未經政黨推薦')
+                    if party == None:
+                        party = '無黨籍及未經政黨推薦'
+                    seat_table[party] = seat_table.get(party, 0) + 1
+        seat_candidates_num = 0
+        for party, seats in seat_table.items():
+            seat_candidates_num += seats
+            seat_cand = tp.SeatCandidateTemplate(label=party, seats=seats).to_json()
+            seat_template['parties'].append(seat_cand)
+        area_candidates_num =  len(hp.mapping_constituency_cand.get(county_code, {}))
+        seat_cand = tp.SeatCandidateTemplate(label='開票中 席次尚未確認', seats=(area_candidates_num - seat_candidates_num)).to_json()
+        seat_template['parties'].append(seat_cand)
+        result[f'{county_code}.json'] = seat_template
     return result

@@ -4,7 +4,6 @@ import data_handlers.templates as tp
 import data_handlers.v2.converter as converter
 
 from data_handlers.helpers import helper
-import copy
 
 def search_constituency_candidate(countyCode:str, areaCode: str, candNo: str):
     candInfo = hp.mapping_constituency_cand.get(countyCode,{}).get(areaCode,{}).get(candNo, None)

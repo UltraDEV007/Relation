@@ -102,7 +102,7 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False, upload: 
 def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False, upload: bool=False):
     '''
         raw_data - running.json or final.json
-        upload   - True:單次上傳(upload_blob), False:批次上傳(upload_multiple)
+        upload   - 是否即時上傳(upload_blob_realtime)
     '''
     result = True
 
@@ -360,14 +360,22 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
 def pipeline_map_seats(raw_data):
     prev_time = time.time()
     root = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'seat')
-    result = lg_generator.generate_map_seats(raw_data)
 
+    ### Generate for country map, and upload immediately
+    result = lg_generator.generate_map_country_seats(raw_data)
     country_list = ['mountain-indigenous', 'plain-indigenous', 'party', 'all']
     for election_type, election_data in result.items():
         if election_type in country_list:
             filename = os.path.join(root, 'country', election_type, 'country.json')
             save_file(filename, election_data)
             upload_blob_realtime(filename)
+    
+    ### Generate for county map(only constituency)
+    result = lg_generator.generate_map_normal_seats(raw_data)
+    for county_name, county_data in result.items():
+        filename = os.path.join(root, 'county', 'normal', county_name)
+        save_file(filename, county_data)
+
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Map seats costed {exe_time} sec')
