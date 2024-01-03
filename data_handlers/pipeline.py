@@ -7,12 +7,70 @@ import data_handlers.queries as query
 import data_handlers.v2.adapter as v2_adapter
 import data_handlers.v2.generator as v2_generator
 import data_handlers.helpers as hp
+import data_handlers.templates as tp
 
-from tools.uploadGCS import upload_blob, save_file, upload_blob_realtime
-from datetime import datetime
+from tools.uploadGCS import save_file, upload_blob_realtime
 import time
 
 gql_endpoint = os.environ['GQL_URL']
+
+'''
+    Default: 建立在選舉開始前的預設資料
+'''
+def pipeline_default(updatedAt: str=None, is_running: bool=False, is_started: bool=False):
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024')
+    default_country = tp.getDefaultCountry(updatedAt, is_running, is_started)
+    default_county  = tp.getDefaultCounty(updatedAt, is_running, is_started)
+    default_town    = tp.getDefaultTown(updatedAt, is_running, is_started)
+    default_constituency = tp.getDefaultConstituency(updatedAt, is_running, is_started)
+
+    ### Save default country
+    # For president
+    filename = os.path.join(root_path, 'president', 'map', 'country', 'country.json')
+    save_file(filename, default_country)
+    # For legislators
+    path = os.path.join(root_path, 'legislator', 'map', 'country')
+    for election_type in ['party', 'mountain-indigenous', 'plain-indigenous']:
+        filename = os.path.join(path, election_type, 'country.json')
+        save_file(filename, default_county)
+
+    ### Save default county
+    for county_code in list(hp.mapping_city.keys()):
+        if county_code in hp.NO_PROCESSING_CODE:
+            continue
+        # For president
+        filename = os.path.join(root_path, 'president', 'map', 'county', f'{county_code}.json')
+        save_file(filename, default_county)
+        # For legislators
+        path = os.path.join(root_path, 'legislator', 'map', 'county')
+        for election_type in ['party', 'normal', 'mountain-indigenous', 'plain-indigenous']:
+            filename = os.path.join(path, election_type, f'{county_code}.json')
+            save_file(filename, default_county)
+
+    ### Save default town(except constituency)
+    for code in list(hp.mapping_town.keys()):
+        county_code = code[:hp.COUNTY_CODE_LENGTH]
+        town_code   = code[hp.COUNTY_CODE_LENGTH:]
+        if (town_code[-1]!='0') or (town_code==hp.DEFAULT_TOWNCODE) or (county_code in hp.NO_PROCESSING_CODE):
+            continue
+        # For president
+        filename = os.path.join(root_path, 'president', 'map', 'town', f'{code}.json')
+        save_file(filename, default_town)
+        # For legislators
+        path = os.path.join(root_path, 'legislator', 'map', 'town')
+        for election_type in ['party', 'mountain-indigenous', 'plain-indigenous']:
+            filename = os.path.join(path, election_type, f'{code}.json')
+            save_file(filename, default_town)
+    
+    ### Save default area(constituency)
+    path = os.path.join(root_path, 'legislator', 'map', 'constituency', 'normal')
+    for county_code, area_data in hp.mapping_constituency_cand.items():
+        for area_code, _ in area_data.items():
+            filename = os.path.join(path, f'{county_code}{area_code}.json')
+            save_file(filename, default_constituency)
+
+    return "ok"
+
 
 '''
     V2: pipeline_v2會產生所有V2的資料
