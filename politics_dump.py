@@ -80,9 +80,9 @@ def landing():
             area_hash[area[2]].append({ "id": area[0], "order": order, "name": area[1], "city": area[2], "candidates": [] })
                 
         #fetch politics
-        dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
+        dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND "PersonElection"."status" = 'active' AND "PersonElection"."election" = {} GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"]))
         if multiple_election == True and len(election["id"]) == 2:
-            dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "Politic"."status" = 'verified' AND ("PersonElection"."election" = {} OR "PersonElection"."election" = {}) GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"][0]), str(election["id"][1]))
+            dump_query = """SELECT count(person), "PersonElection"."person_id", "ElectionArea"."name"  FROM "Politic", "PersonElection", "ElectionArea" WHERE "ElectionArea"."id" = "PersonElection"."electoral_district" AND "Politic"."person" = "PersonElection"."id" AND "PersonElection"."status" = 'active' AND "Politic"."status" = 'verified' AND ("PersonElection"."election" = {} OR "PersonElection"."election" = {}) GROUP BY "PersonElection"."person_id", "ElectionArea"."name";""".format(str(election["id"][0]), str(election["id"][1]))
         cursor.execute(dump_query)
         all_politics = cursor.fetchall()
         dist_politic = {}
@@ -95,9 +95,9 @@ def landing():
                 dist_amount[count[2]] = 1
         result[election["total"]] = len(dist_politic)
         #fetch all candidates
-        get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
+        get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE "Election".id = {} AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."status" = 'active' AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"]))
         if multiple_election == True and len(election["id"]) == 2:
-            get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE ("Election".id = {} OR "Election".id = {}) AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"][0]), str(election["id"][1]))
+            get_candidates = """SELECT "Person"."birth_date_year", "PersonElection"."person_id", "Person"."name", "ElectionArea"."name" FROM "Person", "Election", "PersonElection", "ElectionArea" WHERE ("Election".id = {} OR "Election".id = {}) AND "ElectionArea"."id" = "PersonElection"."electoral_district" AND "PersonElection"."status" = 'active' AND "PersonElection"."election" = "Election"."id" AND "Person".id = "PersonElection"."person_id";""".format(str(election["id"][0]), str(election["id"][1]))
         cursor.execute(get_candidates)
         all_candidates = cursor.fetchall()
         area_candidates = {}
