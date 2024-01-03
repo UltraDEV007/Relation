@@ -26,12 +26,21 @@ def president2024_realtime():
     readr_data = {}
     tz = timezone(timedelta(hours=+8))
     now = datetime.now(tz)
-    date_time = now.strftime("%Y-%m-%d, %H:%M:%S")
+    date_time = now.strftime("%Y-%m-%d, %H:%M")
     voting_data["updateAt"] = date_time
 #    if switch_view == 'T' or get_cec_data == 'T':
-    cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
-    if cec_json.status_code == 200:
-        cec_data = json.loads(cec_json.text)
+    path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map', 'country', 'country.json')
+    if os.path.exists(path):
+        f = open(path)
+        cec_data = json.load(f)
+        print("data from local file")
+        print(cec_data)
+    if "summary" not in cec_data:
+        cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
+        if cec_json.status_code == 200:
+            cec_data = json.loads(cec_json.text)
+
+    if cec_data:
         if "updateAt" in cec_data:
             readr_data["updateAt"] = cec_data["updateAt"]
         else:
@@ -39,8 +48,9 @@ def president2024_realtime():
             
         # upload for pure cec data
         readr_data["title"] = "2024 總統大選即時開票"
-        readr_data["result"] = presindent2024_cec( cec_data["summary"], 2 )
-        upload_data('whoareyou-gcs.readr.tw', json.dumps(readr_data, ensure_ascii=False).encode('utf8'), 'application/json', "json/2024cec_homepage.json")
+        if "summary" in cec_data:
+            readr_data["result"] = presindent2024_cec( cec_data["summary"], 2 )
+            upload_data('whoareyou-gcs.readr.tw', json.dumps(readr_data, ensure_ascii=False).encode('utf8'), 'application/json', "json/2024cec_homepage.json")
 
     if switch_view == 'T':
         print("Getting the final data")
@@ -76,6 +86,8 @@ def presindent2024_cec( summary, phase = 1 ):
     tksRate = []
     candVictor = []
     show_victor = False
+    if "candidates" not in summary:
+        return []
     for candidate in summary["candidates"]:
         if candidate["candNo"] < 4:
             tks.append({candidate["candNo"]: candidate["tks"]})
@@ -172,7 +184,7 @@ def upload_data(bucket_name: str, data: str, content_type: str, destination_blob
         data,
         content_type=content_type, client=storage_client)
     blob.content_language = 'zh'
-    blob.cache_control = 'max-age=300,public'
+    blob.cache_control = 'max-age=30,public'
     blob.patch()
 
 if __name__ == "__main__":  

@@ -7,8 +7,8 @@ def parse_county(data, election_type, helper=hp.helper):
     '''
     ### Initialize data
     preprocessing_result = {}
-    updatedAt = datetime.strptime(data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
     preprocessing_result['updateAt'] = updatedAt
     preprocessing_result['districts'] = {}
 
@@ -20,6 +20,7 @@ def parse_county(data, election_type, helper=hp.helper):
         prvCode  = district.get('prvCode',  hp.DEFAULT_PRVCODE)
         cityCode = district.get('cityCode', hp.DEFAULT_CITYCODE)
         deptCode = district.get('deptCode', hp.DEFAULT_DEPTCODE)
+        areaCode = district.get('areaCode', hp.DEFAULT_AREACODE)
         profRate = district.get('profRate', hp.DEFAULT_PROFRATE)
         tboxNo   = district.get('tboxNo',   hp.DEFAULT_INT)
         
@@ -35,18 +36,36 @@ def parse_county(data, election_type, helper=hp.helper):
             raw_candidates = district.get('patyTksInfo', None)
         else:
             raw_candidates = district.get('candTksInfo', None)
+        ### 在區域立委中，會存在raw_candidates沒有值的情形，需要濾除
+        if raw_candidates == None or len(raw_candidates)==0:
+            continue
 
-        ### store data
-        subLevel = preprocessing_result['districts'].setdefault(county_code, [])
-        deptInfo = {
-            'deptCode': deptCode,
-            'profRate': profRate,
-            'tboxNo':   tboxNo,
-            'voterTurnout': voterTurnout,
-            'eligibleVoters': eligibleVoters,
-            'candTksInfo': raw_candidates
-        }
-        subLevel.append(deptInfo)
+        ### 儲存資料，區域立委需要特別處理
+        if election_type == 'normal':
+            #當deptCode==DEFAULT_DEPTCODE時為某一選區的統整資料，我們只抓該資料
+            if deptCode != hp.DEFAULT_DEPTCODE:
+                continue
+            subLevel = preprocessing_result['districts'].setdefault(county_code, [])
+            deptInfo = {
+                'areaCode': areaCode,
+                'profRate': profRate,
+                'tboxNo':   tboxNo,
+                'voterTurnout': voterTurnout,
+                'eligibleVoters': eligibleVoters,
+                'candTksInfo': raw_candidates,
+            }
+            subLevel.append(deptInfo)
+        else:
+            subLevel = preprocessing_result['districts'].setdefault(county_code, [])
+            deptInfo = {
+                'deptCode': deptCode,
+                'profRate': profRate,
+                'tboxNo':   tboxNo,
+                'voterTurnout': voterTurnout,
+                'eligibleVoters': eligibleVoters,
+                'candTksInfo': raw_candidates
+            }
+            subLevel.append(deptInfo)
     return preprocessing_result
 
 def parse_town(county_code, county_data):
@@ -83,8 +102,8 @@ def parse_constituency_area(data, helper=hp.helper):
     '''
     ### Initialize data
     preprocessing_result = {}
-    updatedAt = datetime.strptime(data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
     preprocessing_result['updateAt'] = updatedAt
     preprocessing_result['districts'] = {}
 

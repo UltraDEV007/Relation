@@ -4,7 +4,6 @@ import data_handlers.templates as tp
 import data_handlers.v2.converter as converter
 
 from data_handlers.helpers import helper
-import copy
 
 def search_constituency_candidate(countyCode:str, areaCode: str, candNo: str):
     candInfo = hp.mapping_constituency_cand.get(countyCode,{}).get(areaCode,{}).get(candNo, None)
@@ -14,8 +13,8 @@ def generate_v2_president(raw_data, mapping_json, year: str):
     election_type = 'president'
     election_data = raw_data[helper['president']]
 
-    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
 
     v2Template = tp.V2Template(
         updatedAt = updatedAt,
@@ -43,8 +42,8 @@ def generate_v2_special_legislator(raw_data, election_type, mapping_json, year: 
     '''
     election_data = raw_data[helper[election_type]]
 
-    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
     
     v2Template = tp.V2Template(
         updatedAt = updatedAt,
@@ -69,8 +68,8 @@ def generate_v2_party_legislator(raw_data, mapping_json, year: str):
     election_type = 'legislator-party'
     election_data = raw_data[helper[election_type]]
 
-    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
     
     v2Template = tp.V2Template(
         updatedAt = updatedAt,
@@ -91,7 +90,7 @@ def generate_v2_party_legislator(raw_data, mapping_json, year: str):
             break
     return v2Template
 
-def generate_v2_district_legislator(raw_data, year: str):
+def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
     '''
     Description:
         在區域立委中會產出各縣市的json檔案，這個函式最後會回傳的不是單份json，而是檔案名稱與資料的字典。
@@ -109,8 +108,8 @@ def generate_v2_district_legislator(raw_data, year: str):
     election_data = raw_data[helper[election_type]]
     districts_list = list(hp.v2_electionDistricts.keys())
 
-    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M%S')
-    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M:%S')}"
+    updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M')
+    updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
 
     ### categorize the data into hierarchy, county_code->area_code->candNo
     hierarchy = {}
@@ -162,7 +161,9 @@ def generate_v2_district_legislator(raw_data, year: str):
                 if tks > max_tks:
                     max_tks, winner = tks, candNo
                 total_tks += tks
-            areaData[winner]['candVictor'] = True
+            ### mark the winner when is final.json
+            if is_running==False:
+                areaData[winner]['candVictor'] = True
             
             for candNo, candData in areaData.items():
                 tks = candData.get('tks', hp.DEFAULT_INT)
