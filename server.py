@@ -30,6 +30,13 @@ def election_all_2024():
         Generate both map and v2 data in one batch
     '''
     if IS_STARTED:
+        ### 當IS_STARTED開始時，我們重新產生DEFAULT的文件
+        if hp.HAS_CREATE_DEFAULT==False:
+            _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
+            _ = pipeline.pipeline_default_seats()
+            upload_multiple('2024', upload_map=True, upload_v2=True)
+            hp.HAS_CREATE_DEFAULT = True
+        
         hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         prev_time = time.time()
         seats_data = request_cec('final_A.json')
@@ -50,7 +57,8 @@ def election_all_2024():
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
             upload_multiple('2024', upload_map=True, upload_v2=True)
     else:
-        _ = pipeline.pipeline_default()
+        _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
+        _ = pipeline.pipeline_default_seats()
         upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
 
@@ -59,8 +67,9 @@ def election_all_default():
     '''
         Test API for creating default json files
     '''
-    _ = pipeline.pipeline_default()
-    upload_multiple('2024', upload_map=True, upload_v2=False)
+    _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
+    _ = pipeline.pipeline_default_seats()
+    upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
 
 @app.route('/elections/cec/fetch', methods=['POST'])

@@ -1,4 +1,5 @@
 import copy
+import data_handlers.helpers as hp
 
 '''
 Description:
@@ -324,3 +325,42 @@ def getDefaultTown(updatedAt: str=None, is_running: bool=False, is_started: bool
         is_started = is_started
     ).to_json()
     return town_json
+
+def getDefaultSeat(election_type: str, area_seats: int=0):
+    seat_template = SeatTemplate().to_json()
+    if election_type == 'all':
+        seat_template['parties'].append(
+            SeatCandidateTemplate(
+                label = '開票中 席次尚未確認',
+                seats = hp.helper['all-allseats'] 
+            ).to_json()
+        )
+    elif election_type == 'mountain-indigenous':
+        seat_template['parties'].append(
+            SeatCandidateTemplate(
+                label = '開票中 席次尚未確認',
+                seats = hp.helper['mountain-indigenous-allseats'] 
+            ).to_json()
+        )
+    elif election_type == 'plain-indigenous':
+        seat_template['parties'].append(
+            SeatCandidateTemplate(
+                label = '開票中 席次尚未確認',
+                seats = hp.helper['plain-indigenous-allseats'] 
+            ).to_json()
+        )
+    elif election_type == 'party':
+        seat_template['parties'].append(
+            SeatCandidateTemplate(
+                label = '開票中 席次尚未確認',
+                seats = hp.helper['party-allseats'] 
+            ).to_json()
+        )
+    elif election_type == 'normal':
+        seat_template['parties'].append(
+            SeatCandidateTemplate(
+                label = '開票中 席次尚未確認',
+                seats = area_seats
+            ).to_json()
+        )
+    return seat_template

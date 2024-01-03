@@ -17,7 +17,7 @@ gql_endpoint = os.environ['GQL_URL']
 '''
     Default: 建立在選舉開始前的預設資料
 '''
-def pipeline_default(updatedAt: str=None, is_running: bool=False, is_started: bool=False):
+def pipeline_default_map(updatedAt: str=None, is_running: bool=False, is_started: bool=False):
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024')
     default_country = tp.getDefaultCountry(updatedAt, is_running, is_started)
     default_county  = tp.getDefaultCounty(updatedAt, is_running, is_started)
@@ -68,9 +68,25 @@ def pipeline_default(updatedAt: str=None, is_running: bool=False, is_started: bo
         for area_code, _ in area_data.items():
             filename = os.path.join(path, f'{county_code}{area_code}.json')
             save_file(filename, default_constituency)
-
     return "ok"
 
+def pipeline_default_seats():
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'seat')
+    
+    ### Save default seats country
+    for election_type in ['all', 'party', 'mountain-indigenous', 'plain-indigenous']:
+        default_seats = tp.getDefaultSeat(election_type=election_type)
+        filename = os.path.join(root_path, 'country', election_type, 'country.json')
+        save_file(filename, default_seats)
+    
+    ### Save default seats county(only for normal)
+    election_type = 'normal'
+    for county_code, area_data in hp.mapping_constituency_cand.items():
+        area_seats = len(area_data)
+        default_seats = tp.getDefaultSeat(election_type=election_type, area_seats=area_seats)
+        filename = os.path.join(root_path, 'county', election_type, f'{county_code}.json')
+        save_file(filename, default_seats)
+    return "ok"
 
 '''
     V2: pipeline_v2會產生所有V2的資料

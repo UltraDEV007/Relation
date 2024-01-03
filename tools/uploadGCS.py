@@ -17,7 +17,7 @@ def upload_multiple(year, upload_map: bool=False, upload_v2: bool=False):
     max_age = upload_configs['cache_control_short']
     if upload_map:
         print('gsutil upload map')
-        os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{year} gs://{BUCKET}/{ENV_FOLDER}/2024 &')
+        os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{year} gs://{BUCKET}/{ENV_FOLDER}/{year} &')
     if upload_v2:
         print('gsutil upload v2')
         os.system(f'gsutil -m -h "Cache-Control: {max_age}" rsync -r {ENV_FOLDER}/{VERSION}/{year} gs://{BUCKET}/{ENV_FOLDER}/{VERSION}/{year} &')# vote comparing
