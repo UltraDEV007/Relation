@@ -29,12 +29,17 @@ def election_all_2024():
     '''
         Generate both map and v2 data in one batch
     '''
+    if IS_STARTED==False:
+        _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
+        _ = pipeline.pipeline_default_seats()
+        upload_multiple('2024', upload_map=True, upload_v2=True)
+        hp.HAS_CREATE_DEFAULT = True
+
     if IS_STARTED:
         ### 當IS_STARTED開始時，我們重新產生DEFAULT的文件
         if hp.HAS_CREATE_DEFAULT==False:
             _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
             _ = pipeline.pipeline_default_seats()
-            upload_multiple('2024', upload_map=True, upload_v2=True)
             hp.HAS_CREATE_DEFAULT = True
         
         hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
@@ -56,10 +61,6 @@ def election_all_2024():
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
             upload_multiple('2024', upload_map=True, upload_v2=True)
-    else:
-        _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
-        _ = pipeline.pipeline_default_seats()
-        upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
 
 @app.route('/elections/2024/default', methods=['POST'])
