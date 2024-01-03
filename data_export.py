@@ -35,7 +35,7 @@ def president2024_realtime():
         cec_data = json.load(f)
         print("data from local file")
         print(cec_data)
-    if "summary" not in cec_data and "candidates" not in cec_data["summary"]:
+    if "summary" not in cec_data:
         cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
         if cec_json.status_code == 200:
             cec_data = json.loads(cec_json.text)
@@ -86,6 +86,8 @@ def presindent2024_cec( summary, phase = 1 ):
     tksRate = []
     candVictor = []
     show_victor = False
+    if "candidates" not in summary:
+        return []
     for candidate in summary["candidates"]:
         if candidate["candNo"] < 4:
             tks.append({candidate["candNo"]: candidate["tks"]})
