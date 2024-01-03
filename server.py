@@ -32,8 +32,7 @@ def election_all_2024():
     if IS_STARTED==False:
         _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
         _ = pipeline.pipeline_default_seats()
-        upload_multiple('2024', upload_map=True, upload_v2=True)
-        hp.HAS_CREATE_DEFAULT = True
+        upload_multiple('2024', upload_map=True, upload_v2=False)
 
     if IS_STARTED:
         ### 當IS_STARTED開始時，我們重新產生DEFAULT的文件
