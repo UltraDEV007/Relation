@@ -31,6 +31,18 @@ helper = {
         'legislator-party': 'L4',
         'WHORU_WEBSITE_PERSON': 'https://whoareyou.readr.tw/person/',
 
+        ### For seats calculation
+        'normal': 'L1',
+        'plain-indigenous': 'L2',
+        'mountain-indigenous': 'L3',
+        'party': 'L4',
+    
+        'plain-indigenous-allseats': 3,
+        'mountain-indigenous-allseats': 3,
+        'normal-allseats': 73, ### TODO: NEED TO MODIFY
+        'party-allseats': 34,
+        'all-allseats': 113,
+        
         ### 立委資料的統一格式字串及較簡易的KEY
         'plain': 'L2',
         'plainIndigenous': 'L2',
@@ -75,6 +87,7 @@ DEFAULT_FLOAT = DEFAULT_PROFRATE = 0.0
 DEFAULT_LIST  = DEFAULT_CANDTKSINFO = []
 DEFAULT_INT   = 0
 ROUND_DECIMAL = 2
+HAS_CREATE_DEFAULT = False
 
 UNKNOWN_CANDIDATE = {
     "name": "未知",
@@ -131,6 +144,7 @@ path = os.path.join(root, 'mapping_constituency_cand.json')
 mapping_constituency_cand = open_file(path)
 
 path = os.path.join(root, 'mapping_party_seat.json')
+mapping_party_seat_init = open_file(path) ### Used to initialize the seat data
 mapping_party_seat = open_file(path)
 
 path = os.path.join(root, 'mapping_nickname.json')
