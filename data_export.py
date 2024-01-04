@@ -30,7 +30,7 @@ def president2024_realtime():
     date_time = now.strftime("%Y-%m-%d, %H:%M")
     voting_data["updateAt"] = date_time
 #    if switch_view == 'T' or get_cec_data == 'T':
-    time.slwwp(20)
+    time.sleep(20)
     path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map', 'country', 'country.json')
     #if os.path.exists(path):
     #    f = open(path, encoding='utf-8')
