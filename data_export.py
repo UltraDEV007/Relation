@@ -31,7 +31,7 @@ def president2024_realtime():
 #    if switch_view == 'T' or get_cec_data == 'T':
     path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map', 'country', 'country.json')
     if os.path.exists(path):
-        f = open(path)
+        f = open(path, encoding='utf-8')
         cec_data = json.load(f)
         print("data from local file")
         print(cec_data)
