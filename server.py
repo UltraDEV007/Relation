@@ -55,9 +55,10 @@ def election_all_2024():
         prev_time = cur_time
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
-            if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
-                _ = pipeline.pipeline_default_map(is_started=IS_STARTED, is_running=False)
-                hp.CREATED_FINAL_DEFAULT = True
+            ### Instead of creating new files, you should open and modify
+            # if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
+            #     _ = pipeline.pipeline_default_map(is_started=IS_STARTED, is_running=False)
+            #     hp.CREATED_FINAL_DEFAULT = True
 
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
