@@ -2,6 +2,7 @@ import os
 import json
 import requests
 import pygsheets
+import time
 from gql.transport.aiohttp import AIOHTTPTransport
 from gql import gql, Client
 from google.cloud import storage
@@ -29,16 +30,16 @@ def president2024_realtime():
     date_time = now.strftime("%Y-%m-%d, %H:%M")
     voting_data["updateAt"] = date_time
 #    if switch_view == 'T' or get_cec_data == 'T':
+    time.sleep(20)
     path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map', 'country', 'country.json')
-    if os.path.exists(path):
-        f = open(path)
-        cec_data = json.load(f)
-        print("data from local file")
-        print(cec_data)
-    if "summary" not in cec_data:
-        cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
-        if cec_json.status_code == 200:
-            cec_data = json.loads(cec_json.text)
+    #if os.path.exists(path):
+    #    f = open(path, encoding='utf-8')
+    #    cec_data = json.load(f)
+    #    print("data from local file")
+    #if "summary" not in cec_data:
+    cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
+    if cec_json.status_code == 200:
+        cec_data = json.loads(cec_json.text)
 
     if cec_data:
         if "updateAt" in cec_data:

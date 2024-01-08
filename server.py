@@ -31,11 +31,9 @@ def election_all_2024():
     '''
     if IS_STARTED:
         ### 當IS_STARTED開始時，我們重新產生DEFAULT的文件
-        if hp.HAS_CREATE_DEFAULT==False:
-            _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
-            _ = pipeline.pipeline_default_seats()
-            upload_multiple('2024', upload_map=True, upload_v2=True)
-            hp.HAS_CREATE_DEFAULT = True
+        if hp.CREATED_START_DEFAULT==False:
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
+            hp.CREATED_START_DEFAULT = True
         
         hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         prev_time = time.time()
@@ -50,19 +48,20 @@ def election_all_2024():
         prev_time = cur_time
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
+            ## Instead of creating new files, you should open and modify
+            if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
+                _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+                hp.CREATED_FINAL_DEFAULT = True
+
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
             _ = pipeline.pipeline_map_seats(raw_data)
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
             upload_multiple('2024', upload_map=True, upload_v2=True)
-    else:
-        _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
-        _ = pipeline.pipeline_default_seats()
-        upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
 
-@app.route('/elections/2024/default', methods=['POST'])
+@app.route('/elections/default/2024', methods=['POST'])
 def election_all_default():
     '''
         Test API for creating default json files
@@ -71,6 +70,12 @@ def election_all_default():
     _ = pipeline.pipeline_default_seats()
     upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
+
+@app.route('/elections/test', methods=['POST'])
+def election_test():
+    _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+    upload_multiple('2024', upload_map=True, upload_v2=True)
+    return 'ok'
 
 @app.route('/elections/cec/fetch', methods=['POST'])
 def cec_fetch():

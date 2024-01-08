@@ -81,11 +81,12 @@ def save_file(dest_filename, data, year=None):
     Note:
         input parameter 'year' will be deprecated in the future.
     '''
-    dirname = os.path.dirname(dest_filename)
-    if len(dirname)>0 and not os.path.exists(dirname):
-        os.makedirs(dirname)
-    with open(dest_filename, 'w', encoding='utf-8') as f:
-        f.write(json.dumps(data, ensure_ascii=False))
+    if data:
+        dirname = os.path.dirname(dest_filename)
+        if len(dirname)>0 and not os.path.exists(dirname):
+            os.makedirs(dirname)
+        with open(dest_filename, 'w', encoding='utf-8') as f:
+            f.write(json.dumps(data, ensure_ascii=False))
 
 def open_file(filename, encoding='utf-8'):
     '''
