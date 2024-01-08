@@ -23,12 +23,6 @@ app = Flask(__name__)
 IS_TV =  os.environ['PROJECT'] == 'tv' 
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
-### Default values for 2024 election
-_ = pipeline.pipeline_default_map(is_started=False)
-_ = pipeline.pipeline_default_seats()
-upload_multiple('2024', upload_map=True, upload_v2=False)
-print('Create the default map jsons')
-
 ### election 2024
 @app.route('/elctions/all/2024', methods=['POST'])
 def election_all_2024():
