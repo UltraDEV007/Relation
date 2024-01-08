@@ -452,7 +452,7 @@ def pipeline_map_seats(raw_data):
 
     ### Generate for all map, and upload immediately
     all_json = lg_generator.generate_map_all_seats(seats_country, seats_normal)
-    filename = os.path.join(root, 'country', 'all', 'all.json')
+    filename = os.path.join(root, 'country', 'all', 'country.json')
     save_file(filename, all_json)
 
     cur_time = time.time()
