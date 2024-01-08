@@ -87,7 +87,7 @@ def pipeline_map_modify(is_running: bool=False, is_started: bool=False):
     for election_type in ['party', 'mountain-indigenous', 'plain-indigenous']:
         filename = os.path.join(path, election_type, 'country.json')
         country_json = open_file(filename)
-        if county_json:
+        if country_json:
             save_file(filename, modify_info(country_json, is_running, is_started))
 
     ### Save default county
