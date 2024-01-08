@@ -29,17 +29,10 @@ def election_all_2024():
     '''
         Generate both map and v2 data in one batch
     '''
-
-    if IS_STARTED==False and hp.CREATED_INIT_DEFAULT==False:
-        _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
-        _ = pipeline.pipeline_default_seats()
-        upload_multiple('2024', upload_map=True, upload_v2=False)
-        hp.CREATED_INIT_DEFAULT = True
-
     if IS_STARTED:
         ### 當IS_STARTED開始時，我們重新產生DEFAULT的文件
         if hp.CREATED_START_DEFAULT==False:
-            _ = pipeline.pipeline_default_map(is_started=IS_STARTED, is_running=True)
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
             hp.CREATED_START_DEFAULT = True
         
         hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
@@ -55,10 +48,10 @@ def election_all_2024():
         prev_time = cur_time
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
-            ### Instead of creating new files, you should open and modify
-            # if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
-            #     _ = pipeline.pipeline_default_map(is_started=IS_STARTED, is_running=False)
-            #     hp.CREATED_FINAL_DEFAULT = True
+            ## Instead of creating new files, you should open and modify
+            if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
+                _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+                hp.CREATED_FINAL_DEFAULT = True
 
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
@@ -200,4 +193,8 @@ def healthcheck():
 
 
 if __name__ == "__main__":
+    ### Default values for 2024 election
+    _ = pipeline.pipeline_default_map(is_started=False)
+    _ = pipeline.pipeline_default_seats()
+    upload_multiple('2024', upload_map=True, upload_v2=False)
     app.run()
