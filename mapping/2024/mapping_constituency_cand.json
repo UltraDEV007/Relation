@@ -1,708 +1,302 @@
 {
-    "68000": {
-        "01": {
+    "63000": {
+        "06": {
             "1": {
-                "party": "中國國民黨",
+                "party": "制度救世島",
                 "person": {
-                    "id": "38740",
-                    "name": "牛煦庭",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38740.jpg"
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "365",
-                    "name": "鄭運鵬",
-                    "image": "https://whoareyou-gcs.readr.tw/person/鄭運鵬.jpg"
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "44354",
-                    "name": "馬治薇",
-                    "image": null
-                }
-            }
-        },
-        "02": {
-            "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "435",
-                    "name": "黃世杰",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100075.jpg"
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "44355",
-                    "name": "王思玟",
+                    "id": "44332",
+                    "name": "張雪卿",
                     "image": null
                 }
             },
-            "3": {
-                "party": "中國國民黨",
+            "2": {
+                "party": "社會民主黨",
                 "person": {
-                    "id": "38784",
-                    "name": "涂權吉",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38784.jpg"
+                    "id": "37078",
+                    "name": "苗博雅",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%8B%97%E5%8D%9A%E9%9B%85.jpg"
+                }
+            },
+            "3": {
+                "party": "臺灣雙語無法黨",
+                "person": {
+                    "id": "44330",
+                    "name": "崔建章",
+                    "image": null
                 }
             },
             "4": {
-                "party": "中華統一促進黨",
-                "person": {
-                    "id": "36975",
-                    "name": "陳志豪",
-                    "image": null
-                }
-            }
-        },
-        "04": {
-            "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "1571",
-                    "name": "范綱祥",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "44357",
-                    "name": "黃明莉",
-                    "image": null
-                }
-            },
-            "3": {
                 "party": "中國國民黨",
                 "person": {
-                    "id": "438",
-                    "name": "萬美玲",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100081.jpg"
+                    "id": "38377",
+                    "name": "羅智強",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E7%BE%85%E6%99%BA%E5%BC%B7.jpg"
                 }
             },
-            "4": {
-                "party": "台灣國民黨",
+            "5": {
+                "party": "台灣維新",
                 "person": {
-                    "id": "40539",
-                    "name": "甘乃迪",
+                    "id": "44331",
+                    "name": "朱翊銘",
                     "image": null
-                }
-            }
-        },
-        "05": {
-            "1": {
-                "party": "司法改革黨",
-                "person": {
-                    "id": "36986",
-                    "name": "易乃文",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "393",
-                    "name": "呂玉玲",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100017.jpg"
-                }
-            },
-            "3": {
-                "party": "台灣民眾黨",
-                "person": {
-                    "id": "724",
-                    "name": "賴香伶",
-                    "image": "https://whoareyou-gcs.readr.tw/person/賴香伶.jpg"
-                }
-            },
-            "4": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "38772",
-                    "name": "劉仁照",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38772.jpg"
                 }
             }
         },
         "03": {
             "1": {
-                "party": "小民參政歐巴桑聯盟",
-                "person": {
-                    "id": "44356",
-                    "name": "徐鶯慈",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "36979",
-                    "name": "彭俊豪",
-                    "image": "https://whoareyou-gcs.readr.tw/person/36979.jpg"
-                }
-            },
-            "3": {
-                "party": "新黨",
-                "person": {
-                    "id": "43161",
-                    "name": "游智彬",
-                    "image": "https://whoareyou-gcs.readr.tw/person/43161.jpg"
-                }
-            },
-            "4": {
-                "party": null,
-                "person": {
-                    "id": "37751",
-                    "name": "戴浙",
-                    "image": null
-                }
-            },
-            "5": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "445",
-                    "name": "魯明哲",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100100.jpg"
-                }
-            }
-        },
-        "06": {
-            "1": {
-                "party": "台灣民眾黨",
-                "person": {
-                    "id": "44362",
-                    "name": "李慕妍",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "439",
-                    "name": "趙正宇",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100087.jpg"
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "44360",
-                    "name": "劉睿宸",
-                    "image": null
-                }
-            },
-            "4": {
                 "party": "人民最大黨",
                 "person": {
-                    "id": "44361",
-                    "name": "翁紹庭",
-                    "image": null
-                }
-            },
-            "5": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "44359",
-                    "name": "邱若華",
-                    "image": null
-                }
-            },
-            "6": {
-                "party": null,
-                "person": {
-                    "id": "44358",
-                    "name": "葉堂宇",
-                    "image": null
-                }
-            }
-        }
-    },
-    "10010": {
-        "02": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "44406",
-                    "name": "簡銘傑",
+                    "id": "44322",
+                    "name": "余新造",
                     "image": null
                 }
             },
             "2": {
                 "party": null,
                 "person": {
-                    "id": "333",
-                    "name": "林國慶",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/ly1000_6_00071_10f.jpg"
+                    "id": "44682",
+                    "name": "陳源發",
+                    "image": null
                 }
             },
             "3": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "36816",
+                    "name": "謝佩芬",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%AC%9D%E4%BD%A9%E8%8A%AC.jpg"
+                }
+            },
+            "4": {
+                "party": "制度救世島",
+                "person": {
+                    "id": "37043",
+                    "name": "高士恩",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "38333",
+                    "name": "王鴻薇",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E7%8E%8B%E9%B4%BB%E8%96%87.jpg"
+                }
+            },
+            "6": {
                 "party": "台灣維新",
                 "person": {
-                    "id": "44404",
-                    "name": "黃一哲",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": null,
-                "person": {
-                    "id": "44405",
-                    "name": "廖昱婧",
-                    "image": null
-                }
-            },
-            "5": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "7523",
-                    "name": "陳冠廷",
-                    "image": null
-                }
-            }
-        },
-        "01": {
-            "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "441",
-                    "name": "蔡易餘",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100092.jpg"
-                }
-            },
-            "2": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "39973",
-                    "name": "詹琬蓁",
-                    "image": "https://whoareyou-gcs.readr.tw/person/39973.jpg"
-                }
-            }
-        }
-    },
-    "66000": {
-        "06": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "37146",
-                    "name": "賀姿華",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "38615",
-                    "name": "江肇國",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38615.jpg"
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "29018",
-                    "name": "羅廷瑋",
-                    "image": "https://whoareyou-gcs.readr.tw/person/29018.jpg"
-                }
-            },
-            "4": {
-                "party": null,
-                "person": {
-                    "id": "17147",
-                    "name": "紀文清",
-                    "image": "https://whoareyou-gcs.readr.tw/person/17147.jpg"
-                }
-            },
-            "5": {
-                "party": "中華統一促進黨",
-                "person": {
-                    "id": "44373",
-                    "name": "黃千庭",
-                    "image": null
-                }
-            }
-        },
-        "02": {
-            "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "461",
-                    "name": "顏寬恒",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/81114.jpg"
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "683",
-                    "name": "林靜儀",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/90034.jpg"
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "44365",
-                    "name": "紀銘修",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": "司法正義黨",
-                "person": {
-                    "id": "29199",
-                    "name": "洪麗華",
-                    "image": null
-                }
-            }
-        },
-        "08": {
-            "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "390",
-                    "name": "江啟臣",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100007.jpg"
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "37150",
-                    "name": "謝志忠",
-                    "image": "https://whoareyou-gcs.readr.tw/person/37150.jpg"
-                }
-            }
-        },
-        "04": {
-            "1": {
-                "party": "臺灣雙語無法黨",
-                "person": {
-                    "id": "44368",
-                    "name": "李海碩",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "427",
-                    "name": "張廖萬堅",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100052.jpg"
-                }
-            },
-            "3": {
-                "party": "臺灣雙語無法黨",
-                "person": {
-                    "id": "44369",
-                    "name": "林中翊",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "44367",
-                    "name": "廖偉翔",
-                    "image": null
-                }
-            },
-            "5": {
-                "party": null,
-                "person": {
-                    "id": "36926",
-                    "name": "陳志彬",
-                    "image": null
-                }
-            }
-        },
-        "01": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "44363",
-                    "name": "賴信全",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "44364",
-                    "name": "劉燈鐘",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "台灣民眾黨",
-                "person": {
-                    "id": "723",
-                    "name": "蔡壁如",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100094.jpg"
-                }
-            },
-            "4": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "363",
-                    "name": "蔡其昌",
-                    "image": "https://whoareyou-gcs.readr.tw/person/蔡其昌.jpg"
-                }
-            }
-        },
-        "05": {
-            "1": {
-                "party": "司法改革黨",
-                "person": {
-                    "id": "36933",
-                    "name": "彭振芳",
-                    "image": "https://whoareyou-gcs.readr.tw/person/36933.jpg"
-                }
-            },
-            "2": {
-                "party": "中華統一促進黨",
-                "person": {
-                    "id": "44372",
-                    "name": "林澤培",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "小民參政歐巴桑聯盟",
-                "person": {
-                    "id": "44371",
-                    "name": "蔡善雯",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "428",
-                    "name": "莊競程",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100054.jpg"
-                }
-            },
-            "5": {
-                "party": null,
-                "person": {
-                    "id": "36934",
-                    "name": "苗豐隆",
-                    "image": null
-                }
-            },
-            "6": {
-                "party": null,
-                "person": {
-                    "id": "10116",
-                    "name": "陳維新",
+                    "id": "38359",
+                    "name": "楊時睿",
                     "image": null
                 }
             },
             "7": {
                 "party": "臺灣雙語無法黨",
                 "person": {
-                    "id": "44370",
-                    "name": "謝旻汎",
+                    "id": "44683",
+                    "name": "陳一郎",
+                    "image": null
+                }
+            }
+        },
+        "08": {
+            "1": {
+                "party": "台灣維新",
+                "person": {
+                    "id": "44684",
+                    "name": "劉佩玲",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "224",
+                    "name": "賴士葆",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%B3%B4%E5%A3%AB%E8%91%86.jpg"
+                }
+            },
+            "3": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "38373",
+                    "name": "王閔生",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E7%8E%8B%E9%96%94%E7%94%9F.jpg"
+                }
+            },
+            "4": {
+                "party": "小民參政歐巴桑聯盟",
+                "person": {
+                    "id": "44335",
+                    "name": "賴宣任",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": null,
+                "person": {
+                    "id": "17170",
+                    "name": "夏萬浪",
+                    "image": null
+                }
+            },
+            "6": {
+                "party": "台灣民眾黨",
+                "person": {
+                    "id": "715",
+                    "name": "張其祿",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%BC%B5%E5%85%B6%E7%A5%BF.jpg"
+                }
+            },
+            "7": {
+                "party": null,
+                "person": {
+                    "id": "44336",
+                    "name": "張維學",
                     "image": null
                 }
             },
             "8": {
-                "party": "中國國民黨",
+                "party": "興中同盟會",
                 "person": {
-                    "id": "38607",
-                    "name": "黃健豪",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38607.jpg"
+                    "id": "44334",
+                    "name": "胡之壯",
+                    "image": null
                 }
             }
         },
         "07": {
             "1": {
-                "party": "民主進步黨",
+                "party": "中華愛國同心黨",
                 "person": {
-                    "id": "392",
-                    "name": "何欣純",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100009.jpg"
-                }
-            },
-            "2": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "44374",
-                    "name": "林家興",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "司法改革黨",
-                "person": {
-                    "id": "29005",
-                    "name": "林振東",
-                    "image": null
-                }
-            }
-        },
-        "03": {
-            "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "44366",
-                    "name": "謝子涵",
+                    "id": "39371",
+                    "name": "李承龍",
                     "image": null
                 }
             },
             "2": {
                 "party": "中國國民黨",
                 "person": {
-                    "id": "208",
-                    "name": "楊瓊瓔",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100079.jpg"
+                    "id": "38329",
+                    "name": "徐巧芯",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%BE%90%E5%B7%A7%E8%8A%AF.jpg"
                 }
             },
             "3": {
-                "party": "司法改革黨",
+                "party": "台灣維新",
                 "person": {
-                    "id": "31646",
-                    "name": "張烱春",
-                    "image": null
-                }
-            }
-        }
-    },
-    "10007": {
-        "03": {
-            "1": {
-                "party": "中華統一促進黨",
-                "person": {
-                    "id": "44397",
-                    "name": "桂麗娜",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "449",
-                    "name": "謝衣鳯",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100106.jpg"
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "44395",
-                    "name": "洪建興",
+                    "id": "16920",
+                    "name": "羅丹",
                     "image": null
                 }
             },
             "4": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "44396",
-                    "name": "吳音寧",
-                    "image": null
-                }
-            }
-        },
-        "04": {
-            "1": {
-                "party": "臺灣雙語無法黨",
-                "person": {
-                    "id": "44398",
-                    "name": "鄭錫懋",
-                    "image": null
-                }
-            },
-            "2": {
                 "party": null,
                 "person": {
-                    "id": "44399",
-                    "name": "蔡念諶",
+                    "id": "44333",
+                    "name": "陳韋安",
                     "image": null
                 }
             },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "1661",
-                    "name": "鄭俊雄",
-                    "image": "https://whoareyou-gcs.readr.tw/person/1661.jpg"
-                }
-            },
-            "4": {
+            "5": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "434",
-                    "name": "陳素月",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/81122.jpg"
-                }
-            }
-        },
-        "02": {
-            "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "44394",
-                    "name": "楊曜聰",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "436",
-                    "name": "黃秀芳",
-                    "image": "https://whoareyou-gcs.readr.tw/person/黃秀芳.jpg"
+                    "id": "36823",
+                    "name": "許淑華",
+                    "image": "https://whoareyou-gcs.readr.tw/person/36823.jpg"
                 }
             }
         },
         "01": {
             "1": {
-                "party": null,
+                "party": "民主進步黨",
                 "person": {
-                    "id": "44393",
-                    "name": "蘇群傑",
-                    "image": null
+                    "id": "416",
+                    "name": "吳思瑤",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%90%B3%E6%80%9D%E7%91%A4.jpg"
                 }
             },
             "2": {
-                "party": "民主進步黨",
+                "party": "中國國民黨",
                 "person": {
-                    "id": "432",
-                    "name": "陳秀寳",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100060.jpg"
+                    "id": "38302",
+                    "name": "張斯綱",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%BC%B5%E6%96%AF%E7%B6%B1.jpg"
                 }
             },
             "3": {
-                "party": "中國國民黨",
+                "party": "人民民主黨",
                 "person": {
-                    "id": "885",
-                    "name": "阮厚爵",
+                    "id": "36792",
+                    "name": "賴宗育",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": null,
+                "person": {
+                    "id": "38299",
+                    "name": "侯漢廷",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E4%BE%AF%E6%BC%A2%E5%BB%B7.jpg"
+                }
+            },
+            "5": {
+                "party": "人民最大黨",
+                "person": {
+                    "id": "44319",
+                    "name": "張臺勝",
+                    "image": null
+                }
+            },
+            "6": {
+                "party": "人民最大黨",
+                "person": {
+                    "id": "44681",
+                    "name": "胡金城",
+                    "image": null
+                }
+            },
+            "7": {
+                "party": null,
+                "person": {
+                    "id": "44318",
+                    "name": "許盛鋒",
+                    "image": null
+                }
+            },
+            "8": {
+                "party": "臺灣雙語無法黨",
+                "person": {
+                    "id": "44317",
+                    "name": "陳執中",
                     "image": null
                 }
             }
-        }
-    },
-    "63000": {
+        },
         "05": {
             "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "38357",
-                    "name": "吳沛憶",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38357.jpg"
-                }
-            },
-            "2": {
                 "party": "中國國民黨",
                 "person": {
                     "id": "38365",
                     "name": "鍾小平",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38365.jpg"
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%8D%BE%E5%B0%8F%E5%B9%B3.jpg"
+                }
+            },
+            "10": {
+                "party": "司法改革黨",
+                "person": {
+                    "id": "44326",
+                    "name": "李慧曦",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": null,
+                "person": {
+                    "id": "44328",
+                    "name": "陳燕玉",
+                    "image": null
                 }
             },
             "3": {
@@ -726,30 +320,30 @@
                 "person": {
                     "id": "44324",
                     "name": "于美人",
-                    "image": null
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E4%BA%8E%E7%BE%8E%E4%BA%BA.jpg"
                 }
             },
             "6": {
-                "party": null,
-                "person": {
-                    "id": "44328",
-                    "name": "陳燕玉",
-                    "image": null
-                }
-            },
-            "7": {
-                "party": "司法改革黨",
-                "person": {
-                    "id": "44326",
-                    "name": "李慧曦",
-                    "image": null
-                }
-            },
-            "8": {
                 "party": "經濟黨",
                 "person": {
                     "id": "44327",
                     "name": "蘇諍",
+                    "image": null
+                }
+            },
+            "7": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "38357",
+                    "name": "吳沛憶",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%90%B3%E6%B2%9B%E6%86%B6.jpg"
+                }
+            },
+            "8": {
+                "party": null,
+                "person": {
+                    "id": "44329",
+                    "name": "孫智麗",
                     "image": null
                 }
             },
@@ -760,144 +354,406 @@
                     "name": "張華特",
                     "image": null
                 }
-            },
-            "10": {
-                "party": null,
-                "person": {
-                    "id": "44329",
-                    "name": "孫智麗",
-                    "image": null
-                }
             }
         },
-        "08": {
+        "02": {
             "1": {
-                "party": null,
+                "party": "制度救世島",
                 "person": {
-                    "id": "17170",
-                    "name": "夏萬浪",
+                    "id": "36797",
+                    "name": "熊嘉玲",
                     "image": null
                 }
             },
             "2": {
-                "party": "台灣民眾黨",
+                "party": "人民最大黨",
                 "person": {
-                    "id": "715",
-                    "name": "張其祿",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100051.jpg"
-                }
-            },
-            "3": {
-                "party": "興中同盟會",
-                "person": {
-                    "id": "44334",
-                    "name": "胡之壯",
+                    "id": "44321",
+                    "name": "何梅娟",
                     "image": null
                 }
             },
-            "4": {
-                "party": "台灣維新",
+            "3": {
+                "party": "民主進步黨",
                 "person": {
-                    "id": "32912",
-                    "name": "劉佩玲",
+                    "id": "316",
+                    "name": "王世堅",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E7%8E%8B%E4%B8%96%E5%A0%85.jpg"
+                }
+            },
+            "4": {
+                "party": "中華統一促進黨",
+                "person": {
+                    "id": "36795",
+                    "name": "郭啟源",
                     "image": null
                 }
             },
             "5": {
-                "party": null,
-                "person": {
-                    "id": "44336",
-                    "name": "張維學",
-                    "image": null
-                }
-            },
-            "6": {
                 "party": "中國國民黨",
                 "person": {
-                    "id": "224",
-                    "name": "賴士葆",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100101.jpg"
+                    "id": "38313",
+                    "name": "游淑慧",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%B8%B8%E6%B7%91%E6%85%A7.jpg"
+                }
+            }
+        },
+        "04": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "454",
+                    "name": "李彥秀",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9D%8E%E5%BD%A5%E7%A7%80.jpg"
                 }
             },
-            "7": {
-                "party": "小民參政歐巴桑聯盟",
+            "2": {
+                "party": "台灣基進",
                 "person": {
-                    "id": "44335",
-                    "name": "賴宣任",
+                    "id": "43306",
+                    "name": "吳欣岱",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%90%B3%E6%AC%A3%E5%B2%B1.jpg"
+                }
+            },
+            "3": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "425",
+                    "name": "高嘉瑜",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%AB%98%E5%98%89%E7%91%9C.jpg"
+                }
+            },
+            "4": {
+                "party": "制度救世島",
+                "person": {
+                    "id": "37311",
+                    "name": "黃啟彬",
                     "image": null
                 }
             },
-            "8": {
+            "5": {
+                "party": "台灣整復師聯盟工黨",
+                "person": {
+                    "id": "44323",
+                    "name": "林秋彤",
+                    "image": null
+                }
+            }
+        }
+    },
+    "10007": {
+        "03": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "44395",
+                    "name": "洪建興",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "449",
+                    "name": "謝衣鳯",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%AC%9D%E8%A1%A3%E9%B3%AF.jpg"
+                }
+            },
+            "3": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "38373",
-                    "name": "王閔生",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38373.jpg"
+                    "id": "44396",
+                    "name": "吳音寧",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%90%B3%E9%9F%B3%E5%AF%A7.jpg"
+                }
+            },
+            "4": {
+                "party": "中華統一促進黨",
+                "person": {
+                    "id": "44397",
+                    "name": "桂麗娜",
+                    "image": null
+                }
+            }
+        },
+        "02": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "436",
+                    "name": "黃秀芳",
+                    "image": "https://whoareyou-gcs.readr.tw/person/黃秀芳.jpg"
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "44394",
+                    "name": "楊曜聰",
+                    "image": null
+                }
+            }
+        },
+        "04": {
+            "1": {
+                "party": "臺灣雙語無法黨",
+                "person": {
+                    "id": "44398",
+                    "name": "鄭錫懋",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "1661",
+                    "name": "鄭俊雄",
+                    "image": "https://whoareyou-gcs.readr.tw/person/1661.jpg"
+                }
+            },
+            "3": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "434",
+                    "name": "陳素月",
+                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/81122.jpg"
+                }
+            },
+            "4": {
+                "party": "中華文化共和黨",
+                "person": {
+                    "id": "44399",
+                    "name": "蔡念諶",
+                    "image": null
                 }
             }
         },
         "01": {
             "1": {
-                "party": "人民最大黨",
+                "party": "民主進步黨",
                 "person": {
-                    "id": "15584",
-                    "name": "胡金城",
-                    "image": null
+                    "id": "432",
+                    "name": "陳秀寳",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100060.jpg"
                 }
             },
             "2": {
-                "party": "中國國民黨",
+                "party": null,
                 "person": {
-                    "id": "38302",
-                    "name": "張斯綱",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38302.jpg"
+                    "id": "44393",
+                    "name": "蘇群傑",
+                    "image": null
                 }
             },
             "3": {
-                "party": "臺灣雙語無法黨",
+                "party": "中國國民黨",
                 "person": {
-                    "id": "44317",
-                    "name": "陳執中",
+                    "id": "885",
+                    "name": "阮厚爵",
+                    "image": null
+                }
+            }
+        }
+    },
+    "66000": {
+        "01": {
+            "1": {
+                "party": "台灣民眾黨",
+                "person": {
+                    "id": "723",
+                    "name": "蔡壁如",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%94%A1%E5%A3%81%E5%A6%82.jpg"
+                }
+            },
+            "2": {
+                "party": null,
+                "person": {
+                    "id": "44363",
+                    "name": "賴信全",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": null,
+                "person": {
+                    "id": "44364",
+                    "name": "劉燈鐘",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%8A%89%E7%87%88%E9%90%98.jpg"
+                }
+            },
+            "4": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "363",
+                    "name": "蔡其昌",
+                    "image": "https://whoareyou-gcs.readr.tw/person/蔡其昌.jpg"
+                }
+            }
+        },
+        "05": {
+            "1": {
+                "party": "司法改革黨",
+                "person": {
+                    "id": "36933",
+                    "name": "彭振芳",
+                    "image": "https://whoareyou-gcs.readr.tw/person/36933.jpg"
+                }
+            },
+            "2": {
+                "party": "小民參政歐巴桑聯盟",
+                "person": {
+                    "id": "44371",
+                    "name": "蔡善雯",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": null,
+                "person": {
+                    "id": "44680",
+                    "name": "陳維新",
                     "image": null
                 }
             },
             "4": {
-                "party": "人民民主黨",
+                "party": "中國國民黨",
                 "person": {
-                    "id": "36792",
-                    "name": "賴宗育",
-                    "image": null
+                    "id": "38607",
+                    "name": "黃健豪",
+                    "image": "https://whoareyou-gcs.readr.tw/person/38607.jpg"
                 }
             },
             "5": {
                 "party": null,
                 "person": {
-                    "id": "44318",
-                    "name": "許盛鋒",
+                    "id": "36934",
+                    "name": "苗豐隆",
                     "image": null
                 }
             },
             "6": {
-                "party": null,
+                "party": "臺灣雙語無法黨",
                 "person": {
-                    "id": "38299",
-                    "name": "侯漢廷",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38299.jpg"
+                    "id": "44370",
+                    "name": "謝旻汎",
+                    "image": null
                 }
             },
             "7": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "416",
-                    "name": "吳思瑤",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100014.jpg"
+                    "id": "428",
+                    "name": "莊競程",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100054.jpg"
                 }
             },
             "8": {
-                "party": "人民最大黨",
+                "party": "中華統一促進黨",
                 "person": {
-                    "id": "44319",
-                    "name": "張臺勝",
+                    "id": "44372",
+                    "name": "林澤培",
+                    "image": null
+                }
+            }
+        },
+        "04": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "427",
+                    "name": "張廖萬堅",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100052.jpg"
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "44367",
+                    "name": "廖偉翔",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "臺灣雙語無法黨",
+                "person": {
+                    "id": "44369",
+                    "name": "林中翊",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": null,
+                "person": {
+                    "id": "36926",
+                    "name": "陳志彬",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": "臺灣雙語無法黨",
+                "person": {
+                    "id": "44368",
+                    "name": "李海碩",
+                    "image": null
+                }
+            }
+        },
+        "03": {
+            "1": {
+                "party": "司法改革黨",
+                "person": {
+                    "id": "31646",
+                    "name": "張烱春",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "44366",
+                    "name": "謝子涵",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "208",
+                    "name": "楊瓊瓔",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100079.jpg"
+                }
+            }
+        },
+        "02": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "461",
+                    "name": "顏寬恒",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%A1%8F%E5%AF%AC%E6%81%92.jpg"
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "683",
+                    "name": "林靜儀",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9E%97%E9%9D%9C%E5%84%80.jpg"
+                }
+            },
+            "3": {
+                "party": "司法正義黨",
+                "person": {
+                    "id": "29199",
+                    "name": "洪麗華",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": null,
+                "person": {
+                    "id": "44365",
+                    "name": "紀銘修",
                     "image": null
                 }
             }
@@ -906,300 +762,810 @@
             "1": {
                 "party": "中國國民黨",
                 "person": {
-                    "id": "38329",
-                    "name": "徐巧芯",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38329.jpg"
+                    "id": "44374",
+                    "name": "林家興",
+                    "image": null
                 }
             },
             "2": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "36823",
-                    "name": "許淑華",
-                    "image": "https://whoareyou-gcs.readr.tw/person/36823.jpg"
+                    "id": "392",
+                    "name": "何欣純",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100009.jpg"
+                }
+            },
+            "3": {
+                "party": "司法改革黨",
+                "person": {
+                    "id": "29005",
+                    "name": "林振東",
+                    "image": null
+                }
+            }
+        },
+        "08": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "390",
+                    "name": "江啟臣",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100007.jpg"
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "37150",
+                    "name": "謝志忠",
+                    "image": "https://whoareyou-gcs.readr.tw/person/37150.jpg"
+                }
+            }
+        },
+        "06": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "29018",
+                    "name": "羅廷瑋",
+                    "image": "https://whoareyou-gcs.readr.tw/person/29018.jpg"
+                }
+            },
+            "2": {
+                "party": null,
+                "person": {
+                    "id": "17147",
+                    "name": "紀文清",
+                    "image": "https://whoareyou-gcs.readr.tw/person/17147.jpg"
                 }
             },
             "3": {
                 "party": null,
                 "person": {
-                    "id": "44333",
-                    "name": "陳韋安",
+                    "id": "37146",
+                    "name": "賀姿華",
                     "image": null
                 }
             },
             "4": {
-                "party": "中華愛國同心黨",
+                "party": "民主進步黨",
                 "person": {
-                    "id": "39371",
-                    "name": "李承龍",
+                    "id": "38615",
+                    "name": "江肇國",
+                    "image": "https://whoareyou-gcs.readr.tw/person/38615.jpg"
+                }
+            },
+            "5": {
+                "party": "中華統一促進黨",
+                "person": {
+                    "id": "44373",
+                    "name": "黃千庭",
+                    "image": null
+                }
+            }
+        }
+    },
+    "65000": {
+        "02": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "334",
+                    "name": "林淑芬",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100031.jpg"
+                }
+            },
+            "2": {
+                "party": "中華統一促進黨",
+                "person": {
+                    "id": "44340",
+                    "name": "何淯笙",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "台灣民眾黨",
+                "person": {
+                    "id": "43321",
+                    "name": "李有宜",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9D%8E%E6%9C%89%E5%AE%9C.jpg"
+                }
+            }
+        },
+        "03": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "35101",
+                    "name": "蔡明堂",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": null,
+                "person": {
+                    "id": "36879",
+                    "name": "蘇卿彥",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "38501",
+                    "name": "李坤城",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": null,
+                "person": {
+                    "id": "19792",
+                    "name": "陳東雲",
+                    "image": null
+                }
+            }
+        },
+        "12": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "38548",
+                    "name": "黃瑞傳",
+                    "image": "https://whoareyou-gcs.readr.tw/person/38548.jpg"
+                }
+            },
+            "2": {
+                "party": null,
+                "person": {
+                    "id": "44353",
+                    "name": "楊木火",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "臺灣雙語無法黨",
+                "person": {
+                    "id": "44351",
+                    "name": "李佳蒨",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": "台灣維新",
+                "person": {
+                    "id": "44352",
+                    "name": "陳長志",
                     "image": null
                 }
             },
             "5": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "446",
+                    "name": "賴品妤",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%B3%B4%E5%93%81%E5%A6%A4.jpg"
+                }
+            },
+            "6": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "38552",
+                    "name": "廖先翔",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%BB%96%E5%85%88%E7%BF%94.jpg"
+                }
+            }
+        },
+        "01": {
+            "1": {
                 "party": "台灣維新",
                 "person": {
-                    "id": "16920",
-                    "name": "羅丹",
+                    "id": "44338",
+                    "name": "徐百弟",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "37211",
+                    "name": "何博文",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E4%BD%95%E5%8D%9A%E6%96%87.jpg"
+                }
+            },
+            "3": {
+                "party": "制度救世島",
+                "person": {
+                    "id": "44339",
+                    "name": "游清池",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "423",
+                    "name": "洪孟楷",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%B4%AA%E5%AD%9F%E6%A5%B7.jpg"
+                }
+            },
+            "5": {
+                "party": "中華統一促進黨",
+                "person": {
+                    "id": "44337",
+                    "name": "翁藤原",
+                    "image": null
+                }
+            }
+        },
+        "05": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "452",
+                    "name": "蘇巧慧",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100111.jpg"
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "38534",
+                    "name": "洪佳君",
+                    "image": "https://whoareyou-gcs.readr.tw/person/38534.jpg"
+                }
+            }
+        },
+        "10": {
+            "1": {
+                "party": "人民最大黨",
+                "person": {
+                    "id": "36818",
+                    "name": "孟藹倫",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "復康聯盟黨",
+                "person": {
+                    "id": "44346",
+                    "name": "袁興",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "417",
+                    "name": "吳琪銘",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100016.jpg"
+                }
+            },
+            "4": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "36907",
+                    "name": "林金結",
+                    "image": "https://whoareyou-gcs.readr.tw/person/36907.jpg"
+                }
+            }
+        },
+        "07": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "38507",
+                    "name": "葉元之",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%91%89%E5%85%83%E4%B9%8B.jpg"
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "451",
+                    "name": "羅致政",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E7%BE%85%E8%87%B4%E6%94%BF.jpg"
+                }
+            },
+            "3": {
+                "party": "小民參政歐巴桑聯盟",
+                "person": {
+                    "id": "44344",
+                    "name": "劉書婷",
+                    "image": null
+                }
+            }
+        },
+        "09": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "255",
+                    "name": "林德福",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100033.jpg"
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "20152",
+                    "name": "莊銘淵",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "台灣維新",
+                "person": {
+                    "id": "36902",
+                    "name": "陳愷寧",
+                    "image": null
+                }
+            }
+        },
+        "11": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "230",
+                    "name": "羅明才",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100108.jpg"
+                }
+            },
+            "2": {
+                "party": null,
+                "person": {
+                    "id": "44348",
+                    "name": "鄭添泉",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "制度救世島",
+                "person": {
+                    "id": "44350",
+                    "name": "魏趨安",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": "人民最大黨",
+                "person": {
+                    "id": "44349",
+                    "name": "張家榛",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": "中華婦女黨",
+                "person": {
+                    "id": "44347",
+                    "name": "陳聖",
+                    "image": null
+                }
+            },
+            "6": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "37132",
+                    "name": "曾柏瑜",
+                    "image": null
+                }
+            }
+        },
+        "08": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "38328",
+                    "name": "吳崢",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%90%B3%E5%B4%A2.jpg"
+                }
+            },
+            "2": {
+                "party": "台灣民眾黨",
+                "person": {
+                    "id": "710",
+                    "name": "邱臣遠",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%82%B1%E8%87%A3%E9%81%A0.jpg"
+                }
+            },
+            "3": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "44345",
+                    "name": "張智倫",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%BC%B5%E6%99%BA%E5%80%AB.jpg"
+                }
+            }
+        },
+        "04": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "44343",
+                    "name": "洪懿馥",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "322",
+                    "name": "吳秉叡",
+                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/80016.jpg"
+                }
+            },
+            "3": {
+                "party": null,
+                "person": {
+                    "id": "44342",
+                    "name": "蘇輝湟",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "44341",
+                    "name": "蔣欣璋",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": "制度救世島",
+                "person": {
+                    "id": "28612",
+                    "name": "邱吉均",
+                    "image": "https://whoareyou-gcs.readr.tw/person/28612.jpg"
+                }
+            }
+        },
+        "06": {
+            "1": {
+                "party": "司法改革黨",
+                "person": {
+                    "id": "44686",
+                    "name": "黃淑珍",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "36892",
+                    "name": "林國春",
+                    "image": "https://whoareyou-gcs.readr.tw/person/36892.jpg"
+                }
+            },
+            "3": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "426",
+                    "name": "張宏陸",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100049.jpg"
+                }
+            }
+        }
+    },
+    "68000": {
+        "01": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "44354",
+                    "name": "馬治薇",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "365",
+                    "name": "鄭運鵬",
+                    "image": "https://whoareyou-gcs.readr.tw/person/鄭運鵬.jpg"
+                }
+            },
+            "3": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "38740",
+                    "name": "牛煦庭",
+                    "image": "https://whoareyou-gcs.readr.tw/person/38740.jpg"
+                }
+            }
+        },
+        "06": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "44358",
+                    "name": "葉堂宇",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": null,
+                "person": {
+                    "id": "439",
+                    "name": "趙正宇",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100087.jpg"
+                }
+            },
+            "3": {
+                "party": "台灣民眾黨",
+                "person": {
+                    "id": "44362",
+                    "name": "李慕妍",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "44359",
+                    "name": "邱若華",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": "人民最大黨",
+                "person": {
+                    "id": "44361",
+                    "name": "翁紹庭",
+                    "image": null
+                }
+            },
+            "6": {
+                "party": "復康聯盟黨",
+                "person": {
+                    "id": "44360",
+                    "name": "劉睿宸",
+                    "image": null
+                }
+            }
+        },
+        "02": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "435",
+                    "name": "黃世杰",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100075.jpg"
+                }
+            },
+            "2": {
+                "party": "中華統一促進黨",
+                "person": {
+                    "id": "36975",
+                    "name": "陳志豪",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": null,
+                "person": {
+                    "id": "44355",
+                    "name": "王思玟",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "38784",
+                    "name": "涂權吉",
+                    "image": "https://whoareyou-gcs.readr.tw/person/38784.jpg"
+                }
+            }
+        },
+        "04": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "1571",
+                    "name": "范綱祥",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "台灣國民黨",
+                "person": {
+                    "id": "40539",
+                    "name": "甘乃迪",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "438",
+                    "name": "萬美玲",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100081.jpg"
+                }
+            },
+            "4": {
+                "party": null,
+                "person": {
+                    "id": "44357",
+                    "name": "黃明莉",
+                    "image": null
+                }
+            }
+        },
+        "05": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "38772",
+                    "name": "劉仁照",
+                    "image": "https://whoareyou-gcs.readr.tw/person/38772.jpg"
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "393",
+                    "name": "呂玉玲",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100017.jpg"
+                }
+            },
+            "3": {
+                "party": "台灣民眾黨",
+                "person": {
+                    "id": "724",
+                    "name": "賴香伶",
+                    "image": "https://whoareyou-gcs.readr.tw/person/賴香伶.jpg"
+                }
+            },
+            "4": {
+                "party": "司法改革黨",
+                "person": {
+                    "id": "36986",
+                    "name": "易乃文",
+                    "image": null
+                }
+            }
+        },
+        "03": {
+            "1": {
+                "party": "制度救世島",
+                "person": {
+                    "id": "37751",
+                    "name": "戴浙",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "新黨",
+                "person": {
+                    "id": "43161",
+                    "name": "游智彬",
+                    "image": "https://whoareyou-gcs.readr.tw/person/43161.jpg"
+                }
+            },
+            "3": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "445",
+                    "name": "魯明哲",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100100.jpg"
+                }
+            },
+            "4": {
+                "party": "小民參政歐巴桑聯盟",
+                "person": {
+                    "id": "44356",
+                    "name": "徐鶯慈",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "36979",
+                    "name": "彭俊豪",
+                    "image": "https://whoareyou-gcs.readr.tw/person/36979.jpg"
+                }
+            }
+        }
+    },
+    "67000": {
+        "02": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "38652",
+                    "name": "陳昆和",
+                    "image": "https://whoareyou-gcs.readr.tw/person/38652.jpg"
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "430",
+                    "name": "郭國文",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/90125.jpg"
+                }
+            },
+            "3": {
+                "party": "人民最大黨",
+                "person": {
+                    "id": "37243",
+                    "name": "詹秋嫻",
                     "image": null
                 }
             }
         },
         "04": {
             "1": {
-                "party": "台灣整復師聯盟工黨",
+                "party": "司法改革黨",
                 "person": {
-                    "id": "44323",
-                    "name": "林秋彤",
+                    "id": "37790",
+                    "name": "劉清田",
                     "image": null
                 }
             },
             "2": {
-                "party": "台灣基進",
-                "person": {
-                    "id": "43306",
-                    "name": "吳欣岱",
-                    "image": "https://whoareyou-gcs.readr.tw/person/43306.jpg"
-                }
-            },
-            "3": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "425",
-                    "name": "高嘉瑜",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100048.jpg"
-                }
-            },
-            "4": {
-                "party": null,
-                "person": {
-                    "id": "37311",
-                    "name": "黃啟彬",
-                    "image": null
-                }
-            },
-            "5": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "454",
-                    "name": "李彥秀",
-                    "image": "https://whoareyou-gcs.readr.tw/person/454.jpg"
-                }
-            }
-        },
-        "03": {
-            "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "36816",
-                    "name": "謝佩芬",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "人民最大黨",
-                "person": {
-                    "id": "44322",
-                    "name": "余新造",
-                    "image": null
+                    "id": "418",
+                    "name": "林宜瑾",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100024.jpg"
                 }
             },
             "3": {
                 "party": null,
                 "person": {
-                    "id": "3912",
-                    "name": "陳源發",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": "台灣維新",
-                "person": {
-                    "id": "38359",
-                    "name": "楊時睿",
-                    "image": null
-                }
-            },
-            "5": {
-                "party": null,
-                "person": {
-                    "id": "37043",
-                    "name": "高士恩",
-                    "image": null
-                }
-            },
-            "6": {
-                "party": "臺灣雙語無法黨",
-                "person": {
-                    "id": "41285",
-                    "name": "陳一郎",
-                    "image": null
-                }
-            },
-            "7": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "38333",
-                    "name": "王鴻薇",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38333.jpg"
-                }
-            }
-        },
-        "02": {
-            "1": {
-                "party": "人民最大黨",
-                "person": {
-                    "id": "44321",
-                    "name": "何梅娟",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "中華統一促進黨",
-                "person": {
-                    "id": "36795",
-                    "name": "郭啟源",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "38313",
-                    "name": "游淑慧",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38313.jpg"
-                }
-            },
-            "4": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "316",
-                    "name": "王世堅",
-                    "image": "https://whoareyou-gcs.readr.tw/person/316.jpg"
-                }
-            },
-            "5": {
-                "party": null,
-                "person": {
-                    "id": "36797",
-                    "name": "熊嘉玲",
-                    "image": null
+                    "id": "239",
+                    "name": "李全教",
+                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/ly1000-400026-1.jpg"
                 }
             }
         },
         "06": {
             "1": {
-                "party": "台灣維新",
+                "party": "民主進步黨",
                 "person": {
-                    "id": "44331",
-                    "name": "朱翊銘",
-                    "image": null
+                    "id": "412",
+                    "name": "王定宇",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100002.jpg"
                 }
             },
             "2": {
                 "party": null,
                 "person": {
-                    "id": "44332",
-                    "name": "張雪卿",
+                    "id": "29749",
+                    "name": "陳永和",
                     "image": null
                 }
             },
             "3": {
                 "party": "中國國民黨",
                 "person": {
-                    "id": "38377",
-                    "name": "羅智強",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": "社會民主黨",
-                "person": {
-                    "id": "37078",
-                    "name": "苗博雅",
-                    "image": "https://whoareyou-gcs.readr.tw/person/37078.jpg"
-                }
-            },
-            "5": {
-                "party": "臺灣雙語無法黨",
-                "person": {
-                    "id": "44330",
-                    "name": "崔建章",
-                    "image": null
-                }
-            }
-        }
-    },
-    "10009": {
-        "02": {
-            "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "44403",
-                    "name": "邱良閱",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "409",
-                    "name": "劉建國",
-                    "image": "https://whoareyou-gcs.readr.tw/person/409.jpg"
+                    "id": "717",
+                    "name": "陳以信",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100058.jpg"
                 }
             }
         },
-        "01": {
+        "03": {
             "1": {
-                "party": "台灣革命黨",
+                "party": "中國國民黨",
                 "person": {
-                    "id": "36758",
-                    "name": "李昭儀",
-                    "image": null
+                    "id": "43347",
+                    "name": "姚正玉",
+                    "image": "https://whoareyou-gcs.readr.tw/person/43347.jpg"
                 }
             },
             "2": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "1004",
-                    "name": "丁學忠",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "36967",
-                    "name": "吳炳輝",
-                    "image": "https://whoareyou-gcs.readr.tw/person/36967.jpg"
-                }
-            },
-            "4": {
-                "party": null,
-                "person": {
-                    "id": "39945",
-                    "name": "陳俊龍",
-                    "image": "https://whoareyou-gcs.readr.tw/person/39945.jpg"
-                }
-            },
-            "5": {
-                "party": "中華統一促進黨",
-                "person": {
-                    "id": "44402",
-                    "name": "郭炳宏",
-                    "image": null
-                }
-            },
-            "6": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "311",
-                    "name": "蘇治芬",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100112.jpg"
+                    "id": "378",
+                    "name": "陳亭妃",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100062.jpg"
                 }
             }
-        }
-    },
-    "67000": {
+        },
         "01": {
             "1": {
                 "party": null,
@@ -1234,253 +1600,143 @@
                 }
             },
             "5": {
+                "party": "復康聯盟黨",
+                "person": {
+                    "id": "36950",
+                    "name": "蔡承攸",
+                    "image": null
+                }
+            },
+            "6": {
                 "party": null,
                 "person": {
                     "id": "44375",
                     "name": "侯陸太",
                     "image": null
                 }
-            },
-            "6": {
-                "party": null,
-                "person": {
-                    "id": "36950",
-                    "name": "蔡承攸",
-                    "image": null
-                }
-            }
-        },
-        "03": {
-            "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "43347",
-                    "name": "姚正玉",
-                    "image": "https://whoareyou-gcs.readr.tw/person/43347.jpg"
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "378",
-                    "name": "陳亭妃",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100062.jpg"
-                }
-            }
-        },
-        "06": {
-            "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "717",
-                    "name": "陳以信",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100058.jpg"
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "29749",
-                    "name": "陳永和",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "412",
-                    "name": "王定宇",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100002.jpg"
-                }
-            }
-        },
-        "02": {
-            "1": {
-                "party": "人民最大黨",
-                "person": {
-                    "id": "37243",
-                    "name": "詹秋嫻",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "38652",
-                    "name": "陳昆和",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38652.jpg"
-                }
-            },
-            "3": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "430",
-                    "name": "郭國文",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/90125.jpg"
-                }
-            }
-        },
-        "04": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "239",
-                    "name": "李全教",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/ly1000-400026-1.jpg"
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "418",
-                    "name": "林宜瑾",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100024.jpg"
-                }
-            },
-            "3": {
-                "party": "司法改革黨",
-                "person": {
-                    "id": "37790",
-                    "name": "劉清田",
-                    "image": null
-                }
             }
         },
         "05": {
             "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "419",
-                    "name": "林俊憲",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100026.jpg"
-                }
-            },
-            "2": {
                 "party": "臺灣雙語無法黨",
                 "person": {
                     "id": "44378",
                     "name": "蕭燐洪",
                     "image": null
                 }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "419",
+                    "name": "林俊憲",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100026.jpg"
+                }
             }
         }
     },
-    "65000": {
-        "09": {
+    "10013": {
+        "02": {
             "1": {
-                "party": "民主進步黨",
+                "party": "中華聯合黨",
                 "person": {
-                    "id": "20152",
-                    "name": "莊銘淵",
+                    "id": "44411",
+                    "name": "吳媚宮",
                     "image": null
                 }
             },
             "2": {
-                "party": "台灣維新",
-                "person": {
-                    "id": "36902",
-                    "name": "陳愷寧",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "255",
-                    "name": "林德福",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100033.jpg"
-                }
-            }
-        },
-        "04": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "44343",
-                    "name": "洪懿馥",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "28612",
-                    "name": "邱吉均",
-                    "image": "https://whoareyou-gcs.readr.tw/person/28612.jpg"
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "44341",
-                    "name": "蔣欣璋",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": null,
-                "person": {
-                    "id": "44342",
-                    "name": "蘇輝湟",
-                    "image": null
-                }
-            },
-            "5": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "322",
-                    "name": "吳秉叡",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/80016.jpg"
-                }
-            }
-        },
-        "11": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "44350",
-                    "name": "魏趨安",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "37132",
-                    "name": "曾柏瑜",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "中華婦女黨",
-                "person": {
-                    "id": "44347",
-                    "name": "陳聖",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": null,
-                "person": {
-                    "id": "44348",
-                    "name": "鄭添泉",
-                    "image": null
-                }
-            },
-            "5": {
                 "party": "人民最大黨",
                 "person": {
-                    "id": "44349",
-                    "name": "張家榛",
+                    "id": "36769",
+                    "name": "何秋葺",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "44412",
+                    "name": "徐富癸",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": null,
+                "person": {
+                    "id": "44410",
+                    "name": "蘇孟淳",
+                    "image": null
+                }
+            }
+        },
+        "01": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "44409",
+                    "name": "曾鈺庭",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "450",
+                    "name": "鍾佳濱",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100107.jpg"
+                }
+            },
+            "3": {
+                "party": null,
+                "person": {
+                    "id": "9400",
+                    "name": "蔣月惠",
+                    "image": "https://whoareyou-gcs.readr.tw/person/9400.jpg"
+                }
+            },
+            "4": {
+                "party": "台灣維新",
+                "person": {
+                    "id": "44408",
+                    "name": "張庭源",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": "中華統一促進黨",
+                "person": {
+                    "id": "44407",
+                    "name": "李孟翰",
                     "image": null
                 }
             },
             "6": {
                 "party": "中國國民黨",
                 "person": {
-                    "id": "230",
-                    "name": "羅明才",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100108.jpg"
+                    "id": "40009",
+                    "name": "黃明賢",
+                    "image": "https://whoareyou-gcs.readr.tw/person/40009.jpg"
+                }
+            }
+        }
+    },
+    "10005": {
+        "02": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "838",
+                    "name": "邱鎮軍",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": null,
+                "person": {
+                    "id": "39830",
+                    "name": "曾玟學",
+                    "image": "https://whoareyou-gcs.readr.tw/person/39830.jpg"
                 }
             }
         },
@@ -1488,301 +1744,203 @@
             "1": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "37211",
-                    "name": "何博文",
+                    "id": "1301",
+                    "name": "康世明",
                     "image": null
                 }
             },
             "2": {
-                "party": "中國國民黨",
+                "party": null,
                 "person": {
-                    "id": "423",
-                    "name": "洪孟楷",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100041.jpg"
+                    "id": "180",
+                    "name": "陳超明",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100067.jpg"
+                }
+            }
+        }
+    },
+    "10015": {
+        "01": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "6829",
+                    "name": "許願神",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "40074",
+                    "name": "張美慧",
+                    "image": "https://whoareyou-gcs.readr.tw/person/40074.jpg"
                 }
             },
             "3": {
-                "party": "中華統一促進黨",
+                "party": "中國國民黨",
                 "person": {
-                    "id": "44337",
-                    "name": "翁藤原",
-                    "image": null
+                    "id": "285",
+                    "name": "傅崐萁",
+                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/ly1000_6_00146_15f.jpg"
                 }
             },
             "4": {
-                "party": null,
+                "party": "制度救世島",
                 "person": {
-                    "id": "44339",
-                    "name": "游清池",
-                    "image": null
-                }
-            },
-            "5": {
-                "party": "台灣維新",
-                "person": {
-                    "id": "44338",
-                    "name": "徐百弟",
+                    "id": "44706",
+                    "name": "周玉梅",
                     "image": null
                 }
             }
-        },
-        "06": {
+        }
+    },
+    "10017": {
+        "01": {
             "1": {
-                "party": "民主進步黨",
+                "party": "家庭基本收入",
                 "person": {
-                    "id": "426",
-                    "name": "張宏陸",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100049.jpg"
+                    "id": "44418",
+                    "name": "邱紹祐",
+                    "image": null
                 }
             },
             "2": {
-                "party": "中國國民黨",
+                "party": null,
                 "person": {
-                    "id": "36892",
-                    "name": "林國春",
-                    "image": "https://whoareyou-gcs.readr.tw/person/36892.jpg"
+                    "id": "44417",
+                    "name": "黃傑陽",
+                    "image": null
                 }
             },
             "3": {
-                "party": "司法改革黨",
-                "person": {
-                    "id": "40291",
-                    "name": "黃淑珍",
-                    "image": null
-                }
-            }
-        },
-        "07": {
-            "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "451",
-                    "name": "羅致政",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100110.jpg"
-                }
-            },
-            "2": {
                 "party": "小民參政歐巴桑聯盟",
                 "person": {
-                    "id": "44344",
-                    "name": "劉書婷",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "38507",
-                    "name": "葉元之",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38507.jpg"
-                }
-            }
-        },
-        "12": {
-            "1": {
-                "party": "台灣維新",
-                "person": {
-                    "id": "44352",
-                    "name": "陳長志",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "44353",
-                    "name": "楊木火",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "臺灣雙語無法黨",
-                "person": {
-                    "id": "44351",
-                    "name": "李佳蒨",
+                    "id": "44419",
+                    "name": "謝海菁",
                     "image": null
                 }
             },
             "4": {
-                "party": "民主進步黨",
+                "party": null,
                 "person": {
-                    "id": "446",
-                    "name": "賴品妤",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100102.jpg"
+                    "id": "37401",
+                    "name": "王醒之",
+                    "image": null
                 }
             },
             "5": {
                 "party": "中國國民黨",
                 "person": {
-                    "id": "38552",
-                    "name": "廖先翔",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38552.jpg"
+                    "id": "40131",
+                    "name": "林沛祥",
+                    "image": "https://whoareyou-gcs.readr.tw/person/40131.jpg"
                 }
             },
             "6": {
-                "party": null,
+                "party": "民主進步黨",
                 "person": {
-                    "id": "38548",
-                    "name": "黃瑞傳",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38548.jpg"
+                    "id": "40119",
+                    "name": "鄭文婷",
+                    "image": "https://whoareyou-gcs.readr.tw/person/40119.jpg"
                 }
             }
-        },
-        "03": {
+        }
+    },
+    "10020": {
+        "01": {
             "1": {
-                "party": null,
+                "party": "民主進步黨",
                 "person": {
-                    "id": "19792",
-                    "name": "陳東雲",
-                    "image": null
+                    "id": "413",
+                    "name": "王美惠",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100003.jpg"
                 }
             },
             "2": {
                 "party": null,
                 "person": {
-                    "id": "36879",
-                    "name": "蘇卿彥",
+                    "id": "36764",
+                    "name": "簡明廉",
                     "image": null
                 }
             },
             "3": {
-                "party": "中國國民黨",
+                "party": "小民參政歐巴桑聯盟",
                 "person": {
-                    "id": "35101",
-                    "name": "蔡明堂",
+                    "id": "44423",
+                    "name": "陳玥妗",
                     "image": null
                 }
             },
             "4": {
-                "party": "民主進步黨",
+                "party": "臺灣雙語無法黨",
                 "person": {
-                    "id": "38501",
-                    "name": "李坤城",
-                    "image": null
-                }
-            }
-        },
-        "02": {
-            "1": {
-                "party": "中華統一促進黨",
-                "person": {
-                    "id": "44340",
-                    "name": "何淯笙",
+                    "id": "44424",
+                    "name": "林智勲",
                     "image": null
                 }
             },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "334",
-                    "name": "林淑芬",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100031.jpg"
-                }
-            },
-            "3": {
-                "party": "台灣民眾黨",
-                "person": {
-                    "id": "43321",
-                    "name": "李有宜",
-                    "image": "https://whoareyou-gcs.readr.tw/person/43321.jpg"
-                }
-            }
-        },
-        "10": {
-            "1": {
+            "5": {
                 "party": "中國國民黨",
                 "person": {
-                    "id": "36907",
-                    "name": "林金結",
-                    "image": "https://whoareyou-gcs.readr.tw/person/36907.jpg"
+                    "id": "40228",
+                    "name": "張秀華",
+                    "image": "https://whoareyou-gcs.readr.tw/person/40228.jpg"
                 }
             },
-            "2": {
-                "party": null,
+            "6": {
+                "party": "復康聯盟黨",
                 "person": {
-                    "id": "44346",
-                    "name": "袁興",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "人民最大黨",
-                "person": {
-                    "id": "36818",
-                    "name": "孟藹倫",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "417",
-                    "name": "吳琪銘",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100016.jpg"
-                }
-            }
-        },
-        "05": {
-            "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "38534",
-                    "name": "洪佳君",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38534.jpg"
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "452",
-                    "name": "蘇巧慧",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100111.jpg"
-                }
-            }
-        },
-        "08": {
-            "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "38328",
-                    "name": "吳崢",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38328.jpg"
-                }
-            },
-            "2": {
-                "party": "台灣民眾黨",
-                "person": {
-                    "id": "710",
-                    "name": "邱臣遠",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100034.jpg"
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "44345",
-                    "name": "張智倫",
-                    "image": null
+                    "id": "43386",
+                    "name": "蔡松益",
+                    "image": "https://whoareyou-gcs.readr.tw/person/43386.jpg"
                 }
             }
         }
     },
     "10004": {
-        "01": {
+        "02": {
             "1": {
-                "party": "民主進步黨",
+                "party": "時代力量",
                 "person": {
-                    "id": "44390",
-                    "name": "詹紀緹",
-                    "image": null
+                    "id": "703",
+                    "name": "王婉諭",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E7%8E%8B%E5%A9%89%E8%AB%AD.jpg"
                 }
             },
             "2": {
-                "party": null,
+                "party": "民主進步黨",
                 "person": {
-                    "id": "36733",
-                    "name": "余筱菁",
-                    "image": "https://whoareyou-gcs.readr.tw/person/36733.jpg"
+                    "id": "44392",
+                    "name": "曾聖凱",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9B%BE%E8%81%96%E5%87%B1.jpg"
+                }
+            },
+            "3": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "421",
+                    "name": "林思銘",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9E%97%E6%80%9D%E9%8A%98.jpg"
+                }
+            }
+        },
+        "01": {
+            "1": {
+                "party": "台灣維新",
+                "person": {
+                    "id": "10781",
+                    "name": "劉復嵐",
+                    "image": "https://whoareyou-gcs.readr.tw/person/10781.jpg"
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "399",
+                    "name": "徐欣瑩",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E5%BE%90%E6%AC%A3%E7%91%A9.jpg"
                 }
             },
             "3": {
@@ -1794,81 +1952,47 @@
                 }
             },
             "4": {
-                "party": "台灣維新",
+                "party": "台灣綠黨",
                 "person": {
-                    "id": "10781",
-                    "name": "劉復嵐",
-                    "image": "https://whoareyou-gcs.readr.tw/person/10781.jpg"
+                    "id": "36733",
+                    "name": "余筱菁",
+                    "image": "https://whoareyou-gcs.readr.tw/person/36733.jpg"
                 }
             },
             "5": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "399",
-                    "name": "徐欣瑩",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/80047.jpg"
-                }
-            }
-        },
-        "02": {
-            "1": {
-                "party": "時代力量",
-                "person": {
-                    "id": "703",
-                    "name": "王婉諭",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100004.jpg"
-                }
-            },
-            "2": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "44392",
-                    "name": "曾聖凱",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "421",
-                    "name": "林思銘",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100028.jpg"
+                    "id": "44390",
+                    "name": "詹紀緹",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%A9%B9%E7%B4%80%E7%B7%B9.jpg"
                 }
             }
         }
     },
     "64000": {
-        "05": {
+        "06": {
             "1": {
-                "party": "中國國民黨",
+                "party": "喜樂島聯盟",
                 "person": {
-                    "id": "36850",
-                    "name": "黃柏霖",
-                    "image": "https://whoareyou-gcs.readr.tw/person/36850.jpg"
+                    "id": "37797",
+                    "name": "郭倍宏",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%83%AD%E5%80%8D%E5%AE%8F.jpg"
                 }
             },
             "2": {
-                "party": null,
+                "party": "民主進步黨",
                 "person": {
-                    "id": "44383",
-                    "name": "楊椒喬",
-                    "image": null
+                    "id": "38447",
+                    "name": "黃捷",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%BB%83%E6%8D%B7.jpg"
                 }
             },
             "3": {
-                "party": "小民參政歐巴桑聯盟",
+                "party": "中國國民黨",
                 "person": {
-                    "id": "44384",
-                    "name": "張芳愉",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "325",
-                    "name": "李昆澤",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100018.jpg"
+                    "id": "36859",
+                    "name": "陳美雅",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%99%B3%E7%BE%8E%E9%9B%85.jpg"
                 }
             }
         },
@@ -1882,22 +2006,6 @@
                 }
             },
             "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "38413",
-                    "name": "李柏毅",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38413.jpg"
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "28673",
-                    "name": "張正達",
-                    "image": null
-                }
-            },
-            "4": {
                 "party": null,
                 "person": {
                     "id": "44382",
@@ -1905,12 +2013,62 @@
                     "image": null
                 }
             },
-            "5": {
+            "3": {
                 "party": "中國國民黨",
                 "person": {
                     "id": "38411",
                     "name": "李眉蓁",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38411.jpg"
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9D%8E%E7%9C%89%E8%93%81.jpg"
+                }
+            },
+            "4": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "38413",
+                    "name": "李柏毅",
+                    "image": "https://whoareyou-gcs.readr.tw/person/38413.jpg"
+                }
+            },
+            "5": {
+                "party": null,
+                "person": {
+                    "id": "28673",
+                    "name": "張正達",
+                    "image": null
+                }
+            }
+        },
+        "01": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "2301",
+                    "name": "林義迪",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9E%97%E7%BE%A9%E8%BF%AA.jpg"
+                }
+            },
+            "2": {
+                "party": "台灣民眾黨",
+                "person": {
+                    "id": "43117",
+                    "name": "曾尹儷",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9B%BE%E5%B0%B9%E5%84%B7.jpg"
+                }
+            },
+            "3": {
+                "party": "人民最大黨",
+                "person": {
+                    "id": "44379",
+                    "name": "劉承智",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "247",
+                    "name": "邱議瑩",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%82%B1%E8%AD%B0%E7%91%A9.jpg"
                 }
             }
         },
@@ -1932,6 +2090,40 @@
                 }
             }
         },
+        "05": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "44383",
+                    "name": "楊椒喬",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "325",
+                    "name": "李昆澤",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100018.jpg"
+                }
+            },
+            "3": {
+                "party": "小民參政歐巴桑聯盟",
+                "person": {
+                    "id": "44384",
+                    "name": "張芳愉",
+                    "image": null
+                }
+            },
+            "4": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "36850",
+                    "name": "黃柏霖",
+                    "image": "https://whoareyou-gcs.readr.tw/person/36850.jpg"
+                }
+            }
+        },
         "08": {
             "1": {
                 "party": "司法改革黨",
@@ -1950,112 +2142,18 @@
                 }
             },
             "3": {
-                "party": "勞動黨",
-                "person": {
-                    "id": "44388",
-                    "name": "湛秀英",
-                    "image": null
-                }
-            },
-            "4": {
                 "party": "民主進步黨",
                 "person": {
                     "id": "448",
                     "name": "賴瑞隆",
                     "image": "http://www.ly.gov.tw//Images/Legislators/100105.jpg"
                 }
-            }
-        },
-        "01": {
-            "1": {
-                "party": "人民最大黨",
-                "person": {
-                    "id": "44379",
-                    "name": "劉承智",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "247",
-                    "name": "邱議瑩",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/71040.jpg"
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "2301",
-                    "name": "林義迪",
-                    "image": "https://whoareyou-gcs.readr.tw/person/2301.jpg"
-                }
             },
             "4": {
-                "party": "台灣民眾黨",
+                "party": "勞動黨",
                 "person": {
-                    "id": "43117",
-                    "name": "曾尹儷",
-                    "image": "https://whoareyou-gcs.readr.tw/person/43117.jpg"
-                }
-            }
-        },
-        "06": {
-            "1": {
-                "party": "喜樂島聯盟",
-                "person": {
-                    "id": "37797",
-                    "name": "郭倍宏",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "38447",
-                    "name": "黃捷",
-                    "image": "https://whoareyou-gcs.readr.tw/person/38447.jpg"
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "36859",
-                    "name": "陳美雅",
-                    "image": "https://whoareyou-gcs.readr.tw/person/36859.jpg"
-                }
-            }
-        },
-        "07": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "44387",
-                    "name": "洪啟修",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "404",
-                    "name": "許智傑",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100056.jpg"
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "37081",
-                    "name": "鍾易仲",
-                    "image": "https://whoareyou-gcs.readr.tw/person/37081.jpg"
-                }
-            },
-            "4": {
-                "party": "司法改革黨",
-                "person": {
-                    "id": "44385",
-                    "name": "王和平統一",
+                    "id": "44388",
+                    "name": "湛秀英",
                     "image": null
                 }
             }
@@ -2077,188 +2175,160 @@
                     "image": "https://whoareyou-gcs.readr.tw/person/33051.jpg"
                 }
             }
-        }
-    },
-    "10013": {
-        "02": {
+        },
+        "07": {
             "1": {
-                "party": "民主進步黨",
+                "party": null,
                 "person": {
-                    "id": "44412",
-                    "name": "徐富癸",
+                    "id": "44387",
+                    "name": "洪啟修",
                     "image": null
                 }
             },
             "2": {
-                "party": "中華聯合黨",
+                "party": "司法改革黨",
                 "person": {
-                    "id": "44411",
-                    "name": "吳媚宮",
+                    "id": "44385",
+                    "name": "王和平統一",
                     "image": null
                 }
             },
             "3": {
-                "party": null,
+                "party": "中國國民黨",
                 "person": {
-                    "id": "44410",
-                    "name": "蘇孟淳",
-                    "image": null
+                    "id": "37081",
+                    "name": "鍾易仲",
+                    "image": "https://whoareyou-gcs.readr.tw/person/37081.jpg"
                 }
             },
             "4": {
-                "party": "人民最大黨",
+                "party": "民主進步黨",
                 "person": {
-                    "id": "36769",
-                    "name": "何秋葺",
+                    "id": "404",
+                    "name": "許智傑",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100056.jpg"
+                }
+            }
+        }
+    },
+    "10009": {
+        "02": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "409",
+                    "name": "劉建國",
+                    "image": "https://whoareyou-gcs.readr.tw/person/409.jpg"
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "44403",
+                    "name": "邱良閱",
                     "image": null
                 }
             }
         },
         "01": {
             "1": {
-                "party": "台灣維新",
+                "party": "中華統一促進黨",
                 "person": {
-                    "id": "44408",
-                    "name": "張庭源",
+                    "id": "44402",
+                    "name": "郭炳宏",
                     "image": null
                 }
             },
             "2": {
-                "party": "中國國民黨",
+                "party": null,
                 "person": {
-                    "id": "40009",
-                    "name": "黃明賢",
-                    "image": "https://whoareyou-gcs.readr.tw/person/40009.jpg"
+                    "id": "36967",
+                    "name": "吳炳輝",
+                    "image": "https://whoareyou-gcs.readr.tw/person/36967.jpg"
                 }
             },
             "3": {
-                "party": null,
+                "party": "民主進步黨",
                 "person": {
-                    "id": "44409",
-                    "name": "曾鈺庭",
-                    "image": null
+                    "id": "311",
+                    "name": "蘇治芬",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100112.jpg"
                 }
             },
             "4": {
-                "party": "民主進步黨",
+                "party": "台灣革命黨",
                 "person": {
-                    "id": "450",
-                    "name": "鍾佳濱",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100107.jpg"
+                    "id": "36758",
+                    "name": "李昭儀",
+                    "image": null
                 }
             },
             "5": {
-                "party": "中華統一促進黨",
+                "party": "中國國民黨",
                 "person": {
-                    "id": "44407",
-                    "name": "李孟翰",
+                    "id": "1004",
+                    "name": "丁學忠",
                     "image": null
                 }
             },
             "6": {
                 "party": null,
                 "person": {
-                    "id": "9400",
-                    "name": "蔣月惠",
-                    "image": "https://whoareyou-gcs.readr.tw/person/9400.jpg"
+                    "id": "39945",
+                    "name": "陳俊龍",
+                    "image": "https://whoareyou-gcs.readr.tw/person/39945.jpg"
                 }
             }
         }
     },
-    "09020": {
+    "10002": {
         "01": {
             "1": {
-                "party": "台灣民眾黨",
-                "person": {
-                    "id": "44415",
-                    "name": "尚文凱",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "431",
-                    "name": "陳玉珍",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/90127.jpg"
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "36728",
-                    "name": "洪和成",
-                    "image": null
-                }
-            }
-        }
-    },
-    "10008": {
-        "02": {
-            "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "39919",
-                    "name": "游顥",
-                    "image": "https://whoareyou-gcs.readr.tw/person/39919.jpg"
-                }
-            },
-            "2": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "698",
-                    "name": "蔡培慧",
-                    "image": "https://whoareyou-gcs.readr.tw/person/蔡培慧.jpg"
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "990",
-                    "name": "陳癸佑",
-                    "image": null
-                }
-            }
-        },
-        "01": {
-            "1": {
-                "party": "勞動黨",
-                "person": {
-                    "id": "44400",
-                    "name": "許文忠",
-                    "image": null
+                    "id": "8294",
+                    "name": "陳俊宇",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%99%B3%E4%BF%8A%E5%AE%87.jpg"
                 }
             },
             "2": {
-                "party": "小民參政歐巴桑聯盟",
+                "party": null,
                 "person": {
-                    "id": "44401",
-                    "name": "李圓恩",
+                    "id": "39573",
+                    "name": "林錦坤",
                     "image": null
                 }
             },
             "3": {
-                "party": null,
+                "party": "制度救世島",
                 "person": {
-                    "id": "5362",
-                    "name": "林金潭",
+                    "id": "44413",
+                    "name": "邱介勲",
                     "image": null
                 }
             },
             "4": {
-                "party": "中國國民黨",
+                "party": "台灣民眾黨",
                 "person": {
-                    "id": "402",
-                    "name": "馬文君",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/71119.jpg"
+                    "id": "43372",
+                    "name": "陳琬惠",
+                    "image": "https://whoareyou-gcs.readr.tw/person/陳琬惠.jpg"
                 }
             },
             "5": {
-                "party": "民主進步黨",
+                "party": "台灣基進",
                 "person": {
-                    "id": "7551",
-                    "name": "蔡銘軒",
-                    "image": "https://whoareyou-gcs.readr.tw/person/7551.jpg"
+                    "id": "4056",
+                    "name": "林意評",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9E%97%E6%84%8F%E8%A9%95.jpg"
+                }
+            },
+            "6": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "39743",
+                    "name": "黃琤婷",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%BB%83%E7%90%A4%E5%A9%B7.jpg"
                 }
             }
         }
@@ -2266,7 +2336,7 @@
     "10018": {
         "01": {
             "1": {
-                "party": null,
+                "party": "制度救世島",
                 "person": {
                     "id": "37291",
                     "name": "趙福龍",
@@ -2282,22 +2352,14 @@
                 }
             },
             "3": {
-                "party": "民主進步黨",
+                "party": null,
                 "person": {
-                    "id": "44421",
-                    "name": "林志潔",
-                    "image": null
+                    "id": "44420",
+                    "name": "柯美蘭",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9F%AF%E7%BE%8E%E8%98%AD.jpg"
                 }
             },
             "4": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "444",
-                    "name": "鄭正鈐",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100097.jpg"
-                }
-            },
-            "5": {
                 "party": null,
                 "person": {
                     "id": "36784",
@@ -2305,302 +2367,28 @@
                     "image": null
                 }
             },
+            "5": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "44421",
+                    "name": "林志潔",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%9E%97%E5%BF%97%E6%BD%94.jpg"
+                }
+            },
             "6": {
                 "party": "時代力量",
                 "person": {
                     "id": "711",
                     "name": "邱顯智",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100038.jpg"
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%82%B1%E9%A1%AF%E6%99%BA.jpg"
                 }
             },
             "7": {
-                "party": null,
-                "person": {
-                    "id": "44420",
-                    "name": "柯美蘭",
-                    "image": null
-                }
-            }
-        }
-    },
-    "10014": {
-        "01": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "43390",
-                    "name": "陳長宏",
-                    "image": "https://whoareyou-gcs.readr.tw/person/43390.jpg"
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "410",
-                    "name": "劉櫂豪",
-                    "image": "https://whoareyou-gcs.readr.tw/person/劉櫂豪.jpg"
-                }
-            },
-            "3": {
                 "party": "中國國民黨",
                 "person": {
-                    "id": "1184",
-                    "name": "黃建賓",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "651",
-                    "name": "賴坤成",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/711110.jpg"
-                }
-            },
-            "5": {
-                "party": null,
-                "person": {
-                    "id": "2380",
-                    "name": "許瑞貴",
-                    "image": null
-                }
-            },
-            "6": {
-                "party": "小民參政歐巴桑聯盟",
-                "person": {
-                    "id": "44414",
-                    "name": "黃婉茹",
-                    "image": null
-                }
-            }
-        }
-    },
-    "10017": {
-        "01": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "44417",
-                    "name": "黃傑陽",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "小民參政歐巴桑聯盟",
-                "person": {
-                    "id": "44419",
-                    "name": "謝海菁",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "40131",
-                    "name": "林沛祥",
-                    "image": "https://whoareyou-gcs.readr.tw/person/40131.jpg"
-                }
-            },
-            "4": {
-                "party": null,
-                "person": {
-                    "id": "44418",
-                    "name": "邱紹祐",
-                    "image": null
-                }
-            },
-            "5": {
-                "party": null,
-                "person": {
-                    "id": "37401",
-                    "name": "王醒之",
-                    "image": null
-                }
-            },
-            "6": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "40119",
-                    "name": "鄭文婷",
-                    "image": "https://whoareyou-gcs.readr.tw/person/40119.jpg"
-                }
-            }
-        }
-    },
-    "10015": {
-        "01": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "6829",
-                    "name": "許願神",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "6931",
-                    "name": "周玉梅",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "40074",
-                    "name": "張美慧",
-                    "image": "https://whoareyou-gcs.readr.tw/person/40074.jpg"
-                }
-            },
-            "4": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "285",
-                    "name": "傅崐萁",
-                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/ly1000_6_00146_15f.jpg"
-                }
-            }
-        }
-    },
-    "10020": {
-        "01": {
-            "1": {
-                "party": "小民參政歐巴桑聯盟",
-                "person": {
-                    "id": "44423",
-                    "name": "陳玥妗",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "臺灣雙語無法黨",
-                "person": {
-                    "id": "44424",
-                    "name": "林智勲",
-                    "image": null
-                }
-            },
-            "3": {
-                "party": null,
-                "person": {
-                    "id": "36764",
-                    "name": "簡明廉",
-                    "image": null
-                }
-            },
-            "4": {
-                "party": null,
-                "person": {
-                    "id": "43386",
-                    "name": "蔡松益",
-                    "image": "https://whoareyou-gcs.readr.tw/person/43386.jpg"
-                }
-            },
-            "5": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "40228",
-                    "name": "張秀華",
-                    "image": "https://whoareyou-gcs.readr.tw/person/40228.jpg"
-                }
-            },
-            "6": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "413",
-                    "name": "王美惠",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100003.jpg"
-                }
-            }
-        }
-    },
-    "10002": {
-        "01": {
-            "1": {
-                "party": null,
-                "person": {
-                    "id": "44413",
-                    "name": "邱介勲",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": "台灣民眾黨",
-                "person": {
-                    "id": "43372",
-                    "name": "陳琬惠",
-                    "image": "https://whoareyou-gcs.readr.tw/person/陳琬惠.jpg"
-                }
-            },
-            "3": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "39743",
-                    "name": "黃琤婷",
-                    "image": "https://whoareyou-gcs.readr.tw/person/39743.jpg"
-                }
-            },
-            "4": {
-                "party": "台灣基進",
-                "person": {
-                    "id": "4056",
-                    "name": "林意評",
-                    "image": "https://whoareyou-gcs.readr.tw/person/4056.jpg"
-                }
-            },
-            "5": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "8294",
-                    "name": "陳俊宇",
-                    "image": "https://whoareyou-gcs.readr.tw/person/8294.jpg"
-                }
-            },
-            "6": {
-                "party": null,
-                "person": {
-                    "id": "39573",
-                    "name": "林錦坤",
-                    "image": null
-                }
-            }
-        }
-    },
-    "10005": {
-        "01": {
-            "1": {
-                "party": "民主進步黨",
-                "person": {
-                    "id": "1301",
-                    "name": "康世明",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "180",
-                    "name": "陳超明",
-                    "image": "http://www.ly.gov.tw//Images/Legislators/100067.jpg"
-                }
-            }
-        },
-        "02": {
-            "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "838",
-                    "name": "邱鎮軍",
-                    "image": null
-                }
-            },
-            "2": {
-                "party": null,
-                "person": {
-                    "id": "39830",
-                    "name": "曾玟學",
-                    "image": "https://whoareyou-gcs.readr.tw/person/39830.jpg"
+                    "id": "444",
+                    "name": "鄭正鈐",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%84%AD%E6%AD%A3%E9%88%90.jpg"
                 }
             }
         }
@@ -2608,6 +2396,14 @@
     "09007": {
         "01": {
             "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "36721",
+                    "name": "李問",
+                    "image": "https://whoareyou-gcs.readr.tw/person/李問.jpg"
+                }
+            },
+            "2": {
                 "party": "台灣民眾黨",
                 "person": {
                     "id": "44416",
@@ -2615,20 +2411,172 @@
                     "image": null
                 }
             },
-            "2": {
+            "3": {
                 "party": "中國國民黨",
                 "person": {
                     "id": "400",
                     "name": "陳雪生",
                     "image": "http://www.ly.gov.tw//Images/Legislators/100065.jpg"
                 }
+            }
+        }
+    },
+    "10010": {
+        "01": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "39973",
+                    "name": "詹琬蓁",
+                    "image": "https://whoareyou-gcs.readr.tw/person/39973.jpg"
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "441",
+                    "name": "蔡易餘",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/100092.jpg"
+                }
+            }
+        },
+        "02": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "44405",
+                    "name": "廖昱婧",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "制度救世島",
+                "person": {
+                    "id": "44406",
+                    "name": "簡銘傑",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": null,
+                "person": {
+                    "id": "333",
+                    "name": "林國慶",
+                    "image": "http://www.ly.gov.tw/upload/01_introduce/0103_leg/LGpicture/ly1000_6_00071_10f.jpg"
+                }
+            },
+            "4": {
+                "party": "台灣維新",
+                "person": {
+                    "id": "44404",
+                    "name": "黃一哲",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "44685",
+                    "name": "陳冠廷",
+                    "image": null
+                }
+            }
+        }
+    },
+    "10008": {
+        "01": {
+            "1": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "402",
+                    "name": "馬文君",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%A6%AC%E6%96%87%E5%90%9B.jpg"
+                }
+            },
+            "2": {
+                "party": "勞動黨",
+                "person": {
+                    "id": "44400",
+                    "name": "許文忠",
+                    "image": null
+                }
             },
             "3": {
                 "party": "民主進步黨",
                 "person": {
-                    "id": "36721",
-                    "name": "李問",
-                    "image": "https://whoareyou-gcs.readr.tw/person/李問.jpg"
+                    "id": "7551",
+                    "name": "蔡銘軒",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%94%A1%E9%8A%98%E8%BB%92.jpg"
+                }
+            },
+            "4": {
+                "party": "小民參政歐巴桑聯盟",
+                "person": {
+                    "id": "44401",
+                    "name": "李圓恩",
+                    "image": null
+                }
+            },
+            "5": {
+                "party": null,
+                "person": {
+                    "id": "5362",
+                    "name": "林金潭",
+                    "image": null
+                }
+            }
+        },
+        "02": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "990",
+                    "name": "陳癸佑",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%99%B3%E7%99%B8%E4%BD%91.jpg"
+                }
+            },
+            "2": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "698",
+                    "name": "蔡培慧",
+                    "image": "https://whoareyou-gcs.readr.tw/person/蔡培慧.jpg"
+                }
+            },
+            "3": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "39919",
+                    "name": "游顥",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E6%B8%B8%E9%A1%A5.jpg"
+                }
+            }
+        }
+    },
+    "09020": {
+        "01": {
+            "1": {
+                "party": null,
+                "person": {
+                    "id": "36728",
+                    "name": "洪和成",
+                    "image": null
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "431",
+                    "name": "陳玉珍",
+                    "image": "http://www.ly.gov.tw//Images/Legislators/90127.jpg"
+                }
+            },
+            "3": {
+                "party": "台灣民眾黨",
+                "person": {
+                    "id": "44415",
+                    "name": "尚文凱",
+                    "image": null
                 }
             }
         }
@@ -2636,19 +2584,19 @@
     "10016": {
         "01": {
             "1": {
-                "party": "中國國民黨",
-                "person": {
-                    "id": "1234",
-                    "name": "吳政杰",
-                    "image": "https://whoareyou-gcs.readr.tw/person/1234.jpg"
-                }
-            },
-            "2": {
                 "party": "民主進步黨",
                 "person": {
                     "id": "406",
                     "name": "楊曜",
                     "image": "http://www.ly.gov.tw//Images/Legislators/100078.jpg"
+                }
+            },
+            "2": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "1234",
+                    "name": "吳政杰",
+                    "image": "https://whoareyou-gcs.readr.tw/person/1234.jpg"
                 }
             },
             "3": {
@@ -2657,6 +2605,58 @@
                     "id": "40095",
                     "name": "陳慧娟",
                     "image": null
+                }
+            }
+        }
+    },
+    "10014": {
+        "01": {
+            "1": {
+                "party": "民主進步黨",
+                "person": {
+                    "id": "651",
+                    "name": "賴坤成",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%B3%B4%E5%9D%A4%E6%88%90.jpg"
+                }
+            },
+            "2": {
+                "party": "小民參政歐巴桑聯盟",
+                "person": {
+                    "id": "44414",
+                    "name": "黃婉茹",
+                    "image": null
+                }
+            },
+            "3": {
+                "party": null,
+                "person": {
+                    "id": "2380",
+                    "name": "許瑞貴",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E8%A8%B1%E7%91%9E%E8%B2%B4.jpg"
+                }
+            },
+            "4": {
+                "party": null,
+                "person": {
+                    "id": "43390",
+                    "name": "陳長宏",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%99%B3%E9%95%B7%E5%AE%8F.jpg"
+                }
+            },
+            "5": {
+                "party": "中國國民黨",
+                "person": {
+                    "id": "1184",
+                    "name": "黃建賓",
+                    "image": "https://storage.googleapis.com/whoareyou-gcs.readr.tw/person/%E9%BB%83%E5%BB%BA%E8%B3%93.jpg"
+                }
+            },
+            "6": {
+                "party": null,
+                "person": {
+                    "id": "410",
+                    "name": "劉櫂豪",
+                    "image": "https://whoareyou-gcs.readr.tw/person/劉櫂豪.jpg"
                 }
             }
         }
