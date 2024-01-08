@@ -434,10 +434,9 @@ def generate_map_country_seats(raw_data, helper=hp.helper):
         seat_template['parties'].append(seat_unchecked_template)
         result[election_type] = seat_template
 
-    ### 計算不分區立委
+    ### 計算不分區立委(直接從final_A抓資料)
     calc_victors = 0
     election_type = 'party'
-    election_data = raw_data[helper[election_type]][0] ### we only take the country data
     seat_template = tp.SeatTemplate().to_json()
     whole_seats = helper[f'{election_type}-allseats']
     mapping_json  = mapping_relationship[election_type]
