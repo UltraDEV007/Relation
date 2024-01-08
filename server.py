@@ -71,6 +71,12 @@ def election_all_default():
     upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
 
+@app.route('/elections/test', methods=['POST'])
+def election_test():
+    _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+    upload_multiple('2024', upload_map=True, upload_v2=True)
+    return 'ok'
+
 @app.route('/elections/cec/fetch', methods=['POST'])
 def cec_fetch():
     '''
