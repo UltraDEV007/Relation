@@ -29,6 +29,7 @@ def election_all_2024():
     '''
         Generate both map and v2 data in one batch
     '''
+
     if IS_STARTED==False and hp.CREATED_INIT_DEFAULT==False:
         _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
         _ = pipeline.pipeline_default_seats()

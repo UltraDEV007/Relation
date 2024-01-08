@@ -436,8 +436,8 @@ def pipeline_map_seats(raw_data):
     root = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'seat')
 
     ### Generate for country map, and upload immediately
-    result = lg_generator.generate_map_country_seats(raw_data)
-    country_list = ['mountain-indigenous', 'plain-indigenous', 'party', 'all']
+    result, seats_country = lg_generator.generate_map_country_seats(raw_data)
+    country_list = ['mountain-indigenous', 'plain-indigenous', 'party']
     for election_type, election_data in result.items():
         if election_type in country_list:
             filename = os.path.join(root, 'country', election_type, 'country.json')
@@ -445,10 +445,15 @@ def pipeline_map_seats(raw_data):
             upload_blob_realtime(filename)
     
     ### Generate for county map(only constituency)
-    result = lg_generator.generate_map_normal_seats(raw_data)
+    result, seats_normal = lg_generator.generate_map_normal_seats(raw_data)
     for county_name, county_data in result.items():
         filename = os.path.join(root, 'county', 'normal', county_name)
         save_file(filename, county_data)
+
+    ### Generate for all map, and upload immediately
+    all_json = lg_generator.generate_map_all_seats(seats_country, seats_normal)
+    filename = os.path.join(root, 'country', 'all', 'all.json')
+    save_file(filename, all_json)
 
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
