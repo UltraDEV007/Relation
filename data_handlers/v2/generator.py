@@ -9,6 +9,26 @@ def search_constituency_candidate(countyCode:str, areaCode: str, candNo: str):
     candInfo = hp.mapping_constituency_cand.get(countyCode,{}).get(areaCode,{}).get(candNo, None)
     return candInfo
 
+def check_only_one_area(data, election_type='normal', helper=helper):
+    '''
+        Return the dict which records the city or county that has only one area
+    '''
+    ### Initialize data
+    only_one_area = {}
+    election_data    = data[helper[election_type]]
+    for county_code, _ in hp.mapping_city.items():
+        only_one_area[county_code] = True
+    
+    ### Check data
+    for district in election_data:
+        prvCode  = district.get('prvCode',  hp.DEFAULT_PRVCODE)
+        cityCode = district.get('cityCode', hp.DEFAULT_CITYCODE)
+        areaCode = district.get('areaCode', hp.DEFAULT_AREACODE)
+        county_code = f"{prvCode}{cityCode}"
+        if areaCode != hp.DEFAULT_AREACODE:
+            only_one_area[county_code] = False
+    return only_one_area
+
 def generate_v2_president(raw_data, mapping_json, year: str):
     election_type = 'president'
     election_data = raw_data[helper['president']]
@@ -110,6 +130,7 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
 
     updatedAt = datetime.strptime(raw_data[helper['START_TIME']], '%m%d%H%M')
     updatedAt = f"{datetime.now().year}-{datetime.strftime(updatedAt, '%m-%d %H:%M')}"
+    only_one_area = check_only_one_area(raw_data)
 
     ### categorize the data into hierarchy, county_code->area_code->candNo
     hierarchy = {}
@@ -117,8 +138,13 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
         prvCode = data.get('prvCode', hp.DEFAULT_PRVCODE)
         cityCode = data.get('cityCode', hp.DEFAULT_CITYCODE)
         areaCode = data.get('areaCode', hp.DEFAULT_AREACODE)
-        if areaCode == hp.DEFAULT_AREACODE:
+        if countyCode not in districts_list:
             continue
+        if only_one_area.get(countyCode, False)==True:
+            areaCode='01'
+        else:
+            if areaCode==hp.DEFAULT_AREACODE:
+                continue
         
         countyCode = f'{prvCode}{cityCode}' ### include city and county
         if countyCode in districts_list:
