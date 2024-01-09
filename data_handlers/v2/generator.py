@@ -138,6 +138,7 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
         prvCode = data.get('prvCode', hp.DEFAULT_PRVCODE)
         cityCode = data.get('cityCode', hp.DEFAULT_CITYCODE)
         areaCode = data.get('areaCode', hp.DEFAULT_AREACODE)
+        countyCode = f'{prvCode}{cityCode}' ### include city and county
         if countyCode not in districts_list:
             continue
         if only_one_area.get(countyCode, False)==True:
@@ -146,7 +147,6 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
             if areaCode==hp.DEFAULT_AREACODE:
                 continue
         
-        countyCode = f'{prvCode}{cityCode}' ### include city and county
         if countyCode in districts_list:
             raw_candidates = data.get('candTksInfo', [])
             subCounty = hierarchy.setdefault(countyCode, {})
