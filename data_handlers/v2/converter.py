@@ -113,7 +113,7 @@ def convert_v2_party_candidates(raw_candidates, mapping_json):
         candidateTemplate['candNo'] = candNo
         
         partyInfo = mapping_json.get(str(candNo), {}).get('party', None)
-        seatsInfo  = mapping_json.get(str(candNo), {}).get('seats', hp.DEFAULT_INT)
+        seatsInfo  = mapping_json.get(str(candNo), {}).get('seat', hp.DEFAULT_INT)
         
         candidateTemplate['party'] = partyInfo
         candidateTemplate['seats'] = seatsInfo
