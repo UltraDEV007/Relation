@@ -66,7 +66,7 @@ def election_all_default():
     '''
         Test API for creating default json files
     '''
-    _ = pipeline.pipeline_default_map(is_started=IS_STARTED)
+    _ = pipeline.pipeline_default_map(is_started=False, is_running=False)
     _ = pipeline.pipeline_default_seats()
     upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
