@@ -472,11 +472,9 @@ def generate_map_normal_seats(raw_data, helper=hp.helper):
             area_candidates = hp.mapping_constituency_cand.get(county_code, {}).get(area_code, None)
             print(f'county_code: {county_code}, area_code: {area_code}, only_one_area: {only_one_area}')
             raw_candidates = area_data.get('candTksInfo', hp.DEFAULT_LIST)
-            if raw_candidates==hp.DEFAULT_LIST:
-                print('raw candidates not exists')
             for candidate in raw_candidates:
                 candNo    = candidate.get('candNo', hp.DEFAULT_INT)
-                is_winner = True if (candidate.get('candVictor')=='*') else False
+                is_winner = True if candidate.get('candVictor', ' ')=='*' else False
                 print(f'candNo={candNo}, is_winner={is_winner}')
                 if is_winner==True:
                     party = area_candidates.get(str(candNo), {}).get('party', '無黨籍及未經政黨推薦')
