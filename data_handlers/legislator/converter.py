@@ -20,8 +20,11 @@ def convert_constituency_candidate(raw_candidates, county_code:str, area_code:st
         candidate_tmp = tp.CandidateTemplate().to_json()
         candNo = cand.get('candNo', 0)
         candidate_tmp['candNo']     = candNo
-        candidate_tmp['name']       = area_candidates.get(str(candNo), {}).get('person', hp.UNKNOWN_CANDIDATE).get('name', None)
-        candidate_tmp['party']      = area_candidates.get(str(candNo), hp.UNKNOWN_CANDIDATE).get('party', None)
+        candidate_tmp['name']       = area_candidates.get(str(candNo), {}).get('person', hp.UNKNOWN_CANDIDATE).get('name', hp.UNKNOWN_CAND_NAME)
+        party = area_candidates.get(str(candNo), hp.UNKNOWN_CANDIDATE).get('party', hp.INDEPENDENT_PARTY)
+        if party==None:
+            party = hp.INDEPENDENT_PARTY
+        candidate_tmp['party']      = party
         candidate_tmp['tks']        = cand.get('tks', hp.DEFAULT_INT)
         candidate_tmp['tksRate']    = round(cand.get('tksRate', hp.DEFAULT_FLOAT), hp.ROUND_DECIMAL)
         candidate_tmp['candVictor'] = cand.get('candVictor', ' ')
@@ -56,8 +59,11 @@ def convert_candidate(raw_candidates, election_type):
             candidate_tmp = tp.CandidateTemplate().to_json()
             candNo = cand.get('candNo', hp.DEFAULT_INT)
             candidate_tmp['candNo']     = candNo
-            candidate_tmp['name']       = mapping_json.get(str(candNo), hp.UNKNOWN_CANDIDATE).get('name', None)
-            candidate_tmp['party']      = mapping_json.get(str(candNo), hp.UNKNOWN_CANDIDATE).get('party', None)
+            candidate_tmp['name']       = mapping_json.get(str(candNo), hp.UNKNOWN_CANDIDATE).get('name', hp.UNKNOWN_CAND_NAME)
+            party = mapping_json.get(str(candNo), hp.UNKNOWN_CANDIDATE).get('party', hp.INDEPENDENT_PARTY)
+            if party == None:
+                party = hp.INDEPENDENT_PARTY 
+            candidate_tmp['party']      = party
             candidate_tmp['tks']        = cand.get('tks', hp.DEFAULT_INT)
             candidate_tmp['tksRate']    = round(cand.get('tksRate', hp.DEFAULT_FLOAT), 2)
             
@@ -71,8 +77,8 @@ def convert_candidate(raw_candidates, election_type):
             candidate_tmp = tp.PartyCandidateTemplate().to_json()
             patyNo = cand.get('patyNo', hp.DEFAULT_INT)
             candidate_tmp['candNo']  = patyNo
-            candidate_tmp['party']   = mapping_json.get(str(patyNo), hp.UNKNOWN_PARTY).get('name', None)
-            candidate_tmp['seats']   = mapping_json.get(str(patyNo), hp.UNKNOWN_PARTY).get('seat', None)
+            candidate_tmp['party']   = mapping_json.get(str(patyNo), hp.UNKNOWN_PARTY).get('name', hp.INDEPENDENT_PARTY)
+            candidate_tmp['seats']   = mapping_json.get(str(patyNo), hp.UNKNOWN_PARTY).get('seat', hp.DEFAULT_INT)
             candidate_tmp['tksRate'] = round(cand.get('tksRate1', hp.DEFAULT_FLOAT), hp.ROUND_DECIMAL) ### Don't use tksRate2
             candidate_tmp['tks']     = cand.get('tks', hp.DEFAULT_INT)
             result.append(candidate_tmp)

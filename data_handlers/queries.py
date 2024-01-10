@@ -52,7 +52,7 @@ query GetMountainIndigeous {
   personElections(
     orderBy:{ number: asc },
     where: {
-      election: {id: { equals: 89 } },
+      election: {id: { equals: 88 } },
       status: {equals: "active"},
     }) {
     id
@@ -75,7 +75,7 @@ query GetPlainIndigeous {
   personElections(
     orderBy:{ number: asc },
     where: {
-      election: {id: { equals: 88 } },
+      election: {id: { equals: 89 } },
       status: {equals: "active"},
     }) {
     id

@@ -93,13 +93,19 @@ DEFAULT_LIST  = DEFAULT_CANDTKSINFO = []
 DEFAULT_INT   = 0
 ROUND_DECIMAL = 2
 
+
+INDEPENDENT_PARTY = "無黨籍及未經政黨推薦"
+V2_INDEPENDENT_PARTY = "無黨籍"
+UNDETERMINED_INFO = "席次尚未確認"
+
+UNKNOWN_CAND_NAME = "未知參選人"
 UNKNOWN_CANDIDATE = {
-    "name": "未知",
-    "party": "未知黨"
+    "name": "未知參選人",
+    "party": "未知政黨"
 }
 
 UNKNOWN_PARTY = {
-    "name": "未知黨",
+    "name": "未知參選人" ,
     "seat": DEFAULT_INT
 }
 

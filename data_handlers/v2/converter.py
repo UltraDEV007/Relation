@@ -13,7 +13,7 @@ def convert_v2_president_candidates(raw_candidates, mapping_json):
     for candidate in raw_candidates:
         candidateTemplate = tp.V2PresidentCandidateTemplate(
             tks = candidate.get('tks', hp.DEFAULT_INT),
-            tksRate = candidate.get('tksRate', hp.DEFAULT_FLOAT),
+            tksRate = round(candidate.get('tksRate', hp.DEFAULT_FLOAT), hp.ROUND_DECIMAL),
             candVictor = True if (candidate.get('candVictor')=='*') else False,
         ).to_json()
         candNo = candidate.get('candNo', hp.DEFAULT_INT)
@@ -74,7 +74,7 @@ def convert_v2_person_candidates(raw_candidates, mapping_json):
     for candidate in raw_candidates:
         candidateTemplate = tp.V2PersonCandidateTemplate(
             tks = candidate.get('tks', hp.DEFAULT_INT),
-            tksRate = candidate.get('tksRate', hp.DEFAULT_FLOAT),
+            tksRate = round(candidate.get('tksRate', hp.DEFAULT_FLOAT), hp.ROUND_DECIMAL),
             candVictor = True if (candidate.get('candVictor')=='*') else False,
         ).to_json()
         candNo = candidate.get('candNo', hp.DEFAULT_INT)
@@ -105,15 +105,15 @@ def convert_v2_party_candidates(raw_candidates, mapping_json):
     for candidate in raw_candidates:
         candidateTemplate = tp.V2PartyCandidateTemplate(
             tks      = candidate.get('tks', hp.DEFAULT_INT),
-            tksRate1 = candidate.get('tksRate1', hp.DEFAULT_FLOAT),
-            tksRate2 = candidate.get('tksRate2', hp.DEFAULT_FLOAT),
+            tksRate1 = round(candidate.get('tksRate1', hp.DEFAULT_FLOAT), hp.ROUND_DECIMAL),
+            tksRate2 = round(candidate.get('tksRate2', hp.DEFAULT_FLOAT), hp.ROUND_DECIMAL),
             seats    = 0  ### TODO: Correct the value of seats
         ).to_json()
         candNo = candidate.get('patyNo', hp.DEFAULT_INT)
         candidateTemplate['candNo'] = candNo
         
         partyInfo = mapping_json.get(str(candNo), {}).get('party', None)
-        seatsInfo  = mapping_json.get(str(candNo), {}).get('seats', hp.DEFAULT_INT)
+        seatsInfo  = mapping_json.get(str(candNo), {}).get('seat', hp.DEFAULT_INT)
         
         candidateTemplate['party'] = partyInfo
         candidateTemplate['seats'] = seatsInfo
@@ -121,6 +121,8 @@ def convert_v2_party_candidates(raw_candidates, mapping_json):
     return result
 
 def convert_district_person(personInfo):
+    if personInfo==None:
+        return
     website = helper['WHORU_WEBSITE_PERSON']
     person_id = personInfo.get('id', None)
     v2_person = tp.V2PersonInfoTemplate(
@@ -130,8 +132,10 @@ def convert_district_person(personInfo):
     ).to_json()
     return v2_person
 
-def convert_district_party(partyInfo):
+def convert_district_party(partyName):
+    if partyName==None:
+        partyName = hp.V2_INDEPENDENT_PARTY
     v2_party = tp.V2PartyInfoTemplate(
-        label = partyInfo.get('name', None), 
+        label = partyName, 
     ).to_json()
     return v2_party
