@@ -94,8 +94,14 @@ def convert_v2_person_candidates(raw_candidates, mapping_json):
         ).to_json()
 
         if partyInfo:
+            partyName = partyInfo.get('name', None)
+            partyName = hp.V2_INDEPENDENT_PARTY if partyName==None else partyName
             candidateTemplate['party'] = tp.V2PartyInfoTemplate(
-                label = partyInfo.get('name', None),
+                label = partyName,
+            ).to_json()
+        else:
+            candidateTemplate['party'] = tp.V2PartyInfoTemplate(
+                label = hp.V2_INDEPENDENT_PARTY,
             ).to_json()
         result.append(candidateTemplate)
     return result
