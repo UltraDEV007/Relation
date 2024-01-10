@@ -331,35 +331,35 @@ def getDefaultSeat(election_type: str, area_seats: int=0):
     if election_type == 'all':
         seat_template['parties'].append(
             SeatCandidateTemplate(
-                label = '開票中 席次尚未確認',
+                label = hp.UNDETERMINED_INFO,
                 seats = hp.helper['all-allseats'] 
             ).to_json()
         )
     elif election_type == 'mountain-indigenous':
         seat_template['parties'].append(
             SeatCandidateTemplate(
-                label = '開票中 席次尚未確認',
+                label = hp.UNDETERMINED_INFO,
                 seats = hp.helper['mountain-indigenous-allseats'] 
             ).to_json()
         )
     elif election_type == 'plain-indigenous':
         seat_template['parties'].append(
             SeatCandidateTemplate(
-                label = '開票中 席次尚未確認',
+                label = hp.UNDETERMINED_INFO,
                 seats = hp.helper['plain-indigenous-allseats'] 
             ).to_json()
         )
     elif election_type == 'party':
         seat_template['parties'].append(
             SeatCandidateTemplate(
-                label = '開票中 席次尚未確認',
+                label = hp.UNDETERMINED_INFO,
                 seats = hp.helper['party-allseats'] 
             ).to_json()
         )
     elif election_type == 'normal':
         seat_template['parties'].append(
             SeatCandidateTemplate(
-                label = '開票中 席次尚未確認',
+                label = hp.UNDETERMINED_INFO,
                 seats = area_seats
             ).to_json()
         )

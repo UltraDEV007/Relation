@@ -83,6 +83,15 @@ def request_cec_by_type(type: str = 'general', secure_mode=False):
     print("Couldn't get CEC data from either final or running URL.")
     return None, None
 
+def request_cec_url(url):
+    '''
+        Get the cec data from url, used to fetch data from bucket
+    '''
+    cec_data = None
+    cec_json= requests.get(url)
+    if cec_json.status_code == 200:
+        cec_data = json.loads(cec_json.text)
+    return cec_data
 
 if __name__ == '__main__':
     for filename in cec_filename:
