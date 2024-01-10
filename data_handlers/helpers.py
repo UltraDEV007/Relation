@@ -96,13 +96,14 @@ ROUND_DECIMAL = 2
 INDEPENDENT_PARTY = "無黨籍及未經政黨推薦"
 UNDETERMINED_INFO = "席次尚未確認"
 
+UNKNOWN_CAND_NAME = "未知參選人"
 UNKNOWN_CANDIDATE = {
     "name": "未知參選人",
-    "party": INDEPENDENT_PARTY
+    "party": "未知政黨"
 }
 
 UNKNOWN_PARTY = {
-    "name": INDEPENDENT_PARTY ,
+    "name": "未知參選人" ,
     "seat": DEFAULT_INT
 }
 
