@@ -3,7 +3,7 @@ import googleapiclient
 from flask import Flask, request
 from politics_dump import dump_politics, landing
 from datetime import datetime
-from tools.cec_data import request_cec_by_type, request_cec, check_existed_cec_file
+from tools.cec_data import request_cec_by_type, request_cec, request_cec_url
 from tools.uploadGCS import upload_multiple_folders, upload_multiple
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
@@ -71,10 +71,33 @@ def election_all_default():
     upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
 
-@app.route('/elections/test', methods=['POST'])
+@app.route('/elections/all/test', methods=['POST'])
 def election_test():
-    _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
-    upload_multiple('2024', upload_map=True, upload_v2=True)
+    if IS_STARTED:
+        final_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/final.json'
+        final_A_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/final_A.json'
+        
+        hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
+        seats_data = request_cec_url(final_A_url)
+        if seats_data:
+            print('Receive final_A data, write the seats information')
+            parser.parse_seat(seats_data, hp.mapping_party_seat)
+        
+        raw_data, is_running = request_cec_url(final_url), False
+        prev_time = time.time()
+        ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
+        if raw_data:
+            ## Instead of creating new files, you should open and modify
+            if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
+                _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+                hp.CREATED_FINAL_DEFAULT = True
+
+            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
+            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
+            _ = pipeline.pipeline_map_seats(raw_data)
+            cur_time = time.time()
+            print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
+            upload_multiple('2024', upload_map=True, upload_v2=True)
     return 'ok'
 
 @app.route('/elections/cec/fetch', methods=['POST'])
