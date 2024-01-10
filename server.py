@@ -71,8 +71,32 @@ def election_all_default():
     upload_multiple('2024', upload_map=True, upload_v2=True)
     return "ok"
 
-@app.route('/elections/all/test', methods=['POST'])
-def election_test():
+@app.route('/elections/all/test_running', methods=['POST'])
+def election_test_running():
+    if IS_STARTED:
+        running_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/running.json'
+        hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
+        seats_data = None
+        
+        raw_data, is_running = request_cec_url(running_url), True
+        prev_time = time.time()
+        ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
+        if raw_data:
+            ## Instead of creating new files, you should open and modify
+            if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
+                _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+                hp.CREATED_FINAL_DEFAULT = True
+
+            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
+            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
+            _ = pipeline.pipeline_map_seats(raw_data)
+            cur_time = time.time()
+            print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
+            upload_multiple('2024', upload_map=True, upload_v2=True)
+    return 'ok'
+
+@app.route('/elections/all/test_final', methods=['POST'])
+def election_test_final():
     if IS_STARTED:
         final_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/final.json'
         final_A_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/final_A.json'

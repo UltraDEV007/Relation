@@ -92,15 +92,17 @@ DEFAULT_FLOAT = DEFAULT_PROFRATE = 0.0
 DEFAULT_LIST  = DEFAULT_CANDTKSINFO = []
 DEFAULT_INT   = 0
 ROUND_DECIMAL = 2
+
+INDEPENDENT_PARTY = "無黨籍及未經政黨推薦"
 UNDETERMINED_INFO = "席次尚未確認"
 
 UNKNOWN_CANDIDATE = {
-    "name": "未知",
-    "party": "未知黨"
+    "name": "未知參選人",
+    "party": INDEPENDENT_PARTY
 }
 
 UNKNOWN_PARTY = {
-    "name": "未知黨",
+    "name": INDEPENDENT_PARTY ,
     "seat": DEFAULT_INT
 }
 
