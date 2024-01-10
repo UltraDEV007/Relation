@@ -501,10 +501,11 @@ def generate_map_all_seats(seats_country, seats_normal, helper=hp.helper):
     calc_seats  = 0
     all_seats = {}
     for label, seats in seats_country.items():
+        calc_seats += seats
         all_seats[label] = seats
     for label, seats in seats_normal.items():
+        calc_seats += seats
         all_seats[label] = all_seats.get(label, 0) + seats
-        calc_seats += all_seats[label]
 
     ### 存入template
     for label, seats in all_seats.items():
