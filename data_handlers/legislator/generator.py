@@ -470,7 +470,6 @@ def generate_map_normal_seats(raw_data, helper=hp.helper):
             if only_one_area==True:
                 area_code = '01'
             area_candidates = hp.mapping_constituency_cand.get(county_code, {}).get(area_code, None)
-            print(f'county_code:{county_code}, area_code:{area_code}, candidates:{area_candidates}')
             raw_candidates = area_data.get('candTksInfo', hp.DEFAULT_LIST)
             for candidate in raw_candidates:
                 candNo    = candidate.get('candNo', hp.DEFAULT_INT)
