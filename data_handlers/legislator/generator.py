@@ -470,23 +470,26 @@ def generate_map_normal_seats(raw_data, helper=hp.helper):
             if only_one_area==True:
                 area_code = '01'
             area_candidates = hp.mapping_constituency_cand.get(county_code, {}).get(area_code, None)
+            print(f'county_code:{county_code}, area_code:{area_code}, candidates:{area_candidates}')
             raw_candidates = area_data.get('candTksInfo', hp.DEFAULT_LIST)
             for candidate in raw_candidates:
                 candNo    = candidate.get('candNo', hp.DEFAULT_INT)
-                is_winner = (candidate.get('candVictor')=='*')
+                is_winner = candidate.get('candVictor')=='*'
                 if is_winner:
+                    print(f'candNo: {candNo}, is_winner')
                     party = area_candidates.get(str(candNo), {}).get('party', '無黨籍及未經政黨推薦')
                     if party == None:
                         party = '無黨籍及未經政黨推薦'
                     seat_table[party] = seat_table.get(party, 0) + 1
                     all_seats[party] = all_seats.get(party, 0) + 1
-        seat_candidates_num = 0
+        seat_candidates_count = 0
         for party, seats in seat_table.items():
-            seat_candidates_num += seats
+            print(f'seat_table, party={party}, seats={seats}')
+            seat_candidates_count += seats
             seat_cand = tp.SeatCandidateTemplate(label=party, seats=seats).to_json()
             seat_template['parties'].append(seat_cand)
         area_candidates_num =  len(hp.mapping_constituency_cand.get(county_code, {}))
-        seat_cand = tp.SeatCandidateTemplate(label=hp.UNDETERMINED_INFO, seats=(area_candidates_num - seat_candidates_num)).to_json()
+        seat_cand = tp.SeatCandidateTemplate(label=hp.UNDETERMINED_INFO, seats=(area_candidates_num - seat_candidates_count)).to_json()
         seat_template['parties'].append(seat_cand)
         result[f'{county_code}.json'] = seat_template
     return result, all_seats
