@@ -121,6 +121,8 @@ def convert_v2_party_candidates(raw_candidates, mapping_json):
     return result
 
 def convert_district_person(personInfo):
+    if personInfo==None:
+        return
     website = helper['WHORU_WEBSITE_PERSON']
     person_id = personInfo.get('id', None)
     v2_person = tp.V2PersonInfoTemplate(
@@ -130,8 +132,10 @@ def convert_district_person(personInfo):
     ).to_json()
     return v2_person
 
-def convert_district_party(partyInfo):
+def convert_district_party(partyName):
+    if partyName==None:
+        partyName = hp.V2_INDEPENDENT_PARTY
     v2_party = tp.V2PartyInfoTemplate(
-        label = partyInfo.get('name', None), 
+        label = partyName, 
     ).to_json()
     return v2_party

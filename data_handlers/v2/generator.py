@@ -203,12 +203,8 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
                 
                 candInfo = search_constituency_candidate(countyCode, areaCode.zfill(2), str(candNo))
                 if candInfo:
-                    personInfo = candInfo.get('person', None)
-                    if personInfo:
-                        person_template['name'] = converter.convert_district_person(personInfo)
-                    partyInfo = candInfo.get('party', None)
-                    if partyInfo:
-                        person_template['party'] = converter.convert_district_party({'name': partyInfo})
+                    person_template['name']  = converter.convert_district_person(candInfo['person'])
+                    person_template['party'] = converter.convert_district_party(candInfo['party'])
                 v2_area_template['candidates'].append(person_template)
             v2_template['districts'].append(v2_area_template)
         result[f'{city_v2}.json'] = v2_template
