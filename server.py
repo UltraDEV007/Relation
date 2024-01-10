@@ -24,7 +24,7 @@ IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 
 ### election 2024
-@app.route('/elctions/all/2024', methods=['POST'])
+@app.route('/elections/all/2024', methods=['POST'])
 def election_all_2024():
     '''
         Generate both map and v2 data in one batch
