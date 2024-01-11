@@ -50,7 +50,7 @@ def election_all_2024():
             _ = pipeline.pipeline_map_seats(raw_data)
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
-            upload_multiple('2024', upload_map=True, upload_v2=True)
+            upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
 @app.route('/elections/default/2024', methods=['POST'])
@@ -63,7 +63,7 @@ def election_all_default():
     default_file = request_url(default_url)
     _ = pipeline.pipeline_default_map(is_started=False, is_running=False)
     _ = pipeline.pipeline_default_seats()
-    upload_multiple('2024', upload_map=True, upload_v2=True)
+    upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
 @app.route('/elections/all/test_running', methods=['POST'])
@@ -82,7 +82,7 @@ def election_test_running():
             _ = pipeline.pipeline_map_seats(raw_data)
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
-            upload_multiple('2024', upload_map=True, upload_v2=True)
+            upload_multiple('2024', upload_map=True, upload_v2=False)
     return 'ok'
 
 @app.route('/elections/all/test_final', methods=['POST'])
@@ -106,7 +106,7 @@ def election_test_final():
             _ = pipeline.pipeline_map_seats(raw_data)
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
-            upload_multiple('2024', upload_map=True, upload_v2=True)
+            upload_multiple('2024', upload_map=True, upload_v2=False)
     return 'ok'
 
 @app.route('/elections/cec/fetch', methods=['POST'])

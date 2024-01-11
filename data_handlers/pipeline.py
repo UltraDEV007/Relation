@@ -9,7 +9,7 @@ import data_handlers.v2.generator as v2_generator
 import data_handlers.helpers as hp
 import data_handlers.templates as tp
 
-from tools.uploadGCS import save_file, upload_blob_realtime, open_file
+from tools.uploadGCS import save_file, upload_blob_realtime, upload_folder_async
 import time
 
 gql_endpoint = os.environ['GQL_URL']
@@ -234,31 +234,33 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
         is_running = is_running,
         is_started = is_started
     )
+    folder = os.path.join(root_path, 'county')
     for county_code, county_json in generated_county_json.items():
-        filename = os.path.join(root_path, 'county', county_code)
+        filename = os.path.join(folder, county_code)
         save_file(filename, county_json)
-        if upload:
-            upload_blob_realtime(filename)
+    upload_folder_async(folder)
 
     ### Parse town
     if is_running == False:
         county_codes = list(parsed_county['districts'].keys())       
         result = []
         updateAt = parsed_county.get('updateAt', None)
+        folder = os.path.join(root_path, 'town')
         for county_code in county_codes:
             if county_code in hp.NO_PROCESSING_CODE:
                 continue
             county_data         = parsed_county['districts'].get(county_code, None)
             town_data           = parser.parse_town(county_code, county_data)
-            vill_data, errors   = pd_generator.generate_town_json(town_data, updateAt, is_running, is_started)
+            vill_data, _   = pd_generator.generate_town_json(town_data, updateAt, is_running, is_started)
             result.append(vill_data)
             # You can use errors to track the problematic tboxNo
         for vill_data in result:
             for key, value in vill_data.items():
-                filename = os.path.join(root_path, 'town', key)
+                filename = os.path.join(folder, key)
                 save_file(filename, value)
-                if upload:
-                    upload_blob_realtime(filename)
+                # if upload:
+                #     upload_blob_realtime(filename)
+        upload_folder_async(folder)
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] President costed {exe_time} sec, is_running={is_running}')
