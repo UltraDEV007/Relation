@@ -29,12 +29,7 @@ def election_all_2024():
     '''
         Generate both map and v2 data in one batch
     '''
-    if IS_STARTED:
-        ### 當IS_STARTED開始時，我們重新產生DEFAULT的文件
-        if hp.CREATED_START_DEFAULT==False:
-            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
-            hp.CREATED_START_DEFAULT = True
-        
+    if IS_STARTED:       
         hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         prev_time = time.time()
         seats_data = request_cec('final_A.json')
@@ -48,11 +43,6 @@ def election_all_2024():
         prev_time = cur_time
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
-            ## Instead of creating new files, you should open and modify
-            if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
-                _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
-                hp.CREATED_FINAL_DEFAULT = True
-
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
             _ = pipeline.pipeline_map_seats(raw_data)
@@ -82,11 +72,6 @@ def election_test_running():
         prev_time = time.time()
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
-            ## Instead of creating new files, you should open and modify
-            if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
-                _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
-                hp.CREATED_FINAL_DEFAULT = True
-
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
             _ = pipeline.pipeline_map_seats(raw_data)
@@ -111,11 +96,6 @@ def election_test_final():
         prev_time = time.time()
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
-            ## Instead of creating new files, you should open and modify
-            if is_running==False and hp.CREATED_FINAL_DEFAULT==False:
-                _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
-                hp.CREATED_FINAL_DEFAULT = True
-
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
             _ = pipeline.pipeline_map_seats(raw_data)

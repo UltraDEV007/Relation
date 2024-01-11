@@ -62,11 +62,6 @@ helper = {
         'CANDIDATES': 'candTksInfo',
 }
 
-### CREATED系列用來追蹤哪些DEFAULT JSON已經被產生過
-CREATED_INIT_DEFAULT    = False
-CREATED_START_DEFAULT   = False
-CREATED_FINAL_DEFAULT   = False
-
 COUNTRY_CODE    = '00000' ## 國碼
 TAIWAN_PRV_CODE = '10000' ## 台灣省省碼
 FUJIAN_PRV_CODE = '09000' ## 福建省省碼
