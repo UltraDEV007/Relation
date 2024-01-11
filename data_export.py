@@ -88,7 +88,11 @@ def presindent2024_cec( summary, phase = 1 ):
     candVictor = []
     show_victor = False
     if "candidates" not in summary:
-        return []
+        cec_json= requests.get('https://storage.googleapis.com/whoareyou-gcs.readr.tw/json/2024cec_homepage_default.json')
+        if cec_json.status_code == 200:
+            cec_data = json.loads(cec_json.text)
+
+        return cec_data
     for candidate in summary["candidates"]:
         if candidate["candNo"] < 4:
             tks.append({candidate["candNo"]: candidate["tks"]})
