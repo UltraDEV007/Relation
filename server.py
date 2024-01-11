@@ -24,7 +24,7 @@ IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 BUCKET = os.environ['BUCKET']
 ENV_FOLDER = os.environ['ENV_FOLDER']
-UPLOAD_LOCAL = os.environ['UPLOAD_LOCAL'] == 'true'
+UPLOAD_LOCAL = os.environ.get('UPLOAD_LOCAL', 'false') == 'true'
 
 ### election 2024
 @app.route('/elections/all/2024', methods=['POST'])
