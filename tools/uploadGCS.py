@@ -47,7 +47,7 @@ def upload_blob_realtime(dest_filename):
     bucket = storage_client.bucket(os.environ['BUCKET'])
     blob = bucket.blob(dest_filename)
     blob.upload_from_filename(dest_filename)
-    blob.cache_control = upload_configs['real_time']
+    blob.cache_control = upload_configs['cache_control_short']
     blob.patch()
 
 def upload_blob(dest_filename, year):
