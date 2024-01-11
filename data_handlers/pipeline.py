@@ -80,14 +80,16 @@ def pipeline_map_modify(is_running: bool=False, is_started: bool=False):
     # For president
     filename = os.path.join(root_path, 'president', 'map', 'country', 'country.json')
     country_json = open_file(filename)
-    save_file(filename, modify_info(country_json, is_running, is_started))
+    if country_json:
+        save_file(filename, modify_info(country_json, is_running, is_started))
 
     # For legislators
     path = os.path.join(root_path, 'legislator', 'map', 'country')
     for election_type in ['party', 'mountain-indigenous', 'plain-indigenous']:
         filename = os.path.join(path, election_type, 'country.json')
         country_json = open_file(filename)
-        save_file(filename, modify_info(country_json, is_running, is_started))
+        if country_json:
+            save_file(filename, modify_info(country_json, is_running, is_started))
 
     ### Save default county
     for county_code in list(hp.mapping_city.keys()):
@@ -96,14 +98,16 @@ def pipeline_map_modify(is_running: bool=False, is_started: bool=False):
         # For president
         filename = os.path.join(root_path, 'president', 'map', 'county', f'{county_code}.json')
         county_json = open_file(filename)
-        save_file(filename, modify_info(county_json, is_running, is_started))
+        if county_json:
+            save_file(filename, modify_info(county_json, is_running, is_started))
 
         # For legislators
         path = os.path.join(root_path, 'legislator', 'map', 'county')
         for election_type in ['party', 'normal', 'mountain-indigenous', 'plain-indigenous']:
             filename = os.path.join(path, election_type, f'{county_code}.json')
             county_json = open_file(filename)
-            save_file(filename, modify_info(county_json, is_running, is_started))
+            if county_json:
+                save_file(filename, modify_info(county_json, is_running, is_started))
 
     ### Save default town(except constituency)
     for code in list(hp.mapping_town.keys()):
@@ -114,13 +118,15 @@ def pipeline_map_modify(is_running: bool=False, is_started: bool=False):
         # For president
         filename = os.path.join(root_path, 'president', 'map', 'town', f'{code}.json')
         town_json = open_file(filename)
-        save_file(filename, modify_info(town_json, is_running, is_started))
+        if town_json:
+            save_file(filename, modify_info(town_json, is_running, is_started))
         # For legislators
         path = os.path.join(root_path, 'legislator', 'map', 'town')
         for election_type in ['party', 'mountain-indigenous', 'plain-indigenous']:
             filename = os.path.join(path, election_type, f'{code}.json')
             town_json = open_file(filename)
-            save_file(filename, modify_info(town_json, is_running, is_started))
+            if town_code:
+                save_file(filename, modify_info(town_json, is_running, is_started))
     
     ### Save default area(constituency)
     path = os.path.join(root_path, 'legislator', 'map', 'constituency', 'normal')
@@ -128,7 +134,8 @@ def pipeline_map_modify(is_running: bool=False, is_started: bool=False):
         for area_code, _ in area_data.items():
             filename = os.path.join(path, f'{county_code}{area_code}.json')
             area_json = open_file(filename)
-            save_file(filename, modify_info(area_json, is_running, is_started))
+            if area_json:
+                save_file(filename, modify_info(area_json, is_running, is_started))
     return "ok"
 
 def pipeline_default_seats():
