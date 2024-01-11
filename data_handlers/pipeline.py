@@ -155,12 +155,6 @@ def pipeline_default_seats():
 def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False, upload: bool=False):
     root_path = os.path.join(os.environ['ENV_FOLDER'], 'v2', '2024')
 
-    ### Check the record execution time
-    cec_time    = int(raw_data['ST'])
-    record_time = hp.RECORD_EXECUTION_TIME['v2']
-    if cec_time <= record_time:
-        return False
-
     ### Generate the v2 president data
     mapping_president =  v2_adapter.adapter_president_v2()
     v2_president = v2_generator.generate_v2_president(raw_data, mapping_president, year)
@@ -227,7 +221,6 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False, upload: 
             upload_blob_realtime(filename)
     print(f'[V2] Constituency district data successed. Upload={upload}')
 
-    hp.RECORD_EXECUTION_TIME['v2'] = cec_time
     return True
 
 '''
@@ -285,12 +278,6 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
     prev_time = time.time()
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map')
     
-    ### Check the record execution time
-    cec_time    = int(raw_data['ST'])
-    record_time = hp.RECORD_EXECUTION_TIME['map']['president']
-    if cec_time <= record_time:
-        return False
-    
     ### Parse and store country(For country level, we'll upload immediately)
     parsed_county = parser.parse_county(raw_data, election_type='president')
     country_json  = pd_generator.generate_country_json(
@@ -336,28 +323,21 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] President costed {exe_time} sec, is_running={is_running}')
-    hp.RECORD_EXECUTION_TIME['map']['president'] = cec_time
     return True
 
 def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False, upload=False):
     prev_time = time.time()
-    
-    ### Check the record execution time
     election_type = 'normal'
-    cec_time    = int(raw_data['ST'])
-    record_time = hp.RECORD_EXECUTION_TIME['map']['constituency']
-    if cec_time <= record_time:
-        return False
 
     ### Generate county data
-    parsed_county = parser.parse_county(raw_data, election_type='normal')
+    parsed_county = parser.parse_county(raw_data, election_type=election_type)
     generated_county_json = lg_generator.generate_constituency_county_json(
         preprocessing_data = parsed_county,
         is_running = is_running,
         is_started = is_started,
     )
 
-    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'county', 'normal')
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'county', election_type)
     for county_code, county_json in generated_county_json.items():
         filename = os.path.join(root_path, county_code)
         save_file(filename, county_json)
@@ -369,7 +349,7 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
         print("We don't generate constituency town data when file is running.json")
         return False ### We don't deal with constituency data when it's not final.json
     
-    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'constituency', 'normal')
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'constituency', election_type)
     parsed_area = parser.parse_constituency_area(raw_data)
     constituency_result = lg_generator.generate_constituency_town_json(parsed_area, is_running, is_started)
     for name, data in constituency_result.items():
@@ -380,7 +360,6 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator constituency costed {exe_time} sec, is_running={is_running}')
-    hp.RECORD_EXECUTION_TIME['map']['constituency'] = cec_time
     return True
 
 def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_running: bool=False, upload: bool=False):
@@ -389,12 +368,6 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
     '''
     prev_time = time.time()
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
-    
-    ### Check the record execution time
-    cec_time    = int(raw_data['ST'])
-    record_time = hp.RECORD_EXECUTION_TIME['map']['indigeous']
-    if cec_time <= record_time:
-        return False
     
     for election_type in ['mountainIndigenous', 'plainIndigenous']:
         parsed_county = parser.parse_county(raw_data, election_type)
@@ -437,19 +410,12 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator special(mountain&plain) costed {exe_time} sec, is_running={is_running}')
-    hp.RECORD_EXECUTION_TIME['map']['indigeous'] = cec_time
     return True
 
 def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: bool=False, upload: bool=False):
     prev_time = time.time()
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
     election_type = 'party'
-
-    ### Check the record execution time
-    cec_time    = int(raw_data['ST'])
-    record_time = hp.RECORD_EXECUTION_TIME['map']['party']
-    if cec_time <= record_time:
-        return False
 
     ### Generate country(upload immediately)
     parsed_county = parser.parse_county(raw_data, election_type)
@@ -489,7 +455,6 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator party costed {exe_time} sec, is_running={is_running}')
-    hp.RECORD_EXECUTION_TIME['map']['party'] = cec_time
     return True
 
 def pipeline_map_seats(raw_data):
