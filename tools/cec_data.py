@@ -83,7 +83,7 @@ def request_cec_by_type(type: str = 'general', secure_mode=False):
     print("Couldn't get CEC data from either final or running URL.")
     return None, None
 
-def request_cec_url(url):
+def request_url(url):
     '''
         Get the cec data from url, used to fetch data from bucket
     '''
