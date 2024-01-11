@@ -9,6 +9,14 @@ BUCKET = os.environ['BUCKET']
 ENV_FOLDER = os.environ['ENV_FOLDER']
 VERSION = os.environ['VERSION']
 
+def upload_folder_async(resource_folder):
+    '''
+        Upload a specific folder asynchronously
+    '''
+    os.system('gcloud auth activate-service-account --key-file=gcs-key.json')
+    max_age = upload_configs['cache_control_short']
+    os.system(f'gsutil -q -m -h "Cache-Control: {max_age}" rsync -r {resource_folder} gs://{BUCKET}/{resource_folder} &')
+
 def upload_multiple(year, upload_map: bool=False, upload_v2: bool=False):
     '''
         You can call this function to upload folder onto bucket
@@ -39,7 +47,7 @@ def upload_blob_realtime(dest_filename):
     bucket = storage_client.bucket(os.environ['BUCKET'])
     blob = bucket.blob(dest_filename)
     blob.upload_from_filename(dest_filename)
-    blob.cache_control = upload_configs['real_time']
+    blob.cache_control = upload_configs['cache_control_short']
     blob.patch()
 
 def upload_blob(dest_filename, year):
