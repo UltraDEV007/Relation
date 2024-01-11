@@ -161,7 +161,7 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False):
     Map: pipeline_map_2024
     warning: 由於地圖的資料量較大，建議拆分成多個endpoint來實作
 '''
-def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False):
+def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local=False):
     '''
         raw_data - running.json or final.json
         upload   - 是否即時上傳(upload_blob_realtime)
@@ -204,7 +204,7 @@ def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False):
 
     return result
 
-def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=False):
+def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local: bool=False):
     prev_time = time.time()
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map')
     
@@ -229,7 +229,8 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
     for county_code, county_json in generated_county_json.items():
         filename = os.path.join(folder, county_code)
         save_file(filename, county_json)
-    upload_folder_async(folder)
+    if upload_local==True:
+        upload_folder_async(folder)
 
     ### Parse town
     if is_running == False:
@@ -249,13 +250,14 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
             for key, value in vill_data.items():
                 filename = os.path.join(folder, key)
                 save_file(filename, value)
-        upload_folder_async(folder)
+        if upload_local==True:
+            upload_folder_async(folder)
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] President costed {exe_time} sec, is_running={is_running}')
     return True
 
-def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False):
+def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local: bool=False):
     prev_time = time.time()
     election_type = 'normal'
 
@@ -271,7 +273,8 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
     for county_code, county_json in generated_county_json.items():
         filename = os.path.join(folder, county_code)
         save_file(filename, county_json)
-    upload_folder_async(folder)
+    if upload_local==True:
+        upload_folder_async(folder)
 
     ### Generate town data
     if is_running:
@@ -283,14 +286,15 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
     for name, data in constituency_result.items():
         filename = os.path.join(folder, name)
         save_file(filename, data)
-    upload_folder_async(folder)
+    if upload_local==True:
+        upload_folder_async(folder)
 
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator constituency costed {exe_time} sec, is_running={is_running}')
     return True
 
-def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_running: bool=False):
+def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local: bool=False):
     '''
         In this pipeline, we generate mountain and plain indigenous in one pipeline
     '''
@@ -313,7 +317,8 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
         for name, county_json in county_result.items():
             filename = os.path.join(folder, name)
             save_file(filename, county_json)
-        upload_folder_async(folder)
+        if upload_local==True:
+            upload_folder_async(folder)
         
         ### Generate town(only in final.json)
         if is_running==False:
@@ -334,13 +339,14 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
                 for name, value in vill_data.items():
                     filename = os.path.join(folder, name)
                     save_file(filename, value)
-            upload_folder_async(folder)
+            if upload_local==True:
+                upload_folder_async(folder)
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator special(mountain&plain) costed {exe_time} sec, is_running={is_running}')
     return True
 
-def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: bool=False):
+def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local: bool=False):
     prev_time = time.time()
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
     election_type = 'party'
@@ -358,7 +364,8 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
     for name, county_json in county_result.items():
         filename = os.path.join(folder, name)
         save_file(filename, county_json)
-    upload_folder_async(folder)
+    if upload_local==True:
+        upload_folder_async(folder)
 
     ### Generate town
     if is_running==False:
@@ -379,13 +386,14 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
             for name, value in vill_data.items():
                 filename = os.path.join(folder, name)
                 save_file(filename, value)
-        upload_folder_async(folder)
+        if upload_local==True:
+            upload_folder_async(folder)
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator party costed {exe_time} sec, is_running={is_running}')
     return True
 
-def pipeline_map_seats(raw_data):
+def pipeline_map_seats(raw_data, upload_local: bool=False):
     prev_time = time.time()
     folder = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'seat')
 
@@ -407,7 +415,8 @@ def pipeline_map_seats(raw_data):
     all_json = lg_generator.generate_map_all_seats(seats_country, seats_normal)
     filename = os.path.join(folder, 'country', 'all', 'country.json')
     save_file(filename, all_json)
-    upload_folder_async(folder)
+    if upload_local:
+        upload_folder_async(folder)
 
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
