@@ -3,7 +3,7 @@ import googleapiclient
 from flask import Flask, request
 from politics_dump import dump_politics, landing
 from datetime import datetime
-from tools.cec_data import request_cec_by_type, request_cec, request_cec_url
+from tools.cec_data import request_cec_by_type, request_cec, request_url
 from tools.uploadGCS import upload_multiple_folders, upload_multiple
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
@@ -22,6 +22,8 @@ app = Flask(__name__)
 
 IS_TV =  os.environ['PROJECT'] == 'tv' 
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
+BUCKET = os.environ['BUCKET']
+ENV_FOLDER = os.environ['ENV_FOLDER']
 
 ### election 2024
 @app.route('/elections/all/2024', methods=['POST'])
@@ -44,7 +46,7 @@ def election_all_2024():
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload=False)
-            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=False)
+            _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running, upload=True) ### default upload immediately
             _ = pipeline.pipeline_map_seats(raw_data)
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
@@ -56,6 +58,9 @@ def election_all_default():
     '''
         Test API for creating default json files
     '''
+    # TODO: Use the default file to generate v2 default
+    default_url  = f'https://{BUCKET}/{ENV_FOLDER}/init.json'
+    default_file = request_url(default_url)
     _ = pipeline.pipeline_default_map(is_started=False, is_running=False)
     _ = pipeline.pipeline_default_seats()
     upload_multiple('2024', upload_map=True, upload_v2=True)
@@ -68,7 +73,7 @@ def election_test_running():
         hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         seats_data = None
         
-        raw_data, is_running = request_cec_url(running_url), True
+        raw_data, is_running = request_url(running_url), True
         prev_time = time.time()
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
@@ -87,12 +92,12 @@ def election_test_final():
         final_A_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/final_A.json'
         
         hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
-        seats_data = request_cec_url(final_A_url)
+        seats_data = request_url(final_A_url)
         if seats_data:
             print('Receive final_A data, write the seats information')
             parser.parse_seat(seats_data, hp.mapping_party_seat)
         
-        raw_data, is_running = request_cec_url(final_url), False
+        raw_data, is_running = request_url(final_url), False
         prev_time = time.time()
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
