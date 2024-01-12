@@ -88,7 +88,7 @@ def presindent2024_cec( summary, phase = 1 ):
     candVictor = []
     show_victor = False
     if "candidates" not in summary:
-        cec_data = '''[{"key": "得票數", "value": [{"1": 0}, {"2": 0}, {"3": 0}]}, {"key": "得票率", "value": [{"1": 0}, {"2": 0}, {"3": 0}]}]'''
+        cec_data = [{"key": "得票數", "value": [{"1": 0}, {"2": 0}, {"3": 0}]}, {"key": "得票率", "value": [{"1": 0}, {"2": 0}, {"3": 0}]}]
         return cec_data
     for candidate in summary["candidates"]:
         if candidate["candNo"] < 4:
