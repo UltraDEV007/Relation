@@ -74,7 +74,7 @@ def election_all_default():
     hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
     default_url  = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/init.json'
     default_file = request_url(default_url)
-    #_ = pipeline.pipeline_default_map(is_started=False, is_running=False)
+    _ = pipeline.pipeline_default_map(is_started=False, is_running=False)
     _ = pipeline.pipeline_default_seats()
     if default_file:
         _ = pipeline.pipeline_map_2024(default_file, is_started=False, is_running=False, upload_local=False)
