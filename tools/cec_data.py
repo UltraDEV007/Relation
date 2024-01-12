@@ -5,6 +5,7 @@ from tools.uploadGCS import save_file
 
 CECURL_RF = os.environ.get('CECURL_RF')
 CECURL_GENERAL = os.environ.get('CECURL_GENERAL')
+SAVE_CEC = os.environ.get('SAVE_CEC', 'false') == 'true'
 
 cec_filename = ['final.json', 'running.json']
 cec_legislator = ['final_A.json'] # TODO: How to deal with it?
@@ -47,9 +48,10 @@ def check_updated_and_save(url, secure_mode=False):
         print(f'Update data for {filename}')
         json.dump(new_data, f)
     ### Save the file for future usage
-    start_time = new_data['ST']
-    folder = os.path.join(os.environ['ENV_FOLDER'], '2024', 'cec-data')
-    save_file(os.path.join(folder, f'{start_time}{filename}'), new_data)
+    if SAVE_CEC:
+        start_time = new_data['ST']
+        folder = os.path.join(os.environ['ENV_FOLDER'], '2024', 'cec-data')
+        save_file(os.path.join(folder, f'{start_time}{filename}'), new_data)
     return new_data
 
 def request_cec(filename, secure_mode=False):
