@@ -11,6 +11,7 @@ import data_handlers.templates as tp
 
 from tools.uploadGCS import save_file, upload_blob_realtime, upload_folder_async, open_file
 import time
+import copy
 
 gql_endpoint = os.environ['GQL_URL']
 
@@ -70,11 +71,13 @@ def pipeline_default_map(updatedAt: str=None, is_running: bool=False, is_started
             save_file(filename, default_constituency)
     return "ok"
 
-def pipeline_map_modify(is_running: bool=False, is_started: bool=False):
+def pipeline_map_modify(is_running, is_started):
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024')
     def modify_info(data, is_running, is_started):
-        data['is_running'] = is_running
-        data['is_started'] = is_started
+        new_data = copy.deepcopy(data)
+        new_data['is_running'] = is_running
+        new_data['is_started'] = is_started
+        return new_data
 
     ### Save default country
     # For president
@@ -119,6 +122,7 @@ def pipeline_map_modify(is_running: bool=False, is_started: bool=False):
         filename = os.path.join(root_path, 'president', 'map', 'town', f'{code}.json')
         town_json = open_file(filename)
         if town_json:
+            print(f'modify default {filename}')
             save_file(filename, modify_info(town_json, is_running, is_started))
         # For legislators
         path = os.path.join(root_path, 'legislator', 'map', 'town')
