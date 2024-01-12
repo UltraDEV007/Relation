@@ -88,10 +88,7 @@ def presindent2024_cec( summary, phase = 1 ):
     candVictor = []
     show_victor = False
     if "candidates" not in summary:
-        cec_json= requests.get('https://storage.googleapis.com/whoareyou-gcs.readr.tw/json/2024cec_homepage_default.json')
-        if cec_json.status_code == 200:
-            cec_data = json.loads(cec_json.text)
-
+        cec_data = '''{"updateAt": "2024-01-13, 16:00", "title": "2024 總統大選即時開票", "result": [{"key": "得票數", "value": [{"1": 0}, {"2": 0}, {"3": 0}]}, {"key": "得票率", "value": [{"1": 0}, {"2": 0}, {"3": 0}]}]}'''
         return cec_data
     for candidate in summary["candidates"]:
         if candidate["candNo"] < 4:
