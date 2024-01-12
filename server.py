@@ -44,9 +44,11 @@ def election_all_2024():
 
         ### 修改default檔案(抓不到檔案時is_running會是None)
         if hp.MODIFY_START_DEFAULT==False and is_running==True:
+            print('modify start default json')
             _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
             hp.MODIFY_START_DEFAULT = True
         if hp.MODIFY_FINAL_DEFAULT==False and is_running==False:
+            print('modify final default json')
             _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
             hp.MODIFY_FINAL_DEFAULT = True
 
@@ -77,6 +79,23 @@ def election_all_default():
     _ = pipeline.pipeline_default_seats()
     if default_file:
         _ = pipeline.pipeline_v2(default_file, None, '2024', is_running=True) ### If is_running=False, we'll mark the winner
+    upload_multiple('2024', upload_map=True, upload_v2=False)
+    return "ok"
+
+@app.route('/elections/default/modify_running', methods=['POST'])
+def election_default_modify_running():
+    print(f'modify running default json, original state={hp.MODIFY_START_DEFAULT}')
+    _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
+    hp.MODIFY_START_DEFAULT = True
+    upload_multiple('2024', upload_map=True, upload_v2=False)
+    print('modify start default json')
+    return "ok"
+
+@app.route('/elections/default/modify_final', methods=['POST'])
+def election_default_modify_final():
+    print(f'modify final default json, original state={hp.MODIFY_FINAL_DEFAULT}')
+    _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+    hp.MODIFY_FINAL_DEFAULT = True
     upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
