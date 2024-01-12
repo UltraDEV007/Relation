@@ -107,7 +107,6 @@ def election_test_running():
             hp.MODIFY_START_DEFAULT = True
         
         running_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/running.json'
-        hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         seats_data = None
         
         raw_data, is_running = request_url(running_url), True
@@ -126,7 +125,7 @@ def election_test_running():
 @app.route('/elections/all/test_final', methods=['POST'])
 def election_test_final():
     if IS_STARTED:
-        if hp.MODIFY_FINAL_DEFAULT==False and is_running==False:
+        if hp.MODIFY_FINAL_DEFAULT==False:
             print('modify final default json')
             _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
             hp.MODIFY_FINAL_DEFAULT = True
