@@ -122,7 +122,6 @@ def pipeline_map_modify(is_running, is_started):
         filename = os.path.join(root_path, 'president', 'map', 'town', f'{code}.json')
         town_json = open_file(filename)
         if town_json:
-            print(f'modify default {filename}')
             save_file(filename, modify_info(town_json, is_running, is_started))
         # For legislators
         path = os.path.join(root_path, 'legislator', 'map', 'town')
