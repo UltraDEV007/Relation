@@ -473,7 +473,7 @@ def generate_map_normal_seats(raw_data, helper=hp.helper):
             raw_candidates = area_data.get('candTksInfo', hp.DEFAULT_LIST)
             for candidate in raw_candidates:
                 candNo    = candidate.get('candNo', hp.DEFAULT_INT)
-                is_winner = candidate.get('candVictor', False) or candidate.get('candVictor', ' ')=='*'
+                is_winner = candidate.get('candVictor', False)==True or candidate.get('candVictor', ' ')=='*'
                 if is_winner==True:
                     party = area_candidates.get(str(candNo), {}).get('party', '無黨籍及未經政黨推薦')
                     if party == None:

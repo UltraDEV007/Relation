@@ -151,7 +151,7 @@ def parse_seat(data, mapping_party_seat):
     patyInfo  = seat_data.get('patyInfo', 0)
     for info in patyInfo:
         patyNo    = info.get('patyNo', None)
-        seatCount = info.get('victorMarkCount', None)
+        seatCount = info.get('victorTotal', None)
         if patyNo:
             party = mapping_party_seat.get(str(patyNo), None)
             if party:

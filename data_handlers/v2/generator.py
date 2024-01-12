@@ -158,10 +158,11 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
                 if cand_info:
                     cand_info['tks'] += candidate['tks']
                 else:
-                    candidate['candVictor'] = False ### No victor yet
+                    is_victor = True if (candidate.get('candVictor')=='*') else False
+                    candidate['candVictor'] = is_victor if is_running==True else False
                     candidate['tksRate'] = hp.DEFAULT_FLOAT
                     subArea[str(candNo)] = candidate
-    
+                    
     ### use the hierarchy to create the county.json
     for countyCode, countyData in hierarchy.items():
         city = hp.mapping_city.get(countyCode, 'Unknown')

@@ -32,7 +32,7 @@ def election_all_2024():
     '''
         Generate both map and v2 data in one batch
     '''
-    if IS_STARTED:       
+    if IS_STARTED:
         prev_time = time.time()
         seats_data = request_cec('final_A.json')
         raw_data, is_running = request_cec_by_type()
@@ -42,15 +42,24 @@ def election_all_2024():
         cur_time = time.time()
         print(f'Time of fetching CEC data is {round(cur_time-prev_time,2)}s, is_running={is_running}')
 
-        prev_time = cur_time
+        ### 修改default檔案(抓不到檔案時is_running會是None)
+        if hp.MODIFY_START_DEFAULT==False and is_running==True:
+            print('modify start default json')
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
+            hp.MODIFY_START_DEFAULT = True
+        if hp.MODIFY_FINAL_DEFAULT==False and is_running==False:
+            print('modify final default json')
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+            hp.MODIFY_FINAL_DEFAULT = True
+
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
+        prev_time = cur_time
         if raw_data:
-            if is_running == False:
-                _ = pipeline.pipeline_map_seats(raw_data)
+            _ = pipeline.pipeline_map_seats(raw_data, is_running)
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:
-                upload_multiple('2024', upload_map=True, upload_v2=False)
+                upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
             upload_multiple('2024', upload_map=True, upload_v2=False)
@@ -65,24 +74,47 @@ def election_all_default():
     hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
     default_url  = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/init.json'
     default_file = request_url(default_url)
-    _ = pipeline.pipeline_default_map(is_started=False, is_running=False)
+    #_ = pipeline.pipeline_default_map(is_started=False, is_running=False)
     _ = pipeline.pipeline_default_seats()
     if default_file:
+        _ = pipeline.pipeline_map_2024(default_file, is_started=False, is_running=False, upload_local=False)
         _ = pipeline.pipeline_v2(default_file, None, '2024', is_running=True) ### If is_running=False, we'll mark the winner
+    upload_multiple('2024', upload_map=True, upload_v2=False)
+    return "ok"
+
+@app.route('/elections/default/modify_running', methods=['POST'])
+def election_default_modify_running():
+    print(f'modify running default json, original state={hp.MODIFY_START_DEFAULT}')
+    _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
+    hp.MODIFY_START_DEFAULT = True
+    upload_multiple('2024', upload_map=True, upload_v2=False)
+    print('modify start default json')
+    return "ok"
+
+@app.route('/elections/default/modify_final', methods=['POST'])
+def election_default_modify_final():
+    print(f'modify final default json, original state={hp.MODIFY_FINAL_DEFAULT}')
+    _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+    hp.MODIFY_FINAL_DEFAULT = True
     upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
 @app.route('/elections/all/test_running', methods=['POST'])
 def election_test_running():
     if IS_STARTED:
+        if hp.MODIFY_START_DEFAULT==False:
+            print('modify start default json')
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
+            hp.MODIFY_START_DEFAULT = True
+        
         running_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/running.json'
-        hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         seats_data = None
         
         raw_data, is_running = request_url(running_url), True
         prev_time = time.time()
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
+            _ = pipeline.pipeline_map_seats(raw_data, is_running)
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:
@@ -94,6 +126,10 @@ def election_test_running():
 @app.route('/elections/all/test_final', methods=['POST'])
 def election_test_final():
     if IS_STARTED:
+        if hp.MODIFY_FINAL_DEFAULT==False:
+            print('modify final default json')
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+            hp.MODIFY_FINAL_DEFAULT = True
         final_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/final.json'
         final_A_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/final_A.json'
         
@@ -107,11 +143,11 @@ def election_test_final():
         prev_time = time.time()
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
-            _ = pipeline.pipeline_map_seats(raw_data)
+            _ = pipeline.pipeline_map_seats(raw_data, is_running)
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:
-                upload_multiple('2024', upload_map=True, upload_v2=False)
+                upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
     return 'ok'
