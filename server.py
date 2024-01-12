@@ -4,7 +4,7 @@ from flask import Flask, request
 from politics_dump import dump_politics, landing
 from datetime import datetime
 from tools.cec_data import request_cec_by_type, request_cec, request_url
-from tools.uploadGCS import upload_multiple_folders, upload_multiple
+from tools.uploadGCS import upload_multiple_folders, upload_multiple, upload_folder_async
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
@@ -63,10 +63,12 @@ def election_all_default():
         Test API for creating default json files
     '''
     # TODO: Use the default file to generate v2 default
-    default_url  = f'https://{BUCKET}/{ENV_FOLDER}/init.json'
+    default_url  = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/init.json'
     default_file = request_url(default_url)
     _ = pipeline.pipeline_default_map(is_started=False, is_running=False)
     _ = pipeline.pipeline_default_seats()
+    if default_file:
+        _ = pipeline.pipeline_v2(default_file, None, '2024', is_running=True) ### If is_running=False, we'll mark the winner
     upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
@@ -113,6 +115,15 @@ def election_test_final():
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
     return 'ok'
+
+@app.route('/elections/cec/upload', methods=['POST'])
+def cec_upload():
+    '''
+        Upload all the retrieved cec data during the execution time
+    '''
+    folder = os.path.join(ENV_FOLDER, 'cec-data')
+    upload_folder_async(folder)
+    return "ok"
 
 @app.route('/elections/cec/fetch', methods=['POST'])
 def cec_fetch():
