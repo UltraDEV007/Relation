@@ -9,8 +9,9 @@ import data_handlers.v2.generator as v2_generator
 import data_handlers.helpers as hp
 import data_handlers.templates as tp
 
-from tools.uploadGCS import save_file, upload_blob_realtime, upload_folder_async
+from tools.uploadGCS import save_file, upload_blob_realtime, upload_folder_async, open_file
 import time
+import copy
 
 gql_endpoint = os.environ['GQL_URL']
 
@@ -68,6 +69,75 @@ def pipeline_default_map(updatedAt: str=None, is_running: bool=False, is_started
         for area_code, _ in area_data.items():
             filename = os.path.join(path, f'{county_code}{area_code}.json')
             save_file(filename, default_constituency)
+    return "ok"
+
+def pipeline_map_modify(is_running, is_started):
+    root_path = os.path.join(os.environ['ENV_FOLDER'], '2024')
+    def modify_info(data, is_running, is_started):
+        new_data = copy.deepcopy(data)
+        new_data['is_running'] = is_running
+        new_data['is_started'] = is_started
+        return new_data
+
+    ### Save default country
+    # For president
+    filename = os.path.join(root_path, 'president', 'map', 'country', 'country.json')
+    country_json = open_file(filename)
+    if country_json:
+        save_file(filename, modify_info(country_json, is_running, is_started))
+
+    # For legislators
+    path = os.path.join(root_path, 'legislator', 'map', 'country')
+    for election_type in ['party', 'mountain-indigenous', 'plain-indigenous']:
+        filename = os.path.join(path, election_type, 'country.json')
+        country_json = open_file(filename)
+        if country_json:
+            save_file(filename, modify_info(country_json, is_running, is_started))
+    
+    ### Save default county
+    for county_code in list(hp.mapping_city.keys()):
+        if county_code in hp.NO_PROCESSING_CODE:
+            continue
+        # For president
+        filename = os.path.join(root_path, 'president', 'map', 'county', f'{county_code}.json')
+        county_json = open_file(filename)
+        if county_json:
+            save_file(filename, modify_info(county_json, is_running, is_started))
+
+        # For legislators
+        path = os.path.join(root_path, 'legislator', 'map', 'county')
+        for election_type in ['party', 'normal', 'mountain-indigenous', 'plain-indigenous']:
+            filename = os.path.join(path, election_type, f'{county_code}.json')
+            county_json = open_file(filename)
+            if county_json:
+                save_file(filename, modify_info(county_json, is_running, is_started))
+
+    ### Save default town(except constituency)
+    for code in list(hp.mapping_town.keys()):
+        county_code = code[:hp.COUNTY_CODE_LENGTH]
+        town_code   = code[hp.COUNTY_CODE_LENGTH:]
+        if (town_code[-1]!='0') or (town_code==hp.DEFAULT_TOWNCODE) or (county_code in hp.NO_PROCESSING_CODE):
+            continue
+        # For president
+        filename = os.path.join(root_path, 'president', 'map', 'town', f'{code}.json')
+        town_json = open_file(filename)
+        if town_json:
+            save_file(filename, modify_info(town_json, is_running, is_started))
+        # For legislators
+        path = os.path.join(root_path, 'legislator', 'map', 'town')
+        for election_type in ['party', 'mountain-indigenous', 'plain-indigenous']:
+            filename = os.path.join(path, election_type, f'{code}.json')
+            town_json = open_file(filename)
+            if town_code:
+                save_file(filename, modify_info(town_json, is_running, is_started))
+    ### Save default area(constituency)
+    path = os.path.join(root_path, 'legislator', 'map', 'constituency', 'normal')
+    for county_code, area_data in hp.mapping_constituency_cand.items():
+        for area_code, _ in area_data.items():
+            filename = os.path.join(path, f'{county_code}{area_code}.json')
+            area_json = open_file(filename)
+            if area_json:
+                save_file(filename, modify_info(area_json, is_running, is_started))
     return "ok"
 
 def pipeline_default_seats():

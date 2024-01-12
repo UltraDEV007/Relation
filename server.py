@@ -32,7 +32,7 @@ def election_all_2024():
     '''
         Generate both map and v2 data in one batch
     '''
-    if IS_STARTED:       
+    if IS_STARTED:
         prev_time = time.time()
         seats_data = request_cec('final_A.json')
         raw_data, is_running = request_cec_by_type()
@@ -42,11 +42,20 @@ def election_all_2024():
         cur_time = time.time()
         print(f'Time of fetching CEC data is {round(cur_time-prev_time,2)}s, is_running={is_running}')
 
-        prev_time = cur_time
+        ### 修改default檔案(抓不到檔案時is_running會是None)
+        if hp.MODIFY_START_DEFAULT==False and is_running==True:
+            print('modify start default json')
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
+            hp.MODIFY_START_DEFAULT = True
+        if hp.MODIFY_FINAL_DEFAULT==False and is_running==False:
+            print('modify final default json')
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+            hp.MODIFY_FINAL_DEFAULT = True
+
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
+        prev_time = cur_time
         if raw_data:
-            if is_running == False:
-                _ = pipeline.pipeline_map_seats(raw_data)
+            _ = pipeline.pipeline_map_seats(raw_data)
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:
@@ -72,6 +81,23 @@ def election_all_default():
     upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
+@app.route('/elections/default/modify_running', methods=['POST'])
+def election_default_modify_running():
+    print(f'modify running default json, original state={hp.MODIFY_START_DEFAULT}')
+    _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
+    hp.MODIFY_START_DEFAULT = True
+    upload_multiple('2024', upload_map=True, upload_v2=False)
+    print('modify start default json')
+    return "ok"
+
+@app.route('/elections/default/modify_final', methods=['POST'])
+def election_default_modify_final():
+    print(f'modify final default json, original state={hp.MODIFY_FINAL_DEFAULT}')
+    _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+    hp.MODIFY_FINAL_DEFAULT = True
+    upload_multiple('2024', upload_map=True, upload_v2=False)
+    return "ok"
+
 @app.route('/elections/all/test_running', methods=['POST'])
 def election_test_running():
     if IS_STARTED:
@@ -83,6 +109,7 @@ def election_test_running():
         prev_time = time.time()
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
+            _ = pipeline.pipeline_map_seats(raw_data)
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:

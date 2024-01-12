@@ -37,7 +37,7 @@ def president2024_realtime():
     #    cec_data = json.load(f)
     #    print("data from local file")
     #if "summary" not in cec_data:
-    cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections-dev/2024/president/map/country/country.json')
+    cec_json= requests.get('https://whoareyou-gcs.readr.tw/elections/2024/president/map/country/country.json')
     if cec_json.status_code == 200:
         cec_data = json.loads(cec_json.text)
 
