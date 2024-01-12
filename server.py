@@ -115,7 +115,7 @@ def election_test_final():
     return 'ok'
 
 @app.route('/elections/cec/upload', methods=['POST'])
-def cec_fetch():
+def cec_upload():
     '''
         Upload all the retrieved cec data during the execution time
     '''
