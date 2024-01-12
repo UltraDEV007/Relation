@@ -32,7 +32,7 @@ def election_all_2024():
     '''
         Generate both map and v2 data in one batch
     '''
-    if IS_STARTED:       
+    if IS_STARTED:
         prev_time = time.time()
         seats_data = request_cec('final_A.json')
         raw_data, is_running = request_cec_by_type()
@@ -42,8 +42,16 @@ def election_all_2024():
         cur_time = time.time()
         print(f'Time of fetching CEC data is {round(cur_time-prev_time,2)}s, is_running={is_running}')
 
-        prev_time = cur_time
+        ### 修改default檔案(抓不到檔案時is_running會是None)
+        if hp.MODIFY_START_DEFAULT==False and is_running==True:
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
+            hp.MODIFY_START_DEFAULT = True
+        if hp.MODIFY_FINAL_DEFAULT==False and is_running==False:
+            _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
+            hp.MODIFY_FINAL_DEFAULT = True
+
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
+        prev_time = cur_time
         if raw_data:
             if is_running == False:
                 _ = pipeline.pipeline_map_seats(raw_data)

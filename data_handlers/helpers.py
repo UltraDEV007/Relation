@@ -62,6 +62,9 @@ helper = {
         'CANDIDATES': 'candTksInfo',
 }
 
+MODIFY_START_DEFAULT = False
+MODIFY_FINAL_DEFAULT = False
+
 COUNTRY_CODE    = '00000' ## 國碼
 TAIWAN_PRV_CODE = '10000' ## 台灣省省碼
 FUJIAN_PRV_CODE = '09000' ## 福建省省碼
