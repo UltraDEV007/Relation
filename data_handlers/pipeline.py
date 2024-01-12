@@ -24,7 +24,7 @@ def pipeline_default_map(updatedAt: str=None, is_running: bool=False, is_started
     default_county  = tp.getDefaultCounty(updatedAt, is_running, is_started)
     default_town    = tp.getDefaultTown(updatedAt, is_running, is_started)
     default_constituency = tp.getDefaultConstituency(updatedAt, is_running, is_started)
-
+    
     ### Save default country
     # For president
     filename = os.path.join(root_path, 'president', 'map', 'country', 'country.json')
