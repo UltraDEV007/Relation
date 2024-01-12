@@ -33,7 +33,6 @@ def election_all_2024():
         Generate both map and v2 data in one batch
     '''
     if IS_STARTED:       
-        hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         prev_time = time.time()
         seats_data = request_cec('final_A.json')
         raw_data, is_running = request_cec_by_type()
@@ -63,6 +62,7 @@ def election_all_default():
         Test API for creating default json files
     '''
     # TODO: Use the default file to generate v2 default
+    hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
     default_url  = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/init.json'
     default_file = request_url(default_url)
     _ = pipeline.pipeline_default_map(is_started=False, is_running=False)
