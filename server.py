@@ -63,10 +63,12 @@ def election_all_default():
         Test API for creating default json files
     '''
     # TODO: Use the default file to generate v2 default
-    default_url  = f'https://{BUCKET}/{ENV_FOLDER}/init.json'
+    default_url  = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/init.json'
     default_file = request_url(default_url)
     _ = pipeline.pipeline_default_map(is_started=False, is_running=False)
     _ = pipeline.pipeline_default_seats()
+    if default_file:
+        _ = pipeline.pipeline_v2(default_file, None, '2024', is_running=True) ### If is_running=False, we'll mark the winner
     upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
