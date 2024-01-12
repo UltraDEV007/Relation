@@ -170,7 +170,8 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False):
 
     filename = os.path.join(root_path, 'president', 'all.json')
     save_file(filename, v2_president)
-    upload_blob_realtime(filename)
+    if is_running==True:
+        upload_blob_realtime(filename)
     print(f'[V2] president data successed.')
 
     ### Generate the v2 special legislator data(mountainIndigeous and plainIndigeous)
@@ -186,7 +187,8 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False):
 
     filename = os.path.join(root_path, 'legislator', 'plainIndigenous','all.json')
     save_file(filename, v2_plain_indigeous)
-    upload_blob_realtime(filename)
+    if is_running==True:
+        upload_blob_realtime(filename)
     print(f'[V2] Plain indigeous legislator data successed.')
     
     # Mountain
@@ -201,7 +203,8 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False):
 
     filename = os.path.join(root_path, 'legislator', 'mountainIndigenous','all.json')
     save_file(filename, v2_mountain_indigeous)
-    upload_blob_realtime(filename)
+    if is_running==True:
+        upload_blob_realtime(filename)
     print(f'[V2] Mountain indigeous legislator data successed.')
 
     ### Generate the v2 party legislator data
@@ -213,7 +216,8 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False):
 
     filename = os.path.join(root_path, 'legislator', 'party','all.json')
     save_file(filename, v2_party)
-    upload_blob_realtime(filename)
+    if is_running==True:
+        upload_blob_realtime(filename)
     print(f'[V2] Party legislator data successed.')
 
     ### Generate the v2 constituency legislator data, you don't need to pass the mapping file
@@ -222,7 +226,8 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False):
     for districtName, districtData in v2_district.items():
         filename = os.path.join(districtRoot, districtName)
         save_file(filename, districtData)
-        upload_blob_realtime(filename)
+        if is_running==True:
+            upload_blob_realtime(filename)
     print(f'[V2] Constituency district data successed.')
 
     return True
@@ -287,7 +292,8 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
     )
     filename = os.path.join(root_path, 'country', 'country.json')
     save_file(filename, country_json)
-    upload_blob_realtime(filename)
+    if is_running==True:
+        upload_blob_realtime(filename)
 
     ### Parse and store county
     generated_county_json = pd_generator.generate_county_json(
@@ -379,7 +385,8 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
         country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
         filename = os.path.join(root_path, 'country', upload_folder, 'country.json')
         save_file(filename, country_json)
-        upload_blob_realtime(filename)
+        if is_running==True:
+            upload_blob_realtime(filename)
 
         ### Generate county
         folder = os.path.join(root_path, 'county', upload_folder)
@@ -426,7 +433,8 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
     country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
     filename = os.path.join(root_path, 'country', election_type, 'country.json')
     save_file(filename, country_json)
-    upload_blob_realtime(filename)
+    if is_running==True:
+        upload_blob_realtime(filename)
 
     ### Generate county
     folder = os.path.join(root_path, 'county', election_type)
@@ -463,7 +471,7 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
     print(f'[MAP] Legislator party costed {exe_time} sec, is_running={is_running}')
     return True
 
-def pipeline_map_seats(raw_data):
+def pipeline_map_seats(raw_data, is_running):
     prev_time = time.time()
     folder = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'seat')
 
@@ -474,20 +482,23 @@ def pipeline_map_seats(raw_data):
         if election_type in country_list:
             filename = os.path.join(folder, 'country', election_type, 'country.json')
             save_file(filename, election_data)
-            upload_blob_realtime(filename)
+            if is_running==True:
+                upload_blob_realtime(filename)
     
     ### Generate for county map(only constituency)
     result, seats_normal = lg_generator.generate_map_normal_seats(raw_data)
     for county_name, county_data in result.items():
         filename = os.path.join(folder, 'county', 'normal', county_name)
         save_file(filename, county_data)
-        upload_blob_realtime(filename)
+        if is_running==True:
+            upload_blob_realtime(filename)
 
     ### Generate for all map, and upload immediately
     all_json = lg_generator.generate_map_all_seats(seats_country, seats_normal)
     filename = os.path.join(folder, 'country', 'all', 'country.json')
     save_file(filename, all_json)
-    upload_blob_realtime(filename)
+    if is_running==True:
+        upload_blob_realtime(filename)
 
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
