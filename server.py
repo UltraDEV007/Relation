@@ -119,7 +119,7 @@ def cec_upload():
     '''
         Upload all the retrieved cec data during the execution time
     '''
-    folder = os.path.join(ENV_FOLDER, '2024', 'cec-data')
+    folder = os.path.join(ENV_FOLDER, 'cec-data')
     upload_folder_async(folder)
     return "ok"
 

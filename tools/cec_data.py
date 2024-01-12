@@ -50,7 +50,7 @@ def check_updated_and_save(url, secure_mode=False):
     ### Save the file for future usage
     if SAVE_CEC:
         start_time = new_data['ST']
-        folder = os.path.join(os.environ['ENV_FOLDER'], '2024', 'cec-data')
+        folder = os.path.join(os.environ['ENV_FOLDER'], 'cec-data')
         save_file(os.path.join(folder, f'{start_time}{filename}'), new_data)
     return new_data
 
