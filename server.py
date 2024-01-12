@@ -59,7 +59,7 @@ def election_all_2024():
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:
-                upload_multiple('2024', upload_map=True, upload_v2=False)
+                upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
             upload_multiple('2024', upload_map=True, upload_v2=False)
@@ -146,7 +146,7 @@ def election_test_final():
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:
-                upload_multiple('2024', upload_map=True, upload_v2=False)
+                upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
     return 'ok'
