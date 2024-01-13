@@ -73,6 +73,8 @@ def generate_constituency_town_json(preprocessing_data, is_running, is_started ,
     preprocessing_data = copy.deepcopy(preprocessing_data)
     updatedAt = preprocessing_data.get('updateAt','')
 
+    only_one_area = ['09007', '09020', '10002', '10014', '10015', '10016', '10017', '10018', '10020']
+
     ### 在每一個行政區(district)下有很多投票所，將這些資料進行整理計算並存到result
     for county_area_code, tbox_data in preprocessing_data['districts'].items():
         constituency_json = tp.ConstituencyTemplate(
@@ -85,15 +87,21 @@ def generate_constituency_town_json(preprocessing_data, is_running, is_started ,
         ### 當為全省(台灣省,福建省)資料和無地區資料時不處理
         county_code = county_area_code[:hp.COUNTY_CODE_LENGTH]
         area_code   = county_area_code[hp.COUNTY_CODE_LENGTH:]  
-        if county_code in hp.NO_PROCESSING_CODE or area_code == hp.DEFAULT_AREACODE:
+        if county_code in hp.NO_PROCESSING_CODE:
             continue
+        # 處理只有單一選區的縣市問題
+        if county_code in only_one_area:
+            area_code == '01'
+        else:
+            if area_code == hp.DEFAULT_AREACODE:
+                continue
         
         ### 統計各開票所資料
         vill_calculator = {}
         for data in tbox_data:
             tboxNo         = data.get('tboxNo', hp.DEFAULT_INT)
             town_code      = data.get('deptCode', hp.DEFAULT_TOWNCODE)
-            area_code      = data.get('areaCode', hp.DEFAULT_AREACODE)
+            area_code      = area_code #data.get('areaCode', hp.DEFAULT_AREACODE)
             voterTurnout   = data.get('voterTurnout', hp.DEFAULT_INT)
             eligibleVoters = data.get('eligibleVoters', hp.DEFAULT_INT)
             if tboxNo == hp.DEFAULT_INT:
