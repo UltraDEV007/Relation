@@ -22,8 +22,8 @@ app = Flask(__name__)
 
 IS_TV =  os.environ['PROJECT'] == 'tv' 
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
-BUCKET = os.environ['BUCKET']
-ENV_FOLDER = os.environ['ENV_FOLDER']
+BUCKET = os.environ['BUCKET']          ### expected: whoareyou-gcs.readr.tw
+ENV_FOLDER = os.environ['ENV_FOLDER']  ### expected: elections[-dev]
 UPLOAD_LOCAL = os.environ.get('UPLOAD_LOCAL', 'false') == 'true'
 
 ### election 2024
@@ -99,15 +99,18 @@ def election_default_modify_final():
     upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
-@app.route('/elections/all/test_running', methods=['POST'])
-def election_test_running():
+@app.route('/elections/all/running', methods=['POST'])
+def election_running():
+    '''
+        Generate running json manually
+    '''
     if IS_STARTED:
         if hp.MODIFY_START_DEFAULT==False:
             print('modify start default json')
             _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
             hp.MODIFY_START_DEFAULT = True
         
-        running_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/running.json'
+        running_url = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/running.json'
         seats_data = None
         
         raw_data, is_running = request_url(running_url), True
@@ -123,15 +126,18 @@ def election_test_running():
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
     return 'ok'
 
-@app.route('/elections/all/test_final', methods=['POST'])
-def election_test_final():
+@app.route('/elections/all/final', methods=['POST'])
+def election_final():
+    '''
+        Generate final json manually
+    '''
     if IS_STARTED:
         if hp.MODIFY_FINAL_DEFAULT==False:
             print('modify final default json')
             _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
             hp.MODIFY_FINAL_DEFAULT = True
-        final_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/final.json'
-        final_A_url = 'https://whoareyou-gcs.readr.tw/elections-dev/mock-cec-data/final_A.json'
+        final_url = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/final.json'
+        final_A_url = 'https://{BUCKET}/{ENV_FOLDER}/cec-data/final_A.json'
         
         hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         seats_data = request_url(final_A_url)
@@ -159,20 +165,6 @@ def cec_upload():
     '''
     folder = os.path.join(ENV_FOLDER, 'cec-data')
     upload_folder_async(folder)
-    return "ok"
-
-@app.route('/elections/cec/fetch', methods=['POST'])
-def cec_fetch():
-    '''
-        Fetch CEC data only
-    '''
-    if IS_STARTED:
-        hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
-        seats_data = request_cec('final_A.json')
-        _, _ = request_cec_by_type()
-        if seats_data:
-            print('Receive final_A data, write the seats information')
-            parser.parse_seat(seats_data, hp.mapping_party_seat)
     return "ok"
 
 @app.route("/election2024_homepage")
