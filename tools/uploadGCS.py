@@ -107,21 +107,3 @@ def open_file(filename, encoding='utf-8'):
         with open(filename, encoding=encoding) as f:
             data = json.load(f)
     return data
-
-def open_tbox_info(filepath: str):
-    '''
-    Description:
-        Read the tbox_info.xls which shows the tbox informations. If the data in index 0 is
-        the note from CEC, please delete it in advance.
-    Input:
-        filepath - The path of tbox_info.xls
-    Output:
-        tbox_info - pd.dataframe
-    '''
-    tbox_info = pd.read_csv(filepath)
-    tbox_info.columns = ['tboxNo', 'village', 'countyCode', 'townCode']
-    tbox_info['village'] = tbox_info['village'].str.replace('\n','')
-    tbox_info['countyCode'] = tbox_info['countyCode'].astype(str).apply(lambda x: x.zfill(5))
-    tbox_info['townCode'] = tbox_info['townCode'].astype(str).apply(lambda x: x.zfill(3))
-    tbox_info['tboxNo'] = tbox_info['tboxNo'].astype(str)
-    return tbox_info
