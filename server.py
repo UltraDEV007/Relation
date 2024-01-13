@@ -137,7 +137,7 @@ def election_final():
             _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
             hp.MODIFY_FINAL_DEFAULT = True
         final_url = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/final.json'
-        final_A_url = 'https://{BUCKET}/{ENV_FOLDER}/cec-data/final_A.json'
+        final_A_url = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/final_A.json'
         
         hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
         seats_data = request_url(final_A_url)
