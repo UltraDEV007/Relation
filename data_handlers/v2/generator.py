@@ -140,7 +140,7 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
         areaCode = data.get('areaCode', hp.DEFAULT_AREACODE)
         deptCode = data.get('deptCode', hp.DEFAULT_TOWNCODE)
         countyCode = f'{prvCode}{cityCode}' ### include city and county
-        if (countyCode not in districts_list) and (deptCode != hp.DEFAULT_TOWNCODE):
+        if (countyCode not in districts_list) or (deptCode != hp.DEFAULT_TOWNCODE):
             continue
         if only_one_area.get(countyCode, False)==True:
             areaCode='01'
