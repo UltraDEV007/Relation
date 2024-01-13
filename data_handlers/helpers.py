@@ -1,5 +1,5 @@
 import os
-from tools.uploadGCS import open_file, open_tbox_info
+from tools.uploadGCS import open_file
 
 '''
     helpers is a tool that content structure which you can use to help mapping the
@@ -130,8 +130,8 @@ mapping_president = open_file(path)
 path = os.path.join(root, 'mapping_tboxNo_vill.json')
 mapping_tboxno_vill = open_file(path)
 
-path = os.path.join(root, '20240113_voter.csv')
-mapping_tbox = open_tbox_info(path)
+path = os.path.join(root, 'mapping_tbox.json')
+mapping_tbox = open_file(path)
 
 ### 立委相關的對照表
 path = os.path.join(root, 'mapping_mountain_cand.json')
