@@ -160,44 +160,78 @@ def generate_town_json(town_data, updateAt, is_running, is_started, helper=hp.he
             eligibleVoters = data.get('eligibleVoters', hp.DEFAULT_INT)
             if tboxNo == 0:
                 continue
-            
             ### 比對村里資訊，我們會使用county_code,town_code,tboxNo調閱該對應投票所所擁有的村里再進行計算
-            df = hp.mapping_tbox
-            filter_df = df[(df['countyCode']==str(county_code)) & (df['townCode']==str(town_code)) & (df['tboxNo']==str(tboxNo))]
-            vill_list = list(filter_df['village'])
-            for vill_name in vill_list:
-                vill_code = hp.mapping_vill_code.get(county_code+town_code, {}).get(vill_name, None)
-                if vill_code == None:
-                    message = f'tboxNo: {tboxNo} has no mapping data'
-                    error = tp.ErrorTemplate(
-                        county = county_code, 
-                        town   = town_code, 
-                        reason = message
-                    ).to_json
-                    errors.append(error)
-                all_code = f'{county_code}{town_code}{vill_code}'
-                vill_calc = vill_calculator.get(all_code, None)
-                if vill_calc == None:
-                    region = hp.mapping_town.get(county_code+town_code, 'Unknown') + hp.mapping_vill.get(all_code, 'Unknown')
-                    vill_calc_json = tp.VillCalcTemplate(
-                        region       = region,
-                        county       = county_code,
-                        town         = town_code,
-                        vill         = vill_code,
-                        voterTurnout   = voterTurnout,
-                        eligibleVoters = eligibleVoters
-                    ).to_json()
-                    raw_candidates = data.get('candTksInfo', [])
-                    vill_calc_json['candidates'] = converter.convert_candidate_president(raw_candidates)
-                    for cand in vill_calc_json['candidates']:
-                        cand['candVictor'] = ' ' ### Haven't finished calculation yet, so no winner for candidates
-                    vill_calculator[all_code] = vill_calc_json
-                else:
-                    vill_calc['voterTurnout']   += voterTurnout
-                    vill_calc['eligibleVoters'] += eligibleVoters
-                    candidates = converter.convert_candidate_president(data.get('candTksInfo', []))
-                    for idx, cand in enumerate(vill_calc['candidates']):
-                        cand['tks'] += candidates[idx]['tks']
+            # df = hp.mapping_tbox
+            # filter_df = df[(df['countyCode']==str(county_code)) & (df['townCode']==str(town_code)) & (df['tboxNo']==str(tboxNo))]
+            # vill_list = list(filter_df['village'])
+            # for vill_name in vill_list:
+            #     vill_code = hp.mapping_vill_code.get(county_code+town_code, {}).get(vill_name, None)
+            #     if vill_code == None:
+            #         message = f'tboxNo: {tboxNo} has no mapping data'
+            #         error = tp.ErrorTemplate(
+            #             county = county_code, 
+            #             town   = town_code, 
+            #             reason = message
+            #         ).to_json
+            #         errors.append(error)
+            #     all_code = f'{county_code}{town_code}{vill_code}'
+            #     vill_calc = vill_calculator.get(all_code, None)
+            #     if vill_calc == None:
+            #         region = hp.mapping_town.get(county_code+town_code, 'Unknown') + hp.mapping_vill.get(all_code, 'Unknown')
+            #         vill_calc_json = tp.VillCalcTemplate(
+            #             region       = region,
+            #             county       = county_code,
+            #             town         = town_code,
+            #             vill         = vill_code,
+            #             voterTurnout   = voterTurnout,
+            #             eligibleVoters = eligibleVoters
+            #         ).to_json()
+            #         raw_candidates = data.get('candTksInfo', [])
+            #         vill_calc_json['candidates'] = converter.convert_candidate_president(raw_candidates)
+            #         for cand in vill_calc_json['candidates']:
+            #             cand['candVictor'] = ' ' ### Haven't finished calculation yet, so no winner for candidates
+            #         vill_calculator[all_code] = vill_calc_json
+            #     else:
+            #         vill_calc['voterTurnout']   += voterTurnout
+            #         vill_calc['eligibleVoters'] += eligibleVoters
+            #         candidates = converter.convert_candidate_president(data.get('candTksInfo', []))
+            #         for idx, cand in enumerate(vill_calc['candidates']):
+            #             cand['tks'] += candidates[idx]['tks']
+            vill_name = hp.mapping_tboxno_vill.get(county_code+town_code, {}).get(str(tboxNo), None)
+            vill_code = hp.mapping_vill_code.get(county_code+town_code, {}).get(vill_name, None)
+            if vill_code == None:
+                message = f'tboxNo: {tboxNo} has no mapping data'
+                error = tp.ErrorTemplate(
+                    county = county_code, 
+                    town   = town_code, 
+                    reason = message
+                ).to_json
+                errors.append(error)
+            
+            all_code = f'{county_code}{town_code}{vill_code}'
+            vill_calc = vill_calculator.get(all_code, None)
+            if vill_calc == None:
+                region = hp.mapping_town.get(county_code+town_code, 'Unknown') + hp.mapping_vill.get(all_code, 'Unknown')
+                vill_calc_json = tp.VillCalcTemplate(
+                    region       = region,
+                    county       = county_code,
+                    town         = town_code,
+                    vill         = vill_code,
+                    voterTurnout   = voterTurnout,
+                    eligibleVoters = eligibleVoters
+                ).to_json()
+                raw_candidates = data.get('candTksInfo', [])
+                vill_calc_json['candidates'] = converter.convert_candidate_president(raw_candidates)
+                for cand in vill_calc_json['candidates']:
+                    cand['candVictor'] = ' ' ### Haven't finished calculation yet, so no winner for candidates
+                vill_calculator[all_code] = vill_calc_json
+            else:
+                vill_calc['voterTurnout']   += voterTurnout
+                vill_calc['eligibleVoters'] += eligibleVoters
+                
+                candidates = converter.convert_candidate_president(data.get('candTksInfo', []))
+                for idx, cand in enumerate(vill_calc['candidates']):
+                    cand['tks'] += candidates[idx]['tks']
         for all_code, vill_calc in vill_calculator.items():
             region, county, town, vill = vill_calc['region'], vill_calc['county'], vill_calc['town'], vill_calc['vill']
             total_voterTurnout   = vill_calc.get('voterTurnout', hp.DEFAULT_INT)
