@@ -91,7 +91,7 @@ def generate_constituency_town_json(preprocessing_data, is_running, is_started ,
             continue
         # 處理只有單一選區的縣市問題
         if county_code in only_one_area:
-            area_code == '01'
+            area_code = '01'
         else:
             if area_code == hp.DEFAULT_AREACODE:
                 continue
