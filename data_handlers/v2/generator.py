@@ -197,7 +197,7 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
                 candVictor = candData.get('candVictor', False)
                 person_template = tp.V2PersonCandidateTemplate(
                     candNo     = int(candNo),
-                    tks        = tks,
+                    tks        = tks/2, ### TODO: Find the reason why the ticket is double
                     candVictor = candVictor,
                     tksRate    = round((tks/total_tks)*100, hp.ROUND_DECIMAL) if total_tks!=0 else 0
                 ).to_json()
