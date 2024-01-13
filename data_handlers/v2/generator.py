@@ -138,8 +138,9 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
         prvCode = data.get('prvCode', hp.DEFAULT_PRVCODE)
         cityCode = data.get('cityCode', hp.DEFAULT_CITYCODE)
         areaCode = data.get('areaCode', hp.DEFAULT_AREACODE)
+        deptCode = data.get('deptCode', hp.DEFAULT_TOWNCODE)
         countyCode = f'{prvCode}{cityCode}' ### include city and county
-        if countyCode not in districts_list:
+        if (countyCode not in districts_list) and (deptCode != hp.DEFAULT_TOWNCODE):
             continue
         if only_one_area.get(countyCode, False)==True:
             areaCode='01'
@@ -197,7 +198,7 @@ def generate_v2_district_legislator(raw_data, is_running: bool, year: str):
                 candVictor = candData.get('candVictor', False)
                 person_template = tp.V2PersonCandidateTemplate(
                     candNo     = int(candNo),
-                    tks        = tks/2, ### TODO: Find the reason why the ticket is double
+                    tks        = tks, #tks/2, ### TODO: Find the reason why the ticket is double
                     candVictor = candVictor,
                     tksRate    = round((tks/total_tks)*100, hp.ROUND_DECIMAL) if total_tks!=0 else 0
                 ).to_json()
