@@ -1,5 +1,5 @@
 import os
-from tools.uploadGCS import open_file
+from tools.uploadGCS import open_file, open_tbox_info
 
 '''
     helpers is a tool that content structure which you can use to help mapping the
@@ -126,8 +126,12 @@ mapping_code_vill = open_file(path)
 path = os.path.join(root, 'mapping_president.json')
 mapping_president = open_file(path)
 
+### 投開票所的對照圖，應全面採用mapping_tbox的表(該表為pandas.DataFrame)
 path = os.path.join(root, 'mapping_tboxNo_vill.json')
 mapping_tboxno_vill = open_file(path)
+
+path = os.path.join(root, '20240113_voter.csv')
+mapping_tbox = open_tbox_info(path)
 
 ### 立委相關的對照表
 path = os.path.join(root, 'mapping_mountain_cand.json')
