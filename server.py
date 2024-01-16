@@ -62,7 +62,7 @@ def election_all_2024():
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
     return "ok"
 
-@app.route('/elections/all/<stage>', methods=['POST'])
+@app.route('/elections/manual/<stage>', methods=['POST'])
 def election_manual(stage):
     '''
         Generate running json manually, stage='running' or 'final'.
