@@ -2,7 +2,7 @@ import copy
 import data_handlers.helpers as hp
 import data_handlers.templates as tp
 import data_handlers.parser as parser
-import data_handlers.legislator.converter as converter
+import data_handlers.map.converter as converter
 
 '''
     Generate constituency(區域立委)
