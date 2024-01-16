@@ -462,7 +462,7 @@ def pipeline_map_seats(raw_data, is_running):
     prev_time = time.time()
     folder = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'seat')
 
-    ### Generate for country map, and upload immediately
+    ### 產生全國席次表
     result, seats_country = map_generator.generate_map_country_seats(raw_data)
     country_list = ['mountain-indigenous', 'plain-indigenous', 'party']
     for election_type, election_data in result.items():
@@ -472,7 +472,7 @@ def pipeline_map_seats(raw_data, is_running):
             if is_running==True:
                 upload_blob_realtime(filename)
     
-    ### Generate for county map(only constituency)
+    ### 產生縣市席次表(僅有區域立委Constituency)
     result, seats_normal = map_generator.generate_map_normal_seats(raw_data)
     for county_name, county_data in result.items():
         filename = os.path.join(folder, 'county', 'normal', county_name)
@@ -480,7 +480,7 @@ def pipeline_map_seats(raw_data, is_running):
         if is_running==True:
             upload_blob_realtime(filename)
 
-    ### Generate for all map, and upload immediately
+    ### 產生席次表統整
     all_json = map_generator.generate_map_all_seats(seats_country, seats_normal)
     filename = os.path.join(folder, 'country', 'all', 'country.json')
     save_file(filename, all_json)

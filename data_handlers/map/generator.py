@@ -415,7 +415,7 @@ def generate_map_country_seats(raw_data, helper=hp.helper):
         mapping_json = mapping_relationship[election_type]
         raw_candidates = election_data['candTksInfo']
         
-        ### Calculate the candidate
+        ### 計算當選名額
         calc_seats = {}
         whole_seats = helper[f'{election_type}-allseats']
         for candidate in raw_candidates:
@@ -425,12 +425,12 @@ def generate_map_country_seats(raw_data, helper=hp.helper):
                 continue
             addVictor = 1 if candidate.get('candVictor', ' ')=='*' else 0
             calc_victors += addVictor
-            label = candInfo.get('party', '無黨籍及未經政黨推薦')
+            label = candInfo.get('party', hp.INDEPENDENT_PARTY)
             if label == None:
-                label = '無黨籍及未經政黨推薦'
+                label = hp.INDEPENDENT_PARTY
             calc_seats[label] = calc_seats.get(label, 0) + addVictor
         
-        ### Store into template
+        ### 儲存席次表，並在排序後計算缺額
         seat_template = tp.SeatTemplate().to_json()
         for label, seats in calc_seats.items():
             if label==None:
@@ -438,6 +438,7 @@ def generate_map_country_seats(raw_data, helper=hp.helper):
             seat_checked = tp.SeatCandidateTemplate(label=label, seats=seats).to_json()
             seat_template['parties'].append(seat_checked)
             all_seats[label] = all_seats.get(label, 0) + seats
+        seat_template['parties'] = sorted(seat_template['parties'], key=lambda x: x['seats'], reverse=True)
         seat_unchecked = 0 if (whole_seats-calc_victors)<0 else (whole_seats-calc_victors)
         seat_unchecked_template = tp.SeatCandidateTemplate(label=hp.UNDETERMINED_INFO, seats=seat_unchecked).to_json()
         seat_template['parties'].append(seat_unchecked_template)
@@ -456,6 +457,7 @@ def generate_map_country_seats(raw_data, helper=hp.helper):
         seat_template['parties'].append(seat_checked)
         all_seats[label] = all_seats.get(label, 0) + seats
         calc_victors += seats
+    seat_template['parties'] = sorted(seat_template['parties'], key=lambda x: x['seats'], reverse=True)
     seat_unchecked = 0 if (whole_seats-calc_victors)<0 else (whole_seats-calc_victors)
     seat_unchecked_template = tp.SeatCandidateTemplate(label=hp.UNDETERMINED_INFO, seats=seat_unchecked).to_json()
     seat_template['parties'].append(seat_unchecked_template)
@@ -470,7 +472,7 @@ def generate_map_normal_seats(raw_data, helper=hp.helper):
     all_seats = {}
     parsed_county = parser.parse_county(raw_data, election_type='normal')
     for county_code, county_data in parsed_county['districts'].items():
-        ### calculate the winner number of each party for the county
+        ### 計算當選名額
         seat_template = tp.SeatTemplate().to_json()
         seat_table = {}
         only_one_area = True if len(county_data)==1 else False
@@ -484,9 +486,9 @@ def generate_map_normal_seats(raw_data, helper=hp.helper):
                 candNo    = candidate.get('candNo', hp.DEFAULT_INT)
                 is_winner = candidate.get('candVictor', False)==True or candidate.get('candVictor', ' ')=='*'
                 if is_winner==True:
-                    party = area_candidates.get(str(candNo), {}).get('party', '無黨籍及未經政黨推薦')
+                    party = area_candidates.get(str(candNo), {}).get('party', hp.INDEPENDENT_PARTY)
                     if party == None:
-                        party = '無黨籍及未經政黨推薦'
+                        party = hp.INDEPENDENT_PARTY
                     seat_table[party] = seat_table.get(party, 0) + 1
                     all_seats[party] = all_seats.get(party, 0) + 1
         seat_candidates_count = 0
@@ -494,6 +496,9 @@ def generate_map_normal_seats(raw_data, helper=hp.helper):
             seat_candidates_count += seats
             seat_cand = tp.SeatCandidateTemplate(label=party, seats=seats).to_json()
             seat_template['parties'].append(seat_cand)
+        seat_template['parties'] = sorted(seat_template['parties'], key=lambda x: x['seats'], reverse=True)
+        
+        ### 計算席次缺額: 在區域立委中，一個選區會對應到一個當選者，故county有多少名額根據底下有多少選區決定
         area_candidates_num =  len(hp.mapping_constituency_cand.get(county_code, {}))
         seat_cand = tp.SeatCandidateTemplate(label=hp.UNDETERMINED_INFO, seats=(area_candidates_num - seat_candidates_count)).to_json()
         seat_template['parties'].append(seat_cand)
@@ -520,6 +525,9 @@ def generate_map_all_seats(seats_country, seats_normal, helper=hp.helper):
     for label, seats in all_seats.items():
         seat_checked = tp.SeatCandidateTemplate(label=label, seats=seats).to_json()
         seat_template['parties'].append(seat_checked)
+    seat_template['parties'] = sorted(seat_template['parties'], key=lambda x: x['seats'], reverse=True)
+
+    ### 計算席次缺額
     seat_unchecked = 0 if (whole_seats-calc_seats)<0 else (whole_seats-calc_seats)
     seat_unchecked_template = tp.SeatCandidateTemplate(label=hp.UNDETERMINED_INFO, seats=seat_unchecked).to_json()
     seat_template['parties'].append(seat_unchecked_template)

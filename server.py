@@ -60,7 +60,6 @@ def election_all_2024():
             upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
-            upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
 
 @app.route('/elections/default/2024', methods=['POST'])
