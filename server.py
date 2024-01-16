@@ -72,10 +72,10 @@ def election_manual(stage):
         running_url = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/running.json'
         final_url   = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/final.json'
         final_A_url = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/final_A.json'
-        
+        print(f'Create data manually, stage={stage}')
+
         if stage=='running':
             if hp.MODIFY_START_DEFAULT==False:
-                print('modify start default json')
                 _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=True)
                 hp.MODIFY_START_DEFAULT = True
             seats_data = None
@@ -90,7 +90,6 @@ def election_manual(stage):
                 print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s, is_running={is_running}')
         if stage=='final':
             if hp.MODIFY_FINAL_DEFAULT==False:
-                print('modify final default json')
                 _ = pipeline.pipeline_map_modify(is_started=IS_STARTED, is_running=False)
                 hp.MODIFY_FINAL_DEFAULT = True
             hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
@@ -114,6 +113,7 @@ def election_all_default():
     '''
         Generate default jsons
     '''
+    print('Create default json')
     hp.mapping_party_seat = copy.deepcopy(hp.mapping_party_seat_init)
     default_url  = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/init.json'
     default_file = request_url(default_url)
