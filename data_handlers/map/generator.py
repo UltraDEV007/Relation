@@ -186,7 +186,7 @@ def generate_country_json(preprocessing_data, is_running, is_started , election_
         preprocessing_data - cec president data after preprocessing county
         is_running         - is_running file?
         is_started         - is_started?
-        election_type      - 'mountainIndigenous'/'plainIndigenous'/'party'
+        election_type      - 'mountainIndigenous'/'plainIndigenous'/'party'/'president'
         helper             - helper file which helps you map the name in raw cec
     Output:
         country_json - result
@@ -277,7 +277,6 @@ def generate_county_json(preprocessing_data, is_running, is_started, election_ty
                 county_code = county_code,
                 town = town_code,
                 profRate = town_data[0][helper['PROFRATE']]
-
             ).to_json()
             raw_candidates = town_data[0].get(helper['CANDIDATES'], [])
             district_tmp['candidates'] = converter.convert_candidate(raw_candidates, election_type)
@@ -308,7 +307,6 @@ def generate_town_json(town_data, updateAt, is_running, is_started, election_typ
         }
     '''
     result = {}
-
     county_code = town_data.get('county_code', None)
     if county_code == None or (county_code in hp.NO_PROCESSING_CODE):
         return None

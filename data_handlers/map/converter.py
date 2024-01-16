@@ -37,7 +37,9 @@ def convert_candidate(raw_candidates, election_type):
         Convert the raw candidates data into CandidateTemplate, mapping file will depend on election_type
     Input:
         raw_candaidates: candidates data
-        election_type: 'mountainIndigenous'/'plainIndigenous'/'party'
+        election_type: 
+            1. Person election: 'mountainIndigenous'/'plainIndigenous'/'president'
+            2. Party election: 'party'
     Warning:
         The raw_candidates field in election_type=='party' is different from others
     '''
@@ -48,6 +50,7 @@ def convert_candidate(raw_candidates, election_type):
         'plainIndigenous': hp.mapping_plain_cand,
         'mountainIndigenous': hp.mapping_mountain_cand,
         'party': hp.mapping_party_seat,
+        'president': hp.mapping_president,
     }
     mapping_json = mapping_relationship.get(election_type, None)
     if mapping_json == None:
@@ -65,11 +68,11 @@ def convert_candidate(raw_candidates, election_type):
                 party = hp.INDEPENDENT_PARTY 
             candidate_tmp['party']      = party
             candidate_tmp['tks']        = cand.get('tks', hp.DEFAULT_INT)
-            candidate_tmp['tksRate']    = round(cand.get('tksRate', hp.DEFAULT_FLOAT), 2)
+            candidate_tmp['tksRate']    = round(cand.get('tksRate', hp.DEFAULT_FLOAT), hp.ROUND_DECIMAL)
             
-            candVictor = cand.get('candVictor', ' ')
+            candVictor = cand.get('candVictor', '')
             if len(candVictor) == 0:
-                candVictor = ' '
+                candVictor = ''
             candidate_tmp['candVictor'] = candVictor
             result.append(candidate_tmp)
     else:

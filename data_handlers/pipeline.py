@@ -1,7 +1,6 @@
 import os
 import data_handlers.parser    as parser
-import data_handlers.president.generator as pd_generator
-import data_handlers.legislator.generator as lg_generator
+import data_handlers.map.generator as map_generator
 
 import data_handlers.queries as query
 import data_handlers.v2.adapter as v2_adapter
@@ -234,12 +233,13 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False):
 
 '''
     Map: pipeline_map_2024
-    warning: 由於地圖的資料量較大，建議拆分成多個endpoint來實作
 '''
-def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local=False):
+def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False):
     '''
+    Description:
+        Generate the election data for 2024, including president, legislator(constituency, indigeous, party)
+    Input:
         raw_data - running.json or final.json
-        upload   - 是否即時上傳(upload_blob_realtime)
     '''
     result = True
 
@@ -279,16 +279,18 @@ def pipeline_map_2024(raw_data, is_started: bool=True, is_running: bool=False, u
 
     return result
 
-def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local: bool=False):
+def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=False):
+    election_type = 'president'
     prev_time = time.time()
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'president', 'map')
     
     ### Parse and store country(For country level, we'll upload immediately)
     parsed_county = parser.parse_county(raw_data, election_type='president')
-    country_json  = pd_generator.generate_country_json(
+    country_json  = map_generator.generate_country_json(
         preprocessing_data = parsed_county, 
         is_running = is_running,
-        is_started = is_started    
+        is_started = is_started,
+        election_type = election_type,
     )
     filename = os.path.join(root_path, 'country', 'country.json')
     save_file(filename, country_json)
@@ -296,17 +298,16 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
         upload_blob_realtime(filename)
 
     ### Parse and store county
-    generated_county_json = pd_generator.generate_county_json(
+    generated_county_json = map_generator.generate_county_json(
         preprocessing_data = parsed_county,
         is_running = is_running,
-        is_started = is_started
+        is_started = is_started,
+        election_type = election_type,
     )
     folder = os.path.join(root_path, 'county')
     for county_code, county_json in generated_county_json.items():
         filename = os.path.join(folder, county_code)
         save_file(filename, county_json)
-    if upload_local==True:
-        upload_folder_async(folder)
 
     ### Parse town
     if is_running == False:
@@ -319,27 +320,25 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
                 continue
             county_data         = parsed_county['districts'].get(county_code, None)
             town_data           = parser.parse_town(county_code, county_data)
-            vill_data, _   = pd_generator.generate_town_json(town_data, updateAt, is_running, is_started)
+            vill_data, _   = map_generator.generate_town_json(town_data, updateAt, is_running, is_started, election_type)
             result.append(vill_data)
             # You can use errors to track the problematic tboxNo
         for vill_data in result:
             for key, value in vill_data.items():
                 filename = os.path.join(folder, key)
                 save_file(filename, value)
-        if upload_local==True:
-            upload_folder_async(folder)
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] President costed {exe_time} sec, is_running={is_running}')
     return True
 
-def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local: bool=False):
+def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_running: bool=False):
     prev_time = time.time()
     election_type = 'normal'
 
     ### Generate county data
     parsed_county = parser.parse_county(raw_data, election_type=election_type)
-    generated_county_json = lg_generator.generate_constituency_county_json(
+    generated_county_json = map_generator.generate_constituency_county_json(
         preprocessing_data = parsed_county,
         is_running = is_running,
         is_started = is_started,
@@ -349,8 +348,6 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
     for county_code, county_json in generated_county_json.items():
         filename = os.path.join(folder, county_code)
         save_file(filename, county_json)
-    if upload_local==True:
-        upload_folder_async(folder)
 
     ### Generate town data
     if is_running:
@@ -358,19 +355,17 @@ def pipeline_legislator_constituency_2024(raw_data, is_started: bool=True, is_ru
         return False
     folder = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map', 'constituency', election_type)
     parsed_area = parser.parse_constituency_area(raw_data)
-    constituency_result = lg_generator.generate_constituency_town_json(parsed_area, is_running, is_started)
+    constituency_result = map_generator.generate_constituency_town_json(parsed_area, is_running, is_started)
     for name, data in constituency_result.items():
         filename = os.path.join(folder, name)
         save_file(filename, data)
-    if upload_local==True:
-        upload_folder_async(folder)
 
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator constituency costed {exe_time} sec, is_running={is_running}')
     return True
 
-def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local: bool=False):
+def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_running: bool=False):
     '''
         In this pipeline, we generate mountain and plain indigenous in one pipeline
     '''
@@ -382,7 +377,7 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
         upload_folder = 'mountain-indigenous' if election_type == 'mountainIndigenous' else 'plain-indigenous'
 
         ### Generate country(upload immediately)
-        country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
+        country_json  = map_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
         filename = os.path.join(root_path, 'country', upload_folder, 'country.json')
         save_file(filename, country_json)
         if is_running==True:
@@ -390,12 +385,10 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
 
         ### Generate county
         folder = os.path.join(root_path, 'county', upload_folder)
-        county_result = lg_generator.generate_county_json(parsed_county, is_running, is_started, election_type)
+        county_result = map_generator.generate_county_json(parsed_county, is_running, is_started, election_type)
         for name, county_json in county_result.items():
             filename = os.path.join(folder, name)
             save_file(filename, county_json)
-        if upload_local==True:
-            upload_folder_async(folder)
         
         ### Generate town(only in final.json)
         if is_running==False:
@@ -408,7 +401,7 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
                     continue
                 county_data = parsed_county['districts'].get(county_code, None)
                 town_data   = parser.parse_town(county_code, county_data)
-                vill_data   = lg_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
+                vill_data   = map_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
                 vill_result.append(vill_data)
             
             folder = os.path.join(root_path, 'town', upload_folder)
@@ -416,21 +409,19 @@ def pipeline_legislator_indigeous_2024(raw_data, is_started: bool=True, is_runni
                 for name, value in vill_data.items():
                     filename = os.path.join(folder, name)
                     save_file(filename, value)
-            if upload_local==True:
-                upload_folder_async(folder)
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator special(mountain&plain) costed {exe_time} sec, is_running={is_running}')
     return True
 
-def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: bool=False, upload_local: bool=False):
+def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: bool=False):
     prev_time = time.time()
     root_path = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'map')
     election_type = 'party'
 
     ### Generate country(upload immediately)
     parsed_county = parser.parse_county(raw_data, election_type)
-    country_json  = lg_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
+    country_json  = map_generator.generate_country_json(parsed_county, is_running, is_started, election_type)
     filename = os.path.join(root_path, 'country', election_type, 'country.json')
     save_file(filename, country_json)
     if is_running==True:
@@ -438,12 +429,10 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
 
     ### Generate county
     folder = os.path.join(root_path, 'county', election_type)
-    county_result = lg_generator.generate_county_json(parsed_county, is_running, is_started, election_type)
+    county_result = map_generator.generate_county_json(parsed_county, is_running, is_started, election_type)
     for name, county_json in county_result.items():
         filename = os.path.join(folder, name)
         save_file(filename, county_json)
-    if upload_local==True:
-        upload_folder_async(folder)
 
     ### Generate town
     if is_running==False:
@@ -456,7 +445,7 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
                 continue
             county_data = parsed_county['districts'].get(county_code, None)
             town_data   = parser.parse_town(county_code, county_data)
-            vill_data   = lg_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
+            vill_data   = map_generator.generate_town_json(town_data, updateAt, is_running, True, election_type)
             vill_result.append(vill_data)
         
         folder = os.path.join(root_path, 'town', election_type)
@@ -464,8 +453,6 @@ def pipeline_legislator_party_2024(raw_data, is_started: bool=True, is_running: 
             for name, value in vill_data.items():
                 filename = os.path.join(folder, name)
                 save_file(filename, value)
-        if upload_local==True:
-            upload_folder_async(folder)
     cur_time = time.time()
     exe_time = round(cur_time-prev_time, 2)
     print(f'[MAP] Legislator party costed {exe_time} sec, is_running={is_running}')
@@ -476,7 +463,7 @@ def pipeline_map_seats(raw_data, is_running):
     folder = os.path.join(os.environ['ENV_FOLDER'], '2024', 'legislator', 'seat')
 
     ### Generate for country map, and upload immediately
-    result, seats_country = lg_generator.generate_map_country_seats(raw_data)
+    result, seats_country = map_generator.generate_map_country_seats(raw_data)
     country_list = ['mountain-indigenous', 'plain-indigenous', 'party']
     for election_type, election_data in result.items():
         if election_type in country_list:
@@ -486,7 +473,7 @@ def pipeline_map_seats(raw_data, is_running):
                 upload_blob_realtime(filename)
     
     ### Generate for county map(only constituency)
-    result, seats_normal = lg_generator.generate_map_normal_seats(raw_data)
+    result, seats_normal = map_generator.generate_map_normal_seats(raw_data)
     for county_name, county_data in result.items():
         filename = os.path.join(folder, 'county', 'normal', county_name)
         save_file(filename, county_data)
@@ -494,7 +481,7 @@ def pipeline_map_seats(raw_data, is_running):
             upload_blob_realtime(filename)
 
     ### Generate for all map, and upload immediately
-    all_json = lg_generator.generate_map_all_seats(seats_country, seats_normal)
+    all_json = map_generator.generate_map_all_seats(seats_country, seats_normal)
     filename = os.path.join(folder, 'country', 'all', 'country.json')
     save_file(filename, all_json)
     if is_running==True:

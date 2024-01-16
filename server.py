@@ -56,7 +56,7 @@ def election_all_2024():
         prev_time = cur_time
         if raw_data:
             _ = pipeline.pipeline_map_seats(raw_data, is_running)
-            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
+            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:
                 upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
@@ -77,7 +77,7 @@ def election_all_default():
     _ = pipeline.pipeline_default_map(is_started=False, is_running=False)
     _ = pipeline.pipeline_default_seats()
     if default_file:
-        _ = pipeline.pipeline_map_2024(default_file, is_started=False, is_running=False, upload_local=False)
+        _ = pipeline.pipeline_map_2024(default_file, is_started=False, is_running=False)
         _ = pipeline.pipeline_v2(default_file, None, '2024', is_running=True) ### If is_running=False, we'll mark the winner
     upload_multiple('2024', upload_map=True, upload_v2=False)
     return "ok"
@@ -118,7 +118,7 @@ def election_running():
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
             _ = pipeline.pipeline_map_seats(raw_data, is_running)
-            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
+            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:
                 upload_multiple('2024', upload_map=True, upload_v2=False)
@@ -150,7 +150,7 @@ def election_final():
         ### 當raw_data存在時，表示有取得新一筆的資料，處理完後需上傳(若無新資料就不處理)
         if raw_data:
             _ = pipeline.pipeline_map_seats(raw_data, is_running)
-            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running, upload_local=UPLOAD_LOCAL)
+            _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
             if UPLOAD_LOCAL==False:
                 upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
