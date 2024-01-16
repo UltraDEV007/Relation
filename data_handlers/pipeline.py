@@ -318,9 +318,9 @@ def pipeline_president_2024(raw_data, is_started: bool=True, is_running: bool=Fa
         for county_code in county_codes:
             if county_code in hp.NO_PROCESSING_CODE:
                 continue
-            county_data         = parsed_county['districts'].get(county_code, None)
-            town_data           = parser.parse_town(county_code, county_data)
-            vill_data, _   = map_generator.generate_town_json(town_data, updateAt, is_running, is_started, election_type)
+            county_data   = parsed_county['districts'].get(county_code, None)
+            town_data     = parser.parse_town(county_code, county_data)
+            vill_data     = map_generator.generate_town_json(town_data, updateAt, is_running, is_started, election_type)
             result.append(vill_data)
             # You can use errors to track the problematic tboxNo
         for vill_data in result:
