@@ -24,7 +24,6 @@ IS_TV =  os.environ['PROJECT'] == 'tv'
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
 BUCKET = os.environ['BUCKET']          ### expected: whoareyou-gcs.readr.tw
 ENV_FOLDER = os.environ['ENV_FOLDER']  ### expected: elections[-dev]
-UPLOAD_LOCAL = os.environ.get('UPLOAD_LOCAL', 'false') == 'true'
 
 ### election 2024
 @app.route('/elections/all/2024', methods=['POST'])
@@ -58,8 +57,7 @@ def election_all_2024():
             _ = pipeline.pipeline_map_seats(raw_data, is_running)
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
-            if UPLOAD_LOCAL==False:
-                upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
+            upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
             upload_multiple('2024', upload_map=True, upload_v2=False)
@@ -120,8 +118,7 @@ def election_running():
             _ = pipeline.pipeline_map_seats(raw_data, is_running)
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
-            if UPLOAD_LOCAL==False:
-                upload_multiple('2024', upload_map=True, upload_v2=False)
+            upload_multiple('2024', upload_map=True, upload_v2=False)
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
     return 'ok'
@@ -152,8 +149,7 @@ def election_final():
             _ = pipeline.pipeline_map_seats(raw_data, is_running)
             _ = pipeline.pipeline_map_2024(raw_data, is_started = IS_STARTED, is_running=is_running)
             _ = pipeline.pipeline_v2(raw_data, seats_data, '2024', is_running=is_running)
-            if UPLOAD_LOCAL==False:
-                upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
+            upload_multiple('2024', upload_map=True, upload_v2=(is_running!=True))
             cur_time = time.time()
             print(f'Time of map&v2 pipeline is {round(cur_time-prev_time,2)}s')
     return 'ok'
