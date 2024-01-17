@@ -11,14 +11,13 @@ gql_endpoint = os.environ['GQL_URL']
 BUCKET = os.environ['BUCKET']          ### expected: whoareyou-gcs.readr.tw
 ENV_FOLDER = os.environ['ENV_FOLDER']  ### expected: elections[-dev]
 
-def show_update_person(result):
+def show_update_person(result, id):
     if result:
         result  = result['item']
-        name    = result['person_id']['name']
         tks     = result['votes_obtained_number']
         tksRate = result['votes_obtained_percentage']
         elected = result['elected']
-        print(f'Update {name} for tks={tks}, tksRate={tksRate}, and elected={elected}')
+        print(f'Update {id} for tks={tks}, tksRate={tksRate}, and elected={elected}')
 
 def update_president(year: str):
     '''
@@ -56,7 +55,7 @@ def update_president(year: str):
                 id                        = id
             ).to_json()
             result = gql_update(gql_endpoint, query.gql_update_president, gql_variable)
-            show_update_person(result)
+            show_update_person(result, id)
     return True
     
 
