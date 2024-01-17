@@ -1,4 +1,3 @@
-import data_handlers.queries as query
 import asyncio
 import os
 import data_handlers.helpers as hp
@@ -6,7 +5,7 @@ import re
 
 gql_endpoint = os.environ['GQL_URL']
 
-def adapter_president_v2():
+def adapter_president_v2(gql_presidents):
     '''
     Description:
         Fetch the presidents data in the GQL database and organize them into the
@@ -21,8 +20,6 @@ def adapter_president_v2():
         }
     '''
     mapping_president    = {}
-    gql_presidents = query.gql2json(gql_endpoint, query.gql_president_2024)
-    
     gql_data = gql_presidents['personElections']
     for idx, data in enumerate(gql_data):
         candNo      = data.get('number', str(idx+1))  ###如果實際candNo尚不存在，使用idx作為假資料

@@ -1,22 +1,11 @@
-from gql.transport.aiohttp import AIOHTTPTransport
-from gql import gql, Client
-import asyncio
-
-'''
-  GQL function
-'''
-def gql2json(gql_endpoint, gql_string):
-    gql_transport = AIOHTTPTransport(url=gql_endpoint)
-    gql_client = Client(transport=gql_transport,
-                        fetch_schema_from_transport=True)
-
-    json_data = gql_client.execute(gql(gql_string))
-    return json_data
-
-
 '''
   Queries string for each election type
 '''
+def get_president_string(year):
+    gql_string = gql_president_2024
+    if year=='2024':
+        gql_string = gql_president_2024
+    return gql_string
 
 gql_president_2024 = """
 query GetPresidents {
@@ -131,6 +120,23 @@ query GetConstituency {
       name
       image
     }
+  }
+}
+"""
+
+'''
+  Update functions
+'''
+gql_update_president = """
+mutation ($data: PersonElectionUpdateInput!, $id: ID!) {
+  item: updatePersonElection(where: {id: $id}, data: $data) {
+    id
+    person_id {
+      name
+    }
+    votes_obtained_number
+    votes_obtained_percentage
+    elected
   }
 }
 """

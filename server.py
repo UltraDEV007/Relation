@@ -13,6 +13,7 @@ from data_export import president2024_realtime
 
 import data_handlers.helpers as hp
 import data_handlers.parser as parser
+import data_handlers.update as gql_update
 
 from data_handlers import pipeline
 import time
@@ -26,6 +27,16 @@ BUCKET = os.environ['BUCKET']          ### expected: whoareyou-gcs.readr.tw
 ENV_FOLDER = os.environ['ENV_FOLDER']  ### expected: elections[-dev]
 
 ### election 2024
+@app.route('/elections/update/cms/<year>', methods=['POST'])
+def election_update_cms(year):
+    '''
+        Fetch v2 json from bucket and update the result into CMS
+    '''
+    result = gql_update.update_president(year)
+    if result==False:
+        print('Update cms president data failed.')
+    return "ok"
+
 @app.route('/elections/all/2024', methods=['POST'])
 def election_all_2024():
     '''
