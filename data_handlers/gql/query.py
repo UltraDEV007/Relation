@@ -19,6 +19,12 @@ def get_plain_indigeous_string(year):
         gql_string = gql_plainIndigeous_2024
     return gql_string
 
+def get_party_string(year):
+    gql_string = gql_party_2024
+    if year=='2024':
+        gql_string = gql_party_2024
+    return gql_string
+
 gql_president_2024 = """
 query GetPresidents {
   personElections(
@@ -137,9 +143,9 @@ query GetConstituency {
 """
 
 '''
-  Update functions
+  Update queries
 '''
-gql_update_president = """
+gql_update_person = """
 mutation ($data: PersonElectionUpdateInput!, $id: ID!) {
   item: updatePersonElection(where: {id: $id}, data: $data) {
     id
@@ -151,4 +157,16 @@ mutation ($data: PersonElectionUpdateInput!, $id: ID!) {
     elected
   }
 }
+"""
+
+gql_update_party = """
+mutation($data: OrganizationsElectionUpdateInput!, $id: ID!) {
+  item: updateOrganizationsElection(where: {id: $id}, data: $data) {
+    id
+    first_obtained_number
+    second_obtained_number
+    votes_obtained_number
+  }
+}
+
 """

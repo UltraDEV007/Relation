@@ -32,11 +32,16 @@ def election_update_cms(year):
     '''
         Fetch v2 json from bucket and update the result into CMS
     '''
+    ### person election
     election_types = ['president', 'mountainIndigenous', 'plainIndigenous']
     for election_type in election_types:
         result = gql_update.update_person_election(year, election_type)
         if result==False:
             print(f'Update cms {election_type} data failed.')
+    ### party election
+    result = gql_update.update_party_election(year)
+    if result==False:
+        print(f'Update cms party data failed')
     return "ok"
 
 @app.route('/elections/all/2024', methods=['POST'])

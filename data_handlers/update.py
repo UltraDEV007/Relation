@@ -21,7 +21,7 @@ def show_update_person(result, id):
 
 def update_person_election(year: str, election_type:str):
     '''
-        Give the year of election, and update the president result into WHORU database
+        Give the year of election, and update the person election result into WHORU database
     '''
     allowed_election_type = ['president', 'mountainIndigenous', 'plainIndigenous']
     if election_type not in allowed_election_type:
@@ -69,9 +69,50 @@ def update_person_election(year: str, election_type:str):
                 elected                   = candVictor,
                 id                        = id
             ).to_json()
-            result = gql_update(gql_endpoint, query.gql_update_president, gql_variable)
+            result = gql_update(gql_endpoint, query.gql_update_person, gql_variable)
             show_update_person(result, id)
     return True
+
+def update_party_election(year: str):
+    '''
+        Give the year of election, and update the party election result into WHORU database
+    '''
+    v2_url = f'https://{BUCKET}/{ENV_FOLDER}/v2/{year}/legislator/party/all.json'
+    query_string = query.get_party_string(year)
+
+    ### Catch the v2 json, which records all the election result
+    raw_data = request_url(v2_url)
+    if raw_data==None:
+        print("Can't get v2 president json")
+        return False
+    v2_data = raw_data['parties']
+
+    ### Create the mapping table for id and candNo
+    gql_presidents = gql_fetch(gql_endpoint, query_string)
+    mapping = {} # {candNo: [id]}
+    for data in gql_presidents['organizationsElections']:
+        id     = str(data['id'])
+        candNo = str(data['number'])
+        mapping[candNo] = id
     
+    ### Parse the data in v2
+    for data in v2_data:
+        candNo       = data['candNo']
+        tks          = data['tks']
+        tksRate1     = data['tksRate1']
+        tksRate2     = data['tksRate2']
+        seats        = data['seats']
+        id           = mapping.get(str(candNo), None)
+        if id!=None:
+            gql_variable = variable.PartyVariable(
+                votes_obtained_number     = f'{tks}',
+                first_obtained_number     = f'{tksRate1}%',
+                second_obtained_number    = f'{tksRate2}%',
+                seats                     = f'{seats}',
+                id                        = id
+            ).to_json()
+            result = gql_update(gql_endpoint, query.gql_update_party, gql_variable)
+            show_update_person(result, id)
+    return True
 
 
