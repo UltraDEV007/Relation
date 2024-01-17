@@ -17,22 +17,37 @@ def show_update_person(result, id):
         tks     = result['votes_obtained_number']
         tksRate = result['votes_obtained_percentage']
         elected = result['elected']
-        print(f'Update {id} for tks={tks}, tksRate={tksRate}, and elected={elected}')
+        print(f'Update election person id={id} to tks={tks}, tksRate={tksRate}, and elected={elected}')
 
-def update_president(year: str):
+def update_person_election(year: str, election_type:str):
     '''
         Give the year of election, and update the president result into WHORU database
     '''
+    allowed_election_type = ['president', 'mountainIndigenous', 'plainIndigenous']
+    if election_type not in allowed_election_type:
+        print(f'election_type: {election_type} is not allowed')
+        return False
+    url_mapping = {
+        'president': f'https://{BUCKET}/{ENV_FOLDER}/v2/{year}/president/all.json',
+        'mountainIndigenous': f'https://{BUCKET}/{ENV_FOLDER}/v2/{year}/legislator/mountainIndigenous/all.json',
+        'plainIndigenous': f'https://{BUCKET}/{ENV_FOLDER}/v2/{year}/legislator/plainIndigenous/all.json'
+    }
+    query_mapping = {
+        'president': query.get_president_string(year),
+        'mountainIndigenous': query.get_mountain_indigeous_string(year),
+        'plainIndigenous': query.get_plain_indigeous_string(year)
+    }
+
     ### Catch the v2 json, which records all the election result
-    v2_president_url = f'https://{BUCKET}/{ENV_FOLDER}/v2/{year}/president/all.json'
-    raw_data = request_url(v2_president_url)
+    v2_url = url_mapping[election_type]
+    raw_data = request_url(v2_url)
     if raw_data==None:
         print("Can't get v2 president json")
         return False
-    v2_president = raw_data['candidates']
+    v2_data = raw_data['candidates']
 
     ### Create the mapping table for id and candNo
-    gql_presidents = gql_fetch(gql_endpoint, query.get_president_string(year))
+    gql_presidents = gql_fetch(gql_endpoint, query_mapping[election_type])
     mapping = {} # {candNo: [id]}
     for data in gql_presidents['personElections']:
         id     = str(data['id'])
@@ -41,7 +56,7 @@ def update_president(year: str):
         subId_list.append(id)
     
     ### Parse the data in v2
-    for data in v2_president:
+    for data in v2_data:
         candNo      = data['candNo']
         tks         = data['tks']
         tksRate     = data['tksRate']

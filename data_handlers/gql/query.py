@@ -7,6 +7,18 @@ def get_president_string(year):
         gql_string = gql_president_2024
     return gql_string
 
+def get_mountain_indigeous_string(year):
+    gql_string = gql_mountainIndigeous_2024
+    if year=='2024':
+        gql_string = gql_mountainIndigeous_2024
+    return gql_string
+
+def get_plain_indigeous_string(year):
+    gql_string = gql_plainIndigeous_2024
+    if year=='2024':
+        gql_string = gql_plainIndigeous_2024
+    return gql_string
+
 gql_president_2024 = """
 query GetPresidents {
   personElections(
