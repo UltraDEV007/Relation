@@ -21,7 +21,7 @@ def show_update_person(result, id):
 
 def show_update_party(result, id):
     if result:
-        result  = result['data']['item']
+        result  = result['item']
         tks      = result['votes_obtained_number']
         tksRate1 = result['first_obtained_number']
         tksRate2 = result['second_obtained_number']
