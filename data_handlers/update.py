@@ -19,6 +19,16 @@ def show_update_person(result, id):
         elected = result['elected']
         print(f'Update election person id={id} to tks={tks}, tksRate={tksRate}, and elected={elected}')
 
+def show_update_party(result, id):
+    if result:
+        result  = result['data']['item']
+        tks      = result['votes_obtained_number']
+        tksRate1 = result['first_obtained_number']
+        tksRate2 = result['second_obtained_number']
+        seats = result['seats']
+        print(f'Update election person id={id} to tks={tks}, tksRate1={tksRate1}, tksRate2={tksRate2}, and seats={seats}')
+
+
 def update_person_election(year: str, election_type:str):
     '''
         Give the year of election, and update the person election result into WHORU database
@@ -112,7 +122,7 @@ def update_party_election(year: str):
                 id                        = id
             ).to_json()
             result = gql_update(gql_endpoint, query.gql_update_party, gql_variable)
-            show_update_person(result, id)
+            show_update_party(result, id)
     return True
 
 

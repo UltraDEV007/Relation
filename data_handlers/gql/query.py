@@ -161,11 +161,12 @@ mutation ($data: PersonElectionUpdateInput!, $id: ID!) {
 
 gql_update_party = """
 mutation($data: OrganizationsElectionUpdateInput!, $id: ID!) {
-  item: updateOrganizationsElection(where: {id: $id}, data: $data) {
+  updateOrganizationsElection(where: {id: $id}, data: $data) {
     id
+    votes_obtained_number
     first_obtained_number
     second_obtained_number
-    votes_obtained_number
+    seats
   }
 }
 
