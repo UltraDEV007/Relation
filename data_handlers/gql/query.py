@@ -25,6 +25,12 @@ def get_party_string(year):
         gql_string = gql_party_2024
     return gql_string
 
+def get_normal_string(year):
+    gql_string = gql_constituency_2024
+    if year=='2024':
+        gql_string = gql_constituency_2024
+    return gql_string
+
 gql_president_2024 = """
 query GetPresidents {
   personElections(
@@ -125,6 +131,7 @@ query GetConstituency {
       election: {id: { equals: 87 } },
       status: {equals: "active"},
     }) {
+    id
     number
     electoral_district{
       city

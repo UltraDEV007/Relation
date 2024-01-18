@@ -1,6 +1,6 @@
 import os
 import googleapiclient
-from flask import Flask, request
+from flask import Flask, request, json
 from politics_dump import dump_politics, landing
 from datetime import datetime
 from tools.cec_data import request_cec_by_type, request_cec, request_url
@@ -30,18 +30,29 @@ ENV_FOLDER = os.environ['ENV_FOLDER']  ### expected: elections[-dev]
 @app.route('/elections/update/cms/<year>', methods=['POST'])
 def election_update_cms(year):
     '''
-        Fetch v2 json from bucket and update the result into CMS
+        Fetch v2 json from bucket and update the result into CMS. 
+        Besides <year> parameter, you should provide json payload to specify the election_type you want to update.
     '''
+    payload = json.loads(request.data)
     ### person election
     election_types = ['president', 'mountainIndigenous', 'plainIndigenous']
     for election_type in election_types:
-        result = gql_update.update_person_election(year, election_type)
-        if result==False:
-            print(f'Update cms {election_type} data failed.')
+        if payload.get(election_type, False)==True:
+            result = gql_update.update_person_election(year, election_type)
+            if result==False:
+                print(f'Update cms {election_type} data failed.')
+
     ### party election
-    result = gql_update.update_party_election(year)
-    if result==False:
-        print(f'Update cms party data failed')
+    if payload.get('party', False)==True:
+        result = gql_update.update_party_election(year)
+        if result==False:
+            print(f'Update cms party data failed')
+
+    ### normal election
+    if payload.get('normal', False)==True:
+        result = gql_update.update_normal_election(year)
+        if result==False:
+            print(f'Update cms normal data failed')
     return "ok"
 
 @app.route('/elections/all/2024', methods=['POST'])
