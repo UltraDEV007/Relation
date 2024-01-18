@@ -195,9 +195,6 @@ gql_create_personOrganization = """
 mutation ($data: PersonOrganizationCreateInput!) {
   item: createPersonOrganization(data: $data) {
     id
-    person_id {
-      name
-    }
   }
 }
 """

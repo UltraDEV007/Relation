@@ -234,5 +234,4 @@ def show_create_personOrganization(result):
     if result:
         result   = result['item']
         personOrganization_id = result['id']
-        personName = result['person_id']['name']
-        print(f'Successfully create personOrganization with id={personOrganization_id}, and name is {personName}')
+        print(f'Successfully create personOrganization with id={personOrganization_id}')
