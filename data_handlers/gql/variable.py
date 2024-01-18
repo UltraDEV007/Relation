@@ -60,7 +60,7 @@ termOffice_legislator_2024 = TermOffice(
     CreatePersonOrganizationVariable: Create person organization, term_office must to be TermOffice(...).to_json()
 '''
 class CreatePersonOrganizationVariable:
-    def __init__(self, person_id: str, organization_id: str, election_id: str, role: str, term_office: dict):
+    def __init__(self, person_id: str, organization_id: str, election_id: str, role: str, source: str, term_office: dict):
         self.data = {}
         self.data['person_id'] = {
             "connect": {
@@ -78,6 +78,7 @@ class CreatePersonOrganizationVariable:
             }
         }
         self.data['role'] = role
+        self.data['source'] = source
         self.data['start_date_year']  = term_office['start_date_year']
         self.data['start_date_month'] = term_office['start_date_month']
         self.data['start_date_day']   = term_office['start_date_day']

@@ -94,6 +94,7 @@ def update_person_election(year: str, election_type:str):
                     organization_id = organization_id,
                     election_id = election_id,
                     role = role,
+                    source = '中選會',
                     term_office = term_office
                 ).to_json()
                 result = gql_update(gql_endpoint, query.gql_create_personOrganization, gql_varible)
