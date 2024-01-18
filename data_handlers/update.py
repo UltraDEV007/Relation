@@ -10,8 +10,8 @@ from data_handlers.gql.tool import gql_fetch, gql_update
 from tools.cec_data import request_url
 
 gql_endpoint = os.environ['GQL_URL']
-BUCKET = os.environ['BUCKET']          ### expected: whoareyou-gcs.readr.tw
-ENV_FOLDER = os.environ['ENV_FOLDER']  ### expected: elections[-dev]
+BUCKET = os.environ['BUCKET']  
+ENV_FOLDER = os.environ['ENV_FOLDER']
 
 def update_person_election(year: str, election_type:str):
     '''
@@ -32,6 +32,10 @@ def update_person_election(year: str, election_type:str):
         'plainIndigenous': query.get_plain_indigeous_string(year)
     }
 
+    ### Get the organization informations
+    gql_organizations = gql_fetch(gql_endpoint, query.gql_organizations_string)
+    organizations_table = {data['name']: data['id'] for data in gql_organizations['organizations']}
+
     ### Catch the v2 json, which records all the election result
     v2_url = url_mapping[election_type]
     raw_data = request_url(v2_url)
@@ -41,30 +45,59 @@ def update_person_election(year: str, election_type:str):
     v2_data = raw_data['candidates']
 
     ### Create the mapping table for id and candNo
-    gql_presidents = gql_fetch(gql_endpoint, query_mapping[election_type])
-    mapping = {} # {candNo: [id]}
-    for data in gql_presidents['personElections']:
-        id     = str(data['id'])
-        candNo = str(data['number'])
-        subId_list = mapping.setdefault(candNo, [])
-        subId_list.append(id)
-    
+    gql_person = gql_fetch(gql_endpoint, query_mapping[election_type])
+    mapping_candNo_eid = {} # {candNo: {election_id: data}}
+    for data in gql_person['personElections']:
+        election_id  = str(data['id'])
+        person_id    = str(data['person_id']['id'])
+        candNo       = str(data['number'])
+        is_vice      = data.get('mainCandidate', None)!=None
+        subId_list   = mapping_candNo_eid.setdefault(candNo, {})
+        subId_list[election_id] = {
+            'person_id': person_id,
+            'is_vice': is_vice,
+        }
+
     ### Parse the data in v2
     for data in v2_data:
         candNo      = data['candNo']
         tks         = data['tks']
         tksRate     = data['tksRate']
         candVictor  = (data['candVictor']==True)
-        ids = mapping.get(str(candNo), [])
-        for id in ids:
-            gql_variable = variable.PersonVariable(
+        election_ids = mapping_candNo_eid.get(str(candNo), {})
+        for election_id, info in election_ids.items():
+            gql_variable = variable.UpdatePersonElectionVariable(
                 votes_obtained_number     = f'{tks}',
                 votes_obtained_percentage = f'{tksRate}%',
                 elected                   = candVictor,
-                id                        = id
+                id                        = election_id
             ).to_json()
             result = gql_update(gql_endpoint, query.gql_update_person, gql_variable)
             show_update_person(result, election_type)
+            
+            ### If the candVictor==True, we need to update Person Organization
+            if candVictor==True:
+                role, organization, term_office = '', '', {}
+                person_id = info['person_id']
+                is_vice   = info['is_vice']
+                if election_type=='president':
+                    role = '副總統' if(is_vice==True) else '總統'
+                    organization = '總統府'
+                    term_office = variable.termOffice_president_2024
+                else:
+                    role = '立委'
+                    organization = '立法院'
+                    term_office = variable.termOffice_legislator_2024
+                organization_id = organizations_table[organization]
+                gql_varible = variable.CreatePersonOrganizationVariable(
+                    person_id = person_id,
+                    organization_id = organization_id,
+                    election_id = election_id,
+                    role = role,
+                    term_office = term_office
+                ).to_json()
+                result = gql_update(gql_endpoint, query.gql_create_personOrganization, gql_varible)
+                show_create_personOrganization(result)
     return True
 
 def update_party_election(year: str):
@@ -98,7 +131,7 @@ def update_party_election(year: str):
         seats        = data['seats']
         id           = mapping.get(str(candNo), None)
         if id!=None:
-            gql_variable = variable.PartyVariable(
+            gql_variable = variable.UpdatePartyElectionVariable(
                 votes_obtained_number     = f'{tks}',
                 first_obtained_number     = f'{tksRate1}%',
                 second_obtained_number    = f'{tksRate2}%',
@@ -135,7 +168,7 @@ def update_normal_election(year: str):
                 candVictor  = (candidate['candVictor']==True)
                 eid = mapping_normal_eid.get(county_code, {}).get(area_code.zfill(2), {}).get(str(candNo), None)
                 if eid != None:
-                    gql_variable = variable.PersonVariable(
+                    gql_variable = variable.UpdatePersonElectionVariable(
                         votes_obtained_number     = f'{tks}',
                         votes_obtained_percentage = f'{tksRate}%',
                         elected                   = candVictor,
@@ -196,3 +229,10 @@ def show_update_party(result):
         tksRate2 = result['second_obtained_number']
         seats = result['seats']
         print(f'Update election party id={id} to tks={tks}, tksRate1={tksRate1}, tksRate2={tksRate2}, and seats={seats}')
+
+def show_create_personOrganization(result):
+    if result:
+        result   = result['item']
+        personOrganization_id = result['id']
+        personName = result['person_id']['name']
+        print(f'Successfully create personOrganization with id={personOrganization_id}, and name is {personName}')

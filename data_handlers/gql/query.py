@@ -149,6 +149,15 @@ query GetConstituency {
 }
 """
 
+gql_organizations_string = """
+query GetOrganizations {
+  organizations(orderBy:{ id: asc }) {
+    id
+    name
+  }
+}
+"""
+
 '''
   Update queries
 '''
@@ -177,4 +186,18 @@ mutation($data: OrganizationsElectionUpdateInput!, $id: ID!) {
   }
 }
 
+"""
+
+'''
+  Create queries
+'''
+gql_create_personOrganization = """
+mutation ($data: PersonOrganizationCreateInput!) {
+  item: createPersonOrganization(data: $data) {
+    id
+    person_id {
+      name
+    }
+  }
+}
 """

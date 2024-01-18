@@ -23,8 +23,8 @@ app = Flask(__name__)
 
 IS_TV =  os.environ['PROJECT'] == 'tv' 
 IS_STARTED = os.environ['IS_STARTED'] == 'true'
-BUCKET = os.environ['BUCKET']          ### expected: whoareyou-gcs.readr.tw
-ENV_FOLDER = os.environ['ENV_FOLDER']  ### expected: elections[-dev]
+BUCKET = os.environ['BUCKET']
+ENV_FOLDER = os.environ['ENV_FOLDER']
 
 ### election 2024
 @app.route('/elections/update/cms/<year>', methods=['POST'])
