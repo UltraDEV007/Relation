@@ -14,7 +14,7 @@ def legislator_dump():
     legislator = {}
     elections = [{"id": "87", "dest": "legislator"}, {"id": "88", "dest": "aboriginalLegislator"}, {"id": "89", "dest": "flatAboriginalLegislator"}, {"id": "86", "dest": "nonRegionalLegislator"}]
     for election in elections:
-        if id = 86:
+        if id == 86:
             gql_string = """
 query OrganizationsElections {
   organizationsElections(
