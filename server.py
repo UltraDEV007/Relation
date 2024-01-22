@@ -8,7 +8,7 @@ from tools.uploadGCS import upload_multiple_folders, upload_multiple, upload_fol
 from referendum import parse_cec_referendum, gen_referendum
 from mayor import gen_mayor, parse_cec_mayor, parse_tv_sht, gen_tv_mayor
 from councilMember import gen_councilMember, parse_cec_council
-from election import factcheck_data, election2024, politics_dump
+from election import factcheck_data, election2024, politics_dump, legislator_dump
 from data_export import president2024_realtime
 
 import data_handlers.helpers as hp
@@ -191,6 +191,12 @@ def election_homepage():
 @app.route("/politics_data_dump")
 def tracker_data_dump():
 	politics_dump()
+	return "ok"
+
+### old version implementations
+@app.route("/legislator_politics")
+def tracker_legislator_dump():
+	legislator_dump()
 	return "ok"
 
 @app.route("/president_factcheck")
