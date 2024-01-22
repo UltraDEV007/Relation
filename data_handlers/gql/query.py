@@ -19,10 +19,16 @@ def get_plain_indigeous_string(year):
         gql_string = gql_plainIndigeous_2024
     return gql_string
 
-def get_party_string(year):
-    gql_string = gql_party_2024
+def get_party_oe_string(year):
+    gql_string = gql_party_oe_2024
     if year=='2024':
-        gql_string = gql_party_2024
+        gql_string = gql_party_oe_2024
+    return gql_string
+
+def get_party_pe_string(year):
+    gql_string = gql_party_pe_2024
+    if year=='2024':
+        gql_string = gql_party_pe_2024
     return gql_string
 
 def get_normal_string(year):
@@ -106,7 +112,8 @@ query GetPlainIndigeous {
 }
 """
 
-gql_party_2024 = """
+### Organization election query for legislator party
+gql_party_oe_2024 = """
 query GetParty {
   organizationsElections(
     orderBy:{ number: asc },
@@ -119,6 +126,29 @@ query GetParty {
       id
       name
     }
+  }
+}
+"""
+
+### Person election query for legislator party
+gql_party_pe_2024 = """
+query GetParty {
+  personElections(
+    orderBy:{ number: asc },
+    where: {
+      election: {id: { equals: 86 } },
+      status: {equals: "active"},
+    }) {
+    id
+    party {
+      id
+      name
+    }
+    person_id {
+      id
+      name
+    }
+    legislatoratlarge_number
   }
 }
 """

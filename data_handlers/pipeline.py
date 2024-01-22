@@ -67,7 +67,7 @@ def pipeline_v2(raw_data, seats_data, year:str, is_running: bool=False):
     print(f'[V2] Mountain indigeous legislator data successed.')
 
     ### Generate the v2 party legislator data
-    gql_party = gql_fetch(gql_endpoint, query.gql_party_2024)
+    gql_party = gql_fetch(gql_endpoint, query.gql_party_oe_2024)
     mapping_party = v2_adapter.adapter_party_v2(gql_party)
     if seats_data:
         parser.parse_seat(seats_data, mapping_party)
