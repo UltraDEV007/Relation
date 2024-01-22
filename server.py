@@ -31,26 +31,28 @@ ENV_FOLDER = os.environ['ENV_FOLDER']
 def election_update_cms(year):
     '''
         Fetch v2 json from bucket and update the result into CMS. 
-        Besides <year> parameter, you should provide json payload to specify the election_type you want to update.
+        In the json payload, you should specify the <election_type> you want to update and <gen_term_offic> to 
+        determine whether to generate term office period for winner.
     '''
     payload = json.loads(request.data)
+    gen_term_office = payload.get('gen_term_office', False)
     ### person election
     election_types = ['president', 'mountainIndigenous', 'plainIndigenous']
     for election_type in election_types:
         if payload.get(election_type, False)==True:
-            result = gql_update.update_person_election(year, election_type)
+            result = gql_update.update_person_election(year, election_type, gen_term_office)
             if result==False:
                 print(f'Update cms {election_type} data failed.')
 
     ### party election
     if payload.get('party', False)==True:
-        result = gql_update.update_party_election(year)
+        result = gql_update.update_party_election(year, gen_term_office)
         if result==False:
             print(f'Update cms party data failed')
 
     ### normal election
     if payload.get('normal', False)==True:
-        result = gql_update.update_normal_election(year)
+        result = gql_update.update_normal_election(year, gen_term_office)
         if result==False:
             print(f'Update cms normal data failed')
     return "ok"
