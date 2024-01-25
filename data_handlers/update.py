@@ -104,15 +104,24 @@ def update_person_election(year: str, election_type:str, gen_term_office: bool=F
 def update_party_election(year: str, gen_term_office: bool=False):
     '''
         Give the year of election, and update the party election result into WHORU database
+        You should parse final_A json to get the person candidate winner.
     '''
     v2_url = f'https://{BUCKET}/{ENV_FOLDER}/v2/{year}/legislator/party/all.json'
+    final_A_url = f'https://{BUCKET}/{ENV_FOLDER}/cec-data/final_A.json'
 
-    ### Catch the v2 json, which records all the election result
+    ### Request v2 json, which records all the election result for organization election
     raw_data = request_url(v2_url)
     if raw_data==None:
         print("Can't get v2 party json")
         return False
     v2_data = raw_data['parties']
+
+    ### Request final_A json, and the winner of person elections are inside M4 patyInfo
+    final_A = request_url(final_A_url)
+    if final_A==None:
+        print("Can't get final_A json")
+        return False
+    patyInfo = final_A['M4'].get('patyInfo', [])
 
     ### Create the mapping table for organization as party
     query_string = query.get_party_oe_string(year)
@@ -153,7 +162,6 @@ def update_party_election(year: str, gen_term_office: bool=False):
         tksRate2     = data['tksRate2']
         seats        = int(data['seats'])
         party_oeid = mapping_party_oeid.get(str(candNo), None)
-        party_oid  = mapping_party_oid.get(str(candNo), None)
         if party_oeid != None:
             gql_variable = variable.UpdatePartyElectionVariable(
                 votes_obtained_number     = f'{tks}',
@@ -164,14 +172,20 @@ def update_party_election(year: str, gen_term_office: bool=False):
             ).to_json()
             result = gql_update(gql_endpoint, query.gql_update_party, gql_variable)
             show_update_party(result)
-
-            ### Add term office
-            if gen_term_office==True and party_oid and seats>0:
-                person_orders = mapping_person.get(party_oid, {})
-                role, organization, term_office = '立委', '立法院', variable.termOffice_legislator_2024
-                organization_id = organizations_table[organization]
-                for i in range(1, seats+1):
-                    person_info = person_orders.get(i, None)
+    
+    ### Add term office
+    role, organization, term_office = '立委', '立法院', variable.termOffice_legislator_2024
+    organization_id = organizations_table[organization]
+    if gen_term_office==True:
+        for party in patyInfo:
+            patyNo    = party.get('patyNo', None)
+            candInfo  = party.get('candInfo', [])
+            party_oid = mapping_party_oid.get(str(patyNo), None)
+            for cand in candInfo:
+                candNo    = cand.get('candNo', None)
+                is_victor = (cand.get('victor', '')=='*') or (cand.get('victor', '')=='!')
+                if candNo!=None and is_victor==True:
+                    person_info = mapping_person.get(party_oid, {}).get(candNo, {})
                     if person_info:
                         person_id   = person_info.get('person_id', None)
                         election_id = person_info.get('election_id', None)
@@ -187,7 +201,7 @@ def update_party_election(year: str, gen_term_office: bool=False):
                             result = gql_update(gql_endpoint, query.gql_create_personOrganization, gql_varible)
                             show_create_personOrganization(result)
                     else:
-                        print(f'Missing person_info for party_id: {party_oeid}, order: {i}')
+                        print(f'Missing person_info for party_id: {party_oid}, order: {candNo}')
     return True
 
 def update_normal_election(year: str, gen_term_office: bool=False):
