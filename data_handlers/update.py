@@ -154,7 +154,7 @@ def update_party_election(year: str, gen_term_office: bool=False):
     gql_organizations = gql_fetch(gql_endpoint, query.gql_organizations_string)
     organizations_table = {data['name']: data['id'] for data in gql_organizations['organizations']}
     
-    ### Parse the data in v2
+    ### Update party election
     for data in v2_data:
         candNo       = data['candNo']
         tks          = data['tks']
@@ -172,24 +172,33 @@ def update_party_election(year: str, gen_term_office: bool=False):
             ).to_json()
             result = gql_update(gql_endpoint, query.gql_update_party, gql_variable)
             show_update_party(result)
-    
-    ### Add term office
+
+    ### Get the result from final_A, update person election and add term office 
     role, organization, term_office = '立委', '立法院', variable.termOffice_legislator_2024
     organization_id = organizations_table[organization]
-    if gen_term_office==True:
-        for party in patyInfo:
-            patyNo    = party.get('patyNo', None)
-            candInfo  = party.get('candInfo', [])
-            party_oid = mapping_party_oid.get(str(patyNo), None)
-            for cand in candInfo:
-                candNo    = cand.get('candNo', None)
-                is_victor = (cand.get('victor', '')=='*') or (cand.get('victor', '')=='!')
-                if candNo!=None and is_victor==True:
-                    person_info = mapping_person.get(party_oid, {}).get(candNo, {})
-                    if person_info:
-                        person_id   = person_info.get('person_id', None)
-                        election_id = person_info.get('election_id', None)
-                        if person_id and election_id:
+    for party in patyInfo:
+        patyNo    = party.get('patyNo', None)
+        candInfo  = party.get('candInfo', [])
+        party_oid = mapping_party_oid.get(str(patyNo), None)
+        for cand in candInfo:
+            candNo    = cand.get('candNo', None)
+            is_victor = (cand.get('victor', '')=='*') or (cand.get('victor', '')=='!')
+            if candNo!=None and is_victor==True:
+                person_info = mapping_person.get(party_oid, {}).get(candNo, {})
+                if person_info:
+                    person_id   = person_info.get('person_id', None)
+                    election_id = person_info.get('election_id', None)
+                    if person_id and election_id:
+                        ### Update person election
+                        gql_variable =variable.UpdatePersonElectionOnlyElectedVariable(
+                            elected = True, 
+                            id      = election_id
+                        ).to_json()
+                        result = gql_update(gql_endpoint, query.gql_update_person, gql_variable)
+                        show_update_person(result)
+
+                        ### Add term office
+                        if gen_term_office==True:
                             gql_varible = variable.CreatePersonOrganizationVariable(
                                 person_id       = person_id,
                                 organization_id = organization_id,
@@ -200,8 +209,8 @@ def update_party_election(year: str, gen_term_office: bool=False):
                             ).to_json()
                             result = gql_update(gql_endpoint, query.gql_create_personOrganization, gql_varible)
                             show_create_personOrganization(result)
-                    else:
-                        print(f'Missing person_info for party_id: {party_oid}, order: {candNo}')
+                else:
+                    print(f'Missing person_info for party_id: {party_oid}, order: {candNo}')
     return True
 
 def update_normal_election(year: str, gen_term_office: bool=False):

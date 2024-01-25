@@ -13,7 +13,15 @@ class UpdatePersonElectionVariable:
         self.data['elected']                   = elected
     def to_json(self):
         return copy.deepcopy(vars(self))
-    
+
+class UpdatePersonElectionOnlyElectedVariable:
+    def __init__(self, elected: bool, id: str):
+        self.id = id
+        self.data = {}
+        self.data['elected'] = elected
+    def to_json(self):
+        return copy.deepcopy(vars(self))
+
 class UpdatePartyElectionVariable:
     def __init__(self, votes_obtained_number: str, first_obtained_number: str, second_obtained_number: str, seats: str, id: str):
         self.id = id
