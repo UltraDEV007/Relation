@@ -195,7 +195,7 @@ def update_party_election(year: str, gen_term_office: bool=False):
                             id      = election_id
                         ).to_json()
                         result = gql_update(gql_endpoint, query.gql_update_person, gql_variable)
-                        show_update_person(result)
+                        show_update_person(result, election_type='party')
 
                         ### Add term office
                         if gen_term_office==True:
