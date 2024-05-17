@@ -1,7 +1,6 @@
 from tools.conn import gql_client
 from gql import gql
 
-
 def query_elections(electioin_type):
     query = '''
     query{
@@ -53,6 +52,6 @@ def query_personElections(electionID, district=''):
             }
         }''' % (electionID, district)
     client = gql_client()
-    # print(query)
+    print(query)
     r = client.execute(gql(query))
     return r['personElections']
