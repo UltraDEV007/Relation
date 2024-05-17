@@ -216,7 +216,7 @@ query { politicCategories {
     category_base = {}
     for category in categories["politicCategories"]:
         category_base[category["name"]] = {"count": 0, "id": category["id"], "displayColor": category["displayColor"]}
-    #==============================================
+        
     all_categories = category_base
     for candidate in all_candidates["personElections"]:
         candidate_data = {}
