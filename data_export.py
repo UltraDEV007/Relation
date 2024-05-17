@@ -15,7 +15,7 @@ def president2024_realtime():
     sht = gc.open_by_url( url )
     voting_data = { "result": [] }
     try:
-        meta_sheet = sht.worksheet_by_title("官網切換相關")
+        meta_sheet = sht.worksheet_by_title("work_sheet")
     except Exception as e:
         print("Exception: {}".format(type(e).__name__))
         print("Exception message: {}".format(e))
