@@ -84,7 +84,7 @@ def gen_tv_mayor(updatedAt = '', source = '', sht_data = '', polling_data = '', 
                 county_code = [k for k in mapping_county_town.keys()][[v for v in mapping_county_town.values()].index(county_name)]
                 cand_infos = polling_data[county_code]
             for candNo in candNos.keys():
-                party = '無黨籍' if sht_data[county_name][candNo]['party'] == '無' else sht_data[county_name][candNo]['party']
+                party = '無黨籍/ttt' if sht_data[county_name][candNo]['party'] == '無' else sht_data[county_name][candNo]['party']
                 try:
                     candidate = {
                         "candNo": str(candNo).zfill(2),
